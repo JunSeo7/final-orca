@@ -10,8 +10,6 @@
 
         <link rel="stylesheet" href="/css/layout/main.css">
         <script defer src="/js/layout/main.js"></script>
-
-
 </head>
 <body>
 

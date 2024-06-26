@@ -10,13 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("orca/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    private static UserService service;
+    private final UserService service;
 
     @GetMapping("login")
     public String login(){
@@ -25,12 +26,12 @@ public class UserController {
 
     @PostMapping("login")
     public String login(UserVo vo, HttpSession httpSession, Model model){
-        UserVo userVo = service.login(vo);
-        if(userVo == null){
+        UserVo loginUserVo = service.login(vo);
+        if(loginUserVo == null){
             model.addAttribute("message", "아이디 또는 비밀번호를 다시 확인해주세요.");
             return "user/login";
         }
-        model.addAttribute("message", "로그인 성공!.");
+        httpSession.setAttribute("loginUserVo", loginUserVo);
         return "home";
     }
 }
