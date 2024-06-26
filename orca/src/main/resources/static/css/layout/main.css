@@ -9,3 +9,114 @@ main {
   padding-left: 150px;
   padding-right: 150px;
 }
+
+/* 컨텐츠 헤더 설정 */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+/* 대시보드 설정 */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard-col-lg {
+  flex: 2;
+}
+
+.dashboard-col-sm {
+  flex: 1;
+}
+
+/* 메인 컨텐츠 박스 설정 */
+
+.work-status, .main-div{
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  height: 250px;
+
+}
+
+.work-status-inner{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 섹션 헤더 설정 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #6eadffba;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 10px;
+}
+.section-header h3 {
+  margin: 0;
+}
+
+.section-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* 작업 시간 설정 */
+.work-time {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* 시간 표시 설정 */
+.time-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.time-icon{
+  font-size: 20px;
+}
+
+.time{
+  font-size: 30px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.clock {
+  color: #808080;
+  font-size: 50px;
+  margin: 35px;
+  text-align: center;
+  font-weight: 300;
+}
+
+
+/* 시스템 링크 설정 */
+.system-link {
+  background-color: #e7f3ff;
+  padding: 15px;
+  border-radius: 5px;
+}
