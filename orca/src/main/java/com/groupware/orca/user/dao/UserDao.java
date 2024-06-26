@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class UserDao {
-    private static UserMapper mapper;
+    private final UserMapper mapper;
 
     public UserVo login(UserVo vo) {
         UserVo userVo = mapper.login(vo);

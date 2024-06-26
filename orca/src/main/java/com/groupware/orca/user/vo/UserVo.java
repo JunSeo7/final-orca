@@ -17,7 +17,7 @@ public class UserVo {
     private String dateOfEmployment;
     private String height;
     private String weight;
-    private String bloodYype;
+    private String bloodType;
     private String religion;
     private String salary;
     private String bankNumber;
@@ -27,42 +27,42 @@ public class UserVo {
     private String otpKey;
     private String sickDate;
     private String vacationDate;
+    private String partName;
+    private String nameOfPosition;
+    private String teamName;
 
     public UserVo() {
-        super();
     }
 
-    public UserVo(String empNo, String name, String positionCode, String deptCode, String teamCode, String gender,
-                String socialSecurity_no, String password, String phone, String extensionCall, String email, String address,
-                String dateOfEmployment, String height, String weight, String bloodYype, String religion, String salary,
-                String bankNumber, String leavingDate, String imgOriginName, String imgChangeName, String otpKey,
-                String sickDate, String vacationDate) {
-        super();
+    public UserVo(String empNo, String teamName, String nameOfPosition, String partName, String vacationDate, String sickDate, String otpKey, String imgChangeName, String imgOriginName, String leavingDate, String bankNumber, String salary, String religion, String bloodType, String weight, String height, String dateOfEmployment, String address, String email, String extensionCall, String phone, String password, String socialSecurity_no, String gender, String teamCode, String deptCode, String positionCode, String name) {
         this.empNo = empNo;
-        this.name = name;
-        this.positionCode = positionCode;
-        this.deptCode = deptCode;
-        this.teamCode = teamCode;
-        this.gender = gender;
-        this.socialSecurity_no = socialSecurity_no;
-        this.password = password;
-        this.phone = phone;
-        this.extensionCall = extensionCall;
-        this.email = email;
-        this.address = address;
-        this.dateOfEmployment = dateOfEmployment;
-        this.height = height;
-        this.weight = weight;
-        this.bloodYype = bloodYype;
-        this.religion = religion;
-        this.salary = salary;
-        this.bankNumber = bankNumber;
-        this.leavingDate = leavingDate;
-        this.imgOriginName = imgOriginName;
-        this.imgChangeName = imgChangeName;
-        this.otpKey = otpKey;
-        this.sickDate = sickDate;
+        this.teamName = teamName;
+        this.nameOfPosition = nameOfPosition;
+        this.partName = partName;
         this.vacationDate = vacationDate;
+        this.sickDate = sickDate;
+        this.otpKey = otpKey;
+        this.imgChangeName = imgChangeName;
+        this.imgOriginName = imgOriginName;
+        this.leavingDate = leavingDate;
+        this.bankNumber = bankNumber;
+        this.salary = salary;
+        this.religion = religion;
+        this.bloodType = bloodType;
+        this.weight = weight;
+        this.height = height;
+        this.dateOfEmployment = dateOfEmployment;
+        this.address = address;
+        this.email = email;
+        this.extensionCall = extensionCall;
+        this.phone = phone;
+        this.password = password;
+        this.socialSecurity_no = socialSecurity_no;
+        this.gender = gender;
+        this.teamCode = teamCode;
+        this.deptCode = deptCode;
+        this.positionCode = positionCode;
+        this.name = name;
     }
 
     public String getEmpNo() {
@@ -113,20 +113,20 @@ public class UserVo {
         this.gender = gender;
     }
 
-    public String getSocialSecurity_no() {
-        return socialSecurity_no;
-    }
-
-    public void setSocialSecurity_no(String socialSecurity_no) {
-        this.socialSecurity_no = socialSecurity_no;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSocialSecurity_no() {
+        return socialSecurity_no;
+    }
+
+    public void setSocialSecurity_no(String socialSecurity_no) {
+        this.socialSecurity_no = socialSecurity_no;
     }
 
     public String getPhone() {
@@ -186,11 +186,11 @@ public class UserVo {
     }
 
     public String getBloodYype() {
-        return bloodYype;
+        return bloodType;
     }
 
     public void setBloodYype(String bloodYype) {
-        this.bloodYype = bloodYype;
+        this.bloodType = bloodYype;
     }
 
     public String getReligion() {
@@ -265,16 +265,61 @@ public class UserVo {
         this.vacationDate = vacationDate;
     }
 
-    @Override
-    public String toString() {
-        return "Text [empNo=" + empNo + ", name=" + name + ", positionCode=" + positionCode + ", deptCode=" + deptCode
-                + ", teamCode=" + teamCode + ", gender=" + gender + ", socialSecurity_no=" + socialSecurity_no
-                + ", password=" + password + ", phone=" + phone + ", extensionCall=" + extensionCall + ", email="
-                + email + ", address=" + address + ", dateOfEmployment=" + dateOfEmployment + ", height=" + height
-                + ", weight=" + weight + ", bloodYype=" + bloodYype + ", religion=" + religion + ", salary=" + salary
-                + ", bankNumber=" + bankNumber + ", leavingDate=" + leavingDate + ", imgOriginName=" + imgOriginName
-                + ", imgChangeName=" + imgChangeName + ", otpKey=" + otpKey + ", sickDate=" + sickDate
-                + ", vacationDate=" + vacationDate + "]";
+    public String getPartName() {
+        return partName;
     }
 
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+
+    public String getNameOfPosition() {
+        return nameOfPosition;
+    }
+
+    public void setNameOfPosition(String nameOfPosition) {
+        this.nameOfPosition = nameOfPosition;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "empNo='" + empNo + '\'' +
+                ", name='" + name + '\'' +
+                ", positionCode='" + positionCode + '\'' +
+                ", deptCode='" + deptCode + '\'' +
+                ", teamCode='" + teamCode + '\'' +
+                ", gender='" + gender + '\'' +
+                ", socialSecurity_no='" + socialSecurity_no + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", extensionCall='" + extensionCall + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfEmployment='" + dateOfEmployment + '\'' +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", bloodYype='" + bloodType + '\'' +
+                ", religion='" + religion + '\'' +
+                ", salary='" + salary + '\'' +
+                ", bankNumber='" + bankNumber + '\'' +
+                ", leavingDate='" + leavingDate + '\'' +
+                ", imgOriginName='" + imgOriginName + '\'' +
+                ", imgChangeName='" + imgChangeName + '\'' +
+                ", otpKey='" + otpKey + '\'' +
+                ", sickDate='" + sickDate + '\'' +
+                ", vacationDate='" + vacationDate + '\'' +
+                ", partName='" + partName + '\'' +
+                ", nameOfPosition='" + nameOfPosition + '\'' +
+                ", teamName='" + teamName + '\'' +
+                '}';
+    }
 }
+

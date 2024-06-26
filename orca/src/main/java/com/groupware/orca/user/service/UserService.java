@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private static UserDao dao;
+    private final UserDao dao;
 
     public UserVo login(UserVo vo) {
         UserVo userVo = dao.login(vo);
