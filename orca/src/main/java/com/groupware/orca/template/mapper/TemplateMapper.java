@@ -1,0 +1,26 @@
+package com.groupware.orca.template.mapper;
+
+import com.groupware.orca.template.vo.TemplateVo;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
+
+@Mapper
+public interface TemplateMapper {
+    @Select("SELECT TC.CATEGORY_NO, TC.NAME categoryName, T.TEMPLATE_NO, T.TITLE, T.CONTENT, T.ENROLL_DATE FROM  DOC_TEMPLATE T JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO=TC.CATEGORY_NO WHERE T.DEL_YN='N' ORDER BY ENROLL_DATE DESC")
+    List<TemplateVo> getTemplateList();
+
+    @Insert("INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, #{categoryNo}, #{title}, #{content})")
+    int addTemplate(TemplateVo vo);
+
+    @Select("SELECT TC.CATEGORY_NO, TC.NAME AS categoryName, T.TEMPLATE_NO, T.TITLE, T.CONTENT, T.ENROLL_DATE, AI.APPROVER_NO, PI.NAME AS empName, D.PARTNAME, DT.TEAM_NAME, P.NAME_OF_POSITION FROM DOC_TEMPLATE T JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO LEFT JOIN APPR_LINE_TEMPLATE ALT ON T.APPR_LINE_NO = ALT.APPR_LINE_NO LEFT JOIN APPROVER_INFO AI ON AI.APPR_LINE_NO = ALT.APPR_LINE_NO LEFT JOIN PERSONNEL_INFORMATION PI ON AI.APPROVER_NO = PI.EMP_NO LEFT JOIN DEPARTMENT D ON D.DEPT_CODE = PI.DEPT_CODE LEFT JOIN DEPARTMENT_TEAM DT ON DT.TEAM_CODE = PI.TEAM_CODE LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE WHERE T.DEL_YN='N' AND T.TEMPLATE_NO = #{templateNo}")
+    TemplateVo TemplateDetail(String templateNo);
+
+    @Update("UPDATE DOC_TEMPLATE SET CONTENT=#{templateContent} WHERE TEMPLATE_NO = #{templateNo}")
+    int editTemplate(TemplateVo vo);
+
+    @Delete("UPDATE DOC_TEMPLATE SET DEL_YN='Y' WHERE TEMPLATE_NO = #{templateNo}")
+    int deleteTemplate(String vo);
+
+
+}
