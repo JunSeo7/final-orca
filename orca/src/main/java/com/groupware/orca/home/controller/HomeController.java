@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("orca")
 public class HomeController {
 
     @GetMapping("home")
@@ -13,3 +14,4 @@ public class HomeController {
         return "home";
     }
 }
+
