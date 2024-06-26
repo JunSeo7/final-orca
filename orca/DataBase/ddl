@@ -2,19 +2,19 @@
 ----------------------시퀀스 삭제 ------------------------
 --------------------------------------------------- 이경빈
 -- 인사 정보 시퀀스 삭제
-DROP SEQUENCE SEQ_PERSONNEL_INFORMATION;
+DROP SEQUENCE SEQ_EMP_NO;
 -- 부서 시퀀스 삭제
-DROP SEQUENCE SEQ_DEPARTMENT;
+DROP SEQUENCE SEQ_DEPT_CODE;
 -- 팀 시퀀스 삭제
-DROP SEQUENCE SEQ_DEPARTMENT_TEAM;
+DROP SEQUENCE SEQ_TEAM_CODE;
 -- 직급 시퀀스 삭제
-DROP SEQUENCE SEQ_POSITION;
+DROP SEQUENCE SEQ_POSITION_CODE;
 -- 일정(캘린더) 시퀀스 삭제
-DROP SEQUENCE SEQ_CALENDAR;
+DROP SEQUENCE SEQ_CALENDAR_NO;
 -- 일정 권한 시퀀스 삭제
-DROP SEQUENCE SEQ_CALENDAR_AUTHORITY;
+DROP SEQUENCE SEQ_AUTHORITY_NO;
 -- 드라이버 시퀀스 삭제
-DROP SEQUENCE SEQ_DRIVER;
+DROP SEQUENCE SEQ_DRIVER_NO;
 --------------------------------------------------- 나지원
 DROP SEQUENCE SEQ_DOC_TEMPLATE;
 DROP SEQUENCE SEQ_DOC_FILES;
@@ -105,20 +105,20 @@ DROP TABLE WEB_MAIL CASCADE CONSTRAINTS;
 ---------------------------------------------------
 ----------------------시퀀스 생성 ------------------------
 ---------------------------------------------------이경빈
--- 인사 정보 시퀀스 생성
-CREATE SEQUENCE SEQ_PERSONNEL_INFORMATION;
--- 부서 시퀀스 생성
-CREATE SEQUENCE SEQ_DEPARTMENT;
--- 팀 시퀀스 생성
-CREATE SEQUENCE SEQ_DEPARTMENT_TEAM;
--- 직급 시퀀스 생성
-CREATE SEQUENCE SEQ_POSITION;
--- 일정(캘린더) 시퀀스 생성
-CREATE SEQUENCE SEQ_CALENDAR;
--- 일정 권한 시퀀스 생성
-CREATE SEQUENCE SEQ_CALENDAR_AUTHORITY;
--- 드라이버 시퀀스 생성
-CREATE SEQUENCE SEQ_DRIVER;
+-- 인사 정보 시퀀스 삭제
+CREATE SEQUENCE SEQ_EMP_NO;
+-- 부서 시퀀스 삭제
+CREATE SEQUENCE SEQ_DEPT_CODE;
+-- 팀 시퀀스 삭제
+CREATE SEQUENCE SEQ_TEAM_CODE;
+-- 직급 시퀀스 삭제
+CREATE SEQUENCE SEQ_POSITION_CODE;
+-- 일정(캘린더) 시퀀스 삭제
+CREATE SEQUENCE SEQ_CALENDAR_NO;
+-- 일정 권한 시퀀스 삭제
+CREATE SEQUENCE SEQ_AUTHORITY_NO;
+-- 드라이버 시퀀스 삭제
+CREATE SEQUENCE SEQ_DRIVER_NO;
 --------------------------------------------------- 나지원
 CREATE SEQUENCE SEQ_DOC_TEMPLATE;
 CREATE SEQUENCE SEQ_DOC_FILES;
