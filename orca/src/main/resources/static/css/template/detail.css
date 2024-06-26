@@ -1,0 +1,15 @@
+/*메인*/
+main {
+  margin-top: 60px;
+  margin-left: 220px;
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.approval-lines-btn img{
+  width: 18px;
+}

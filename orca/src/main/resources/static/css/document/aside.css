@@ -4,7 +4,7 @@ aside {
    padding: 20px;
    width: 200px;
    position: fixed;
-   top: 90px;
+   top: 90px; /* 헤더 높이 */
    bottom: 0;
    overflow-y: auto;
    transition: transform 0.3s ease;

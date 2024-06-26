@@ -1,7 +1,7 @@
 /*메인*/
 main {
-  margin-top: 60px; /* 헤더 높이 */
-  margin-left: 220px; /* 어사이드 너비 */
+  margin-top: 60px;
+  margin-left: 220px;
   padding: 20px;
   flex-grow: 1;
   overflow-y: auto;
@@ -46,7 +46,6 @@ main {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   height: 250px;
-
 }
 
 .work-status-inner{
@@ -112,7 +111,6 @@ main {
   text-align: center;
   font-weight: 300;
 }
-
 
 /* 시스템 링크 설정 */
 .system-link {

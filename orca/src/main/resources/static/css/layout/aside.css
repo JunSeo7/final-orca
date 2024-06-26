@@ -1,11 +1,10 @@
-
 /* 어사이드 바 설정 */
 aside {
 border-right: 1px solid rgb(212, 212, 212);
   padding: 20px;
   width: 200px;
   position: fixed;
-  top: 90px; /* 헤더 높이 */
+  top: 90px;
   bottom: 0;
   overflow-y: auto;
   transition: transform 0.3s ease;
@@ -14,23 +13,6 @@ border-right: 1px solid rgb(212, 212, 212);
 /* 어사이드 바 숨김 상태 설정 */
 aside.hidden {
   transform: translateX(-220px);
-}
-
-/* 메인 컨텐츠 설정 */
-main {
-  margin-top: 80px; /* 헤더 높이 */
-  margin-left: 220px; /* 어사이드 너비 */
-  padding: 20px;
-  flex-grow: 1;
-  overflow-y: auto;
-  transition: margin-left 0.3s ease;
-  padding-left: 150px;
-  padding-right: 150px;
-}
-
-/* 메인 컨텐츠 확장 상태 설정 */
-main.full {
-  margin-left: 20px;
 }
 
 /* 프로필 설정 */

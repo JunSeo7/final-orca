@@ -28,9 +28,7 @@ function toggleProfile() {
 /* 프로필 숨김 함수 */
 function hideProfile() {
   const profileDetail = document.getElementById('profileDetail');
-  consol.log("1")
   if (!profileDetail.classList.contains('hidden')) {
-
     profileDetail.classList.add('hidden');  // 프로필 숨김
   }
 }
