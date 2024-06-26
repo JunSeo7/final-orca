@@ -1,6 +1,6 @@
-package com.groupware.orca.template.mapper;
+package com.groupware.orca.document.mapper;
 
-import com.groupware.orca.template.vo.TemplateVo;
+import com.groupware.orca.document.vo.TemplateVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
