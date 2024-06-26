@@ -1,0 +1,88 @@
+/* 전체 페이지 설정 */
+body {
+  display: flex;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* 헤더 설정 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #6eadff;
+  color: rgb(18, 15, 81);
+  padding: 10px;
+  position: fixed;
+  width: 99%;
+  height: 25px;
+  top: 0;
+  z-index: 1000;
+}
+
+/* 로고 이미지 설정 */
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* 헤더 왼쪽 영역 설정 */
+.header-left {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 헤더 오른쪽 아이콘 설정 */
+.header-right .icon {
+  width: 24px;
+  height: auto;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* 상단 네비게이션 설정 */
+.top-nav {
+  background-color: white;
+  padding: 10px 20px;
+  margin-top: 30px;
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  border-bottom:1px solid rgb(212, 212, 212) ;
+}
+
+.top-nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+
+.top-nav ul li {
+  margin-right: 20px;
+}
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 사이드바 토글 버튼 설정 */
+#toggleSidebar {
+  position: fixed;
+  top: 48px;
+  left: 10px;
+  z-index: 1100;
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
