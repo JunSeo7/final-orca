@@ -1,7 +1,7 @@
-package com.groupware.orca.template.dao;
+package com.groupware.orca.document.dao;
 
-import com.groupware.orca.template.mapper.TemplateMapper;
-import com.groupware.orca.template.vo.TemplateVo;
+import com.groupware.orca.document.mapper.TemplateMapper;
+import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

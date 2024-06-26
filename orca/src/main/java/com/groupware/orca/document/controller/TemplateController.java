@@ -1,14 +1,13 @@
-package com.groupware.orca.template.controller;
+package com.groupware.orca.document.controller;
 
-import com.groupware.orca.template.service.TemplateService;
-import com.groupware.orca.template.vo.TemplateVo;
+import com.groupware.orca.document.service.TemplateService;
+import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("template")

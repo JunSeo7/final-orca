@@ -1,7 +1,7 @@
-package com.groupware.orca.template.service;
+package com.groupware.orca.document.service;
 
-import com.groupware.orca.template.dao.TemplateDao;
-import com.groupware.orca.template.vo.TemplateVo;
+import com.groupware.orca.document.dao.TemplateDao;
+import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
