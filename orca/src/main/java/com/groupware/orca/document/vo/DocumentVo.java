@@ -1,5 +1,6 @@
 package com.groupware.orca.document.vo;
 
+import com.groupware.orca.user.vo.UserVo;
 import lombok.Data;
 
 import java.util.List;
@@ -27,10 +28,10 @@ public class DocumentVo {
     private String statusName;         // 상태 이름
     private String urgent;             // 긴급 여부 (Y/N)
     private String delYn;              // 삭제 여부 (Y/N)
+
     private List<ApproverLineVo> ApproverLineNo; //결재선목록
 
     // File and Reference Information (파일 및 참조자 정보)
     private List<DocFileVo> files;     // 파일 리스트
     private List<UserVo> references;   // 참조자 리스트
-
 }

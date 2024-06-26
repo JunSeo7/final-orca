@@ -1,9 +1,13 @@
 package com.groupware.orca.document.vo;
 
+import lombok.Data;
+
+@Data
 public class DocFileVo {
 
-    private String FILE_NO;
-    private String DOC_NO;
-    private String CHANGE_NAME;
-    private String ORIGIN_NAME;
+    private int fileNo;             // 파일 번호
+    private int docNo;              // 문서 번호
+    private String changeName;      // 변경된 파일 이름
+    private String originName;      // 원본 파일 이름
+
 }

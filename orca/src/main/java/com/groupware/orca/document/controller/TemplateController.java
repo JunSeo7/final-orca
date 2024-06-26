@@ -39,8 +39,8 @@ public class TemplateController {
     }
 
     @GetMapping("detail")
-    public String TemplateDetail(@RequestParam("templateNo")String templateNo, Model model){
-        TemplateVo vo = service.TemplateDetail(templateNo);
+    public String templateDetail(@RequestParam("templateNo") String templateNo, Model model) {
+        TemplateVo vo = service.getTemplateDetail(templateNo);
         model.addAttribute("templateDetail", vo);
         System.out.println("templateDetail = " + vo);
         return "template/detail";

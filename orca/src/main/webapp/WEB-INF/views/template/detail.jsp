@@ -5,8 +5,8 @@
     <title>결재양식 상세</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
 
-    <link rel="stylesheet" href="/css/template/detail.css">
-    <script defer src="/js/template/detail.js"></script>
+    <link rel="stylesheet" href="/css/template/css">
+    <script defer src="/js/template/js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
@@ -20,15 +20,32 @@
              </div>
         <div class="template-detail-box">
             <div class="template-detail">
-                <span class="detail-title">카테고리: ${templateDetail.categoryName}</span><br>
-                <span class="detail-title">양식명: ${templateDetail.title}</span><br>
-                <span class="detail-content">내용: ${templateDetail.content}</span><br>
-                <span class="detail-enroll">생성날짜: ${templateDetail.enrollDate}</span><br>
-                <span class="detail-approver">결재자: ${templateDetail.empName}</span><br>
-                <span class="detail-dept">부서: ${templateDetail.partName}</span><br>
-                <span class="detail-team">팀: ${templateDetail.teamName}</span><br>
-                <span class="detail-position">직위: ${templateDetail.nameOfPosition}</span><br>
-            </div>
+
+                <div class="template-detail-box">
+                    <div class="template-detail">
+                        <span class="detail-title">카테고리: ${templateDetail.categoryName}</span><br>
+                        <span class="detail-title">양식명: ${templateDetail.title}</span><br>
+                        <span class="detail-content">내용: ${templateDetail.content}</span><br>
+                        <span class="detail-enroll">생성날짜: ${templateDetail.enrollDate}</span><br>
+                    </div>
+
+                    <div class="approver-detail">
+                        <c:forEach var="approver" items="${templateDetail.apprLineList}">
+                            <div class="approver-item">
+                                <span class="detail-approver">결재자: ${approver.approverName}</span><br>
+                                <span class="detail-dept">부서: ${approver.deptName}</span><br>
+                                <span class="detail-team">팀: ${approver.teamName}</span><br>
+                                <span class="detail-position">직위: ${approver.positionName}</span><br>
+                                <span class="detail-comment">코멘트: ${approver.comment}</span><br>
+                            </div>
+                            <hr>
+                        </c:forEach>
+                    </div>
+                </div>
+
+
+
+                </div>
 
         </div>
 
