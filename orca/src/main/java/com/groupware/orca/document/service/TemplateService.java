@@ -1,7 +1,7 @@
 package com.groupware.orca.document.service;
 
 import com.groupware.orca.document.dao.TemplateDao;
-import com.groupware.orca.document.vo.ApproverLineVo;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class TemplateService {
 
         // ApproverLine 정보 가져오기
         if (templateVo != null) {
-            List<ApproverLineVo> approverLineVoList = dao.selectApproverLineVo(templateVo.getApprLineNo());
-            templateVo.setApprLineList(approverLineVoList);
+            List<ApprovalLineVo> approvalLineVoList = dao.selectApproverLineVo(templateVo.getApprLineNo());
+            templateVo.setApprLineList(approvalLineVoList);
         }
 
         return templateVo;

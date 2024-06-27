@@ -1,6 +1,6 @@
 package com.groupware.orca.document.mapper;
 
-import com.groupware.orca.document.vo.ApproverLineVo;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import org.apache.ibatis.annotations.*;
 
@@ -26,7 +26,7 @@ public interface TemplateMapper {
     TemplateVo templateDetail(String templateNo);
 
     @Select("SELECT AI.APPROVER_NO, PI.NAME AS approverName, P.NAME_OF_POSITION AS positionName, DT.TEAM_NAME AS deptName, AI.SEQ, AI.APPROVER_CLASSIFICATION_NO FROM APPROVER_INFO AI JOIN PERSONNEL_INFORMATION PI ON AI.APPROVER_NO = PI.EMP_NO LEFT JOIN POSITION P ON PI.POSITION_CODE = P.POSITION_CODE LEFT JOIN DEPARTMENT_TEAM DT ON PI.TEAM_CODE = DT.TEAM_CODE WHERE AI.APPR_LINE_NO = #{apprLineNo} ORDER BY AI.SEQ")
-    List<ApproverLineVo> selectApproverLineVo(int apprLineNo);
+    List<ApprovalLineVo> selectApproverLineVo(int apprLineNo);
 
 
 

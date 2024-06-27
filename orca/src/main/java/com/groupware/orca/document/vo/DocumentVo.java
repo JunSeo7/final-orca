@@ -30,7 +30,7 @@ public class DocumentVo {
     private String delYn;              // 삭제 여부 (Y/N)
 
     private int apprLineNo;
-    private List<ApproverLineVo> ApproverLineNo; //결재선목록
+    private List<ApprovalLineVo> ApproverLineNo; //결재선목록
 
     // File and Reference Information (파일 및 참조자 정보)
     private List<DocFileVo> files;     // 파일 리스트

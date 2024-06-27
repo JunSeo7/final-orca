@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("document")
+@RequestMapping("orca/document")
 @RequiredArgsConstructor
 public class DocumentController {
 
