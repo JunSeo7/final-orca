@@ -82,9 +82,8 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BoardVo>> searchBoardByTitle(@RequestParam("title") String title, @RequestParam("categoryNo") String categoryNoStr) {
+    public ResponseEntity<List<BoardVo>> searchBoardByTitle(@RequestParam("title") String title, @RequestParam("categoryNo") int categoryNo) {
         try {
-            int categoryNo = Integer.parseInt(categoryNoStr); // 문자열을 정수로 변환
             List<BoardVo> boardList = boardService.searchBoard(title, categoryNo);
             if (boardList.isEmpty()) {
                 return ResponseEntity.noContent().build();
