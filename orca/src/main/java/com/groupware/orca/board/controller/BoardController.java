@@ -121,7 +121,7 @@ public class BoardController {
 
             // DB에 파일 정보 저장
             BoardFileVo fileVo = new BoardFileVo();
-            fileVo.setBoardNo(boardNo); // boardNo 설정
+            fileVo.setBoardNo(boardNo);
             fileVo.setFileOriginName(fileName);
             fileVo.setFileSaveName(fileName);
             fileVo.setFileDelYn("N");
