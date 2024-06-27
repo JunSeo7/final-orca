@@ -118,7 +118,9 @@
                     console.log("변환된 Longitude 값:", lng);
 
                     if (!isNaN(lat) && !isNaN(lng)) {
+
                         //initMap(lat, lng);
+                        $('#map').show();
                         map.relayout();
                         var moveLatLon = new kakao.maps.LatLng(lat, lng);
                         map.setCenter(moveLatLon);
