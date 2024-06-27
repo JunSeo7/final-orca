@@ -22,6 +22,7 @@
             <div id="edit"></div>
             <input type="hidden" id="content" name="content">
 
+
             <label for="categoryNo">카테고리</label>
             <select id="categoryNo" name="categoryNo" required>
                 <option value="1">자유 게시판</option>
@@ -46,9 +47,14 @@
 
         $(document).ready(function() {
             var editor = new FroalaEditor('#edit', {
-             height: 400, /* 원하는 높이 값으로 설정 */
-                    width: '100%', /* 원하는 너비 값으로 설정 */
+                height: 400, /* 원하는 높이 값으로 설정 */
+                width: '100%', /* 원하는 너비 값으로 설정 */
                 imageUploadURL: '/board/uploadImage',
+                imageUploadParams: function() {
+                    return {
+                        boardNo: $('#boardNo').val()
+                    };
+                },
                 imageUploadParam: 'file',
                 imageUploadMethod: 'POST',
                 imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
