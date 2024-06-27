@@ -1,0 +1,539 @@
+/* 전체 페이지 설정 */
+body {
+    display: flex;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+/* ------------------------------------------------------------------------- */
+/* 헤더*/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6eadff;
+    color: rgb(18, 15, 81);
+    padding: 10px;
+    position: fixed;
+    width: 99%;
+    height: 25px;
+    top: 0;
+    z-index: 1000;
+}
+.logo {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.header-right .icon {
+    width: 24px;
+    height: auto;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* +헤더 */
+.header-right {
+    width: 185px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 사이드바 토글 버튼 설정 */
+#toggleSidebar {
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    z-index: 1100;
+    background-color: #6eadff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 어사이드 바 설정 */
+aside {
+    background-color: #f4f4f4;
+    padding: 20px;
+    width: 200px;
+    position: fixed;
+    top: 45px;
+    /* 헤더 높이 */
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+/* 어사이드 바 숨김 상태 설정 */
+aside.hidden {
+    transform: translateX(-220px);
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 메인 컨텐츠 설정 */
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    /* 헤더 높이 */
+    margin-left: 243px;
+    /* 어사이드 너비 */
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+}
+/* 메인 컨텐츠 확장 상태 설정 */
+main.full {
+    margin-left: 20px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 프로필 설정 */
+.profile {
+    text-align: center;
+    cursor: pointer;
+}
+/* 프로필 사진 설정 */
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+/* 프로필 상세 정보 설정 */
+.profile-detail {
+    position: fixed;
+    left: 220px;
+    /* 어사이드 너비 */
+    top: 70px;
+    /* 헤더 높이 */
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+/* 프로필 상세 정보 숨김 상태 설정 */
+.profile-detail.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 네비게이션 설정 */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+/* 네비게이션 항목 설정 */
+nav ul li {
+    margin: 10px 0;
+}
+/* 네비게이션 링크 설정 */
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+/* 네비게이션 링크 호버 상태 설정 */
+nav ul li a:hover {
+    color: #368dff;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 일정 등록 + 사이드 캘린더 */
+.aside-Calendar-sell{
+    height: 310px;
+}
+
+
+/*일정 등록*/
+.aside-Calendar{
+    display: flex;
+    justify-content: center;
+    height: 20%;
+}
+
+/* 일정 등록 */
+.new-schedule{
+    padding: 8px;
+    width: 80%;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6eadff;
+    border-radius: 3px;
+    color: white;
+    font-weight: 900;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(92, 91, 91, 0.24);
+    margin-top: 20px;
+}
+.new-schedule:hover{
+    background-color: #368dff;
+    cursor: pointer;
+}
+.selectContainer{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 0px;
+}
+
+.selectContainer select {
+    font-size: 11px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    color: #333;
+    width: 75px;
+}
+
+/* 선택된 옵션 스타일링 */
+.selectContainer select option:checked {
+    background-color: #e0e0e0;
+}
+/* ------------------------------------------------------------------------- */
+
+/* 사이드 캘린더 */
+#sidebarCalendarContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#sidebarCalendar{
+    width: 90%;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24); /* 박스 섀도우 추가 */
+    padding: 13px;
+    padding-top: 5px;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.side-date{
+    font-weight: bold;
+    text-align: center;
+    border: 1.5px solid rgba(163, 163, 163, 0.62);
+    box-sizing: border-box;
+    font-size: 13px;
+}
+.side-date:hover{
+    border: 1.5px solid #0e0e0f;
+    cursor: pointer;
+}
+
+
+.side-calendar-header{
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+    place-items: center center;
+    width: 90%;
+    padding: 5px;
+    gap: 0px;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.side-calendar-header button {
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+}
+.side-calendar-header button:hover{
+    color: #368dff;
+}
+
+/* ------------------------------------------------------------------------- */
+.my-calendar-title{
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    justify-content: start;
+    padding: 4px;
+    border-radius: 3px;
+}
+.my-calendar{
+    margin-left: 10px;
+    font-size: 13.8px;
+}
+.checked {
+    color: #368dff
+}
+/* 팀/개인/전체 체크 */
+.checked::after {
+    content: '✔';
+    margin-left: 10px;
+    color: #368dff;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/*캘린더*/
+#calendar {
+    width: 100%;
+    height: 593px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24); /* 박스 섀도우 추가 */
+    padding: 20px;
+    padding-top: 5px;
+    margin-top: 25px;
+    border-radius: 15px;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    place-items: center center;
+    width: 20%;
+    padding: 10px;
+    gap: 10px;
+    font-size: 20px;
+    margin-bottom: 9px;
+}
+
+.calendar-header button {
+    background-color: white;
+    border: none;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+}
+
+.calendar-header button:hover{
+    cursor: pointer;
+    color: #368dff;
+}
+
+.calendar-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-collapse: collapse;
+    border: 1px solid rgba(163, 163, 163, 0.62);
+}
+
+.date{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    padding-top: 6px;
+    padding-left: 6px;
+}
+
+.calendar-grid .day, .calendar-grid .date {
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid rgba(163, 163, 163, 0.62);
+    box-sizing: border-box;
+    font-size: 13px;
+}
+.calendar-grid .date:hover{
+    cursor: pointer;
+    border: 1px solid #030303;
+}
+
+.day{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 23px;
+}
+
+.calendar-grid .date .number {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+
+.calendar-grid .date .empty {
+    height: 37.5px;
+}
+
+.calendar-grid .other-month {
+    color: #aaa;
+}
+
+.calendar-grid .sunday .number {
+    color: red;
+}
+
+.calendar-grid .saturday .number {
+    color: rgb(60, 0, 255);
+}
+
+.calendar-grid .date.today .number {
+    border: 1px solid #368dff;
+    width: max-content;
+    height: max-content;
+    background-color: #368dff;
+    border-radius: 25px;
+    padding: 4px;
+    color: white;
+}
+
+.redColor{
+    color: red;
+}
+
+.blueColor{
+    color: blue;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 일정 바 */
+.bar{
+    width: 345.5px;
+    background-color: #368dff;
+    position: fixed;
+    left: 283.5px;
+    top: 183px;
+    z-index: 999;
+    height: 13px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: white;
+    border-radius: 10px;
+}
+
+/* ------------------------------------------------------------------------- */
+.new-calendar-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    max-width: 350px;
+    width: 90%;
+    height: 560px;
+    z-index: 1000;
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.form-header .cancel-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-header .cancel-button:hover {
+    color: red;
+}
+
+.form-body {
+    margin-bottom: 15px;
+}
+
+.new-calendar-form .form-group {
+    margin-bottom: 10px;
+}
+
+.new-calendar-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.new-calendar-form input[type="text"],
+.new-calendar-form input[type="date"],
+.new-calendar-form textarea,
+.new-calendar-form select {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.new-calendar-form input[type="text"]:focus,
+.new-calendar-form input[type="date"]:focus,
+.new-calendar-form textarea:focus,
+.new-calendar-form select:focus {
+    border-color: #368dff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(54, 141, 255, 0.5);
+}
+
+.new-calendar-form textarea {
+    resize: vertical;
+    min-height: 80px;
+    resize: none; /* 크기 조정 핸들 제거 */
+    height: 80px; /* 고정 높이 설정 */
+}
+.form-footer {
+    text-align: right;
+    margin-top: 23px; /* 추가된 부분 */
+}
+.form-footer button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    background-color: #368dff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-footer button:hover {
+    background-color: #2672e8;
+}
+/* --------------------------------------------------------------------- */
