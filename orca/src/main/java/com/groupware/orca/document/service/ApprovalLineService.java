@@ -17,11 +17,12 @@ public class ApprovalLineService {
 
     private final ApprovalLineDao dao;
 
-//    public List<ApprovalLineVo> list() {
-//
-//        return dao.list();
-//    }
+    //기본 결재선 등록
+    public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+        dao.addApprLineTemplate(approvalLineVo);
+    }
 
+    // 결재선 전체목록 (양식/결재라인)
     public List<TemplateVo> getApprovalLines() {
         List<TemplateVo> templates = dao.getTemplateList();
         List<ApprovalLineVo> approvalLines = dao.getApprovalLineList();
@@ -42,6 +43,10 @@ public class ApprovalLineService {
         }
         System.out.println("templateMap = " + templateMap);
         return new ArrayList<>(templateMap.values());
+    }
 
+    // 결재선 삭제
+    public void deleteApprLine(int apprLineNo) {
+        dao.deleteApprLine(apprLineNo);
     }
 }

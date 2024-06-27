@@ -13,7 +13,19 @@ main {
 main.full {
   margin-left: 20px;
 }
+/* 결재선 등록 버튼 */
+.approval-btn {
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
+.approval-btn:hover {
+  background-color: #368dff;
+}
 /* 결재선 없음 메시지 */
 .no-approval-lines {
   border: 1px solid #ddd;

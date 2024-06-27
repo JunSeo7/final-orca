@@ -54,7 +54,7 @@ public class TemplateController {
 
     @PostMapping("delete")
     @ResponseBody
-    public String deleteTemplate(@RequestParam("templateNo")String templateNo) {
+    public String deleteTemplate(@RequestParam("templateNo")int templateNo) {
         System.out.println("templateNo = " + templateNo);
         int result = service.deleteTemplate(templateNo);
         System.out.println("result = " + result);

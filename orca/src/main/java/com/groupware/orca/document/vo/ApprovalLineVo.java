@@ -10,7 +10,7 @@ public class ApprovalLineVo {
     private int docNo;                   // 문서 번호
     private int seq;                     // 순서 번호
     private int approverNo;              // 결재자 번호
-    private int approver;                // 결재자 이름
+    private String approverName;         // 결재자 이름
     private int approvalStage;           // 결재 단계
     private int deptCode;                // 부서 코드
     private String deptName;             // 부서 이름

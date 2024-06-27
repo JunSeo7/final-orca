@@ -14,16 +14,20 @@ public class ApprovalLineDao {
 
     private final ApprovalLineMapper mapper;
 
-//    public List<ApprovalLineVo> list() {
-//        return mapper.list();
-//    }
+    //기본 결재선 등록
+    public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+        mapper.addApprLineTemplate(approvalLineVo);
+    }
 
+
+    // 결재선 전체목록 (양식)
     public List<TemplateVo> getTemplateList() {
         List<TemplateVo> templates = mapper.getTemplateList();
         System.out.println("templates = " + templates);
         return templates;
     }
 
+    // 결재선 전체목록 (양식-결재라인)
     public List<ApprovalLineVo> getApprovalLineList() {
         // ApproverLine 정보 가져오기
         List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList();
@@ -32,4 +36,9 @@ public class ApprovalLineDao {
             System.out.println("approverLineVoList nulllllllllll= " + approvalLines);
     } return approvalLines;
   }
+
+    // 결재선 삭제
+    public void deleteApprLine(int apprLineNo) {
+        mapper.deleteApprLine(apprLineNo);
+    }
 }

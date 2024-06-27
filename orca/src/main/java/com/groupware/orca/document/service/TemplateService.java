@@ -41,8 +41,8 @@ public class TemplateService {
         return dao.editTemplate(vo);
     }
 
-    public int deleteTemplate(String no) {
-        return dao.deleteTemplate(no);
+    public int deleteTemplate(int templateNo) {
+        return dao.deleteTemplate(templateNo);
     }
 
 

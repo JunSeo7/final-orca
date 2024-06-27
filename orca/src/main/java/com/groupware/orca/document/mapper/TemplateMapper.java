@@ -34,7 +34,7 @@ public interface TemplateMapper {
     int editTemplate(TemplateVo vo);
 
     @Delete("UPDATE DOC_TEMPLATE SET DEL_YN='Y' WHERE TEMPLATE_NO = #{templateNo}")
-    int deleteTemplate(String vo);
+    int deleteTemplate(int templateNo);
 
 
 }
