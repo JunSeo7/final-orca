@@ -108,7 +108,7 @@ public class BoardController {
 
     @PostMapping("/board/uploadImage")
     @ResponseBody
-    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
+    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("boardNo") int boardNo) {
         Map<String, Object> response = new HashMap<>();
         try {
             String uploadDir = "C:/dev/setup/uploads/";
@@ -121,6 +121,7 @@ public class BoardController {
 
             // DB에 파일 정보 저장
             BoardFileVo fileVo = new BoardFileVo();
+            fileVo.setBoardNo(boardNo); // boardNo 설정
             fileVo.setFileOriginName(fileName);
             fileVo.setFileSaveName(fileName);
             fileVo.setFileDelYn("N");
@@ -133,6 +134,7 @@ public class BoardController {
         }
         return response;
     }
+
 
 
     //조회수 증가

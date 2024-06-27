@@ -128,7 +128,7 @@
                         marker.setMap(map);
 
                     } else {
-                        console.error("잘못된 지도 좌표 값입니다.");
+                           $('#map').hide();
                     }
                 },
                 error: function() {

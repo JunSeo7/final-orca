@@ -14,7 +14,7 @@ public interface BoardFileMapper {
 
     @Insert("INSERT INTO BOARD_FILE(FILE_NO, FILE_ORIGIN_NAME, FILE_SAVE_NAME, FILE_DEL_YN, BOARD_NO) " +
             "VALUES (SEQ_BOARD_FILE.NEXTVAL, #{fileOriginName}, #{fileSaveName}, #{fileDelYn}, #{boardNo})")
-    @Options(useGeneratedKeys = true, keyProperty = "fileNo")
+
     int insertFile(BoardFileVo file);
 
     @Delete("DELETE FROM BOARD_FILE WHERE FILE_NO = #{fileNo}")

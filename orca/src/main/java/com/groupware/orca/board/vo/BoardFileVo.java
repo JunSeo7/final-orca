@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class BoardFileVo {
-    private String  fileNo;
+    private int  fileNo;
     private String fileOriginName;
     private String fileSaveName;
     private String fileDelYn;
-    private String boardNo;
+    private int boardNo;
 }
