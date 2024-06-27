@@ -1,4 +1,4 @@
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,12 +26,12 @@
 
     <nav class="top-nav">
         <ul>
-            <li><a href="#">캘린더/할일</a></li>
-            <li><a href="#">게시판</a></li>
-            <li><a href="#">전자결재</a></li>
-            <li><a href="#">급여관리</a></li>
-            <li><a href="#">근태관리</a></li>
-            <li><a href="#">메뉴</a></li>
+            <li><a href="">캘린더/할일</a></li>
+            <li><a href="">게시판</a></li>
+            <li><a href="">전자결재</a></li>
+            <li><a href="">급여관리</a></li>
+            <li><a href="">근태관리</a></li>
+            <li><a href="">메뉴</a></li>
         </ul>
     </nav>
      <button id="toggleSidebar" class="sidebar-toggle" onclick="toggleSidebar()">메뉴</button>

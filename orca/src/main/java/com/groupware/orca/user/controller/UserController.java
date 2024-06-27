@@ -32,6 +32,6 @@ public class UserController {
             return "user/login";
         }
         httpSession.setAttribute("loginUserVo", loginUserVo);
-        return "home";
+        return "redirect:/orca/home";
     }
 }

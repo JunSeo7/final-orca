@@ -33,7 +33,7 @@
 
             <ul class="nav-list">
                 <li class="nav-item"><a href="#">채팅</a></li>
-                <li class="nav-item"><a href="#">캘린더/할일</a></li>
+                <li class="nav-item"><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
                 <li class="nav-item"><a href="#">문서관리</a></li>
                 <li class="nav-item"><a href="#">근태</a></li>
                 <li class="nav-item"><a href="#">투표</a></li>
