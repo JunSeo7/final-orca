@@ -37,7 +37,7 @@
       <button onclick="logout()">로그아웃</button>
     </div>
     <nav>
-      <button class="draft_write">결재 작성</button>
+      <a href="/template/add"><button class="draft_write">결재 작성</button></a>
       <hr>
       <div id="navTree">
         <ul>

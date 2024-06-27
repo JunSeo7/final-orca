@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("template")
+@RequestMapping("orca/template")
 @RequiredArgsConstructor
 public class TemplateController {
 
     private final TemplateService service;
 
     @GetMapping("list")
-    public List<TemplateVo> getTemplateList(Model model){
+    public String getTemplateList(Model model){
         List<TemplateVo> templateList = service.getTemplateList();
         model.addAttribute("templateList", templateList);
         System.out.println("templateList = " + templateList);
-        return templateList;
+        return "template/list";
     }
 
     @GetMapping("add")
@@ -30,12 +30,11 @@ public class TemplateController {
     }
 
     @PostMapping("add")
-    @ResponseBody
-    public String  addTemplate(TemplateVo vo) {
+    public String addTemplate(TemplateVo vo) {
         System.out.println("vo = " + vo);
         int result = service.addTemplate(vo);
         System.out.println(result);
-        return "redirect:/template/list";
+        return "redirect:/orca/template/list";
     }
 
     @GetMapping("detail")
@@ -48,8 +47,9 @@ public class TemplateController {
 
     @PostMapping("edit")
     @ResponseBody
-    public void editTemplate(@RequestBody TemplateVo vo){
+    public String editTemplate(@RequestBody TemplateVo vo){
         service.editTemplate(vo);
+        return "redirect:/orca/template/list";
     }
 
     @PostMapping("delete")
@@ -58,6 +58,6 @@ public class TemplateController {
         System.out.println("templateNo = " + templateNo);
         int result = service.deleteTemplate(templateNo);
         System.out.println("result = " + result);
-        return "redirect:/template/list";
+        return "redirect:/orca/template/list";
     }
 }

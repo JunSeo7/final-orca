@@ -37,27 +37,15 @@
       <button onclick="logout()">로그아웃</button>
     </div>
     <nav>
-      <button class="draft_write">결재 작성</button>
+      <a href="/orca/template/add"><button class="draft_write">결재 양식 추가</button></a>
       <hr>
       <div id="navTree">
         <ul>
-          <li data-jstree='{"icon":"bi bi-folder", "opened": true}'>결재현황
+          <li data-jstree='{"icon":"bi bi-folder", "opened": true}'>시스템 관리
             <ul>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">임시 보관함</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">기안</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">결재</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">진행</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">종결</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">반려</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">삭제함</a></li>
-            </ul>
-          </li>
-          <li data-jstree='{"icon":"bi bi-gear"}'>사용자 설정
-            <ul>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인환경설정</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인 결재선</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인함 관리</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">공유함 관리</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">양식카테고리</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">결재양식</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">기본결재선</a></li>
             </ul>
           </li>
         </ul>

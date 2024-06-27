@@ -14,41 +14,6 @@ main.full {
   margin-left: 20px;
 }
 
-/* 검색창 */
-.search_box {
-  position: relative;
-  width: 350px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  padding: 5px;
-  margin-bottom: 20px;
-}
-
-.search_select {
-  border: none;
-  background: none;
-  font-size: 14px;
-  margin-right: 10px;
-  outline: none;
-}
-
-.search_text {
-  flex: 1;
-  border: none;
-  font-size: 14px;
-  outline: none;
-}
-
-.search_img {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-
 /* 결재선 없음 메시지 */
 .no-approval-lines {
   border: 1px solid #ddd;
@@ -181,6 +146,11 @@ main.full {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   }
+
+.jstree-icon{
+font-size: 1.2em;
+color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
+}
 
 .approval-line {
   display: flex;

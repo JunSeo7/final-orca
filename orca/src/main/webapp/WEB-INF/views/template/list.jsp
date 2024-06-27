@@ -17,8 +17,16 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <main>
 <h2>결재 양식 목록</h2>
-<a href="/template/add"><button type="button">작성</button></a>
- <c:forEach var="template" items="${templateList}">
+        <div class="search_box">
+            <select class="search_select">
+                <option>카테고리</option>
+                <option>제목</option>
+            </select>
+            <input class="search_text" type="text" placeholder="검색어 입력">
+            <img class="search_img" src="img/document/search.png" alt="검색 아이콘">
+        </div>
+
+         <c:forEach var="template" items="${templateList}">
           <div class="approval-lines-box template-div" data-template-no="${template.templateNo}">
               <div class="approval-lines">
                  <span class="approval-title">카테고리 : ${template.categoryName}</span>

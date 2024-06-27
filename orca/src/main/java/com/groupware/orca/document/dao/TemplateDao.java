@@ -1,7 +1,7 @@
 package com.groupware.orca.document.dao;
 
 import com.groupware.orca.document.mapper.TemplateMapper;
-import com.groupware.orca.document.vo.ApproverLineVo;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -28,14 +28,14 @@ public class TemplateDao {
         System.out.println("templateVo = " + templateVo);
         return templateVo;
     }
-    public List<ApproverLineVo> selectApproverLineVo(int apprLineNo) {
+    public List<ApprovalLineVo> selectApproverLineVo(int apprLineNo) {
         // ApproverLine 정보 가져오기
-        List<ApproverLineVo> approverLineVoList = mapper.selectApproverLineVo(apprLineNo);
-        System.out.println("approverLineVoList = " + approverLineVoList);
-        if(approverLineVoList==null){
-            System.out.println("approverLineVoList nulllllllllll= " + approverLineVoList);
+        List<ApprovalLineVo> approvalLineVoList = mapper.selectApproverLineVo(apprLineNo);
+        System.out.println("approverLineVoList = " + approvalLineVoList);
+        if(approvalLineVoList ==null){
+            System.out.println("approverLineVoList nulllllllllll= " + approvalLineVoList);
         }
-        return approverLineVoList;
+        return approvalLineVoList;
     }
     public int editTemplate(TemplateVo templateVo) {
         return mapper.editTemplate(templateVo);
