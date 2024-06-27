@@ -46,6 +46,8 @@
 
         $(document).ready(function() {
             var editor = new FroalaEditor('#edit', {
+             height: 400, /* 원하는 높이 값으로 설정 */
+                    width: '100%', /* 원하는 너비 값으로 설정 */
                 imageUploadURL: '/board/uploadImage',
                 imageUploadParam: 'file',
                 imageUploadMethod: 'POST',

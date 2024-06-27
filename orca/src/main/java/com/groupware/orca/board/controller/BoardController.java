@@ -6,6 +6,8 @@ import com.groupware.orca.board.service.CommentService;
 import com.groupware.orca.board.vo.BoardFileVo;
 import com.groupware.orca.board.vo.BoardVo;
 import com.groupware.orca.board.vo.CommentVo;
+import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,23 +35,23 @@ public class BoardController {
     // 게시판 화면
     @GetMapping("/board")
     public String getBoard() {
-        return "board";
+        return "board/board";
     }
 
     // 게시판 작성 화면
     @GetMapping("/board/insert")
     public String insertDisplay() {
-        return "insert";
+        return "board/insert";
     }
 
     // 게시물 리스트 보기
     @GetMapping("/board/list/{categoryNo}")
-    public @ResponseBody List<BoardVo> getBoardList(@PathVariable("categoryNo") String categoryNo) {
+    public @ResponseBody List<BoardVo> getBoardList(@PathVariable("categoryNo") int categoryNo) {
         return boardService.getBoardList(categoryNo);
     }
 
     @GetMapping("/board/{boardNo}")
-    public @ResponseBody BoardVo getBoardDetail(@PathVariable("boardNo") String boardNo) {
+    public @ResponseBody BoardVo getBoardDetail(@PathVariable("boardNo") int boardNo) {
         BoardVo boardDetail = boardService.getBoardDetail(boardNo);
         System.out.println("Map Latitude: " + boardDetail.getLatitude());
         System.out.println("Map Longitude: " + boardDetail.getLongitude());
@@ -59,10 +61,10 @@ public class BoardController {
 
     // 게시물 수정 페이지 이동
     @GetMapping("/board/updatePage")
-    public String updatePage(@RequestParam("boardNo") String boardNo, Model model) {
+    public String updatePage(@RequestParam("boardNo") int boardNo, Model model) {
         BoardVo boardVo = boardService.getBoardDetail(boardNo);
         model.addAttribute("board", boardVo);
-        return "updatePage";
+        return "board/updatePage";
     }
 
     // 게시물 수정
@@ -74,24 +76,36 @@ public class BoardController {
 
     // 게시물 삭제
     @PostMapping("/board/delete/{boardNo}")
-    public @ResponseBody String delete(@PathVariable("boardNo") String boardNo) {
+    public @ResponseBody String delete(@PathVariable("boardNo") int boardNo) {
         boardService.boardDelete(boardNo);
         return "게시물이 삭제되었습니다.";
     }
 
-    @GetMapping("/board/search")
-    public @ResponseBody List<BoardVo> searchBoardByTitle(@RequestParam("keyword") String keyword) {
-        return boardService.searchBoard(keyword);
+    @GetMapping("/search")
+    public ResponseEntity<List<BoardVo>> searchBoardByTitle(@RequestParam("title") String title, @RequestParam("categoryNo") String categoryNoStr) {
+        try {
+            int categoryNo = Integer.parseInt(categoryNoStr); // 문자열을 정수로 변환
+            List<BoardVo> boardList = boardService.searchBoard(title, categoryNo);
+            if (boardList.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(boardList);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // 잘못된 숫자 형식 처리
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     // 게시판 작성 내용
     @PostMapping("/board/insert")
-    public String insert(@ModelAttribute BoardVo vo, Model model) {
+    public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
+        String insertUserNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setInsertUserNo(Integer.parseInt(insertUserNo));
         boardService.boardInsert(vo);
         return "redirect:/board";
     }
 
-    // 이미지 업로드
     @PostMapping("/board/uploadImage")
     @ResponseBody
     public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
@@ -110,7 +124,6 @@ public class BoardController {
             fileVo.setFileOriginName(fileName);
             fileVo.setFileSaveName(fileName);
             fileVo.setFileDelYn("N");
-            // fileVo.setBoardNo(boardNo);
             boardFileService.insertFile(fileVo);
 
             response.put("link", "/uploads/" + fileName);
@@ -121,14 +134,15 @@ public class BoardController {
         return response;
     }
 
+
     //조회수 증가
     @PostMapping("/board/hit/{boardNo}")
-    public ResponseEntity<String> hit(@PathVariable("boardNo") String boardNo) {
+    public ResponseEntity<String> hit(@PathVariable("boardNo") int boardNo) {
         try {
             boardService.hit(boardNo);
-            return ResponseEntity.ok("View count incremented successfully");
+            return ResponseEntity.ok("조회수 증가 성공");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error incrementing view count");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("조회수 증가 실패");
         }
     }
 
@@ -140,7 +154,7 @@ public class BoardController {
 
     @PostMapping("/board/comment/edit")
     public @ResponseBody CommentVo editComment(@ModelAttribute CommentVo commentVo) {
-        commentService.updateComment(commentVo);  // 이 부분을 수정
+        commentService.updateComment(commentVo);
         return commentVo;
     }
 
