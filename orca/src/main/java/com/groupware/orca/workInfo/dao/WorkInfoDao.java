@@ -21,4 +21,12 @@ public class WorkInfoDao {
     public WorkInfoVo startWork(WorkInfoVo vo) {
         return mapper.startWork(vo);
     }
+
+    public WorkInfoVo endWork(WorkInfoVo vo) {
+        return mapper.endWork(vo);
+    }
+
+    public WorkInfoVo overTimeWork(WorkInfoVo vo) {
+        return mapper.overTimeWork(vo);
+    }
 }
