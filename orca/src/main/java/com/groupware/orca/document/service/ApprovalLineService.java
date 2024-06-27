@@ -19,6 +19,7 @@ public class ApprovalLineService {
 
     //기본 결재선 등록
     public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+
         dao.addApprLineTemplate(approvalLineVo);
     }
 

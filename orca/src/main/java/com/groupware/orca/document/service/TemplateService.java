@@ -33,7 +33,6 @@ public class TemplateService {
             List<ApprovalLineVo> approvalLineVoList = dao.selectApproverLineVo(templateVo.getApprLineNo());
             templateVo.setApprLineList(approvalLineVoList);
         }
-
         return templateVo;
     }
 

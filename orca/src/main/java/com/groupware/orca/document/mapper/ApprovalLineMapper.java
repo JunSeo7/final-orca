@@ -2,10 +2,7 @@ package com.groupware.orca.document.mapper;
 
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,10 +11,11 @@ public interface ApprovalLineMapper {
 
     // 기본 결재선 등록
     @Insert("INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, WRITER_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, #{writerNo}, #{apprLineName}, SYSDATE)")
+    @Options(useGeneratedKeys = true, keyProperty = "apprLineNo", keyColumn = "APPR_LINE_NO")
     void addApprLineTemplate(ApprovalLineVo approvalLineVo);
     // 결재자 등록
     @Insert("INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, #{approverNo}, #{apprLineNo}, #{seq}, #{approverClassificationNo})")
-    void addApproverInfo(ApprovalLineVo approvalLineVo);
+    void addApproverInfo(ApprovalLineVo.apprLineNo approvalLineVo);
 
     //나만의 결재선 등록- userNo입력
 //    @Insert("INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, WRITER_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, #{writerNo}, #{apprLineName}, SYSDATE)")

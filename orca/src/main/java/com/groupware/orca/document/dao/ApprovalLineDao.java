@@ -5,6 +5,7 @@ import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,9 +15,19 @@ public class ApprovalLineDao {
 
     private final ApprovalLineMapper mapper;
 
-    //기본 결재선 등록
-    public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+    @Transactional
+    public void addApprLine(ApprovalLineVo approvalLineVo) {
+        // 결재선 등록
         mapper.addApprLineTemplate(approvalLineVo);
+
+        // 생성된 결재선 번호 가져오기
+        int apprLineNo = approvalLineVo.getApprLineNo();
+
+        // 결재자 등록
+        for (ApprovalLineVo.Approver approver : approvalLineVo.getApprLineList()) {
+            approver.setApprLineNo(apprLineNo); // 결재선 번호 설정
+            mapper.addApproverInfo(approver); // 결재자 정보 등록
+        }
     }
 
 
