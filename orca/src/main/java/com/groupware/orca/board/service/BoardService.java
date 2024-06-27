@@ -13,7 +13,7 @@ public class BoardService {
 
     private final BoardDao dao;
 
-    public BoardVo getBoardDetail(String boardNo) {
+    public BoardVo getBoardDetail(int boardNo) {
         return dao.getBoardDetail(boardNo);
     }
 
@@ -25,19 +25,19 @@ public class BoardService {
         return dao.boardUpdate(vo);
     }
 
-    public int boardDelete(String boardNo) {
+    public int boardDelete(int boardNo) {
         return dao.boardDelete(boardNo);
     }
 
-    public List<BoardVo> searchBoard(String keyword) {
-        return dao.searchBoard(keyword);
+    public List<BoardVo> searchBoard(String title, int categoryNo) {
+        return dao.searchBoard(title, categoryNo);
     }
 
-    public void hit(String boardNo) {
+    public void hit(int boardNo) {
         dao.hit(boardNo);
     }
 
-    public List<BoardVo> getBoardList(String categoryNo) {
+    public List<BoardVo> getBoardList(int categoryNo) {
         return dao.getBoardList(categoryNo);
     }
 }
