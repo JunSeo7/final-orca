@@ -67,12 +67,9 @@
                 <tr>
                     <td class="t-title">결재선 프로세스</td>
                     <td>
-                        <select>
-                            <option>휴가어쩌고</option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                        </select>
+                     <select id="approvalProcess">
+                        <!-- 결재 양식 목록  -->
+                    </select>
                     </td>
                 </tr>
                 <tr>
@@ -149,7 +146,7 @@
     </div>
     <div class="modal-body-bottom">
         <div class="approval-slots" id="modalApprovalSlotsContainer">
-            <!-- 동적으로 생성될 합의/결재 칸 -->
+            <!-- 합의/결재 칸 -->
         </div>
     </div>
     <div class="modal-footer">

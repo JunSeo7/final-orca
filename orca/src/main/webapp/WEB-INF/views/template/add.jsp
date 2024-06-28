@@ -22,7 +22,7 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-<form action="/template/add" method="POST" enctype="multipart/form-data">
+<form action="/orca/template/add" method="POST" enctype="multipart/form-data">
       <main id="content">
              <div class="container">
                <h1>결재양식 등록</h1>

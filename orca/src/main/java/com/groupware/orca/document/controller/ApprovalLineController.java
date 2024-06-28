@@ -3,6 +3,7 @@ package com.groupware.orca.document.controller;
 import com.groupware.orca.document.service.ApprovalLineService;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,23 +24,34 @@ public class ApprovalLineController {
         model.addAttribute("approvalLine", new ApprovalLineVo());
         return "apprline/add";
     }
+//    // 결재선 등록 조직도 가져오기
+//    @GetMapping("/add/organization/list")
+//    public List<UserVo> getUsers() {
+//        return service.getUsers();
+//    }
+//    @GetMapping("template/categories")
+//    public List<TemplateVo> getTemplateTitle() {
+//        return service.getTemplateTitle();
+//    }
+
     //기본 결재선 등록
     @PostMapping("add")
-    public String addApprLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
+    public String addApprLineTemplate(@ModelAttribute ApprovalLineVo approvalLineVo) {
         service.addApprLineTemplate(approvalLineVo);
         return "redirect:/orca/apprline/list";
     }
 
-    // 결재선 전체목록 (양식/결재라인)
-    @GetMapping("list")
-    public String getApprLines(Model model) {
-        List<TemplateVo> approvalLines = service.getApprovalLines();
-        System.out.println("approvalLines = " + approvalLines);
-        model.addAttribute("approvalLines", approvalLines);
-        return "apprline/list";
-    }
+//    // 결재선 전체목록 (양식/결재라인)
+//    @GetMapping("list")
+//    public String getApprLines(Model model) {
+//        List<TemplateVo> approvalLines = service.getApprovalLines();
+//        System.out.println("approvalLines = " + approvalLines);
+//        model.addAttribute("approvalLines", approvalLines);
+//        return "apprline/list";
+//    }
 
-    //edit
+    // 결재선 수정
+
 
     // 결재선 삭제
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {

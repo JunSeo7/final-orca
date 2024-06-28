@@ -2,6 +2,7 @@ package com.groupware.orca.document.dao;
 
 import com.groupware.orca.document.mapper.ApprovalLineMapper;
 import com.groupware.orca.document.vo.ApprovalLineVo;
+import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,20 +17,21 @@ public class ApprovalLineDao {
     private final ApprovalLineMapper mapper;
 
     @Transactional
-    public void addApprLine(ApprovalLineVo approvalLineVo) {
+    public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
         // 결재선 등록
         mapper.addApprLineTemplate(approvalLineVo);
 
         // 생성된 결재선 번호 가져오기
         int apprLineNo = approvalLineVo.getApprLineNo();
+        System.out.println("apprLineNo = " + apprLineNo);
 
         // 결재자 등록
-        for (ApprovalLineVo.Approver approver : approvalLineVo.getApprLineList()) {
-            approver.setApprLineNo(apprLineNo); // 결재선 번호 설정
-            mapper.addApproverInfo(approver); // 결재자 정보 등록
+        List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
+        for (ApproverVo approverVo : approverList) {
+            approverVo.setApprLineNo(apprLineNo); // 결재선 번호 설정
+            mapper.addApproverInfo(approverVo); // 결재자 정보 등록
         }
     }
-
 
     // 결재선 전체목록 (양식)
     public List<TemplateVo> getTemplateList() {
