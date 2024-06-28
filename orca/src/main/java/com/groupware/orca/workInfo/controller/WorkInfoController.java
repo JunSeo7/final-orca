@@ -26,20 +26,20 @@ public class WorkInfoController {
     }
 
     // 출근
-    @PostMapping
+    @PostMapping("goWork")
     public WorkInfoVo startWork(@RequestBody WorkInfoVo vo) {
         WorkInfoVo wiVo = service.startWork(vo);
         return wiVo;
     }
 
     // 퇴근
-    @PostMapping
+    @PostMapping("leaveWork")
     public WorkInfoVo endWork(@RequestBody WorkInfoVo vo) {
         return service.endWork(vo);
     }
 
     // 연장 근무
-    @PostMapping
+    @PostMapping("overtime")
     public WorkInfoVo overTimeWork(@RequestBody WorkInfoVo vo){
         return service.overTimeWork(vo);
     }
