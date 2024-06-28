@@ -222,7 +222,7 @@ CREATE TABLE CALENDAR (
    , REPEAT_YN               CHAR(1)              DEFAULT 'N' NOT NULL
    , ENROLL_DATE             TIMESTAMP          DEFAULT SYSDATE NOT NULL
    , DEL_DATE                TIMESTAMP
-   , RANGE                   CHAR(10)              NOT NULL
+   , RANGE                   VARCHAR2(10)              NOT NULL
 );
 -- 일정 권한 테이블 생성
 CREATE TABLE CALENDAR_AUTHORITY (

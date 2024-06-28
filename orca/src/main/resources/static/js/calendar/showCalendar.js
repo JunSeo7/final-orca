@@ -10,6 +10,7 @@ function loadPage(page) {
             console.error('Error loading page:', error);
         });
 }
+
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
@@ -34,8 +35,6 @@ function logout() {
 function toggleCheck(element) {
     element.parentNode.classList.toggle('checked');
 }
-
-
 
 // 캘린더
 
@@ -123,7 +122,6 @@ function renderCalendar(calendarEl, year, month) {
 
     calendarEl.appendChild(grid);
 }
-
 // 사이드 캘린더
 function renderSideCalendar(calendarEl, year, month) {
     calendarEl.innerHTML = '';
@@ -199,7 +197,6 @@ function renderSideCalendar(calendarEl, year, month) {
         dateElement.innerHTML = `<div class="number">${i}</div>`;
         grid.appendChild(dateElement);
     }
-
     calendarEl.appendChild(grid);
 }
 
@@ -226,7 +223,6 @@ function changeMonth(offset) {
         }
     }
 }
-
 renderCalendar(calendarElement, year, month);
 renderSideCalendar(sidebarCalendarElement, year, month);
 
@@ -326,6 +322,15 @@ let initialClickY = 0;
 let initialFormX = 0;
 let initialFormY = 0;
 
+function submitNewEvent() {
+    KeyCnt++;
+    if (KeyCnt % 2 == 0) {
+        hideNewEventForm();
+    } else if (KeyCnt % 2 != 0) {
+        showNewEventForm();
+    }
+}
+//일정 등록 화면 드래그 앤 드랍
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('newEventForm');
 
@@ -361,20 +366,12 @@ function onStopDragForm() {
     document.removeEventListener('mouseup', onStopDragForm);
 }
 
-function submitNewEvent() {
-    KeyCnt++;
-    if (KeyCnt % 2 == 0) {
-        hideNewEventForm();
-    } else if (KeyCnt % 2 != 0) {
-        showNewEventForm();
-    }
-}
 
 
+//연도 이동
 const yearSelect = document.getElementById('yearSelect');
 const monthSelect = document.getElementById('monthSelect');
 const currentDate = new Date();
-
 
 const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 for (let i = 0; i < 12; i++) {
@@ -401,7 +398,44 @@ function handleMonthChange() {
     renderCalendar(calendarElement, year, month);
     renderSideCalendar(sidebarCalendarElement, year, month);
 }
+//캘린더 바 표시
+let CalendarBar = document.querySelectorAll('.showCalendarBar');
+let showCalendarBarCnt = [0, 0, 0];
 
+
+for (let i = 0; i < CalendarBar.length; i++) {
+    let range = "";
+
+    if (i == 0) {
+        range = "company";
+    } else if (i == 1) {
+        range = "individual";
+    } else if (i == 2) {
+        range = "team";
+    }
+    CalendarBar[i].addEventListener('click', function () {
+        if (showCalendarBarCnt[i] % 2 == 0) {
+            console.log(range);
+            $.ajax({
+                type: 'get',
+                url: '/orca/calendar/showCalendarBar',
+                dataType: 'json',
+                data: { range: range },
+                success: function (response) {
+                    console.log('CalendarBar 클릭 성공:', response);
+                    showCalendarBarCnt[i]++;
+                },
+                error: function (error) {
+                    console.error('CalendarBar 클릭 실패:', error);
+                }
+            });
+        }else if(showCalendarBarCnt[i] % 2 != 0){
+            console.log("데이터 비워주기");
+            showCalendarBarCnt[i]++;
+        }
+
+    });
+}
 
 
 

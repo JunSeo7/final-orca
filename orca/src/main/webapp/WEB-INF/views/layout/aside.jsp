@@ -34,8 +34,8 @@
             <ul class="nav-list">
                 <li class="nav-item"><a href="#">채팅</a></li>
                 <li class="nav-item"><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
-                <li class="nav-item"><a href="#">문서관리</a></li>
-                <li class="nav-item"><a href="#">근태</a></li>
+                <li class="nav-item"><a href="/orca/document/list">전자결재</a></li>
+                <li class="nav-item"><a href="/orca/work/workInfo">근태</a></li>
                 <li class="nav-item"><a href="#">투표</a></li>
                 <li class="nav-item"><a href="#">드라이브</a></li>
                 <li class="nav-item"><a href="#">메일</a></li>

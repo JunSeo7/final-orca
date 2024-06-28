@@ -5,11 +5,12 @@ import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +21,18 @@ public class CalendarController {
     @GetMapping("showCalendar")
     public String showCalendar(){
         return "calendar/showCalendar";
+    }
+
+    @GetMapping("showCalendarBar")
+    @ResponseBody
+    public List<CalendarVo> showCalendarBar(@RequestParam("range") String range){
+        System.out.println("range : " + range);
+        List<CalendarVo> calendarBarlist = service.showCalendarBar(range);
+        for(CalendarVo vo : calendarBarlist){
+            System.out.println("vo = " + vo);
+        }
+        System.out.println("컨트롤러 도착함");
+        return calendarBarlist;
     }
 
     @PostMapping("writeCalendar")
