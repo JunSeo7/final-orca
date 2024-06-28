@@ -33,7 +33,6 @@ public class TemplateService {
             List<ApprovalLineVo> approvalLineVoList = dao.selectApproverLineVo(templateVo.getApprLineNo());
             templateVo.setApprLineList(approvalLineVoList);
         }
-
         return templateVo;
     }
 
@@ -41,8 +40,8 @@ public class TemplateService {
         return dao.editTemplate(vo);
     }
 
-    public int deleteTemplate(String no) {
-        return dao.deleteTemplate(no);
+    public int deleteTemplate(int templateNo) {
+        return dao.deleteTemplate(templateNo);
     }
 
 

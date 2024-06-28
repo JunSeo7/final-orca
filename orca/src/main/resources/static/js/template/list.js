@@ -6,7 +6,7 @@
      detailDiv.addEventListener("click", function(event) {
          const templateNo = detailDiv.getAttribute('data-template-no');
          console.log('Template No:', templateNo);
-         location.href = 'orca/template/detail?templateNo=' + templateNo;
+         location.href = '/orca/template/detail?templateNo=' + templateNo;
      });
  });
 
@@ -18,7 +18,7 @@
              console.log('Template No:', templateNo);
 
              $.ajax({
-                 url: 'orca/template/delete?templateNo=' + templateNo,
+                 url: '/orca/template/delete?templateNo=' + templateNo,
                  method: 'POST',
                  success: function(data) {
                      console.log('Template deleted:', data);

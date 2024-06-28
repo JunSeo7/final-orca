@@ -41,8 +41,8 @@ public class TemplateDao {
         return mapper.editTemplate(templateVo);
     }
 
-    public int deleteTemplate(String no) {
-        return mapper.deleteTemplate(no);
+    public int deleteTemplate(int templateNo) {
+        return mapper.deleteTemplate(templateNo);
     }
 
 

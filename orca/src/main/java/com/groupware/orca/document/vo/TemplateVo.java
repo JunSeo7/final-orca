@@ -18,6 +18,7 @@ public class TemplateVo {
     private String enrollDate;                 // 템플릿 생성 날짜
 
     // 결재자 관련 APPR_LINE_TEMPLATE
-    private int apprLineNo;
-    private List<ApprovalLineVo> apprLineList;  // 결재자 목록(결재선)
+    private int apprLineNo;                     // 결재선 번호
+    private String apprLineName;                // 결재선 이름
+    private List<ApprovalLineVo> apprLineList;  // 결재선 목록(결재선)
 }

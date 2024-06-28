@@ -4,8 +4,6 @@
 <head>
     <title>결재 양식 목록</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
-    <!--파비콘-->
-    <link rel="icon" href="/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/approvalLine/list.css">
     <script defer src="/js/approvalLine/list.js"></script>
 </head>
@@ -19,41 +17,44 @@
     <p>* 개인적으로 사용할 결재선을 등록하고 관리합니다.</p>
     <button class="approval-btn" onclick="showApprovalLinePopup()">+ 결재선 등록</button>
 
-    <c:choose>
-        <c:when test="${empty approvalLines}">
+<c:choose>
+     <c:when test="${empty approvalLines}">
             <div class="no-approval-lines">등록된 개인 결재선이 없습니다.</div>
-        </c:when>
-        <c:otherwise>
-            <div class="approval-lines-box">
-                <c:forEach var="template" items="${approvalLines}">
-                    <div class="approval-lines">
-                        <span class="approval-lines-name">${template.apprLineName}</span>
-                        <span class="approval-title">[${template.categoryName}] ${template.title}</span>
-                        <br>
-                        <c:forEach var="approver" items="${template.apprLineList}">
-                            <c:choose>
-                                <c:when test="${approver.approverClassification == 2}">
-                                    <span class="approver">합의:</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="approver">결재:</span>
-                                </c:otherwise>
-                            </c:choose>
-                            <span class="approver">${approver.approverName} ${approver.positionName}</span>
-                            <c:if test="${!approver.last}">
-                                <span>▶</span>
-                            </c:if>
-                        </c:forEach>
-                        <hr>
-                        <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/edit.png" alt="수정 아이콘"></a>
-                        <a class="approval-lines-btn"><img class="delete_img" src="/img/delete.png" alt="삭제 아이콘"></a>
-                    </div>
+    </c:when>
+    <c:otherwise>
+     <div class="approval-lines-box">
+        <c:forEach var="template" items="${approvalLines}">
+            <div class="approval-lines">
+                <!-- 결재선 이름 및 템플릿 제목 -->
+                <span class="approval-lines-name">${template.apprLineName}</span>
+                <span class="approval-title">[${template.categoryName}] ${template.title}</span>
+                <br>
+                <!-- 결재자 목록 -->
+                <c:forEach var="approver" items="${template.apprLineList}">
+                    <c:choose>
+                        <c:when test="${approver.approverClassificationNo == 2}">
+                            <span class="approver">합의:</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="approver">결재:</span>
+                        </c:otherwise>
+                    </c:choose>
+                    <span class="approver">${approver.approverName} ${approver.positionName}</span>
+                    <c:if test="${!status.last}">
+                        <span>▶</span>
+                    </c:if>
                 </c:forEach>
+                <hr>
+                <!-- 수정 및 삭제 버튼 -->
+                <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/edit.png" alt="수정 아이콘"></a>
+                <a class="approval-lines-btn"><img class="delete_img" src="/img/delete.png" alt="삭제 아이콘"></a>
+            </div>
+            </c:forEach>
             </div>
         </c:otherwise>
     </c:choose>
 </main>
-
+<!-- 결재선 선택 팝업 -->
 <div class="popup-overlay" id="popupOverlay" onclick="closeApprovalLinePopup()"></div>
 <div class="popup" id="approvalLinePopup">
     <div class="popup-header">
@@ -64,14 +65,11 @@
         <div class="popup-body-left">
             <table>
                 <tr>
-                    <td class="t-title">결재선 프로세스 </td>
+                    <td class="t-title">결재선 프로세스</td>
                     <td>
-                        <select>
-                            <option>휴가어쩌고</option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                        </select>
+                     <select id="approvalProcess">
+                        <!-- 결재 양식 목록  -->
+                    </select>
                     </td>
                 </tr>
                 <tr>
@@ -105,6 +103,7 @@
     </div>
 </div>
 
+<!-- 결재선 수정 모달 -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
 <div class="modal" id="approvalModal">
     <div class="modal-header">
@@ -147,7 +146,7 @@
     </div>
     <div class="modal-body-bottom">
         <div class="approval-slots" id="modalApprovalSlotsContainer">
-            <!-- 동적으로 생성될 합의/결재 칸 -->
+            <!-- 합의/결재 칸 -->
         </div>
     </div>
     <div class="modal-footer">

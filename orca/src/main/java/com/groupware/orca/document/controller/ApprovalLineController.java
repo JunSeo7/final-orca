@@ -1,12 +1,13 @@
 package com.groupware.orca.document.controller;
 
 import com.groupware.orca.document.service.ApprovalLineService;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,24 +18,44 @@ public class ApprovalLineController {
 
     private final ApprovalLineService service;
 
-    //add
-
-    //list
-    @GetMapping("list")
-//    public String list(){
-//        List<ApprovalLineVo> approvalLine = service.list();
-//        System.out.println("approvalLine = " + approvalLine);
-//        return "apprline/list";
+    //기본 결재선 등록 - 화면
+    @GetMapping("add")
+    public String addApprLineView(Model model) {
+        model.addAttribute("approvalLine", new ApprovalLineVo());
+        return "apprline/add";
+    }
+//    // 결재선 등록 조직도 가져오기
+//    @GetMapping("/add/organization/list")
+//    public List<UserVo> getUsers() {
+//        return service.getUsers();
 //    }
-//
-//  @GetMapping("approvalLines")
-    public String getApprovalLines(Model model) {
-        List<TemplateVo> approvalLines = service.getApprovalLines();
-        System.out.println("approvalLines = " + approvalLines);
-        return "apprline/list";
+//    @GetMapping("template/categories")
+//    public List<TemplateVo> getTemplateTitle() {
+//        return service.getTemplateTitle();
+//    }
+
+    //기본 결재선 등록
+    @PostMapping("add")
+    public String addApprLineTemplate(@ModelAttribute ApprovalLineVo approvalLineVo) {
+        service.addApprLineTemplate(approvalLineVo);
+        return "redirect:/orca/apprline/list";
     }
 
-    //edit
+//    // 결재선 전체목록 (양식/결재라인)
+//    @GetMapping("list")
+//    public String getApprLines(Model model) {
+//        List<TemplateVo> approvalLines = service.getApprovalLines();
+//        System.out.println("approvalLines = " + approvalLines);
+//        model.addAttribute("approvalLines", approvalLines);
+//        return "apprline/list";
+//    }
 
-    //delete
+    // 결재선 수정
+
+
+    // 결재선 삭제
+    public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
+        service.deleteApprLine(apprLineNo);
+        return "redirect:/orca/apprline/list";
+    }
 }
