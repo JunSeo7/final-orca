@@ -294,7 +294,9 @@ nav ul li a:hover {
     margin-left: 10px;
     color: #368dff;
 }
-
+.showCalendarBar{
+    font-weight: 900;
+}
 /* ------------------------------------------------------------------------- */
 
 /*캘린더*/
@@ -414,25 +416,6 @@ nav ul li a:hover {
 }
 
 /* ------------------------------------------------------------------------- */
-
-/* 일정 바 */
-.bar{
-    width: 345.5px;
-    background-color: #368dff;
-    position: fixed;
-    left: 283.5px;
-    top: 183px;
-    z-index: 999;
-    height: 13px;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    color: white;
-    border-radius: 10px;
-}
 
 /* ------------------------------------------------------------------------- */
 .new-calendar-form {
