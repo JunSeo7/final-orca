@@ -4,6 +4,7 @@ import com.groupware.orca.document.mapper.ApprovalLineMapper;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,20 @@ import java.util.List;
 public class ApprovalLineDao {
 
     private final ApprovalLineMapper mapper;
+
+    // 결재선 등록 조직도 가져오기
+    public List<UserVo> getUsers() {
+        return mapper.getUsers();
+    }
+    // 결재선 등록 템플릿 카테고리 가져오기
+    public List<TemplateVo> getCategory() {
+        return mapper.getCategory();
+    }
+
+    // 결재선 등록 카테고리번호 - 결재양식 제목 가져오기
+    public List<TemplateVo> getTemplateByCategoryNo(int categoryNo) {
+        return mapper.getTemplateByCategoryNo(categoryNo);
+    }
 
     // 기본 결재선 등록
     public void insertApprovalLine(ApprovalLineVo approvalLine) {

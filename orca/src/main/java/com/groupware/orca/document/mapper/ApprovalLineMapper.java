@@ -3,12 +3,23 @@ package com.groupware.orca.document.mapper;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface ApprovalLineMapper {
+
+    // 결재선 등록 조직도 가져오기
+    @Select("SELECT PI., PI.NAME , P.NAME_OF_POSITION , D.PARTNAME , DT.TEAM_NAME FROM PERSONNEL_INFORMATION PI JOIN POSITION P ON PI.POSITION_CODE = P.POSITION_CODE JOIN DEPARTMENT D ON PI.DEPT_CODE = D.DEPT_CODE JOIN DEPARTMENT_TEAM DT ON PI.TEAM_CODE = DT.TEAM_CODE WHERE LEAVING_DATE IS NULL ORDER BY P.POSITION_CODE, D.DEPT_CODE, DT.TEAM_CODE, PI.NAME")
+    List<UserVo> getUsers();
+    // 결재선 등록 템플릿 카테고리 가져오기
+    @Select("SELECT CATEGORY_NO ,NAME categoryName FROM  DOC_TEMPLATE_CATEGORY WHERE DEL_YN='N'")
+    List<TemplateVo> getCategory();
+    // 결재선 등록 카테고리번호 - 결재양식 제목 가져오기
+    @Select("SELECT CATEGORY_NO ,TEMPLATE_NO ,TITLE FROM DOC_TEMPLATE WHERE DEL_YN='N' AND CATEGORY_NO=#{categoryNo}")
+    List<TemplateVo> getTemplateByCategoryNo(int categoryNo);
 
     // 기본 결재선 등록
     @Insert("INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) " +

@@ -27,18 +27,37 @@ public class ApprovalLineController {
         model.addAttribute("approvalLine", new ApprovalLineVo());
         return "apprline/add";
     }
-//    // 결재선 등록 조직도 가져오기
-//    @GetMapping("/add/organization/list")
-//    public List<UserVo> getUsers() {
-//        return service.getUsers();
-//    }
-//    @GetMapping("template/categories")
-//    public List<TemplateVo> getTemplateTitle() {
-//        return service.getTemplateTitle();
-//    }
+    // 결재선 등록 조직도 가져오기
+    @GetMapping("organization/list")
+    @ResponseBody
+    public List<UserVo> getUsers() {
+        System.out.println("ApprovalLineController.getUsers");
+        List<UserVo> userVoList = service.getUsers();
+        System.out.println("userVoList = " + userVoList);
+        return userVoList;
+    }
+    // 결재선 등록 카테고리 가져오기
+    @GetMapping("categorie/list")
+    @ResponseBody
+    public List<TemplateVo> getCategory() {
+        System.out.println("ApprovalLineController.getCategory");
+        List<TemplateVo> templateVoList = service.getCategory();
+        System.out.println("templateVoList = " + templateVoList);
+        return templateVoList;
+    }
+   // 결재선 등록 결재양식 제목 가져오기
+   @GetMapping("template/list")
+   @ResponseBody
+   public List<TemplateVo> getTemplateByCategoryNo(@RequestParam int categoryNo) {
+       System.out.println("ApprovalLineController.getTemplateByCategoryNo");
+       System.out.println("categoryNo = " + categoryNo);
+       List<TemplateVo> templateVoList= service.getTemplateByCategoryNo(categoryNo);
+       System.out.println("templateVoList = " + templateVoList);
+       return service.getTemplateByCategoryNo(categoryNo);
+   }
 
     //기본 결재선 등록
-    @PostMapping("/add")
+    @PostMapping("add")
     public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
         System.out.println("ApprovalLineController.addApprovalLine");
         System.out.println("approvalLineVo = " + approvalLineVo);
