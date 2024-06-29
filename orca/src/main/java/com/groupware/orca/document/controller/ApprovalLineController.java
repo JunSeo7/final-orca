@@ -2,6 +2,7 @@ package com.groupware.orca.document.controller;
 
 import com.groupware.orca.document.service.ApprovalLineService;
 import com.groupware.orca.document.vo.ApprovalLineVo;
+import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,6 +23,7 @@ public class ApprovalLineController {
     //기본 결재선 등록 - 화면
     @GetMapping("add")
     public String addApprLineView(Model model) {
+        System.out.println("model = " + model);
         model.addAttribute("approvalLine", new ApprovalLineVo());
         return "apprline/add";
     }
@@ -35,12 +38,14 @@ public class ApprovalLineController {
 //    }
 
     //기본 결재선 등록
-    @PostMapping("add")
-    public String addApprLineTemplate(@ModelAttribute ApprovalLineVo approvalLineVo) {
-       int result = service.addApprLineTemplate(approvalLineVo);
-        System.out.println("result = " + result);
-        return "redirect:/orca/apprline/list";
+    @PostMapping("/add")
+    public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
+        System.out.println("ApprovalLineController.addApprovalLine");
+        System.out.println("approvalLineVo = " + approvalLineVo);
+        service.addApprovalLine(approvalLineVo);
+       return "redirect:/apprline/list";
     }
+
 
 //    // 결재선 전체목록 (양식/결재라인)
 //    @GetMapping("list")

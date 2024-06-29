@@ -16,25 +16,15 @@ public class ApprovalLineDao {
 
     private final ApprovalLineMapper mapper;
 
-    @Transactional
-    public int addApprLineTemplate(ApprovalLineVo approvalLineVo) {
-        System.out.println("approvalLineVo = " + approvalLineVo);
-        // 결재선 등록
-        mapper.addApprLineTemplate(approvalLineVo);
-
-        // 생성된 결재선 번호 가져오기
-        int apprLineNo = approvalLineVo.getApprLineNo();
-        System.out.println("apprLineNo = " + apprLineNo);
-
-
-        // 결재자 등록
-        List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
-        int result = 0;
-        for (ApproverVo approverVo : approverList) {
-            approverVo.setApprLineNo(apprLineNo); // 결재선 번호 설정
-            result = mapper.addApproverInfo(approverVo); // 결재자 정보 등록
-        }
-        return result;
+    // 기본 결재선 등록
+    public void insertApprovalLine(ApprovalLineVo approvalLine) {
+        System.out.println("ApprovalLineDao.insertApprovalLine");
+        mapper.insertApprovalLine(approvalLine);
+    }
+    // 결재선 - 결재자 여러명 등록
+    public void insertApprover(ApproverVo approver) {
+        System.out.println("ApprovalLineDao.insertApprover");
+        mapper.insertApprover(approver);
     }
 
     // 결재선 전체목록 (결재선)
@@ -46,7 +36,6 @@ public class ApprovalLineDao {
 
     // 결재선 전체목록 (결재자 여러명)
     public List<ApproverVo> getApproverList() {
-        // ApproverLine 정보 가져오기
         List<ApproverVo> approvers = mapper.getApproverList();
         System.out.println("approvalLines = " + approvers);
         if(approvers ==null){
@@ -58,4 +47,7 @@ public class ApprovalLineDao {
     public void deleteApprLine(int apprLineNo) {
         mapper.deleteApprLine(apprLineNo);
     }
+
+
+
 }
