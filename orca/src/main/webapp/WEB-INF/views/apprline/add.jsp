@@ -116,30 +116,98 @@
                     }
                 },
                 error: function(error) {
-                    console.error('Error fetching categories:', error);
+                    console.error('error:', error);
                     console.log(error); // 에러 객체를 로그에 출력
                 }
             });
         }
 
         // 결재양식add 화면 - 조직도 가져오기
-        function fetchOrganization() {
-            $('#jstree').jstree({
-                'core' : {
-                    'data' : {
-                        'url' : '/orca/apprline/organization/list',
-                        'dataType' : 'json'
-                    }
-                }
-            });
-        }
+           function fetchOrganization() {
+               $.ajax({
+                   url: '/orca/apprline/organization/list',
+                   method: 'GET',
+                   success: function(data) {
+                       console.log("data:", data);
+                       const treeData = buildTreeData(data);
+                       $('#jstree').jstree({
+                           'core' : {
+                               'data' : treeData
+                           }
+                       });
+                   },
+                   error: function(error) {
+                       console.error('error:', error);
+                       console.log(error);
+                   }
+               });
+           }
 
-        $(function() {
-            // 페이지 로드 후 카테고리와 조직도 로드
-            fetchCategories();
-            fetchOrganization();
-        });
-</script>
+       function fetchOrganization() {
+           $.ajax({
+               url: '/orca/apprline/organization/list',
+               method: 'GET',
+               success: function(data) {
+                   console.log("data:", data);
+                   const treeData = buildTreeData(data);
+                   $('#jstree').jstree({
+                       'core' : {
+                           'data' : treeData
+                       }
+                   });
+               },
+               error: function(error) {
+                   console.error('error:', error);
+                   console.log(error);
+               }
+           });
+       }
+
+       function buildTreeData(data) {
+           const tree = [];
+           const departments = {};
+
+           // 데이터를 순회하며 트리 구조를 생성
+           data.forEach(user => {
+               if (!departments[user.partName]) {
+                   departments[user.partName] = {
+                       text: `${user.partName}: ${user.partName}명`,
+                       icon: "fas fa-folder",
+                       children: []
+                   };
+                   tree.push(departments[user.partName]);
+               }
+
+               const department = departments[user.partName];
+
+               let team = department.children.find(team => team.text.startsWith(user.teamName));
+               if (!team) {
+                   team = {
+                       text: `${user.teamName}: ${user.teamName}명`,
+                       icon: "fas fa-folder",
+                       children: []
+                   };
+                   department.children.push(team);
+               }
+
+               const userNode = {
+                   id: `user_${user.empNo}`,
+                   text: `${user.name} (${user.nameOfPosition})`,
+                   icon: "fas fa-user"
+               };
+               team.children.push(userNode);
+           });
+
+           return tree;
+       }
+
+
+           $(function() {
+               // 페이지 로드 후 카테고리와 조직도 로드
+               fetchCategories();
+               fetchOrganization();
+           });
+       </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
