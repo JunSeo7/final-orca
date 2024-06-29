@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재 양식 목록</title>
+    <title>결재선 목록</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/approvalLine/list.css">
     <script defer src="/js/approvalLine/list.js"></script>
@@ -12,7 +12,7 @@
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
 
 <main id="content">
-    <h2>개인 결재선 관리</h2>
+    <h2>결재선 관리</h2>
     <hr>
     <p>* 개인적으로 사용할 결재선을 등록하고 관리합니다.</p>
     <button class="approval-btn" onclick="showApprovalLinePopup()">+ 결재선 등록</button>
