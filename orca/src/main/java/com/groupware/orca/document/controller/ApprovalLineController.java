@@ -37,14 +37,15 @@ public class ApprovalLineController {
     //기본 결재선 등록
     @PostMapping("add")
     public String addApprLineTemplate(@ModelAttribute ApprovalLineVo approvalLineVo) {
-        service.addApprLineTemplate(approvalLineVo);
+       int result = service.addApprLineTemplate(approvalLineVo);
+        System.out.println("result = " + result);
         return "redirect:/orca/apprline/list";
     }
 
 //    // 결재선 전체목록 (양식/결재라인)
 //    @GetMapping("list")
 //    public String getApprLines(Model model) {
-//        List<TemplateVo> approvalLines = service.getApprovalLines();
+//        List<ApprovalLineVo> approvalLines = service.getApprovalLines();
 //        System.out.println("approvalLines = " + approvalLines);
 //        model.addAttribute("approvalLines", approvalLines);
 //        return "apprline/list";

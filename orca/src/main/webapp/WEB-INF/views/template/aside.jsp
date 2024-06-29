@@ -43,9 +43,9 @@
         <ul>
           <li data-jstree='{"icon":"bi bi-folder", "opened": true}'>시스템 관리
             <ul>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">양식카테고리</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">결재양식</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="#" onclick="loadPage('home.jsp')">기본결재선</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="/orca/template/list">양식카테고리</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="/orca/template/list">결재양식</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="/orca/apprline/list">기본결재선</a></li>
             </ul>
           </li>
         </ul>
