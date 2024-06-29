@@ -17,7 +17,8 @@ public class ApprovalLineDao {
     private final ApprovalLineMapper mapper;
 
     @Transactional
-    public void addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+    public int addApprLineTemplate(ApprovalLineVo approvalLineVo) {
+        System.out.println("approvalLineVo = " + approvalLineVo);
         // 결재선 등록
         mapper.addApprLineTemplate(approvalLineVo);
 
@@ -25,29 +26,32 @@ public class ApprovalLineDao {
         int apprLineNo = approvalLineVo.getApprLineNo();
         System.out.println("apprLineNo = " + apprLineNo);
 
+
         // 결재자 등록
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
+        int result = 0;
         for (ApproverVo approverVo : approverList) {
             approverVo.setApprLineNo(apprLineNo); // 결재선 번호 설정
-            mapper.addApproverInfo(approverVo); // 결재자 정보 등록
+            result = mapper.addApproverInfo(approverVo); // 결재자 정보 등록
         }
+        return result;
     }
 
-    // 결재선 전체목록 (양식)
-    public List<TemplateVo> getTemplateList() {
-        List<TemplateVo> templates = mapper.getTemplateList();
-        System.out.println("templates = " + templates);
-        return templates;
-    }
-
-    // 결재선 전체목록 (양식-결재라인)
+    // 결재선 전체목록 (결재선)
     public List<ApprovalLineVo> getApprovalLineList() {
-        // ApproverLine 정보 가져오기
         List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList();
-        System.out.println("approvalLines = " + approvalLines);
-        if(approvalLines ==null){
-            System.out.println("approverLineVoList nulllllllllll= " + approvalLines);
-    } return approvalLines;
+        System.out.println("templates = " + approvalLines);
+        return approvalLines;
+    }
+
+    // 결재선 전체목록 (결재자 여러명)
+    public List<ApproverVo> getApproverList() {
+        // ApproverLine 정보 가져오기
+        List<ApproverVo> approvers = mapper.getApproverList();
+        System.out.println("approvalLines = " + approvers);
+        if(approvers ==null){
+            System.out.println("approverLineVoList nulllllllllll= " + approvers);
+    } return approvers;
   }
 
     // 결재선 삭제

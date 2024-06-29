@@ -9,12 +9,14 @@
 
         <link rel="stylesheet" href="/css/template/list.css">
         <script defer src="/js/template/list.js"></script>
+
  <!-- jQuery 라이브러리 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %>
-<%@ include file="/WEB-INF/views/template/aside.jsp" %>
+        <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+        <%@ include file="/WEB-INF/views/template/aside.jsp" %>
+
 <main>
 <h2>결재 양식 목록</h2>
         <div class="search_box">

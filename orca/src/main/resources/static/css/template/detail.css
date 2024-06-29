@@ -2,6 +2,7 @@
 main {
   margin-top: 100px;
   margin-left: 220px;
+  padding-bottom: 100px;
   flex-grow: 1;
   overflow-y: auto;
   transition: margin-left 0.3s ease;
@@ -17,4 +18,127 @@ main.full {
 
 .approval-lines-btn img{
   width: 18px;
+}
+
+
+.approval-table {
+    border-collapse: collapse;
+}
+
+.approval-table th,
+.approval-table td {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.approval-table th {
+    background-color: #f4f4f4;
+}
+
+/* 버튼 컨테이너 설정 */
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* 개별 버튼 설정 */
+.button-container .btn {
+    font-size: 1.2em;
+    width: 130px;
+}
+
+/* 결재 영역 설정 */
+.approval-btn {
+    background-color: #6eadff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.approval-btn:hover {
+    background-color: #368dff;
+}
+
+/* 사용자 정보 테이블 설정 */
+.user-info-table {
+    border: 1px solid black;
+    margin-top: 1px;
+    border-collapse: collapse;
+}
+
+.user-info-header {
+    background: #d4e9ff;
+    padding: 5px;
+    border: 1px solid black;
+    height: 18px;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.user-info-data {
+    background: white;
+    padding: 5px;
+    border: 1px solid black;
+    text-align: left;
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+/* 문서 본문 설정 */
+.document-body {
+    border: 0;
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.document-body-header {
+    background: #d4e9ff;
+    padding: 5px;
+    border: 1px solid black;
+    height: 25px;
+    width: 100px;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.document-body-data {
+    background: white;
+    padding: 5px;
+    border: 1px solid black;
+    text-align: left;
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+/* 문서 본문 내용 설정 */
+.document-body-content {
+    background: white;
+    border-width: medium 1px 1px;
+    border-style: none solid solid;
+    border-color: currentColor black black;
+    padding: 5px;
+    height: 550px;
+    text-align: left;
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
+    vertical-align: top;
 }
