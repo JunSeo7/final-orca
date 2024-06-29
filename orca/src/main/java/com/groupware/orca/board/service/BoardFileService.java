@@ -3,7 +3,6 @@ package com.groupware.orca.board.service;
 import com.groupware.orca.board.dao.BoardFileDao;
 import com.groupware.orca.board.vo.BoardFileVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardFileService {
 
-
-    private  final BoardFileDao dao;
+    private final BoardFileDao dao;
 
     public List<BoardFileVo> getFilesByBoardNo(Long boardNo) {
         return dao.getFilesByBoardNo(boardNo);
@@ -26,4 +24,14 @@ public class BoardFileService {
     public int deleteFile(Long fileNo) {
         return dao.deleteFile(fileNo);
     }
+
+    public int updateBoardNo(Integer fileId, Integer boardNo) {
+        return dao.updateBoardNo(fileId, boardNo);
+    }
+
+    public int updateBoardNoByTemp(int newBoardNo) {
+        return dao.updateBoardNoByTemp(newBoardNo);
+    }
+
+
 }

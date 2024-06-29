@@ -20,4 +20,5 @@ public class BoardVo {
     private String latitude;
     private String longitude;
     private String uploadImageName; // 이미지 파일 이름 필드 추가
+    private String employeeName; // 작성자 이름 필드 추가
 }

@@ -40,4 +40,6 @@ public class BoardService {
     public List<BoardVo> getBoardList(int categoryNo) {
         return dao.getBoardList(categoryNo);
     }
-}
+
+    }
+
