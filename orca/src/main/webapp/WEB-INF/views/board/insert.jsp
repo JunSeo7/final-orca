@@ -23,6 +23,7 @@
             <input type="hidden" id="content" name="content">
 
 
+
             <label for="categoryNo">카테고리</label>
             <select id="categoryNo" name="categoryNo" required>
                 <option value="1">자유 게시판</option>

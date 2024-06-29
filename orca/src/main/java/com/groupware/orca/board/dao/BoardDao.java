@@ -42,4 +42,6 @@ public class BoardDao {
     public List<BoardVo> getBoardList(int categoryNo) {
         return mapper.getBoardList(categoryNo);
     }
+
+
 }

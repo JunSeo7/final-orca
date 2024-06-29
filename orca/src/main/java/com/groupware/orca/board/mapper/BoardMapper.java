@@ -11,8 +11,10 @@ public interface BoardMapper {
     @Select("SELECT * FROM BOARD WHERE CATEGORY_NO=#{categoryNo}")
     List<BoardVo> getBoardList(int categoryNo);
 
-    @Select("SELECT * FROM BOARD WHERE BOARD_NO = #{boardNo}")
-    BoardVo getBoardDetail(int boardNo);
+    @Select("SELECT B.*, E.NAME AS EMPLOYEE_NAME FROM BOARD B " +
+            "JOIN PERSONNEL_INFORMATION E ON B.INSERT_USER_NO = E.EMP_NO " +
+            "WHERE B.BOARD_NO = #{boardNo}")
+    BoardVo getBoardDetail(@Param("boardNo") int boardNo);
 
     @Insert("INSERT INTO BOARD (BOARD_NO, TITLE, CONTENT, CATEGORY_NO, INSERT_USER_NO, LATITUDE, LONGITUDE) " +
             "VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{content}, #{categoryNo}, #{insertUserNo}, #{latitude}, #{longitude})")
@@ -29,4 +31,6 @@ public interface BoardMapper {
 
     @Update("UPDATE BOARD SET HIT = HIT + 1 WHERE BOARD_NO = #{boardNo}")
     void hit(@Param("boardNo") int boardNo);
+
+
 }

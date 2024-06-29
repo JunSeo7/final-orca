@@ -2,14 +2,15 @@ package com.groupware.orca.board.vo;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.util.List;
 
 @Data
 public class CommentVo {
-    private String boardChatNo;
+    private int boardChatNo;
     private String content;
-    private String boardNo;
-    private String insertUserNo;
-    private String previousCommentNo;
-    private String noticeNo;
+    private int boardNo;
+    private int insertUserNo;
+    private String enrollDate;
+    private String employeeName;
+    private List<CommentVo> replies;
 }

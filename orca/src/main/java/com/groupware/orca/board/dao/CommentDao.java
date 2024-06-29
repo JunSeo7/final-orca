@@ -3,7 +3,6 @@ package com.groupware.orca.board.dao;
 import com.groupware.orca.board.mapper.CommentMapper;
 import com.groupware.orca.board.vo.CommentVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,15 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentDao {
 
-
     private final CommentMapper mapper;
 
-    public List<CommentVo> getCommentsByBoardNo(Long boardNo) {
+    public List<CommentVo> getCommentsByBoardNo(int boardNo) {
         return mapper.getCommentsByBoardNo(boardNo);
-    }
-
-    public List<CommentVo> getRepliesByCommentNo(Long previousCommentNo) {
-        return mapper.getRepliesByCommentNo(previousCommentNo);
     }
 
     public int insertComment(CommentVo commentVo) {
@@ -31,8 +25,11 @@ public class CommentDao {
         return mapper.updateComment(commentVo);
     }
 
-    public int deleteComment(String boardChatNo) {
+    public int deleteComment(int boardChatNo) {
         return mapper.deleteComment(boardChatNo);
     }
 
+    public int deleteCommentsByBoardNo(int boardNo) {
+        return mapper.deleteCommentsByBoardNo(boardNo);
+    }
 }

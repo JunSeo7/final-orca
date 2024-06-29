@@ -161,6 +161,9 @@ body {
         height: 95%;
         margin: 20px auto;
         background-color: white;
+        overflow-y: auto; /* 세로 스크롤 활성화 */
+         overflow-x: hidden; /* 가로 스크롤 비활성화 */
+          padding: 20px; /* 내용이 가장자리에 붙지 않도록 여백 추가 */
         position:relative;
     }
 
