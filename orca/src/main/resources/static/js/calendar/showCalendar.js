@@ -35,8 +35,59 @@ function logout() {
 function toggleCheck(element) {
     element.parentNode.classList.toggle('checked');
 }
-
 // 캘린더
+// 캘린더
+let CalendarBar = document.querySelectorAll('.showCalendarBar');
+let showCalendarBarCnt = [0, 0, 0];
+let calendarBar = {
+    company: [],
+    individual: [],
+    team: []
+};
+let isCalendarBarVisible = [false, false, false];  // 각 범위의 클릭 상태를 저장
+
+// 클릭 이벤트 핸들러를 설정할 때 범위를 정의합니다.
+CalendarBar[0].addEventListener('click', function() {
+    toggleCalendarBar("company", 0);
+});
+CalendarBar[1].addEventListener('click', function() {
+    toggleCalendarBar("individual", 1);
+});
+CalendarBar[2].addEventListener('click', function() {
+    toggleCalendarBar("team", 2);
+});
+
+function toggleCalendarBar(range, index) {
+    isCalendarBarVisible[index] = !isCalendarBarVisible[index];
+    if (isCalendarBarVisible[index]) {
+        console.log(range);
+        $.ajax({
+            type: 'get',
+            url: '/orca/calendar/showCalendarBar',
+            dataType: 'json',
+            data: { range: range },
+            success: function (response) {
+                console.log('CalendarBar 클릭 성공:', response);
+                calendarBar[range] = response;  // response 데이터를 calendarBar에 저장
+
+                // Render calendar with combined events
+                let combinedEvents = [].concat(...Object.values(calendarBar));
+                renderCalendar(calendarElement, year, month, combinedEvents);
+            },
+            error: function (error) {
+                console.error('CalendarBar 클릭 실패:', error);
+            }
+        });
+    } else {
+        console.log("데이터 비워주기");
+        calendarBar[range] = []; // 해당 범위 배열 초기화
+
+        // Render calendar with combined events
+        let combinedEvents = [].concat(...Object.values(calendarBar));
+        renderCalendar(calendarElement, year, month, combinedEvents);
+        console.log(calendarBar);
+    }
+}
 
 const calendarElement = document.getElementById('calendar');
 const sidebarCalendarElement = document.getElementById('sidebarCalendar');
@@ -44,7 +95,7 @@ const date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
 
-function renderCalendar(calendarEl, year, month) {
+function renderCalendar(calendarEl, year, month, events = []) {
     calendarEl.innerHTML = '';
 
     const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
@@ -107,7 +158,6 @@ function renderCalendar(calendarEl, year, month) {
             dateElement.classList.add('today');
         }
         dateElement.innerHTML = `<div class="number">${date}</div><div class="empty"></div>`;
-
         grid.appendChild(dateElement);
     }
 
@@ -120,8 +170,41 @@ function renderCalendar(calendarEl, year, month) {
         grid.appendChild(dateElement);
     }
 
+    // Add events to the calendar
+    events.forEach(event => {
+        let startDate = new Date(event.startDate);
+        let endDate = new Date(event.endDate);
+        while (startDate <= endDate) {
+            let isCurrentMonth = startDate.getFullYear() === year && startDate.getMonth() === month;
+            let isNextMonth = (startDate.getFullYear() === year && startDate.getMonth() === (month + 1) % 12);
+
+            if (isCurrentMonth || isNextMonth) {
+                const day = startDate.getDate();
+                const dayElements = grid.querySelectorAll('.date');
+                dayElements.forEach(el => {
+                    const dayNumber = parseInt(el.querySelector('.number').textContent);
+                    if (dayNumber === day) {
+                        let eventBar = document.createElement('div');
+                        eventBar.classList.add('event-bar');
+                        if (el.classList.contains('other-month')) {
+                            eventBar.classList.add('other-month-bar');
+                        }
+                        eventBar.textContent = event.title;
+                        el.querySelector('.empty').appendChild(eventBar);
+                    }
+                });
+            }
+            startDate.setDate(startDate.getDate() + 1);
+        }
+    });
+
     calendarEl.appendChild(grid);
 }
+
+// Initial render with empty events
+renderCalendar(calendarElement, year, month, []);
+
+
 // 사이드 캘린더
 function renderSideCalendar(calendarEl, year, month) {
     calendarEl.innerHTML = '';
@@ -211,7 +294,10 @@ function changeMonth(offset) {
     }
     yearSelect.value = year;
     monthSelect.value = month;
-    renderCalendar(calendarElement, year, month);
+    
+    // Render calendar with combined events
+    let combinedEvents = [].concat(...Object.values(calendarBar));
+    renderCalendar(calendarElement, year, month, combinedEvents);
     renderSideCalendar(sidebarCalendarElement, year, month);
 
     const week = document.querySelectorAll('.day');
@@ -223,7 +309,7 @@ function changeMonth(offset) {
         }
     }
 }
-renderCalendar(calendarElement, year, month);
+
 renderSideCalendar(sidebarCalendarElement, year, month);
 
 // 주말 색 변경
@@ -399,43 +485,7 @@ function handleMonthChange() {
     renderSideCalendar(sidebarCalendarElement, year, month);
 }
 //캘린더 바 표시
-let CalendarBar = document.querySelectorAll('.showCalendarBar');
-let showCalendarBarCnt = [0, 0, 0];
 
-
-for (let i = 0; i < CalendarBar.length; i++) {
-    let range = "";
-
-    if (i == 0) {
-        range = "company";
-    } else if (i == 1) {
-        range = "individual";
-    } else if (i == 2) {
-        range = "team";
-    }
-    CalendarBar[i].addEventListener('click', function () {
-        if (showCalendarBarCnt[i] % 2 == 0) {
-            console.log(range);
-            $.ajax({
-                type: 'get',
-                url: '/orca/calendar/showCalendarBar',
-                dataType: 'json',
-                data: { range: range },
-                success: function (response) {
-                    console.log('CalendarBar 클릭 성공:', response);
-                    showCalendarBarCnt[i]++;
-                },
-                error: function (error) {
-                    console.error('CalendarBar 클릭 실패:', error);
-                }
-            });
-        }else if(showCalendarBarCnt[i] % 2 != 0){
-            console.log("데이터 비워주기");
-            showCalendarBarCnt[i]++;
-        }
-
-    });
-}
 
 
 
