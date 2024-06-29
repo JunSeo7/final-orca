@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class WorkInfoVo {
 
-    private String work_no;
-    private String emp_no;
-    private String work_date;
-    private String start_time;
-    private String end_time;
-    private int overtime_work;
-    private int holiday_work;
+    private String workNo;
+    private String empNo;
+    private String workDate;
+    private String startTime;
+    private String endTime;
+    private double overtimeWork;
+    private double holidayWork;
 
 }

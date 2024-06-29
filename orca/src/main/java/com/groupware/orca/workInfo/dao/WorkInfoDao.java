@@ -13,20 +13,20 @@ public class WorkInfoDao {
 
     private final WorkInfoMapper mapper;
 
-    public List<WorkInfoVo> workList() {
+    public List<WorkInfoVo> workList(String empNo) {
 
-        return mapper.workList();
+        return mapper.workList(empNo);
     }
 
-    public WorkInfoVo startWork(WorkInfoVo vo) {
-        return mapper.startWork(vo);
+    public void startWork(WorkInfoVo vo) {
+        mapper.startWork(vo);
     }
 
-    public WorkInfoVo endWork(WorkInfoVo vo) {
-        return mapper.endWork(vo);
+    public void endWork(WorkInfoVo vo) {
+        mapper.endWork(vo);
     }
 
-    public WorkInfoVo overTimeWork(WorkInfoVo vo) {
-        return mapper.overTimeWork(vo);
+    public void overTimeWork(WorkInfoVo vo) {
+        mapper.overTimeWork(vo);
     }
 }
