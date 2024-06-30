@@ -1,9 +1,15 @@
 package com.groupware.orca.board.mapper;
 
 import com.groupware.orca.board.vo.BoardVo;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BoardMapper {
@@ -33,4 +39,9 @@ public interface BoardMapper {
     void hit(@Param("boardNo") int boardNo);
 
 
+    @Select("SELECT TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE_STR, COUNT(*) AS POST_COUNT, SUM(HIT) AS VIEWS " +
+            "FROM BOARD " +
+            "GROUP BY TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') " +
+            "ORDER BY TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD')")
+    List<Map<String, Object>> getStatsByDate();
 }

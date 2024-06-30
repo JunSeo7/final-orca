@@ -9,11 +9,20 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/board/board.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script defer src="/js/board/board.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=417c2d6869f3c660f4e0370cf828ba62&libraries=services,places"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type="module" src="path/to/your/javascript/file.js"></script>
+
+    <!-- Firebase 초기화 -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
 
     <style>
         .kakao-share-button {
@@ -53,9 +62,77 @@
         .comment-reply {
             margin-left: 30px;
         }
+
+        .post-actions {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .post-actions i {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .post-actions i.liked {
+            color: red;
+        }
+
+        .post-actions i.bookmarked {
+            color: blue;
+        }
+
+        .post-likes {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+  <header>
+        <div class="header-left" onclick="loadPage('home.jsp')">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h2>ORCA</h2>
+        </div>
+        <div class="header-right">
+            <span>알림</span>
+            <span>조직도</span>
+            <span>설정</span>
+        </div>
+    </header>
+    <button id="toggleSidebar" onclick="toggleSidebar()">메뉴</button>
+    <aside id="sidebar">
+      <div class="profile" onclick="toggleProfile()">
+          <img src="profile.png" alt="Profile Picture" class="profile-pic">
+          <P>SW팀 | <span>양파쿵야</span></P>
+      </div>
+      <hr>
+      <div id="profileDetail" class="profile-detail hidden">
+          <p>상태 설정</p>
+          <p>상태 메시지</p>
+          <p>@멘션 확인하기</p>
+          <p>파일 리스트</p>
+          <p>직책</p>
+          <p>생년월일</p>
+          <p>휴대전화</p>
+          <p>raji1004@naver.com</p>
+          <button onclick="logout()">로그아웃</button>
+        </div>
+      <nav>
+          <ul>
+              <li><a href="#" onclick="loadPage('home.jsp')">홈</a></li>
+              <li><a href="#" onclick="loadPage('chat.jsp')">채팅</a></li>
+              <li><a href="#" onclick="loadPage('calendar.jsp')">캘린더/할일</a></li>
+              <li><a href="#" onclick="loadPage('documents.jsp')">문서관리</a></li>
+              <li><a href="#" onclick="loadPage('attendance.jsp')">근태</a></li>
+              <li><a href="#" onclick="loadPage('vote.jsp')">투표</a></li>
+              <li><a href="#" onclick="loadPage('drive.jsp')">드라이브</a></li>
+              <li><a href="#" onclick="loadPage('mail.jsp')">메일</a></li>
+              <li><a href="#" onclick="loadPage('settings.jsp')">설정</a></li>
+              <li><a href="/board/statistics">통계</a></li>
+          </ul>
+      </nav>
+  </aside>
 <main id="content">
     <h2>게시판 목록</h2>
     <select id="categorySelect">
@@ -63,7 +140,7 @@
         <option value="2">팀 게시판</option>
         <option value="3">익명 게시판</option>
     </select>
-    <input type="text" id="searchTitle" placeholder="검색어 입력">
+    <input type="text" id="searchTitle" placeholder="제목으로 검색">
     <button id="searchBtn">검색</button>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
@@ -74,8 +151,15 @@
         <button class="updateButton" onclick="redirectToUpdatePage()">수정</button>
         <button class="deleteButton" onclick="deleteModal()">삭제</button>
         <h1 id="modal-title"></h1>
-        <div id="enrolldate"></div>
-        <div id="insert-name"></div>
+        <div id="enrolldate">작성일</div>
+        <div id="insert-name">작성자</div>
+        <div class="post-actions">
+            <i class="far fa-heart like-button" id="like-button" onclick="toggleLike()"></i>
+            <i class="far fa-bookmark bookmark-button" id="bookmark-button" onclick="toggleBookmark()"></i>
+        </div>
+        <div class="post-likes">
+            <span id="like-count">0</span> 좋아요
+        </div>
         <div id="hit-container">조회수: <span id="hit"></span></div>
         <hr>
         <div id="modal-content"></div>
@@ -86,6 +170,119 @@
         <button id="btn-kakao" class="kakao-share-button">💬</button>
     </div>
 </div>
+
+<script type="module">
+    // Firebase 초기화
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBBDpdglycOaD-K2xeciSs3e0DvNvgQyGk",
+        authDomain: "finalboard-e002b.firebaseapp.com",
+        projectId: "finalboard-e002b",
+        storageBucket: "finalboard-e002b.appspot.com",
+        messagingSenderId: "827563179973",
+        appId: "1:827563179973:web:649d2f81301439863cd5ac",
+        measurementId: "G-CGL4488CMS"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const db = getFirestore(app);
+
+    // 로그인 체크
+    function checkAuthState() {
+        return new Promise((resolve, reject) => {
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject('로그인 필요');
+                }
+            });
+        });
+    }
+
+    // 좋아요 토글
+    window.toggleLike = function() {
+        checkAuthState().then(user => {
+            const boardNo = document.getElementById('modal-title').dataset.boardNo;
+            const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
+
+            getDoc(likeRef).then(docSnap => {
+                if (docSnap.exists()) {
+                    deleteDoc(likeRef).then(() => {
+                        document.getElementById('like-button').classList.remove('liked');
+                        updateLikeCount(boardNo, -1);
+                    });
+                } else {
+                    setDoc(likeRef, { liked: true }).then(() => {
+                        document.getElementById('like-button').classList.add('liked');
+                        updateLikeCount(boardNo, 1);
+                    });
+                }
+            });
+        }).catch(error => {
+            alert(error + " 후 이용해 주세요.");
+        });
+    }
+
+    // 북마크 토글
+    window.toggleBookmark = function() {
+        checkAuthState().then(user => {
+            const boardNo = document.getElementById('modal-title').dataset.boardNo;
+            const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
+
+            getDoc(bookmarkRef).then(docSnap => {
+                if (docSnap.exists()) {
+                    deleteDoc(bookmarkRef).then(() => {
+                        document.getElementById('bookmark-button').classList.remove('bookmarked');
+                    });
+                } else {
+                    setDoc(bookmarkRef, { saved: true }).then(() => {
+                        document.getElementById('bookmark-button').classList.add('bookmarked');
+                    });
+                }
+            });
+        }).catch(error => {
+            alert(error + " 후 이용해 주세요.");
+        });
+    }
+
+    window.checkLikeStatus = function(boardNo) {
+        checkAuthState().then(user => {
+            const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
+
+            getDoc(likeRef).then(docSnap => {
+                if (docSnap.exists()) {
+                    document.getElementById('like-button').classList.add('liked');
+                }
+            });
+        });
+    }
+
+    window.checkBookmarkStatus = function(boardNo) {
+        checkAuthState().then(user => {
+            const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
+
+            getDoc(bookmarkRef).then(docSnap => {
+                if (docSnap.exists()) {
+                    document.getElementById('bookmark-button').classList.add('bookmarked');
+                }
+            });
+        });
+    }
+
+    window.updateLikeCount = function(boardNo, delta) {
+        const likeCountElement = document.getElementById('like-count');
+        const currentCount = parseInt(likeCountElement.textContent, 10);
+        likeCountElement.textContent = currentCount + delta;
+    }
+</script>
 
 <script type="text/javascript">
     var map;
@@ -146,8 +343,8 @@
                 {label: 'Views', name: 'hit', width: 50},
             ],
             viewrecords: true,
-            width: 900,
-            height: 300,
+            width: 1400,
+            height: 600,
             rowNum: 20,
             pager: "#jqGridPager"
         });
@@ -186,6 +383,8 @@
                     $('#map').hide();
                 }
                 showComments(boardNo);
+                checkLikeStatus(boardNo);
+                checkBookmarkStatus(boardNo);
             },
             error: function () {
                 alert("게시물 상세 정보를 불러오는데 실패했습니다.");

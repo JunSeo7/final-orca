@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -43,5 +44,7 @@ public class BoardDao {
         return mapper.getBoardList(categoryNo);
     }
 
-
+    public List<Map<String, Object>> getStatsByDate() {
+        return mapper.getStatsByDate();
+    }
 }

@@ -1,6 +1,5 @@
 package com.groupware.orca.board.controller;
 
-
 import com.groupware.orca.board.service.BoardFileService;
 import com.groupware.orca.board.service.BoardService;
 import com.groupware.orca.board.service.CommentService;
@@ -74,8 +73,6 @@ public class BoardController {
         String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setInsertUserNo(Integer.parseInt(insertUserNo));
         boardService.boardInsert(vo);
-
-
         return "redirect:/board";
     }
 
@@ -107,18 +104,18 @@ public class BoardController {
         }
         return response;
     }
-    // 게시물 수정
+
     @PostMapping("/board/update")
-    public String updateBoard(@ModelAttribute BoardVo boardVo) {
+    public String updateBoard(@ModelAttribute BoardVo boardVo, HttpSession httpSession) {
+        String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        boardVo.setInsertUserNo(Integer.parseInt(insertUserNo));
         boardService.boardUpdate(boardVo);
         return "redirect:/board";
     }
 
-    // 게시물 삭제
-    @DeleteMapping("board/{boardNo}")
+    @DeleteMapping("/board/{boardNo}")
     public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo) {
         try {
-
             // 댓글 먼저 삭제
             commentService.deleteCommentsByBoardNo(boardNo);
             // 게시글 삭제
@@ -130,11 +127,21 @@ public class BoardController {
         }
     }
 
-    // 게시물 수정 페이지 이동
     @GetMapping("/board/updatePage")
     public String updatePage(@RequestParam("boardNo") int boardNo, Model model) {
         BoardVo boardVo = boardService.getBoardDetail(boardNo);
         model.addAttribute("board", boardVo);
         return "board/updatePage";
+    }
+
+    @GetMapping("/board/statistics")
+    public String getStatisticsPage() {
+        return "board/statistics";
+    }
+
+    @GetMapping("/board/statsByDate")
+    @ResponseBody
+    public List<Map<String, Object>> getStatsByDate() {
+        return boardService.getStatsByDate();
     }
 }

@@ -26,6 +26,7 @@ public class CommentController {
 
     @PostMapping("/edit")
     public @ResponseBody CommentVo editComment(@RequestBody CommentVo commentVo) {
+
         commentService.updateComment(commentVo);
         return commentVo;
     }
