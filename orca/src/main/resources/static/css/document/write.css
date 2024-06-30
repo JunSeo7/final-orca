@@ -1,0 +1,69 @@
+/*메인*/
+main {
+  margin-top: 100px;
+  margin-left: 220px;
+  padding-bottom: 100px;
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+
+.content {
+  word-break: keep-all;
+}
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.document-table th, .document-table td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.document-table th {
+  background-color:  #d4e9ff;
+  text-align: center;
+}
+
+.approval-btn {
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100px;
+}
+
+.approval-btn:hover {
+  background-color: #368dff;
+}
+
+/* 추가적인 스타일 설정 */
+form {
+  margin: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+}
+
+input[type="text"], select {
+  width: calc(100% - 22px);
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.text-center {
+  text-align: center;
+}
+

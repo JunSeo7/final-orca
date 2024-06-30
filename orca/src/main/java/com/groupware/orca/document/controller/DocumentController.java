@@ -17,15 +17,32 @@ public class DocumentController {
 
     private final DocumentService service;
 
-    // 결재 작성 화면 (카테고리 보여주기)
+    // 결재 작성 화면
     @GetMapping("write")
+    public String getTemplateList(){
+        return "document/write";
+    }
+    // 결재 작성 카테고리 가져오기
+    @GetMapping("categorie/list")
     @ResponseBody
-    public List<TemplateVo> getTemplateList(){
-        List<TemplateVo> templateVoList = service.getTemplateList();
+    public List<TemplateVo> getCategory() {
+        System.out.println("ApprovalLineController.getCategory");
+        List<TemplateVo> templateVoList = service.getCategory();
+        System.out.println("templateVoList = " + templateVoList);
         return templateVoList;
     }
-    // 템플릿 내용 가져오기
-    @GetMapping("gettemplate")
+    // 결재 작성 결재양식 제목 가져오기
+    @GetMapping("template/list")
+    @ResponseBody
+    public List<TemplateVo> getTemplateByCategoryNo(@RequestParam int categoryNo) {
+        System.out.println("ApprovalLineController.getTemplateByCategoryNo");
+        System.out.println("categoryNo = " + categoryNo);
+        List<TemplateVo> templateVoList= service.getTemplateByCategoryNo(categoryNo);
+        System.out.println("templateVoList = " + templateVoList);
+        return service.getTemplateByCategoryNo(categoryNo);
+    }
+    // 결재 작성 템플릿 내용 가져오기
+    @GetMapping("template/content")
     @ResponseBody
     public TemplateVo getTemplateContent(@RequestParam("templateNo") int templateNo){
         TemplateVo template = service.getTemplateContent(templateNo);
@@ -33,9 +50,11 @@ public class DocumentController {
     }
     // 결재 작성
     @PostMapping("write")
-    @ResponseBody
-    public void writeDocument(DocumentVo vo){
+    public String writeDocument(DocumentVo vo){
+        System.out.println("DocumentController.writeDocument");
+        System.out.println("vo = " + vo);
     int result = service.writeDocument(vo);
+        return "redirect:/orca/document/list";
     }
 
     // 전체 목록

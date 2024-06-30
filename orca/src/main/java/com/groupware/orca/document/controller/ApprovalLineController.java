@@ -26,7 +26,6 @@ public class ApprovalLineController {
     @GetMapping("add")
     public String addApprLineView(Model model) {
         System.out.println("model = " + model);
-        model.addAttribute("approvalLine", new ApprovalLineVo());
         return "apprline/add";
     }
     // 결재선 등록 조직도 가져오기
