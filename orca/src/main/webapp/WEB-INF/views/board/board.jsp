@@ -142,6 +142,8 @@
     </select>
     <input type="text" id="searchTitle" placeholder="제목으로 검색">
     <button id="searchBtn">검색</button>
+    <a href="/board/insert">게시물 작성하기</a>
+      <a href="/board/statistics">게시물 통계보기</a>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
 </main>
