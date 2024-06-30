@@ -18,6 +18,7 @@
 <body>
     <div class="chart-container">
         <h2>게시물 및 조회수 통계</h2>
+       <a href="/board">게시물 목록 돌아가기</a>
         <canvas id="statsChart" width="400" height="200"></canvas>
     </div>
 
