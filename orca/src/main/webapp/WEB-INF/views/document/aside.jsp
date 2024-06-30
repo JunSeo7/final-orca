@@ -37,7 +37,7 @@
       <button onclick="logout()">로그아웃</button>
     </div>
     <nav>
-      <a href="/template/add"><button class="draft_write">결재 작성</button></a>
+      <a href="/orca/document/write"><button class="draft_write">결재 작성</button></a>
       <hr>
       <div id="navTree">
         <ul>
@@ -55,7 +55,7 @@
           <li data-jstree='{"icon":"bi bi-gear"}'>사용자 설정
             <ul>
               <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인환경설정</a></li>
-              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인 결재선</a></li>
+              <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="/orca/myapprline/list.jsp">개인 결재선</a></li>
               <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">개인함 관리</a></li>
               <li data-jstree='{"icon":"bi bi-file-earmark"}'><a href="">공유함 관리</a></li>
             </ul>

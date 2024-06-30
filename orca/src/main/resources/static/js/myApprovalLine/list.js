@@ -85,6 +85,7 @@
         }
     }
 
+   // 결재선 등록 결재양식 제목 가져오기
     function fetchTemplatesByCategory(categoryNo) {
         $.ajax({
             url: '/orca/myapprline/template/list',
@@ -105,7 +106,7 @@
             }
         });
     }
-
+    // 결재선 등록 카테고리 가져오기
     function fetchCategories() {
         $.ajax({
             url: '/orca/myapprline/categorie/list',
@@ -131,7 +132,7 @@
             }
         });
     }
-
+    // 결재선 등록 조직도 가져오기
     function fetchOrganization() {
         $.ajax({
             url: '/orca/myapprline/organization/list',
@@ -189,6 +190,7 @@
         return tree;
     }
 
+    //등록 팝업
     function showApprovalLinePopup() {
         document.querySelector('#popupOverlay').style.display = 'block';
         document.querySelector('#approvalLinePopup').style.display = 'block';
@@ -229,6 +231,7 @@
         });
     }
 
+    //수정팝업
     function openModal() {
         document.getElementById('modalOverlay').style.display = 'block';
         document.getElementById('approvalModal').style.display = 'block';

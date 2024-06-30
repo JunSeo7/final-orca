@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
-<%@ include file="/WEB-INF/views/document/aside.jsp" %>
+<%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
 <main id="content">
     <h2>결재선 관리</h2>

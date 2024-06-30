@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface DocumentMapper {
 
-    // 결재 양식 카테고리와 이름 보여주기
-    @Select("SELECT DT.TEMPLATE_NO, DT.TITLE, DT.CATEGORY_NO, DTC.NAME " +
-            "FROM DOC_TEMPLATE DT " +
-            "JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO")
-    List<TemplateVo> getTemplateList();
-
-    // 템플릿 내용 가져오기
-    @Select("SELECT TITLE, CONTENT FROM DOC_TEMPLATE WHERE TEMPLATE_NO = #{templateNo}")
-    TemplateVo getTemplateContent(@Param("templateNo") int templateNo);
+    // 결재선 등록 템플릿 카테고리 가져오기
+    @Select("SELECT CATEGORY_NO ,NAME categoryName FROM  DOC_TEMPLATE_CATEGORY WHERE DEL_YN='N'")
+    List<TemplateVo> getCategory();
+    // 결재선 등록 카테고리번호 - 결재양식 제목 가져오기
+    @Select("SELECT CATEGORY_NO ,TEMPLATE_NO ,TITLE FROM DOC_TEMPLATE WHERE DEL_YN='N' AND CATEGORY_NO=#{categoryNo}")
+    List<TemplateVo> getTemplateByCategoryNo(int categoryNo);
+    // 결재선 등록 카테고리번호 - 템플릿 내용 가져오기
+    @Select("SELECT TEMPLATE_NO, TITLE, CONTENT FROM DOC_TEMPLATE WHERE TEMPLATE_NO = #{templateNo}")
+    TemplateVo getTemplateContent(int templateNo);
 
     // 결재 작성
     @Insert("INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE) " +

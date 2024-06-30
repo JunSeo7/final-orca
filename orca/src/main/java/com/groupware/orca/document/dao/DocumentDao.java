@@ -15,14 +15,25 @@ public class DocumentDao {
 
     private final DocumentMapper mapper;
 
-    // 결재 작성 화면
-    public List<TemplateVo> getTemplateList() {
-        return mapper.getTemplateList();
+//    // 결재 작성 화면
+//    public List<TemplateVo> getTemplateList() {
+//        return mapper.getTemplateList();
+//    }
+
+    // 결재 작성 템플릿 카테고리 가져오기
+    public List<TemplateVo> getCategory() {
+        return mapper.getCategory();
     }
-    //템플릿 가져오기
+
+    // 결재 작성 카테고리번호 - 결재양식 제목 가져오기
+    public List<TemplateVo> getTemplateByCategoryNo(int categoryNo) {
+        return mapper.getTemplateByCategoryNo(categoryNo);
+    }
+    //결재 작성 템플릿 내용 가져오기
     public TemplateVo getTemplateContent(int templateNo) {
         return mapper.getTemplateContent(templateNo);
     }
+
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {

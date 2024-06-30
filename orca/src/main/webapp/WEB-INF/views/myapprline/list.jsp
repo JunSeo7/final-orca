@@ -110,7 +110,6 @@
     </div>
     <div class="popup-footer">
         <button onclick="saveApprovalLine()">확인</button>
-        <button onclick="closeApprovalLinePopup()">닫기</button>
     </div>
         </form>
 </div>
