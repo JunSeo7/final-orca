@@ -2,17 +2,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재선 목록</title>
+    <title>나의 결재선 목록</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="/css/approvalLine/list.css">
-    <script defer src="/js/approvalLine/list.js"></script>
+    <link rel="stylesheet" href="/css/myApprovalLine/list.css">
+    <script defer src="/js/myApprovalLine/list.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
 
 <main id="content">
-    <h2>결재선 관리</h2>
+    <h2>나의 결재선 관리</h2>
     <hr>
     <p>* 개인적으로 사용할 결재선을 등록하고 관리합니다.</p>
     <button class="approval-btn" onclick="showApprovalLinePopup()">+ 결재선 등록</button>
@@ -47,8 +47,9 @@
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
                 <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/edit.png" alt="수정 아이콘"></a>
-                <a class="approval-lines-btn"><img class="delete_img" src="/img/delete.png" alt="삭제 아이콘"></a>
-            </div>
+                  <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLine.apprLineNo}">
+                      <img class="delete_img" src="/img/delete.png" alt="삭제 아이콘">
+                  </a></div>
             </c:forEach>
             </div>
         </c:otherwise>
@@ -61,21 +62,31 @@
         <h2>결재선 선택</h2>
         <button onclick="closeApprovalLinePopup()">X</button>
     </div>
+     <form id="approvalLineForm" action="/orca/myapprline/add" method="post">
     <div class="popup-body">
         <div class="popup-body-left">
             <table>
                 <tr>
                     <td class="t-title">결재선 프로세스</td>
                     <td>
-                     <select id="approvalProcess">
-                        <!-- 결재 양식 목록  -->
-                    </select>
+                        <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
+                        <!-- 카테고리 옵션들이 여기 추가될 예정 -->
+                        </select>
                     </td>
                 </tr>
+                 <tr>
+                    <td class="t-title">템플릿</td>
+                    <td>
+                        <select id="templateNo" name="templateNo">
+                            <!-- 템플릿 옵션들이 여기 추가될 예정 -->
+                        </select>
+                    </td>
+                 </tr>
                 <tr>
                     <td class="t-title">결재선 이름</td>
                     <td><input type="text"></td>
                 </tr>
+
             </table>
             <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
             <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
@@ -101,6 +112,7 @@
         <button onclick="saveApprovalLine()">확인</button>
         <button onclick="closeApprovalLinePopup()">닫기</button>
     </div>
+        </form>
 </div>
 
 <!-- 결재선 수정 모달 -->

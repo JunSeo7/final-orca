@@ -75,7 +75,7 @@ public class MyApprLineController {
     }
 
     // 결재선 삭제
-    @GetMapping("delete")
+    @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
         service.deleteApprLine(apprLineNo);
         return "redirect:/orca/myapprline/list";

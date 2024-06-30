@@ -44,7 +44,7 @@ public interface MyApprLineMapper {
     List<ApproverVo> getApproverList(int apprLineNo);
 
     // 결재선 삭제 - userNo입력
-    @Delete("UPDATE SET APPROVER_INFO WHERE APPR_LINE_NO = #{apprLineNo}")
+    @Delete("UPDATE SET APPR_LINE_TEMPLATE WHERE APPR_LINE_NO = #{apprLineNo}")
     void deleteApprLine(int apprLineNo);
 
 
