@@ -35,8 +35,10 @@ function logout() {
 function toggleCheck(element) {
     element.parentNode.classList.toggle('checked');
 }
+//------------------------------------------------------------------------------------------------------------------------
 // 캘린더
-// 캘린더
+//-- 캐린더 바 요청 보내기
+//-- 캐린더 바 변수 설정
 let CalendarBar = document.querySelectorAll('.showCalendarBar');
 let showCalendarBarCnt = [0, 0, 0];
 let calendarBar = {
@@ -47,13 +49,13 @@ let calendarBar = {
 let isCalendarBarVisible = [false, false, false];  // 각 범위의 클릭 상태를 저장
 
 // 클릭 이벤트 핸들러를 설정할 때 범위를 정의합니다.
-CalendarBar[0].addEventListener('click', function() {
+CalendarBar[0].addEventListener('click', function () {
     toggleCalendarBar("company", 0);
 });
-CalendarBar[1].addEventListener('click', function() {
+CalendarBar[1].addEventListener('click', function () {
     toggleCalendarBar("individual", 1);
 });
-CalendarBar[2].addEventListener('click', function() {
+CalendarBar[2].addEventListener('click', function () {
     toggleCalendarBar("team", 2);
 });
 
@@ -69,10 +71,10 @@ function toggleCalendarBar(range, index) {
             success: function (response) {
                 console.log('CalendarBar 클릭 성공:', response);
                 calendarBar[range] = response;  // response 데이터를 calendarBar에 저장
-
-                // Render calendar with combined events
+                //저장된 데이터를 객체화 해서 변수에 저장
                 let combinedEvents = [].concat(...Object.values(calendarBar));
                 renderCalendar(calendarElement, year, month, combinedEvents);
+                todayText();
             },
             error: function (error) {
                 console.error('CalendarBar 클릭 실패:', error);
@@ -81,14 +83,13 @@ function toggleCalendarBar(range, index) {
     } else {
         console.log("데이터 비워주기");
         calendarBar[range] = []; // 해당 범위 배열 초기화
-
-        // Render calendar with combined events
         let combinedEvents = [].concat(...Object.values(calendarBar));
         renderCalendar(calendarElement, year, month, combinedEvents);
         console.log(calendarBar);
+        todayText();
     }
 }
-
+//-- 캐린더 변수 설정
 const calendarElement = document.getElementById('calendar');
 const sidebarCalendarElement = document.getElementById('sidebarCalendar');
 const date = new Date();
@@ -101,7 +102,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
     const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
     const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
-    // Header
+    // 캘린더 추가
     const header = document.createElement('div');
     header.className = 'calendar-header';
 
@@ -138,7 +139,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
     const prevLastDate = new Date(year, month, 0).getDate();
     for (let i = firstDay - 1; i >= 0; i--) {
         const dateElement = document.createElement('div');
-        dateElement.className = 'date other-month';
+        dateElement.className = 'date other-month before-month';
         dateElement.innerHTML = `<div class="number">${prevLastDate - i}</div><div class="empty"></div>`;
         grid.appendChild(dateElement);
     }
@@ -165,46 +166,88 @@ function renderCalendar(calendarEl, year, month, events = []) {
     const nextDays = (7 - (totalCells % 7)) % 7;
     for (let i = 1; i <= nextDays; i++) {
         const dateElement = document.createElement('div');
-        dateElement.className = 'date other-month';
+        dateElement.className = 'date other-month after-month';
         dateElement.innerHTML = `<div class="number">${i}</div><div class="empty"></div>`;
         grid.appendChild(dateElement);
     }
 
-    // Add events to the calendar
+    // 캘린더 바 추가
     events.forEach(event => {
         let startDate = new Date(event.startDate);
         let endDate = new Date(event.endDate);
+        let range = event.range;
         while (startDate <= endDate) {
             let isCurrentMonth = startDate.getFullYear() === year && startDate.getMonth() === month;
-            let isNextMonth = (startDate.getFullYear() === year && startDate.getMonth() === (month + 1) % 12);
+            let beforeMonth = startDate.getFullYear() === year && startDate.getMonth() === month - 1;
+            let afterMonth = startDate.getFullYear() === year && startDate.getMonth() === month + 1;
 
-            if (isCurrentMonth || isNextMonth) {
+            if (isCurrentMonth) {
                 const day = startDate.getDate();
                 const dayElements = grid.querySelectorAll('.date');
                 dayElements.forEach(el => {
                     const dayNumber = parseInt(el.querySelector('.number').textContent);
-                    if (dayNumber === day) {
-                        let eventBar = document.createElement('div');
-                        eventBar.classList.add('event-bar');
-                        if (el.classList.contains('other-month')) {
-                            eventBar.classList.add('other-month-bar');
+                    if (!el.classList.contains('other-month')) {
+                        if (dayNumber === day) {
+                            let eventBar = document.createElement('div');
+                            eventBar.classList.add('event-bar');
+                            if (range === 'company') {
+                                eventBar.classList.add('company-bar');
+                            } else if (range === 'team') {
+                                eventBar.classList.add('team-bar');
+                            }
+                            eventBar.textContent = event.title;
+                            el.querySelector('.empty').appendChild(eventBar);
                         }
-                        eventBar.textContent = event.title;
-                        el.querySelector('.empty').appendChild(eventBar);
+                    }
+                });
+            } else if (beforeMonth) {
+                const day = startDate.getDate();
+                const dayElements = grid.querySelectorAll('.date');
+                dayElements.forEach(el => {
+                    const dayNumber = parseInt(el.querySelector('.number').textContent);
+                    if (el.classList.contains('before-month')) {
+                        if (dayNumber === day) {
+                            let eventBar = document.createElement('div');
+                            eventBar.classList.add('event-bar');
+                            eventBar.classList.add('other-bar');
+                            if (range === 'company') {
+                                eventBar.classList.add('company-bar');
+                            } else if (range === 'team') {
+                                eventBar.classList.add('team-bar');
+                            }
+                            eventBar.textContent = event.title;
+                            el.querySelector('.empty').appendChild(eventBar);
+                        }
+                    }
+                });
+            } else if (afterMonth) {
+                const day = startDate.getDate();
+                const dayElements = grid.querySelectorAll('.date');
+                dayElements.forEach(el => {
+                    const dayNumber = parseInt(el.querySelector('.number').textContent);
+                    if (el.classList.contains('after-month')) {
+                        if (dayNumber === day) {
+                            let eventBar = document.createElement('div');
+                            eventBar.classList.add('event-bar');
+                            eventBar.classList.add('other-bar');
+                            if (range === 'company') {
+                                eventBar.classList.add('company-bar');
+                            } else if (range === 'team') {
+                                eventBar.classList.add('team-bar');
+                            }
+                            eventBar.textContent = event.title;
+                            el.querySelector('.empty').appendChild(eventBar);
+                        }
                     }
                 });
             }
+
             startDate.setDate(startDate.getDate() + 1);
         }
     });
 
     calendarEl.appendChild(grid);
 }
-
-// Initial render with empty events
-
-renderCalendar(calendarElement, year, month, []);
-
 
 // 사이드 캘린더
 function renderSideCalendar(calendarEl, year, month) {
@@ -249,7 +292,7 @@ function renderSideCalendar(calendarEl, year, month) {
     const prevLastDate = new Date(year, month, 0).getDate();
     for (let i = firstDay - 1; i >= 0; i--) {
         const dateElement = document.createElement('div');
-        dateElement.className = 'side-date other-month';
+        dateElement.className = 'side-date other-month before-month';
         dateElement.innerHTML = `<div class="number">${prevLastDate - i}</div>`;
         grid.appendChild(dateElement);
     }
@@ -266,7 +309,7 @@ function renderSideCalendar(calendarEl, year, month) {
 
         const today = new Date();
         if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
-            dateElement.classList.add('today');
+            dateElement.classList.add('side-today');
         }
         dateElement.innerHTML = `<div class="number">${date}</div>`;
 
@@ -277,13 +320,35 @@ function renderSideCalendar(calendarEl, year, month) {
     const nextDays = (7 - (totalCells % 7)) % 7;
     for (let i = 1; i <= nextDays; i++) {
         const dateElement = document.createElement('div');
-        dateElement.className = 'side-date other-month';
+        dateElement.className = 'side-date other-month after-month';
         dateElement.innerHTML = `<div class="number">${i}</div>`;
         grid.appendChild(dateElement);
     }
     calendarEl.appendChild(grid);
 }
 
+function todayText() {
+    let todayNumber = document.querySelector('.calendar-grid .date.today .number');
+    let todayText = document.createElement('div');
+    todayText.textContent = 'today'; // 'D' 텍스트를 추가
+    todayText.classList.add('today-text');
+    todayNumber.appendChild(todayText);
+}
+
+// 캘린더/사이드 캘린더 함수 호출
+renderCalendar(calendarElement, year, month, []);
+renderSideCalendar(sidebarCalendarElement, year, month);
+todayText();
+
+
+
+
+
+
+
+
+
+//월 이동 함수
 function changeMonth(offset) {
     month += offset;
     if (month < 0) {
@@ -295,8 +360,7 @@ function changeMonth(offset) {
     }
     yearSelect.value = year;
     monthSelect.value = month;
-    
-    // Render calendar with combined events
+
     let combinedEvents = [].concat(...Object.values(calendarBar));
     renderCalendar(calendarElement, year, month, combinedEvents);
     renderSideCalendar(sidebarCalendarElement, year, month);
@@ -309,11 +373,10 @@ function changeMonth(offset) {
             week[i].classList.add('blueColor');
         }
     }
+    todayText();
 }
 
-renderSideCalendar(sidebarCalendarElement, year, month);
-
-// 주말 색 변경
+// 캘린더 주말 색 변경
 const week = document.querySelectorAll('.day');
 for (let i = 0; i < week.length; i++) {
     if (week[i].textContent === '일') {
@@ -322,7 +385,7 @@ for (let i = 0; i < week.length; i++) {
         week[i].classList.add('blueColor');
     }
 }
-
+//--------------------------------------------------------------------------------------------------
 //일정 등록
 let lastClickedDiv = null;
 let KeyCnt = 0;
@@ -482,10 +545,12 @@ monthSelect.value = currentDate.getMonth().toString();
 function handleMonthChange() {
     year = parseInt(yearSelect.value);
     month = parseInt(monthSelect.value);
-    renderCalendar(calendarElement, year, month);
+    let combinedEvents = [].concat(...Object.values(calendarBar));
+    renderCalendar(calendarElement, year, month, combinedEvents);
     renderSideCalendar(sidebarCalendarElement, year, month);
+    todayText();
 }
-//캘린더 바 표시
+
 
 
 

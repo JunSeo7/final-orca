@@ -3,7 +3,6 @@ body {
     display: flex;
     margin: 0;
     font-family: Arial, sans-serif;
-    height: 100vh;
 }
 /* ------------------------------------------------------------------------- */
 /* 헤더*/
@@ -19,6 +18,9 @@ header {
     height: 25px;
     top: 0;
     z-index: 1000;
+}
+.header-right {
+    width: 185px;
 }
 .logo {
     width: 60px;
@@ -38,14 +40,6 @@ header {
 }
 
 /* ------------------------------------------------------------------------- */
-
-/* +헤더 */
-.header-right {
-    width: 185px;
-}
-
-/* ------------------------------------------------------------------------- */
-
 /* 사이드바 토글 버튼 설정 */
 #toggleSidebar {
     position: fixed;
@@ -59,9 +53,7 @@ header {
     cursor: pointer;
     border-radius: 5px;
 }
-
 /* ------------------------------------------------------------------------- */
-
 /* 어사이드 바 설정 */
 aside {
     background-color: #f4f4f4;
@@ -74,14 +66,12 @@ aside {
     overflow-y: auto;
     transition: transform 0.3s ease;
 }
-
 /* 어사이드 바 숨김 상태 설정 */
 aside.hidden {
     transform: translateX(-220px);
 }
 
 /* ------------------------------------------------------------------------- */
-
 /* 메인 컨텐츠 설정 */
 main {
     display: flex;
@@ -98,9 +88,7 @@ main {
 main.full {
     margin-left: 20px;
 }
-
 /* ------------------------------------------------------------------------- */
-
 /* 프로필 설정 */
 .profile {
     text-align: center;
@@ -133,9 +121,7 @@ main.full {
 .profile-detail.hidden {
     display: none;
 }
-
 /* ------------------------------------------------------------------------- */
-
 /* 네비게이션 설정 */
 nav ul {
     list-style-type: none;
@@ -155,21 +141,17 @@ nav ul li a {
 nav ul li a:hover {
     color: #368dff;
 }
-
 /* ------------------------------------------------------------------------- */
-/* 일정 등록 + 사이드 캘린더 */
+/* 사이드(일정 등록 + 사이드 캘린더 + 캘린더 바)*/
 .aside-Calendar-sell{
     height: 310px;
 }
-
-
 /*일정 등록*/
 .aside-Calendar{
     display: flex;
     justify-content: center;
     height: 20%;
 }
-
 /* 일정 등록 */
 .new-schedule{
     padding: 8px;
@@ -206,20 +188,18 @@ nav ul li a:hover {
     color: #333;
     width: 75px;
 }
-
 /* 선택된 옵션 스타일링 */
 .selectContainer select option:checked {
     background-color: #e0e0e0;
 }
 /* ------------------------------------------------------------------------- */
-
+/* 사이드(일정 등록 + 사이드 캘린더 + 캘린더 바)*/
 /* 사이드 캘린더 */
 #sidebarCalendarContainer{
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
 #sidebarCalendar{
     width: 90%;
     height: 170px;
@@ -232,20 +212,16 @@ nav ul li a:hover {
     margin-top: 10px;
     border-radius: 15px;
 }
-
 .side-date{
     font-weight: bold;
     text-align: center;
-    border: 1.5px solid rgba(163, 163, 163, 0.62);
+    border: 1.5px solid rgba(14, 14, 14, 0.521);
     box-sizing: border-box;
     font-size: 13px;
 }
 .side-date:hover{
-    border: 1.5px solid #0e0e0f;
     cursor: pointer;
 }
-
-
 .side-calendar-header{
     display: grid;
     grid-template-columns: 1fr 10fr 1fr;
@@ -256,7 +232,6 @@ nav ul li a:hover {
     font-size: 13px;
     font-weight: 900;
 }
-
 .side-calendar-header button {
     background-color: #f4f4f4;
     border: none;
@@ -269,10 +244,10 @@ nav ul li a:hover {
     height: 35px;
 }
 .side-calendar-header button:hover{
-    color: #368dff;
+    color: #060606;
 }
-
 /* ------------------------------------------------------------------------- */
+/* 사이드(일정 등록 + 사이드 캘린더 + 캘린더 바)*/
 .my-calendar-title{
     font-weight: 600;
     font-size: 15px;
@@ -298,21 +273,18 @@ nav ul li a:hover {
     font-weight: 900;
 }
 /* ------------------------------------------------------------------------- */
-
 /*캘린더*/
 #calendar {
     width: 100%;
-    height: 593px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24); /* 박스 섀도우 추가 */
     padding: 20px;
     padding-top: 5px;
-    margin-top: 25px;
+    margin-top: 20px;
     border-radius: 15px;
+    
 }
-
 .calendar-header {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
@@ -323,7 +295,6 @@ nav ul li a:hover {
     font-size: 20px;
     margin-bottom: 9px;
 }
-
 .calendar-header button {
     background-color: white;
     border: none;
@@ -335,89 +306,78 @@ nav ul li a:hover {
     width: 35px;
     height: 35px;
 }
-
 .calendar-header button:hover{
     cursor: pointer;
     color: #368dff;
 }
-
 .calendar-grid {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     border-collapse: collapse;
-    border: 1px solid rgba(163, 163, 163, 0.62);
+    border: 1px solid rgba(79, 78, 78, 0.521);
 }
-
 .date{
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    padding-top: 6px;
-    padding-left: 6px;
+    grid-template-rows: 0.5fr 3fr;
+    padding: 2px;
 }
-
 .calendar-grid .day, .calendar-grid .date {
     font-weight: bold;
     text-align: center;
-    border: 1px solid rgba(163, 163, 163, 0.62);
+    border: 1px solid rgba(79, 78, 78, 0.521);
     box-sizing: border-box;
     font-size: 13px;
 }
 .calendar-grid .date:hover{
     cursor: pointer;
-    border: 1px solid #030303;
+    border: 1px solid #070707;
 }
-
 .day{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 23px;
 }
-
 .calendar-grid .date .number {
     display: flex;
     justify-content: start;
     align-items: start;
+    margin-top: 4px;
+    margin-left: 4px;
+    height: 20px;
+    width: 20px; 
 }
-
-.calendar-grid .date .empty {
-    height: 37.5px;
-}
-
-.calendar-grid .other-month {
-    color: #aaa;
-}
-
 .calendar-grid .sunday .number {
     color: red;
 }
-
 .calendar-grid .saturday .number {
     color: rgb(60, 0, 255);
 }
-
 .calendar-grid .date.today .number {
-    border: 1px solid #368dff;
-    width: max-content;
-    height: max-content;
-    background-color: #368dff;
-    border-radius: 25px;
-    padding: 4px;
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #2672e8;
+    font-weight: 900;
 }
-
 .redColor{
     color: red;
 }
-
 .blueColor{
     color: blue;
 }
-
+/* today-text표시 */
+.today-text{
+    font-size: 10px;
+    
+    
+}
+.side-today{
+    color: #2672e8;
+}
 /* ------------------------------------------------------------------------- */
-
-/* ------------------------------------------------------------------------- */
+/* 일정 등록 */
 .new-calendar-form {
     display: none;
     position: fixed;
@@ -494,7 +454,6 @@ nav ul li a:hover {
     outline: none;
     box-shadow: 0 0 5px rgba(54, 141, 255, 0.5);
 }
-
 .new-calendar-form textarea {
     resize: vertical;
     min-height: 80px;
@@ -520,3 +479,34 @@ nav ul li a:hover {
     background-color: #2672e8;
 }
 /* --------------------------------------------------------------------- */
+/* 이벤트 바 */
+.event-bar {
+    height: 12px; /* 바의 높이를 설정합니다 */
+    font-size: 10px;
+    background-color: rgba(15, 38, 249, 0.377); 
+    margin-top: 4px; /* 바와 숫자 사이의 간격을 설정합니다 */
+    position: relative;
+    width: 100%; /* 바의 너비를 100%로 설정 */
+    border-radius: 2px; /* 모서리를 둥글게 설정 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+    background-color: rgba(15, 38, 249, 0.377); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.empty {
+    padding: 3px;
+    display: grid;
+}
+.company-bar{
+    background-color: rgba(7, 240, 42, 0.623); 
+}
+.team-bar{
+    background-color: rgba(217, 240, 10, 0.541); 
+}
+.other-bar{
+    opacity: 0.85;
+}
+.other-month .number{
+    color: rgb(178, 176, 176);
+}
