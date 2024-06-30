@@ -1,8 +1,7 @@
 package com.groupware.orca.document.controller;
 
-import com.groupware.orca.document.service.ApprovalLineService;
+import com.groupware.orca.document.service.MyApprLineService;
 import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
@@ -10,24 +9,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("orca/apprline")
+@RequestMapping("orca/myapprline")
 @RequiredArgsConstructor
-public class ApprovalLineController {
+public class MyApprLineController {
 
-    private final ApprovalLineService service;
+    private final MyApprLineService service;
 
-    //관리자
+    //사원
 
     //기본 결재선 등록 - 화면
     @GetMapping("add")
     public String addApprLineView(Model model) {
         System.out.println("model = " + model);
         model.addAttribute("approvalLine", new ApprovalLineVo());
-        return "apprline/add";
+        return "myapprline/add";
     }
     // 결재선 등록 조직도 가져오기
     @GetMapping("organization/list")
@@ -64,7 +62,7 @@ public class ApprovalLineController {
         System.out.println("ApprovalLineController.addApprovalLine");
         System.out.println("approvalLineVo = " + approvalLineVo);
         service.addApprovalLine(approvalLineVo);
-       return "redirect:/orca/apprline/list";
+       return "redirect:/orca/myapprline/list";
     }
 
     // 결재선 전체목록 (양식/결재라인)
@@ -73,14 +71,15 @@ public class ApprovalLineController {
         List<ApprovalLineVo> approvalLines = service.getApprovalLines();
         System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
-        return "apprline/list";
+        return "myapprline/list";
     }
 
     // 결재선 삭제
     @GetMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
         service.deleteApprLine(apprLineNo);
-        return "redirect:/orca/apprline/list";
+        return "redirect:/orca/myapprline/list";
     }
+
 
 }
