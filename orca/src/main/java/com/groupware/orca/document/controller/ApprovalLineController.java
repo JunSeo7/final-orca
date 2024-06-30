@@ -66,14 +66,23 @@ public class ApprovalLineController {
     }
 
 
-//    // 결재선 전체목록 (양식/결재라인)
-//    @GetMapping("list")
-//    public String getApprLines(Model model) {
-//        List<ApprovalLineVo> approvalLines = service.getApprovalLines();
-//        System.out.println("approvalLines = " + approvalLines);
-//        model.addAttribute("approvalLines", approvalLines);
-//        return "apprline/list";
-//    }
+    // 결재선 전체목록 (양식/결재라인)
+    @GetMapping("list")
+    public String getApprLines(Model model) {
+        List<ApprovalLineVo> approvalLines = service.getApprovalLines();
+        System.out.println("approvalLines = " + approvalLines);
+        model.addAttribute("approvalLines", approvalLines);
+        return "apprline/list";
+    }
+
+    // 마이결재선 전체목록 (양식/결재라인)
+    @GetMapping("mylist")
+    public String getMyApprLines(Model model) {
+        List<ApprovalLineVo> approvalLines = service.getMyApprLines();
+        System.out.println("approvalLines = " + approvalLines);
+        model.addAttribute("approvalLines", approvalLines);
+        return "apprline/mylist";
+    }
 
     // 결재선 수정
 

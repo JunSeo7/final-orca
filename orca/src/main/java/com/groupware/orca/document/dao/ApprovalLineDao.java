@@ -45,14 +45,14 @@ public class ApprovalLineDao {
     // 결재선 전체목록 (결재선)
     public List<ApprovalLineVo> getApprovalLineList() {
         List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList();
-        System.out.println("templates = " + approvalLines);
+        System.out.println("approvalLines = " + approvalLines);
         return approvalLines;
     }
 
     // 결재선 전체목록 (결재자 여러명)
-    public List<ApproverVo> getApproverList() {
-        List<ApproverVo> approvers = mapper.getApproverList();
-        System.out.println("approvalLines = " + approvers);
+    public List<ApproverVo> getApproverList(int apprLineNo) {
+        List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
+        System.out.println("approvers = " + approvers);
         if(approvers ==null){
             System.out.println("approverLineVoList nulllllllllll= " + approvers);
     } return approvers;

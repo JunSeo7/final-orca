@@ -23,14 +23,14 @@
     </c:when>
     <c:otherwise>
      <div class="approval-lines-box">
-        <c:forEach var="template" items="${approvalLines}">
+        <c:forEach var="approvalLines" items="${approvalLines}">
             <div class="approval-lines">
                 <!-- 결재선 이름 및 템플릿 제목 -->
-                <span class="approval-lines-name">${template.apprLineName}</span>
-                <span class="approval-title">[${template.categoryName}] ${template.title}</span>
+                <span class="approval-lines-name">${approvalLines.apprLineName}</span>
+                <span class="approval-title">[${approvalLines.categoryName}] ${approvalLines.title}</span>
                 <br>
                 <!-- 결재자 목록 -->
-                <c:forEach var="approver" items="${template.apprLineList}">
+                <c:forEach var="approver" items="${approvalLines.approverVoList}">
                     <c:choose>
                         <c:when test="${approver.approverClassificationNo == 2}">
                             <span class="approver">합의:</span>

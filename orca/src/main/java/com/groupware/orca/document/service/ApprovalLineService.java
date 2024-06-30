@@ -49,15 +49,15 @@ public class ApprovalLineService {
         }
     }
 
-//    // 결재선 전체목록 (결재선/결재자)
-//    public List<ApprovalLineVo> getApprovalLines() {
-//        List<ApprovalLineVo> approvalLines = dao.getApprovalLineList();
-//        for (ApprovalLineVo line : approvalLines) {
-//            List<ApproverVo> approvers = dao.getApproverList(line.getApprLineNo());
-//            line.setApproverVoList(approvers);
-//        }
-//        return approvalLines;
-//    }
+    // 결재선 전체목록 (결재선/결재자)
+    public List<ApprovalLineVo> getApprovalLines() {
+        List<ApprovalLineVo> approvalLines = dao.getApprovalLineList();
+        for (ApprovalLineVo line : approvalLines) {
+            List<ApproverVo> approvers = dao.getApproverList(line.getApprLineNo());
+            line.setApproverVoList(approvers);
+        }
+        return approvalLines;
+    }
 
 
     // 결재선 삭제
