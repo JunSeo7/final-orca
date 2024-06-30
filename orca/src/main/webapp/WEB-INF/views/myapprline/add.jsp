@@ -12,9 +12,12 @@
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
 
 <main id="content">
-    <form id="approvalLineForm" action="/orca/apprline/add" method="post">
+    <form id="approvalLineForm" action="/orca/myapprline/add" method="post">
         <label for="apprLineName">결재선 이름:</label>
         <input type="text" id="apprLineName" name="apprLineName">
+
+        <label for="apprLineName">기안자 번호:</label>
+        <input type="number" id="writerNo" name="writerNo">
 
         <label for="categoryNo">카테고리:</label>
         <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
@@ -75,7 +78,7 @@
         // 결재양식add 화면 - 카테고리 번호 가져가서 템플릿 제목 가져오기
         function fetchTemplatesByCategory(categoryNo) {
             $.ajax({
-                url: '/orca/apprline/template/list',
+                url: '/orca/myapprline/template/list',
                 method: 'GET',
                 data: { categoryNo: categoryNo },
                 success: function(templates) {
@@ -97,7 +100,7 @@
         // 결재양식add 화면 - 선택한 카테고리 번호 가져오기
         function fetchCategories() {
             $.ajax({
-                url: '/orca/apprline/categorie/list',
+                url: '/orca/myapprline/categorie/list',
                 method: 'GET',
                 success: function(categories) {
                     const categorySelect = document.querySelector('#categoryNo');
@@ -125,7 +128,7 @@
         // 결재양식add 화면 - 조직도 가져오기
            function fetchOrganization() {
                $.ajax({
-                   url: '/orca/apprline/organization/list',
+                   url: '/orca/myapprline/organization/list',
                    method: 'GET',
                    success: function(data) {
                        console.log("data:", data);
@@ -145,7 +148,7 @@
 
        function fetchOrganization() {
            $.ajax({
-               url: '/orca/apprline/organization/list',
+               url: '/orca/myapprline/organization/list',
                method: 'GET',
                success: function(data) {
                    console.log("data:", data);

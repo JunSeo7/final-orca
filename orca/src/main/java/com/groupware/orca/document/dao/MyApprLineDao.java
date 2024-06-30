@@ -1,21 +1,20 @@
 package com.groupware.orca.document.dao;
 
-import com.groupware.orca.document.mapper.ApprovalLineMapper;
+import com.groupware.orca.document.mapper.MyApprLineMapper;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ApprovalLineDao {
+public class MyApprLineDao {
 
-    private final ApprovalLineMapper mapper;
+    private final MyApprLineMapper mapper;
 
     // 결재선 등록 조직도 가져오기
     public List<UserVo> getUsers() {

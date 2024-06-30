@@ -1,0 +1,276 @@
+/*메인*/
+main {
+  margin-top: 100px;
+  margin-left: 220px;
+  padding-bottom: 100px;
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+/* 메인 컨텐츠 확장 상태 설정 */
+main.full {
+  margin-left: 20px;
+}
+/* 결재선 등록 버튼 */
+.approval-btn {
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.approval-btn:hover {
+  background-color: #368dff;
+}
+/* 결재선 없음 메시지 */
+.no-approval-lines {
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* 결재선 있으면 */
+.approval-lines-box{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.approval-lines {
+  border: 1px solid #ddd;
+  width: 45%;
+  min-width: 300px;
+  border-radius: 5px;
+  padding: 20px;
+  color: #000000;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.approval-lines-name{
+  font-weight: bold;
+}
+
+.approval-title{
+  color:  #535353;;
+}
+
+.approver{
+  color: #0072e3;
+}
+
+.approval-lines-btn{
+  cursor: pointer;
+}
+
+.approval-lines-btn img{
+  width: 18px;
+}
+
+/*결재선 등록 팝업*/
+.popup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 700px; /* 팝업 너비 조정 */
+  height: 600px; /* 팝업 높이 조정 */
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  height: calc(100% - 100px); /* 하단의 결재선 선택 영역을 제외한 높이 */
+}
+
+.popup-body-left {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.t-title{
+  font-weight: bold;
+}
+
+.popup-body-left p {
+  font-size: 12px;
+}
+
+.popup-body-right {
+  border:1px solid#ddd;
+  border-radius: 5px;
+  width: 100%;
+  height: 95%;
+  overflow-y: auto;
+}
+
+.popup-body-bottom{
+  width: 100%;
+  height: 30%;
+  grid-column: span 2;
+}
+
+.popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  }
+
+.jstree-icon{
+font-size: 1.2em;
+color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
+}
+
+.approval-line {
+  display: flex;
+  flex-direction: column;
+}
+
+.approval-line > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.approval-selection {
+  height: 100px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.approval-selection .slot {
+  border: 1px dashed #bbb;
+  padding: 5px;
+  margin: 5px;
+  width: 100px;
+  text-align: center;
+  flex-grow: 1;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.approval-selection .slot.dragover {
+  border-color: #1E90FF;
+}
+
+.approval-role {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.approval-role label {
+  margin-right: 10px;
+}
+
+.approval-role select {
+  margin-left: 5px;
+}
+
+.slot-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.role-select {
+  width: 80px;
+  margin-top: 5px;
+}
+
+input, select{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+/*수정팝업*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 10;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  display: none;
+  width: 80%;
+  max-width: 600px;
+}
+.modal-header, .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-body {
+  display: flex;
+}
+.modal-body-left, .modal-body-right {
+  flex: 1;
+  padding: 10px;
+}
+.modal-body-bottom {
+  margin-top: 10px;
+}

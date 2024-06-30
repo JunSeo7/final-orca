@@ -1,6 +1,6 @@
 package com.groupware.orca.document.service;
 
-import com.groupware.orca.document.dao.ApprovalLineDao;
+import com.groupware.orca.document.dao.MyApprLineDao;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
@@ -9,16 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ApprovalLineService {
+public class MyApprLineService {
 
-    private final ApprovalLineDao dao;
+    private final MyApprLineDao dao;
+
     // 결재선 등록 조직도 가져오기
     public List<UserVo> getUsers() {
         return dao.getUsers();
@@ -59,8 +57,11 @@ public class ApprovalLineService {
         return approvalLines;
     }
 
+
     // 결재선 삭제
     public void deleteApprLine(int apprLineNo) {
         dao.deleteApprLine(apprLineNo);
     }
+
+
 }
