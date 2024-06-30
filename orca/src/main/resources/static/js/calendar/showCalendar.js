@@ -202,6 +202,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
 }
 
 // Initial render with empty events
+
 renderCalendar(calendarElement, year, month, []);
 
 
