@@ -89,12 +89,14 @@ function toggleCalendarBar(range, index) {
         todayText();
     }
 }
-//-- 캐린더 변수 설정
+//-- 캘린더 변수 설정
 const calendarElement = document.getElementById('calendar');
 const sidebarCalendarElement = document.getElementById('sidebarCalendar');
 const date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
+let lastClickedview = null;
+let viewCnt = 0;
 
 function renderCalendar(calendarEl, year, month, events = []) {
     calendarEl.innerHTML = '';
@@ -176,77 +178,166 @@ function renderCalendar(calendarEl, year, month, events = []) {
         let startDate = new Date(event.startDate);
         let endDate = new Date(event.endDate);
         let range = event.range;
-        while (startDate <= endDate) {
-            let isCurrentMonth = startDate.getFullYear() === year && startDate.getMonth() === month;
-            let beforeMonth = startDate.getFullYear() === year && startDate.getMonth() === month - 1;
-            let afterMonth = startDate.getFullYear() === year && startDate.getMonth() === month + 1;
 
-            if (isCurrentMonth) {
-                const day = startDate.getDate();
-                const dayElements = grid.querySelectorAll('.date');
-                dayElements.forEach(el => {
-                    const dayNumber = parseInt(el.querySelector('.number').textContent);
-                    if (!el.classList.contains('other-month')) {
-                        if (dayNumber === day) {
-                            let eventBar = document.createElement('div');
-                            eventBar.classList.add('event-bar');
-                            if (range === 'company') {
-                                eventBar.classList.add('company-bar');
-                            } else if (range === 'team') {
-                                eventBar.classList.add('team-bar');
-                            }
-                            eventBar.textContent = event.title;
-                            el.querySelector('.empty').appendChild(eventBar);
+        while (startDate <= endDate) {
+            let day = startDate.getDate();
+            let dayElements = grid.querySelectorAll('.date');
+
+            dayElements.forEach(el => {
+                let dayNumber = parseInt(el.querySelector('.number').textContent);
+                let isCurrentMonth = startDate.getFullYear() === year && startDate.getMonth() === month;
+                let beforeMonth = startDate.getFullYear() === year && startDate.getMonth() === month - 1;
+                let afterMonth = startDate.getFullYear() === year && startDate.getMonth() === month + 1;
+
+                if ((isCurrentMonth && !el.classList.contains('other-month')) ||
+                    (beforeMonth && el.classList.contains('before-month')) ||
+                    (afterMonth && el.classList.contains('after-month'))) {
+
+                    if (dayNumber === day) {
+                        let eventBar = document.createElement('div');
+                        eventBar.classList.add('event-bar');
+                        eventBar.textContent = event.title;
+
+                        if (range === 'company') {
+                            eventBar.classList.add('company-bar');
+                        } else if (range === 'team') {
+                            eventBar.classList.add('team-bar');
+                        } else if (range === 'individual') {
+
                         }
-                    }
-                });
-            } else if (beforeMonth) {
-                const day = startDate.getDate();
-                const dayElements = grid.querySelectorAll('.date');
-                dayElements.forEach(el => {
-                    const dayNumber = parseInt(el.querySelector('.number').textContent);
-                    if (el.classList.contains('before-month')) {
-                        if (dayNumber === day) {
-                            let eventBar = document.createElement('div');
-                            eventBar.classList.add('event-bar');
+                        if (el.classList.contains('other-month')) {
                             eventBar.classList.add('other-bar');
-                            if (range === 'company') {
-                                eventBar.classList.add('company-bar');
-                            } else if (range === 'team') {
-                                eventBar.classList.add('team-bar');
-                            }
-                            eventBar.textContent = event.title;
-                            el.querySelector('.empty').appendChild(eventBar);
                         }
+
+                        el.querySelector('.empty').appendChild(eventBar);
+
+                        // 클릭 이벤트 핸들러 추가
+                        eventBar.addEventListener('click', function () {
+                            handleEventBarClick(event, eventBar); // 이벤트 바 클릭 시 호출할 함수
+                        });
                     }
-                });
-            } else if (afterMonth) {
-                const day = startDate.getDate();
-                const dayElements = grid.querySelectorAll('.date');
-                dayElements.forEach(el => {
-                    const dayNumber = parseInt(el.querySelector('.number').textContent);
-                    if (el.classList.contains('after-month')) {
-                        if (dayNumber === day) {
-                            let eventBar = document.createElement('div');
-                            eventBar.classList.add('event-bar');
-                            eventBar.classList.add('other-bar');
-                            if (range === 'company') {
-                                eventBar.classList.add('company-bar');
-                            } else if (range === 'team') {
-                                eventBar.classList.add('team-bar');
-                            }
-                            eventBar.textContent = event.title;
-                            el.querySelector('.empty').appendChild(eventBar);
-                        }
-                    }
-                });
-            }
+                }
+            });
 
             startDate.setDate(startDate.getDate() + 1);
         }
     });
 
+    // 이벤트 바 클릭 시 호출할 함수
+    function handleEventBarClick(event, barDiv) {
+        // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
+        console.log('이벤트 바를 클릭했습니다:', event.title);
+        const titleElement = document.querySelector('.view-calendar-title');
+        const enrollDateElement = document.querySelector('.view-calendar-enroll-date');
+        const writerElement = document.querySelector('.view-calendar-writer');
+        const partnameElement = document.querySelector('.view-calendar-partName');
+        const contentElement = document.getElementById('viewEventContent');
+        const startDateElement = document.getElementById('viewStartDate');
+        const endDateElement = document.getElementById('viewEndDate');
+        const rangeElement = document.getElementById('viewRange');
+        
+        console.log(enrollDateElement);
+        console.log(event.enrollDate);
+
+        titleElement.textContent = event.title;
+        enrollDateElement.textContent = event.enrollDate;
+        writerElement.textContent = event.writer;
+        partnameElement.textContent = event.partName;
+        contentElement.value = event.content;
+        startDateElement.value = event.startDate;
+        endDateElement.value = event.endDate;
+        rangeElement.value = event.range;
+
+        console.log(barDiv);
+        viewCnt++;
+        if (viewCnt % 2 == 0) {
+            hideNewEventView();
+        } else if (viewCnt % 2 != 0) {
+            showNewEventView(barDiv);
+        }
+    }
+
     calendarEl.appendChild(grid);
+}
+//일정 상세 조회 View
+function showNewEventView(barDiv) {
+    const form = document.getElementById('viewEventDetailsForm');
+    form.style.display = 'block';
+    const rect = barDiv.getBoundingClientRect();
+    const formRect = form.getBoundingClientRect();
+
+    let left = rect.right + 195;
+    if (left + formRect.width > window.innerWidth + 300) {
+        left = rect.left - formRect.width + 185;
+    }
+    let top = rect.top + 145;
+
+    if (top < 0) {
+        top = 0;
+    }
+    form.style.left = `${left}px`;
+    form.style.top = `${top}px`;
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+//일정 상세조회
+function hideNewEventView() {
+    const form = document.getElementById('viewEventDetailsForm');
+    form.style.display = 'none';
+}
+// 일정 상세조회 드래그 앤 드랍
+let isDraggingView = false;
+let viewClickX = 0;
+let viewClickY = 0;
+let viewX = 0;
+let viewY = 0;
+//일정 상세 조회 close
+function closeViewEvent() {
+    viewCnt++;
+    hideNewEventView();
+}
+//일정 삭제
+function deleteEvent() {
+    viewCnt++;
+    hideNewEventView();
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('viewEventDetailsForm');
+
+    console.log(form);
+
+    form.addEventListener('mousedown', function (event) {
+        if (event.target.classList.contains('view-form-header') || event.target.closest('.view-form-header')) {
+            console.log("넘어옴2");
+            isDraggingView = true;
+            viewClickX = event.clientX;
+            viewClickY = event.clientY;
+            viewX = form.offsetLeft;
+            viewY = form.offsetTop;
+            document.addEventListener('mousemove', onDragView);
+            document.addEventListener('mouseup', onStopDragView);
+        }
+    });
+});
+
+function onDragView(event) {
+    if (isDraggingView) {
+        const deltaX = event.clientX - viewClickX;
+        const deltaY = event.clientY - viewClickY;
+        const newFormX = viewX + deltaX;
+        const newFormY = viewY + deltaY;
+
+        const form = document.getElementById('viewEventDetailsForm');
+        form.style.left = `${newFormX}px`;
+        form.style.top = `${newFormY}px`;
+    }
+}
+
+function onStopDragView() {
+    isDraggingView = false;
+    document.removeEventListener('mousemove', onDragForm);
+    document.removeEventListener('mouseup', onStopDragForm);
 }
 
 // 사이드 캘린더
@@ -330,23 +421,17 @@ function renderSideCalendar(calendarEl, year, month) {
 function todayText() {
     let todayNumber = document.querySelector('.calendar-grid .date.today .number');
     let todayText = document.createElement('div');
-    todayText.textContent = 'today'; // 'D' 텍스트를 추가
-    todayText.classList.add('today-text');
-    todayNumber.appendChild(todayText);
+    if (todayNumber) {
+        todayText.textContent = 'today'; // 'D' 텍스트를 추가
+        todayText.classList.add('today-text');
+        todayNumber.appendChild(todayText);
+    }
 }
 
 // 캘린더/사이드 캘린더 함수 호출
 renderCalendar(calendarElement, year, month, []);
 renderSideCalendar(sidebarCalendarElement, year, month);
 todayText();
-
-
-
-
-
-
-
-
 
 //월 이동 함수
 function changeMonth(offset) {
@@ -394,8 +479,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendarDiv.addEventListener('click', function (event) {
         const clickedDiv = event.target.closest('.date');
+        const clickedDivBar = event.target.closest('.event-bar');
 
-        if (clickedDiv) {
+        if (clickedDiv && !clickedDivBar) {
             KeyCnt++;
             if (KeyCnt % 2 == 0) {
                 hideNewEventForm();
@@ -405,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     document.addEventListener('keydown', function (event) {
-        if (event.ctrlKey && event.key === 'c') {
+        if (event.ctrlKey && event.key === '.') {
             KeyCnt++;
             if (KeyCnt % 2 == 0) {
                 hideNewEventForm();
@@ -418,6 +504,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function showNewEventForm() {
     const form = document.getElementById('newEventForm');
+
     form.style.display = 'block';
 
     const formRect = form.getBoundingClientRect();
@@ -466,11 +553,10 @@ document.getElementById('eventForm').addEventListener('submit', function (event)
     hideNewEventForm();
 });
 
-let isDraggingForm = false;
-let initialClickX = 0;
-let initialClickY = 0;
-let initialFormX = 0;
-let initialFormY = 0;
+function closeFormEvent() {
+    KeyCnt++;
+    hideNewEventForm();
+}
 
 function submitNewEvent() {
     KeyCnt++;
@@ -480,7 +566,16 @@ function submitNewEvent() {
         showNewEventForm();
     }
 }
+
+
+
 //일정 등록 화면 드래그 앤 드랍
+let isDraggingForm = false;
+let initialClickX = 0;
+let initialClickY = 0;
+let initialFormX = 0;
+let initialFormY = 0;
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('newEventForm');
 
@@ -550,6 +645,27 @@ function handleMonthChange() {
     renderSideCalendar(sidebarCalendarElement, year, month);
     todayText();
 }
+
+let calendarBars = document.querySelectorAll('.empty .event-bar');
+console.log(calendarBars);
+// 각 calendarBars 요소에 클릭 이벤트 핸들러 추가
+calendarBars.forEach(function (bar) {
+    bar.addEventListener('click', function (event) {
+        console.log(bar);
+        // 클릭 이벤트가 발생했을 때 이벤트 버블링을 중지시킴
+        event.stopPropagation();
+        // 클릭 이벤트 발생 시 수행할 작업
+        console.log('calendar bar를 클릭했습니다.');
+        // 추가적인 작업 수행 가능
+    });
+});
+//--------------------------------------------------------------
+//일정 조회
+
+
+
+
+
 
 
 

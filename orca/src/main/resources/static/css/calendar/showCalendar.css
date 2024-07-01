@@ -215,7 +215,7 @@ nav ul li a:hover {
 .side-date{
     font-weight: bold;
     text-align: center;
-    border: 1.5px solid rgba(14, 14, 14, 0.521);
+    border: 1px solid rgba(79, 78, 78, 0.521);
     box-sizing: border-box;
     font-size: 13px;
 }
@@ -482,31 +482,164 @@ nav ul li a:hover {
 /* 이벤트 바 */
 .event-bar {
     height: 12px; /* 바의 높이를 설정합니다 */
-    font-size: 10px;
+    font-size: 12px;
     background-color: rgba(15, 38, 249, 0.377); 
     margin-top: 4px; /* 바와 숫자 사이의 간격을 설정합니다 */
-    position: relative;
     width: 100%; /* 바의 너비를 100%로 설정 */
     border-radius: 2px; /* 모서리를 둥글게 설정 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
-    background-color: rgba(15, 38, 249, 0.377); 
+    background-color: #79e4ea;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 999;
+    padding: 1.5px;
 }
+.empty .event-bar:hover{
+    font-size: 13.5px;
+    background-color: #6eadff;
+}
+
 .empty {
     padding: 3px;
     display: grid;
+    padding-bottom: 3px;
 }
 .company-bar{
-    background-color: rgba(7, 240, 42, 0.623); 
+    background-color: #c8a8ed;
 }
 .team-bar{
-    background-color: rgba(217, 240, 10, 0.541); 
+    background-color: #e87e7e;
 }
 .other-bar{
-    opacity: 0.85;
+    opacity: 0.80;
+    
 }
 .other-month .number{
     color: rgb(178, 176, 176);
 }
+/* ----------------------------------- */
+/* 일정 조회 */
+
+.view-calendar-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    max-width: 400px;
+    width: 95%;
+    height: 510px;
+    z-index: 1000;
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+.view-calendar-form .view-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 19px;
+    width: 100%;
+}
+
+.view-calendar-name{
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.view-calendar-title{
+    font-weight: 900;
+    font-size: 1.23rem;
+    color: #333;
+    margin-left: 4px;
+}
+
+.view-calendar-enroll-date{
+    font-size: 10px;
+    font-weight: 600;
+    color: rgb(181, 177, 177);
+}
+
+.view-calendar-writer{
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #333;
+    margin-left: 4px;
+}
+.view-calendar-partName{
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: rgb(181, 177, 177);
+    margin-left: 4px;
+    padding-bottom: 2px;
+}
+.view-calendar-form .view-cancel-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.view-calendar-form .view-cancel-button:hover {
+    color: red;
+}
+
+.view-calendar-form .view-form-body {
+    margin-bottom: 15px;
+}
+
+.view-calendar-form .view-form-group {
+    margin-bottom: 18px;
+}
+
+.view-calendar-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #333;
+}
+
+.view-calendar-form input[type="text"],
+.view-calendar-form input[type="date"],
+.view-calendar-form textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.view-calendar-form textarea {
+    resize: vertical;
+    min-height: 90px;
+    resize: none;
+    height: 80px;
+}
+
+.view-form-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.view-form-footer button {
+    padding: 7px 14.5px;
+    font-size: 0.85rem;
+    background-color: #368dff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+
+.view-form-footer button:hover {
+    background-color: #2672e8;
+}
+

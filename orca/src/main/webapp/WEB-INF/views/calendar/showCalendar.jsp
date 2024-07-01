@@ -84,8 +84,9 @@
             <div class="new-calendar-form" id="newEventForm">
                 <div class="form-header">
                     <h2>일정 등록</h2>
-                    <button class="cancel-button" onclick="hideNewEventForm()">✖</button>
+                    <button class="cancel-button" onclick="closeFormEvent()">✖</button>
                 </div>
+
                 <div class="form-body">
                     <form id="eventForm" action="/orca/calendar/writeCalendar" method="post">
                         <div class="form-group">
@@ -124,6 +125,41 @@
                     </form>
                 </div>
             </div>
+            
+            <div class="view-calendar-form" id="viewEventDetailsForm">
+                <div class="view-form-header">
+                    <div><span class="view-calendar-title">일정 제목</span> <span class="view-calendar-enroll-date">2024.06.21</span></div>
+                    <button class="view-cancel-button" onclick="closeViewEvent()">✖</button>
+                </div>
+                
+                <div class="view-form-body">
+                    <div class="view-form-group view-calendar-name">
+                        <span class="view-calendar-writer">작성자</span>
+                        <span class="view-calendar-partName">부서</span>
+                    </div>
+                    <div class="view-form-group">
+                        <label for="viewEventContent">일정 내용</label>
+                        <textarea id="viewEventContent" name="content" rows="4.5" readonly></textarea>
+                    </div>
+                    <div class="view-form-group">
+                        <label for="viewStartDate">시작일</label>
+                        <input type="date" id="viewStartDate" name="startDate" readonly>
+                    </div>
+                    <div class="view-form-group">
+                        <label for="viewEndDate">종료일</label>
+                        <input type="date" id="viewEndDate" name="endDate" readonly>
+                    </div>
+                    <div class="view-form-group">
+                        <label for="viewRange">공유 범위</label>
+                        <input type="text" id="viewRange" name="range" readonly>
+                    </div>
+                    <div class="view-form-footer">
+                        <button class="view-edit-button" onclick="editEvent()">수정</button>
+                        <button class="view-delete-button" onclick="deleteEvent()">삭제</button>
+                    </div>
+                </div>
+            </div>
+
             </main>
 
         </body>
