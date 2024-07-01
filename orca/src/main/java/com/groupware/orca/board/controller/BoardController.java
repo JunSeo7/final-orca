@@ -9,7 +9,6 @@ import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,28 +24,29 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/board")
 public class BoardController {
 
     private final BoardService boardService;
     private final BoardFileService boardFileService;
     private final CommentService commentService;
 
-    @GetMapping("/board")
+    @GetMapping
     public String getBoard() {
         return "board/board";
     }
 
-    @GetMapping("/board/insert")
+    @GetMapping("/insert")
     public String insertDisplay() {
         return "board/insert";
     }
 
-    @GetMapping("/board/list/{categoryNo}")
+    @GetMapping("/list/{categoryNo}")
     public @ResponseBody List<BoardVo> getBoardList(@PathVariable("categoryNo") int categoryNo) {
         return boardService.getBoardList(categoryNo);
     }
 
-    @GetMapping("/board/{boardNo}")
+    @GetMapping("/{boardNo}")
     public @ResponseBody BoardVo getBoardDetail(@PathVariable("boardNo") int boardNo) {
         BoardVo boardDetail = boardService.getBoardDetail(boardNo);
         boardService.hit(boardNo);
@@ -55,57 +55,51 @@ public class BoardController {
 
     @GetMapping("/search")
     public ResponseEntity<List<BoardVo>> searchBoardByTitle(@RequestParam("title") String title, @RequestParam("categoryNo") int categoryNo) {
-        try {
-            List<BoardVo> boardList = boardService.searchBoard(title, categoryNo);
-            if (boardList.isEmpty()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(boardList);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        List<BoardVo> boardList = boardService.searchBoard(title, categoryNo);
+        if (boardList.isEmpty()) {
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.ok(boardList);
     }
 
-    @PostMapping("/board/insert")
+    @PostMapping("/insert")
     public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
         String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setInsertUserNo(Integer.parseInt(insertUserNo));
+        if (vo.getCategoryNo() == 3) { // 익명 게시판일 경우
+            vo.setIsAnonymous('Y');
+        } else {
+            vo.setIsAnonymous('N');
+        }
         boardService.boardInsert(vo);
         return "redirect:/board";
     }
 
-    @PostMapping("/board/uploadImage")
+    @PostMapping("/uploadImage")
     @ResponseBody
-    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
+    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         Map<String, Object> response = new HashMap<>();
-        try {
-            String uploadDir = "C:/dev/setup/uploads/";
-            String fileName = file.getOriginalFilename();
-            File dest = new File(uploadDir, fileName);
-            if (!dest.getParentFile().exists()) {
-                dest.getParentFile().mkdirs();
-            }
-            file.transferTo(dest);
-
-            // DB에 파일 정보 저장
-            BoardFileVo fileVo = new BoardFileVo();
-            fileVo.setBoardNo(null); // null로 설정
-            fileVo.setFileOriginName(fileName);
-            fileVo.setFileSaveName(fileName);
-            fileVo.setFileDelYn("N");
-            boardFileService.insertFile(fileVo);
-
-            response.put("link", "/uploads/" + fileName);
-        } catch (IOException e) {
-            log.error("이미지 업로드 실패", e);
-            response.put("error", "이미지 업로드 실패");
+        String uploadDir = "C:/dev/setup/uploads/";
+        String fileName = file.getOriginalFilename();
+        File dest = new File(uploadDir, fileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
         }
+        file.transferTo(dest);
+
+        // DB에 파일 정보 저장
+        BoardFileVo fileVo = new BoardFileVo();
+        fileVo.setBoardNo(null); // null로 설정
+        fileVo.setFileOriginName(fileName);
+        fileVo.setFileSaveName(fileName);
+        fileVo.setFileDelYn("N");
+        boardFileService.insertFile(fileVo);
+
+        response.put("link", "/uploads/" + fileName);
         return response;
     }
 
-    @PostMapping("/board/update")
+    @PostMapping("/update")
     public String updateBoard(@ModelAttribute BoardVo boardVo, HttpSession httpSession) {
         String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         boardVo.setInsertUserNo(Integer.parseInt(insertUserNo));
@@ -113,35 +107,37 @@ public class BoardController {
         return "redirect:/board";
     }
 
-    @DeleteMapping("/board/{boardNo}")
+    @DeleteMapping("/{boardNo}")
     public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo) {
-        try {
-            // 댓글 먼저 삭제
-            commentService.deleteCommentsByBoardNo(boardNo);
-            // 게시글 삭제
-            boardService.boardDelete(boardNo);
-            return "게시물이 삭제되었습니다.";
-        } catch (Exception e) {
-            e.printStackTrace(); // 오류 로그 출력
-            return "게시물 삭제에 실패했습니다.";
-        }
+        // 댓글 먼저 삭제
+        commentService.deleteCommentsByBoardNo(boardNo);
+        // 게시글 삭제
+        boardService.boardDelete(boardNo);
+        return "게시물이 삭제되었습니다.";
     }
 
-    @GetMapping("/board/updatePage")
+    @GetMapping("/updatePage")
     public String updatePage(@RequestParam("boardNo") int boardNo, Model model) {
         BoardVo boardVo = boardService.getBoardDetail(boardNo);
         model.addAttribute("board", boardVo);
         return "board/updatePage";
     }
 
-    @GetMapping("/board/statistics")
+    @GetMapping("/statistics")
     public String getStatisticsPage() {
         return "board/statistics";
     }
 
-    @GetMapping("/board/statsByDate")
+    @GetMapping("/statsByDate")
     @ResponseBody
     public List<Map<String, Object>> getStatsByDate() {
         return boardService.getStatsByDate();
+    }
+
+    //조회수 증가
+    @PostMapping("/hit/{boardNo}")
+    public ResponseEntity<String> hit(@PathVariable("boardNo") int boardNo) {
+        boardService.hit(boardNo);
+        return ResponseEntity.ok("조회수 증가 성공");
     }
 }

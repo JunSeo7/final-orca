@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="chart-container">
-        <h2>게시물 및 조회수 통계</h2>
+        <h2>총 게시물 및 조회수 통계</h2>
        <a href="/board">게시물 목록 돌아가기</a>
         <canvas id="statsChart" width="400" height="200"></canvas>
     </div>
@@ -40,14 +40,14 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: '게시물 수',
+                            label: '총 게시물 수',
                             data: postCounts,
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
                         },
                         {
-                            label: '조회수',
+                            label: '총 조회수',
                             data: viewCounts,
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',

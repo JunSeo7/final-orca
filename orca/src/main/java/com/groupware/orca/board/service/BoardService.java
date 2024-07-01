@@ -15,7 +15,11 @@ public class BoardService {
     private final BoardDao dao;
 
     public BoardVo getBoardDetail(int boardNo) {
-        return dao.getBoardDetail(boardNo);
+        BoardVo boardVo = dao.getBoardDetail(boardNo);
+        if (boardVo.getIsAnonymous() == 'Y') {
+            boardVo.setEmployeeName("***");
+        }
+        return boardVo;
     }
 
     public int boardInsert(BoardVo vo) {
@@ -31,7 +35,8 @@ public class BoardService {
     }
 
     public List<BoardVo> searchBoard(String title, int categoryNo) {
-        return dao.searchBoard(title, categoryNo);
+        List<BoardVo> boardList = dao.searchBoard(title, categoryNo);
+        return boardList;
     }
 
     public void hit(int boardNo) {
@@ -39,7 +44,13 @@ public class BoardService {
     }
 
     public List<BoardVo> getBoardList(int categoryNo) {
-        return dao.getBoardList(categoryNo);
+        List<BoardVo> boardList = dao.getBoardList(categoryNo);
+        for (BoardVo board : boardList) {
+            if (board.getIsAnonymous() == 'Y') {
+                board.setEmployeeName("***");
+            }
+        }
+        return boardList;
     }
 
     public List<Map<String, Object>> getStatsByDate() {
