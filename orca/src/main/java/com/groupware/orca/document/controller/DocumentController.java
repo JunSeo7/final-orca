@@ -59,11 +59,11 @@ public class DocumentController {
 
     // 전체 목록
     @GetMapping("list")
-    public List<DocumentVo> getDocumentList(Model model){
-        System.out.println("model = " + model);
+    public String getDocumentList(Model model){
         List<DocumentVo> documentList = service.getDocumentList();
+        model.addAttribute("templateList", documentList);
         System.out.println("documentList = " + documentList);
-        return documentList;
+        return "document/list";
     }
     // 올린 결재
     // 받은 결재

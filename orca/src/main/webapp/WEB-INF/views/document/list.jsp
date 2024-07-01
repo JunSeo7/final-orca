@@ -23,7 +23,7 @@
                 <option>내용</option>
             </select>
             <input class="search_text" type="text" placeholder="검색어 입력">
-            <img class="search_img" src="img/document/search.png" alt="검색 아이콘">
+            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘">
         </div>
 
         <c:forEach var="document" items="${documents}">
