@@ -31,7 +31,7 @@
                 <p>${document.enrollDate}</p>
                 <div class="status_box">
                     <div class="status_details">
-                        <img src="img/profile.png" alt="Profile Picture" class="profile-pic-small">
+                        <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
                         <span class="approval_title">[${document.categoryName}]${document.title}</span>
                         <div class="status_steps">
                             <div class="status_step">
@@ -41,7 +41,7 @@
                             </div>
                             <!-- 결재 진행 상태 추가 -->
                             <c:forEach var="approverLine" items="${document.approvalLineVoList}">
-                                    <div class="status_step">
+                                <div class="status_step">
                                     <p>${approverLine.approvalStage}</p>
                                     <p>${approverLine.approverName}</p>
                                     <p>${approverLine.approvalDate}</p>

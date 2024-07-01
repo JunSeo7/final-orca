@@ -62,15 +62,15 @@ h2 {
 .approval_status {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .status_box {
   display: flex;
   align-items: center;
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
+  background-color: #f6f6f6;
 }
 
 .profile-pic-small {
@@ -79,10 +79,6 @@ h2 {
   border-radius: 50%;
   margin-right: 10px;
   object-fit: cover;
-}
-
-.approval_title{
-
 }
 
 .status_details {
@@ -99,10 +95,16 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 2px solid #ffffff;
   padding: 10px;
   border-radius: 8px;
-  width: 100px;
+  width: 130px;
+  height: 145px;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #d4e9ff;
+}
+.status_step p {
+  margin: 0;
+  padding-top:10px;
+  padding-bottom:10px;
 }
