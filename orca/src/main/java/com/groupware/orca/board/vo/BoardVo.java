@@ -14,11 +14,12 @@ public class BoardVo {
     private Date modifyDate;
     private String delYn;
     private int categoryNo;
-    private int insertUserNo;
-    private int otp;
-    private String secretKey;
+    private Integer insertUserNo;
     private String latitude;
     private String longitude;
-    private String uploadImageName; // 이미지 파일 이름 필드 추가
-    private String employeeName; // 작성자 이름 필드 추가
+    private String uploadImageName;
+    private String employeeName;
+    private String departmentName;
+    private String teamName;
+    private char isAnonymous;  // 익명 여부 추가
 }

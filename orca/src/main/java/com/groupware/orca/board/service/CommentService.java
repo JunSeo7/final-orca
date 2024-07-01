@@ -14,7 +14,14 @@ public class CommentService {
     private final CommentDao dao;
 
     public List<CommentVo> getCommentsByBoardNo(int boardNo) {
-        return dao.getCommentsByBoardNo(boardNo);
+        List<CommentVo> comments = dao.getCommentsByBoardNo(boardNo);
+        for (CommentVo comment : comments) {
+            if (comment.getIsAnonymous() == 'Y') {
+                comment.setEmployeeName("***");
+                comment.setTeamName(""); // 익명일 때 팀 이름은 표시하지 않음
+            }
+        }
+        return comments;
     }
 
     public int insertComment(CommentVo commentVo) {
@@ -30,6 +37,10 @@ public class CommentService {
     }
 
     public int deleteCommentsByBoardNo(int boardNo) {
-      return  dao.deleteCommentsByBoardNo(boardNo);
+        return dao.deleteCommentsByBoardNo(boardNo);
+    }
+
+    public int getCategoryNoByBoardNo(int boardNo) {
+        return dao.getCategoryNoByBoardNo(boardNo);
     }
 }

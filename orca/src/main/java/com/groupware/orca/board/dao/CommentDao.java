@@ -32,4 +32,8 @@ public class CommentDao {
     public int deleteCommentsByBoardNo(int boardNo) {
         return mapper.deleteCommentsByBoardNo(boardNo);
     }
+
+    public int getCategoryNoByBoardNo(int boardNo) {
+        return mapper.getCategoryNoByBoardNo(boardNo);
+    }
 }
