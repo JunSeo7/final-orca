@@ -57,7 +57,7 @@ public class DocumentController {
         return "redirect:/orca/document/list";
     }
 
-    // 전체 목록
+    // 전체 목록 - 기안자 no 추가 (params)
     @GetMapping("list")
     public String getDocumentList(Model model){
         List<DocumentVo> documentList = service.getDocumentList();
@@ -65,9 +65,20 @@ public class DocumentController {
         System.out.println("documentList = " + documentList);
         return "document/list";
     }
+
     // 올린 결재
     // 받은 결재
     // 검색(기안자/제목/내용/카테고리)
-    // 결재 수정 (임시저장일 경우)
-    // 결재 취소
+
+    // 결재 상세보기 - 기안자 no 추가 (params)
+    @GetMapping("detail")
+    public DocumentVo getDocumentByNo(int docNo){
+        return service.getDocumentByNo(docNo);
+    }
+
+    // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
+    @PutMapping("delete")
+    public DocumentVo deleteDocumentByNo(int docNo){
+        return service.deleteDocumentByNo(docNo);
+    }
 }

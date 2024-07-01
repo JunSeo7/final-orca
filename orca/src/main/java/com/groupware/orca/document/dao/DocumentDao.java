@@ -1,10 +1,7 @@
 package com.groupware.orca.document.dao;
 
 import com.groupware.orca.document.mapper.DocumentMapper;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.DocumentVo;
-import com.groupware.orca.document.vo.ReferencerVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.document.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,13 +39,39 @@ public class DocumentDao {
         return mapper.writeDocument(vo);
     }
     //전체목록
+    // 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public List<DocumentVo> getDocumentList() {
         return mapper.getDocumentList();
     }
+    // 문서목록 - 결재선 목록 넣기
     public List<ApprovalLineVo> getApprovalLineList(int docNo) {
         return mapper.getApprovalLineList(docNo);
     }
+    // 문서목록 - 참조인 목록 조회
     public List<ReferencerVo> getReferencerList(int docNo) {
         return mapper.getReferencerList(docNo);
     }
+    // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
+    public DocumentVo getDocumentByNo(int docNo) {
+        return mapper.getDocumentByNo(docNo);
+    }
+    // 문서 - 결재선 목록 조회
+    public List<ApprovalLineVo> getApprovalLineByNo(int docNo) {
+        return mapper.getApprovalLineByNo(docNo);
+    }
+    // 문서 - 참조인 목록 조회
+    public List<ReferencerVo> getReferencerByNo(int docNo) {
+        return mapper.getReferencerByNo(docNo);
+    }
+    // 문서 - 파일 목록 조회
+    public List<DocFileVo> getDocFileByNo (int docNo) {
+        return mapper.getDocFileByNo(docNo);
+    }
+
+    // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
+    public DocumentVo deleteDocumentByNo(int docNo) {
+        return mapper.deleteDocumentByNo(docNo);
+    }
+
+
 }
