@@ -78,7 +78,7 @@ public class DocumentService {
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    public DocumentVo deleteDocumentByNo(int docNo) {
+    public int deleteDocumentByNo(int docNo) {
         return dao.deleteDocumentByNo(docNo);
     }
 }

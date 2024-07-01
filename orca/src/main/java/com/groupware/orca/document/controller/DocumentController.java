@@ -72,13 +72,16 @@ public class DocumentController {
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
-    public DocumentVo getDocumentByNo(int docNo){
-        return service.getDocumentByNo(docNo);
+    public String getDocumentByNo(Model model, int docNo){
+        DocumentVo documentList = service.getDocumentByNo(docNo);
+        model.addAttribute("documentList", documentList);
+        return "document/detail";
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PutMapping("delete")
-    public DocumentVo deleteDocumentByNo(int docNo){
-        return service.deleteDocumentByNo(docNo);
+    public String deleteDocumentByNo(int docNo){
+        int result = service.deleteDocumentByNo(docNo);
+        return "redirect:/orca/document/list";
     }
 }

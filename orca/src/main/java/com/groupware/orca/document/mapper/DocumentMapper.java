@@ -110,5 +110,5 @@ public interface DocumentMapper {
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @Update("UPDATE DOCUMENT SET DEL_YN ='Y' WHERE DOC_NO = #{docNo}")
-    DocumentVo deleteDocumentByNo(int docNo);
+    int deleteDocumentByNo(int docNo);
 }
