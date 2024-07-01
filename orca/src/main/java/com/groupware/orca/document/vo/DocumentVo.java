@@ -22,16 +22,17 @@ public class DocumentVo {
     private String writerName;         // 작성자 이름
     private String title;              // 문서 제목
     private String content;            // 문서 내용
-    private String enrollDate;         // 등록 날짜
-    private String creditDate;         // 생성 날짜
+    private String enrollDate;         // 작성 날짜
+    private String creditDate;         // 기안 날짜
     private int status;                // 1: 임시저장 2: 기안(대기) 3: 결재 취소
     private String statusName;         // 상태 이름
     private String urgent;             // 긴급 여부 (Y/N)
     private String delYn;              // 삭제 여부 (Y/N)
 
-    private int apprLineNo;             //결재선 번호
+    private int apprLineNo;            //결재선 번호
+    private List<ApprovalLineVo> approvalLineVoList; //결재선 리스트
 
     // File and Reference Information (파일 및 참조자 정보)
-    private List<DocFileVo> files;     // 파일 리스트
-    private List<UserVo> references;   // 참조자 리스트
+    private List<DocFileVo> files;           // 파일 리스트
+    private List<ReferencerVo> referencerVoList;   // 참조자 리스트
 }

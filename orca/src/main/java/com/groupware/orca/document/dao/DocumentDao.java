@@ -1,7 +1,9 @@
 package com.groupware.orca.document.dao;
 
 import com.groupware.orca.document.mapper.DocumentMapper;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.DocumentVo;
+import com.groupware.orca.document.vo.ReferencerVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -42,5 +44,11 @@ public class DocumentDao {
     //전체목록
     public List<DocumentVo> getDocumentList() {
         return mapper.getDocumentList();
+    }
+    public List<ApprovalLineVo> getApprovalLineList(int docNo) {
+        return mapper.getApprovalLineList(docNo);
+    }
+    public List<ReferencerVo> getReferencerList(int docNo) {
+        return mapper.getReferencerList(docNo);
     }
 }

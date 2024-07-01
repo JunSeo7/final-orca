@@ -1,7 +1,9 @@
 package com.groupware.orca.document.service;
 
 import com.groupware.orca.document.dao.DocumentDao;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.DocumentVo;
+import com.groupware.orca.document.vo.ReferencerVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,18 @@ public class DocumentService {
 
     //전체목록
     public List<DocumentVo> getDocumentList() {
-        return dao.getDocumentList();
+        List<DocumentVo> documentList = dao.getDocumentList();
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            List<ApprovalLineVo> apprLineList = dao.getApprovalLineList(docNo);
+            System.out.println("apprLineList = " + apprLineList);
+            List<ReferencerVo> references = dao.getReferencerList(docNo);
+            System.out.println("references = " + references);
+            document.setApprovalLineVoList(apprLineList);
+            document.setReferencerVoList(references);
+        }
+        return documentList;
     }
 
 

@@ -23,15 +23,15 @@
                 <option>내용</option>
             </select>
             <input class="search_text" type="text" placeholder="검색어 입력">
-            <img class="search_img" src="img/document/search.png" alt="검색 아이콘">
+            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘">
         </div>
 
-        <c:forEach var="document" items="${documents}">
+        <c:forEach var="document" items="${documentList}">
             <div class="approval_status">
                 <p>${document.enrollDate}</p>
                 <div class="status_box">
                     <div class="status_details">
-                        <img src="img/profile.png" alt="Profile Picture" class="profile-pic-small">
+                        <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
                         <span class="approval_title">[${document.categoryName}]${document.title}</span>
                         <div class="status_steps">
                             <div class="status_step">
@@ -40,8 +40,8 @@
                                 <p>${document.enrollDate}</p>
                             </div>
                             <!-- 결재 진행 상태 추가 -->
-                            <c:forEach var="approverLine" items="${document.approverLineNo}">
-                                    <div class="status_step">
+                            <c:forEach var="approverLine" items="${document.approvalLineVoList}">
+                                <div class="status_step">
                                     <p>${approverLine.approvalStage}</p>
                                     <p>${approverLine.approverName}</p>
                                     <p>${approverLine.approvalDate}</p>
@@ -53,6 +53,7 @@
             </div>
         </c:forEach>
     </div>
+
 </main>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class TemplateController {
     }
 
     @GetMapping("detail")
-    public String templateDetail(@RequestParam("templateNo") String templateNo, Model model) {
+    public String templateDetail(String templateNo, Model model) {
         TemplateVo vo = service.getTemplateDetail(templateNo);
         model.addAttribute("templateDetail", vo);
         System.out.println("templateDetail = " + vo);
@@ -46,15 +46,13 @@ public class TemplateController {
     }
 
     @PostMapping("edit")
-    @ResponseBody
     public String editTemplate(@RequestBody TemplateVo vo){
         service.editTemplate(vo);
         return "redirect:/orca/template/list";
     }
 
     @PostMapping("delete")
-    @ResponseBody
-    public String deleteTemplate(@RequestParam("templateNo")int templateNo) {
+    public String deleteTemplate(int templateNo) {
         System.out.println("templateNo = " + templateNo);
         int result = service.deleteTemplate(templateNo);
         System.out.println("result = " + result);
