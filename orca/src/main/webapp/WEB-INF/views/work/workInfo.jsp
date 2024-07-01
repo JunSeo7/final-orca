@@ -1,11 +1,13 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORCA</title>
-    <link rel="stylesheet" href="test.css">
-    <script defer src="test.js"></script>
+    <link rel="stylesheet" href="/css/work/workInfo.css">
+    <script defer src="/js/work/workInfo.js"></script>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/layout/header.jsp" %>
@@ -31,10 +33,10 @@
             <ul>
                 <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
                     <ul id="attendanceMenu" class="submenu hidden">
+                        <li><a href="#" onclick="loadPage('workInfo.jsp')">근무정보</a></li>
                         <li><a href="#" onclick="loadPage('vacation.jsp')">휴가신청</a></li>
-                        <li><a href="#" onclick="loadPage('sickleave.jsp')">병가신청</a></li>
+                        <li><a href="#" onclick="loadPage('sickLeave.jsp')">병가신청</a></li>
                         <li><a href="#" onclick="loadPage('etc.jsp')">기타신청</a></li>
-                        <li><a href="#" onclick="loadPage('workinfo.jsp')">근무정보</a></li>
                     </ul>
                 </li>
             </ul>
