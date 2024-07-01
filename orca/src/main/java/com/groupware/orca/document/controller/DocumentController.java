@@ -61,7 +61,7 @@ public class DocumentController {
     @GetMapping("list")
     public String getDocumentList(Model model){
         List<DocumentVo> documentList = service.getDocumentList();
-        model.addAttribute("templateList", documentList);
+        model.addAttribute("documentList", documentList);
         System.out.println("documentList = " + documentList);
         return "document/list";
     }

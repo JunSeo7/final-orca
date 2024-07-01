@@ -26,7 +26,7 @@
             <img class="search_img" src="/img/document/search.png" alt="검색 아이콘">
         </div>
 
-        <c:forEach var="document" items="${documents}">
+        <c:forEach var="document" items="${documentList}">
             <div class="approval_status">
                 <p>${document.enrollDate}</p>
                 <div class="status_box">
@@ -40,7 +40,7 @@
                                 <p>${document.enrollDate}</p>
                             </div>
                             <!-- 결재 진행 상태 추가 -->
-                            <c:forEach var="approverLine" items="${document.approverLineNo}">
+                            <c:forEach var="approverLine" items="${document.approvalLineVoList}">
                                     <div class="status_step">
                                     <p>${approverLine.approvalStage}</p>
                                     <p>${approverLine.approverName}</p>
@@ -53,6 +53,7 @@
             </div>
         </c:forEach>
     </div>
+
 </main>
 </body>
 </html>

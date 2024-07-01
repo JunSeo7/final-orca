@@ -1,7 +1,10 @@
 package com.groupware.orca.document.vo;
 
+import lombok.Data;
+
+@Data
 public class ReferencerVo {
-    
+
     private int docNo;                  // 문서 번호
     private int referrerNo;             // 결재자 번호
     private String referrerName;        // 결재자 이름

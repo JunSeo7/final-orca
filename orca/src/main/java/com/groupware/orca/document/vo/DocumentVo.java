@@ -29,9 +29,10 @@ public class DocumentVo {
     private String urgent;             // 긴급 여부 (Y/N)
     private String delYn;              // 삭제 여부 (Y/N)
 
-    private int apprLineNo;             //결재선 번호
+    private int apprLineNo;            //결재선 번호
+    private List<ApprovalLineVo> approvalLineVoList; //결재선 리스트
 
     // File and Reference Information (파일 및 참조자 정보)
-    private List<DocFileVo> files;     // 파일 리스트
-    private List<ReferencerVo> references;   // 참조자 리스트
+    private List<DocFileVo> files;           // 파일 리스트
+    private List<ReferencerVo> referencerVoList;   // 참조자 리스트
 }

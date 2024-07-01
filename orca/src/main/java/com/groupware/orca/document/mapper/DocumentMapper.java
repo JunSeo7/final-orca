@@ -1,6 +1,8 @@
 package com.groupware.orca.document.mapper;
 
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.DocumentVo;
+import com.groupware.orca.document.vo.ReferencerVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -26,15 +28,43 @@ public interface DocumentMapper {
             "CASE WHEN #{status} = 2 THEN SYSDATE ELSE NULL END)")
     int writeDocument(DocumentVo vo);
 
-    @Select("SELECT D.DOC_NO ,D.WRITER_NO ,D.STATUS ,D.TITLE ,D.CONTENT ,D.ENROLL_DATE ,D.CREDIT_DATE " +
-            ",D.URGENT ,T.TITLE AS templateTitle ,TC.NAME AS categoryName ,AL.DOC_NO AS approvalDocNo " +
-            ",AL.SEQ ,AL.APPROVAL_DATE ,AL.APPROVER_CLASSIFICATION_NO ,PI.NAME AS writerName ,DEPT.PARTNAME AS dept " +
-            ",P.NAME_OF_POSITION AS position ,DRL.REFERRER_NO FROM DOCUMENT D JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO " +
-            "JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO LEFT JOIN APPR_LINE AL ON D.DOC_NO = AL.DOC_NO " +
-            "LEFT JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO " +
-            "LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = AL.DEPT_CODE LEFT JOIN POSITION P ON P.POSITION_CODE = AL.POSITION_CODE " +
-            "WHERE D.DEL_YN = 'N' ORDER BY D.ENROLL_DATE DESC")
+    // 결재 문서 목록 조회
+    @Select("SELECT D.DOC_NO ,D.WRITER_NO ,D.STATUS ,D.TITLE ,D.CONTENT ,D.ENROLL_DATE,D.CREDIT_DATE,STATUS\n" +
+            "    ,D.URGENT ,T.TITLE AS templateTitle ,TC.NAME AS categoryName ,D.STATUS, DSL.DOC_STATUS_NAME statusName,PI.NAME AS writerName ,DEPT.PARTNAME AS dept \n" +
+            "   ,P.NAME_OF_POSITION AS position ,DRL.REFERRER_NO \n" +
+            "    FROM DOCUMENT D JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO\n" +
+            "    JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO \n" +
+            "    JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO \n" +
+            "    JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE \n" +
+            "    LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE \n" +
+            "    WHERE D.DEL_YN ='N'\n" +
+            "    ORDER BY CREDIT_DATE")
     List<DocumentVo> getDocumentList();
+
+    // 결재선 목록 조회
+    @Select("SELECT AL.DOC_NO AS approvalDocNo \n" +
+            "    ,AL.SEQ ,AL.APPROVAL_DATE ,AL.APPROVER_CLASSIFICATION_NO ,PI.NAME AS writerName ,DEPT.PARTNAME AS dept \n" +
+            "    ,P.NAME_OF_POSITION AS position ,DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME\n" +
+            "    FROM APPR_LINE AL JOIN APPR_STAGE_LIST ASL ON AL.APPROVAL_STAGE = ASL.APPR_STAGE_NO\n" +
+            "    JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = AL.DEPT_CODE \n" +
+            "    LEFT JOIN POSITION P ON P.POSITION_CODE = AL.POSITION_CODE \n" +
+            "    WHERE AL.DOC_NO = #{docNo}")
+    List<ApprovalLineVo> getApprovalLineList(int docNo);
+
+    // 참조인 목록 조회
+    @Select("SELECT DL.DOC_NO,PI.NAME AS writerName ,DEPT.PARTNAME AS dept \n" +
+            "   ,P.NAME_OF_POSITION AS position ,DRL.REFERRER_NO references\n" +
+            "    FROM DOC_REFERENCE_LIST DL\n" +
+            "    JOIN PERSONNEL_INFORMATION PI ON DL.REFERRER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO \n" +
+            "    LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE \n" +
+            "    LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE \n" +
+            "   WHERE DL.DOC_NO = #{docNo}")
+    List<ReferencerVo> getReferencerList(int docNo);
 
 
 }
