@@ -3,8 +3,6 @@ package com.groupware.orca.document.controller;
 import com.groupware.orca.document.service.DocumentService;
 import com.groupware.orca.document.vo.DocumentVo;
 import com.groupware.orca.document.vo.TemplateVo;
-import com.groupware.orca.user.vo.UserVo;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,33 +50,25 @@ public class DocumentController {
     }
     // 결재 작성
     @PostMapping("write")
-    public String writeDocument(DocumentVo vo, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(Integer.parseInt(loginUserNo));
+    public String writeDocument(DocumentVo vo){
         System.out.println("DocumentController.writeDocument");
         System.out.println("vo = " + vo);
-        int result = service.writeDocument(vo);
+    int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }
 
     // 전체 목록 - 기안자 no 추가 (params)
     @GetMapping("list")
-    public String getDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getDocumentList(loginUserNo);
+    public String getDocumentList(Model model){
+        List<DocumentVo> documentList = service.getDocumentList();
         model.addAttribute("documentList", documentList);
         System.out.println("documentList = " + documentList);
         return "document/list";
     }
 
     // 올린 결재
-
-
     // 받은 결재
-
-
     // 검색(기안자/제목/내용/카테고리)
-
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
@@ -90,9 +80,8 @@ public class DocumentController {
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PutMapping("delete")
-    public String deleteDocumentByNo(int docNo, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        int result = service.deleteDocumentByNo(docNo, loginUserNo);
+    public String deleteDocumentByNo(int docNo){
+        int result = service.deleteDocumentByNo(docNo);
         return "redirect:/orca/document/list";
     }
 }
