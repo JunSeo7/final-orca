@@ -178,6 +178,17 @@ nav ul li a:hover {
     border: 1px solid #ddd;
 }
 
+#reason {
+    height: 350px;
+    resize: none;
+}
+
+form .button-container {
+  text-align: right;
+  margin-top: 20px;
+}
+
+
 
 
 

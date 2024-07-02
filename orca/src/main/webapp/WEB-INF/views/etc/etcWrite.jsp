@@ -3,7 +3,7 @@
         <html>
 
         <head>
-            <title>휴가서 작성</title>
+            <title>기타 신청 작성</title>
             <!-- 파비콘 -->
             <link rel="icon" href="img/logo.png" type="image/png">
 
@@ -47,7 +47,7 @@
                 </aside>
 
                 <main>
-                    <h1>휴가 신청서</h1>
+                    <h1>기타 신청서</h1>
                     <form id="documentForm" method="post" action="/orca/vacation/vacationWrite">
                         <table class="document-table">
                             <tr>
@@ -107,7 +107,7 @@
                                 <td colspan='3'>
                                     시작 날짜 : <input type="date" id="start-date" name="start-date"
                                         style="color: dimgray;">
-                                    <br>
+                                        <br>
                                     종료 날짜 : <input type="date" id="end-date" name="end-date" style="color: dimgray;">
                                 </td>
                             </tr>
@@ -136,9 +136,7 @@
                         </table>
                         <br>
                         <br>
-                        <div class="div-container">
-                            <button type="button" onclick="submitDocument()" class="approval-btn">기안</button>
-                        </div>
+                        <button type="button" onclick="submitDocument()" class="approval-btn">기안</button>
                     </form>
                 </main>
         </body>
