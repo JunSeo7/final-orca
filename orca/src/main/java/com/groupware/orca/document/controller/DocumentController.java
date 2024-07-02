@@ -1,6 +1,7 @@
 package com.groupware.orca.document.controller;
 
 import com.groupware.orca.document.service.DocumentService;
+import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.DocumentVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
@@ -50,6 +51,14 @@ public class DocumentController {
         TemplateVo template = service.getTemplateContent(templateNo);
         return template;
     }
+    // 결재 작성 결재선 가져오기
+    @GetMapping("template/apprline")
+    @ResponseBody
+    public ApprovalLineVo getTemplateApprLine(@RequestParam("templateNo") int templateNo){
+        System.out.println("templateNo = " + templateNo);
+        ApprovalLineVo apprline = service.getTemplateApprLine(templateNo);
+        return apprline;
+    }
     // 결재 작성
     @PostMapping("write")
     public String writeDocument(DocumentVo vo, HttpSession httpSession){
@@ -61,7 +70,7 @@ public class DocumentController {
         return "redirect:/orca/document/list";
     }
 
-    // 전체 목록 - 기안자 no 추가 (params)
+    // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();

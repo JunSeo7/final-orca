@@ -54,7 +54,7 @@ public class ApprovalLineDao {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
         System.out.println("approvers = " + approvers);
         if(approvers ==null){
-            System.out.println("approverLineVoList nulllllllllll= " + approvers);
+            System.out.println("approverLineVoList= " + approvers);
     } return approvers;
   }
 

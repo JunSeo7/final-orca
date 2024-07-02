@@ -33,6 +33,16 @@ public class DocumentService {
         return dao.getTemplateContent(templateNo);
     }
 
+    // 결재 작성 결재선 가져오기
+    public ApprovalLineVo getTemplateApprLine(int templateNo) {
+        ApprovalLineVo apprline = dao.getTemplateApprLine(templateNo);
+        System.out.println("apprline = " + apprline);
+        List<ApproverVo> approvers = dao.getApproverList(apprline.getApprLineNo());
+        System.out.println("approvers = " + approvers);
+        apprline.setApproverVoList(approvers);
+        return apprline;
+    }
+
     // 결재 작성
     public int writeDocument(DocumentVo vo) {
         return dao.writeDocument(vo);
@@ -40,7 +50,7 @@ public class DocumentService {
 
     //전체목록
     public List<DocumentVo> getDocumentList(String loginUserNo) {
-        // 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+        // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
         List<DocumentVo> documentList = dao.getDocumentList(loginUserNo);
         System.out.println("documentList = " + documentList);
         for (DocumentVo document : documentList) {
@@ -81,4 +91,5 @@ public class DocumentService {
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
+
 }

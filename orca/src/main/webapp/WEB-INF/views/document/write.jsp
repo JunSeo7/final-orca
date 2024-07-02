@@ -19,27 +19,40 @@
     <form id="documentForm" method="post" action="/orca/document/write">
         <table class="document-table">
             <tr>
-                <th>결재선 프로세스</th>
+                <th>결재 프로세스</th>
                 <td>
                     <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
-                    <!-- 카테고리 옵션들이 여기 추가될 예정 -->
+                    <!-- 카테고리 옵션 -->
                     </select>
                 </td>
                 <th>결재 양식</th>
                 <td>
                     <select id="templateNo" name="templateNo">
-                        <!-- 결재 양식 옵션들이 여기 추가될 예정 -->
+                        <!-- 결재 양식 옵션 -->
                     </select>
                 </td>
             </tr>
             <tr>
                 <th>결재선</th>
-                <td colspan='3'>
+                <td>
                     <select id="approver" name="approver" required>
                         <!-- 디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌 -->
                     </select>
                 </td>
-            </tr>
+                 <th>긴급 여부</th>
+                    <td>
+                        <label><input type="radio" name="urgent" value="Y"> 예</label>
+                        <label><input type="radio" name="urgent" value="N" checked> 아니오</label>
+                    </td>
+                </tr>
+                 <tr>
+                    <th>결재선 프로세스</th>
+                    <td colspan='3'>
+                        <div class="approval-process">
+                            <!-- 결재선 프로세스 -->
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <th>공람(참조인)</th>
                     <td colspan='3'>
@@ -61,7 +74,6 @@
             </tr>
             <tr>
                 <td colspan='2'>
-                     <textarea id="summernote" name="content"></textarea>
                       <textarea name="content" id="content"></textarea>
                 </td>
             </tr>
