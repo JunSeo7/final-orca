@@ -10,7 +10,6 @@ public class CalendarVo {
     private String content;
     private String startDate;
     private String endDate;
-    private char repeatYn;
     private String enrollDate;
     private String delDate;
     private String range;

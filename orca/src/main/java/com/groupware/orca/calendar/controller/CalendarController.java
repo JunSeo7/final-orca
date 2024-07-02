@@ -5,7 +5,6 @@ import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,27 +29,22 @@ public class CalendarController {
         return calendarBarlist;
     }
 
-    @PostMapping("writeCalendar")
-    public String createCalendar(CalendarVo vo, HttpSession httpSession, Model model){
+    @PostMapping("createCalendar")
+    @ResponseBody
+    public int createCalendar(CalendarVo vo, HttpSession httpSession){
+        System.out.println(vo);
         String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         int result = service.createCalendar(vo);
-        if(result != 1){
-            model.addAttribute("message", "다시 작성해주세요.");
-            return "redirect:/orca/calendar/showCalendar";
-        }
-        return "calendar/showCalendar";
+
+        return result;
     }
 
     @PostMapping("deleteCalendarEvent")
     @ResponseBody
-    public String deleteCalendarEvent(@RequestParam("calendarNo") int calendarNo, Model model){
-        System.out.println(calendarNo);
+    public int deleteCalendarEvent(@RequestParam("calendarNo") int calendarNo, Model model){
         int result = service.deleteCalendarEvent(calendarNo);
-        if(result != 1){
-            model.addAttribute("message", "다시 작성해주세요.");
-            return "redirect:/orca/calendar/showCalendar";
-        }
-        return "1";
+
+        return result;
     }
 }

@@ -88,50 +88,42 @@
                 </div>
 
                 <div class="form-body">
-                    <form id="eventForm" action="/orca/calendar/writeCalendar" method="post">
-                        <div class="form-group">
-                            <label for="eventTitle">일정 제목</label>
-                            <input type="text" id="eventTitle" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventDescription">일정 내용</label>
-                            <textarea id="eventDescription" name="content" rows="4"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="startDate">시작일</label>
-                            <input type="date" id="startDate" name="startDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="endDate">종료일</label>
-                            <input type="date" id="endDate" name="endDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="repeatOption">반복 옵션</label>
-                            <select id="repeatOption" name="repeatYn">
-                                <option value="N">반복 안 함</option>
-                                <option value="Y">반복 추가</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="shareScope">공유 범위</label>
-                            <select id="shareScope" name="range">
-                                <option value="individual">개인</option>
-                                <option value="team">팀</option>
-                            </select>
-                        </div>
-                        <div class="form-footer">
-                            <button type="submit">일정 등록</button>
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <label for="eventTitle">일정 제목</label>
+                        <input type="text" id="eventTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">일정 내용</label>
+                        <textarea id="eventContent" name="content" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">시작일</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">종료일</label>
+                        <input type="date" id="endDate" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="range">공유 범위</label>
+                        <select id="range" name="range">
+                            <option value="individual">개인</option>
+                            <option value="team">팀</option>
+                        </select>
+                    </div>
+                    <div class="form-footer">
+                        <button id="submitBtn" type="submit" onclick="createCalendar();">일정 등록</button>
+                    </div>
                 </div>
             </div>
-            
+
             <div class="view-calendar-form" id="viewEventDetailsForm">
                 <div class="view-form-header">
-                    <div><span class="view-calendar-title">일정 제목</span> <span class="view-calendar-enroll-date">2024.06.21</span></div>
+                    <div><span class="view-calendar-title">일정 제목</span> <span
+                            class="view-calendar-enroll-date">2024.06.21</span></div>
                     <button class="view-cancel-button" onclick="closeViewEvent()">✖</button>
                 </div>
-                
+
                 <div class="view-form-body">
                     <div class="view-form-group view-calendar-name">
                         <span class="view-calendar-writer">작성자</span>
@@ -143,11 +135,11 @@
                     </div>
                     <div class="view-form-group">
                         <label for="viewStartDate">시작일</label>
-                        <input type="date" id="viewStartDate" name="startDate" readonly>
+                        <input type="date" id="viewStartDate" name="startDate" readonly required>
                     </div>
                     <div class="view-form-group">
                         <label for="viewEndDate">종료일</label>
-                        <input type="date" id="viewEndDate" name="endDate" readonly>
+                        <input type="date" id="viewEndDate" name="endDate" readonly required>
                     </div>
                     <div class="view-form-group">
                         <label for="viewRange">공유 범위</label>

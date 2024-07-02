@@ -288,9 +288,9 @@ function deleteEvent(event) {
         type: 'post',
         url: '/orca/calendar/deleteCalendarEvent',
         dataType: 'json',
-        data: { calendarNo : calendarNo },
+        data: { calendarNo: calendarNo },
         success: function (response) {
-            if(response === 1){
+            if (response === 1) {
                 alert("캘린더 삭제 성공!");
                 isCalendarBarVisible[0] = !isCalendarBarVisible[0];
                 isCalendarBarVisible[1] = !isCalendarBarVisible[1];
@@ -298,11 +298,14 @@ function deleteEvent(event) {
                 toggleCalendarBar("company", 0);
                 toggleCalendarBar("individual", 1);
                 toggleCalendarBar("team", 2);
+            } else {
+                alert("캘린더 삭제 실패!");
             }
 
         },
         error: function (error) {
             console.log(error);
+            alert("캘린더 삭제 실패!");
         }
     });
 }
@@ -515,6 +518,51 @@ for (let i = 0; i < week.length; i++) {
 }
 //--------------------------------------------------------------------------------------------------
 //일정 등록
+// 일정 등록 ajax
+function createCalendar() {
+    const title = document.getElementById('eventTitle');
+    const content = document.getElementById('eventContent');
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+    const range = document.getElementById('range');
+
+    $.ajax({
+        url: "/orca/calendar/createCalendar",
+        method: "post",
+        data: {
+            title: title.value,
+            content: content.value,
+            startDate: startDate.value,
+            endDate: endDate.value,
+            range: range.value
+        },
+        success: function (response) {
+            console.log(response);
+            if (response === 1) {
+                alert("일정이 등록되었습니다.");
+                isCalendarBarVisible[0] = !isCalendarBarVisible[0];
+                isCalendarBarVisible[1] = !isCalendarBarVisible[1];
+                isCalendarBarVisible[2] = !isCalendarBarVisible[2];
+                toggleCalendarBar("company", 0);
+                toggleCalendarBar("individual", 1);
+                toggleCalendarBar("team", 2);
+                document.getElementById('eventTitle').value = "";
+                document.getElementById('eventContent').value = "";
+                document.getElementById('startDate').value = "";
+                document.getElementById('endDate').value = "";
+                document.getElementById('range').value = "";
+            } else {
+                alert("일정 등록 실패");
+            }
+        },
+        error: function (error) {
+            alert("일정 등록 실패");
+        }
+    });
+    submitNewEvent();
+}
+
+//일정 등록 화면 표시
 let lastClickedDiv = null;
 let KeyCnt = 0;
 document.addEventListener('DOMContentLoaded', function () {
@@ -547,41 +595,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function showNewEventForm() {
     const form = document.getElementById('newEventForm');
-
     form.style.display = 'block';
-
     const formRect = form.getBoundingClientRect();
     const left = (window.innerWidth - formRect.width) / 2;
     const top = (window.innerHeight - formRect.height) / 2;
-
     form.style.left = `${left}px`;
     form.style.top = `${top}px`;
-
 }
 
 function showNewEventForm(dateDiv) {
     const form = document.getElementById('newEventForm');
     form.style.display = 'block';
-
     const rect = dateDiv.getBoundingClientRect();
     const formRect = form.getBoundingClientRect();
 
     let left = rect.right + 195;
-
     if (left + formRect.width > window.innerWidth + 300) {
         left = rect.left - formRect.width + 185;
     }
-
     let top = rect.top + 145;
-
-
     if (top < 0) {
         top = 0;
     }
-
     form.style.left = `${left}px`;
     form.style.top = `${top}px`;
-
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -589,12 +626,6 @@ function hideNewEventForm() {
     const form = document.getElementById('newEventForm');
     form.style.display = 'none';
 }
-
-
-document.getElementById('eventForm').addEventListener('submit', function (event) {
-    alert('일정이 등록되었습니다.');
-    hideNewEventForm();
-});
 
 function closeFormEvent() {
     KeyCnt++;
@@ -609,8 +640,6 @@ function submitNewEvent() {
         showNewEventForm();
     }
 }
-
-
 
 //일정 등록 화면 드래그 앤 드랍
 let isDraggingForm = false;
@@ -655,6 +684,53 @@ function onStopDragForm() {
 }
 
 
+
+//일정 등록 유효성 검사
+// 등록 버튼과 관련된 요소를 가져옵니다.
+const submitBtn = document.getElementById('submitBtn');
+const eventTitleInput = document.getElementById('eventTitle');
+const startDateInput = document.getElementById('startDate');
+const endDateInput = document.getElementById('endDate');
+
+// 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
+function checkInputs() {
+    const eventTitleValue = eventTitleInput.value.trim();
+    const startDateValue = startDateInput.value;
+    const endDateValue = endDateInput.value;
+    const startDate = new Date(startDateInput.value);
+    const endDate = new Date(endDateInput.value);
+
+
+    if (eventTitleValue !== '' && startDateValue !== '' && endDateValue !== '') {
+        if (endDate < startDate) {
+            submitBtn.classList.remove('opacity');
+            submitBtn.disabled = true;
+            alert("시작일은 종료일보다 빨라야합니다.");
+            submitBtn.style.backgroundColor = '#6eadff';
+        }else{
+            submitBtn.classList.add('opacity');
+            submitBtn.style.backgroundColor = '#1c76ec';
+            submitBtn.disabled = false;
+        }
+    } else {
+        submitBtn.classList.remove('opacity');
+        submitBtn.disabled = true;
+        submitBtn.style.backgroundColor = '#6eadff';
+    }
+
+
+}
+
+// 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
+eventTitleInput.addEventListener('input', checkInputs);
+startDateInput.addEventListener('change', checkInputs);
+endDateInput.addEventListener('change', checkInputs);
+
+// 폼이 처음 로드될 때도 한 번 호출하여 초기 상태를 설정합니다.
+checkInputs();
+
+
+//---------------------------------------------------------------------------------------------------
 
 //연도 이동
 const yearSelect = document.getElementById('yearSelect');
@@ -703,7 +779,8 @@ calendarBars.forEach(function (bar) {
     });
 });
 //--------------------------------------------------------------
-//일정 삭제
+
+
 
 
 
