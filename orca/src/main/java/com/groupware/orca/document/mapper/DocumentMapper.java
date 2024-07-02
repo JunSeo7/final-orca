@@ -41,7 +41,7 @@ public interface DocumentMapper {
             "    LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE \n" +
             "    WHERE D.DEL_YN ='N'\n" +
             "    ORDER BY CREDIT_DATE")
-    List<DocumentVo> getDocumentList();
+    List<DocumentVo> getDocumentList(String loginUserNo);
 
     // 결재선 목록 조회
     @Select("SELECT AL.DOC_NO AS approvalDocNo \n" +
@@ -109,6 +109,6 @@ public interface DocumentMapper {
     List<DocFileVo> getDocFileByNo(int docNo);
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    @Update("UPDATE DOCUMENT SET DEL_YN ='Y' WHERE DOC_NO = #{docNo}")
-    int deleteDocumentByNo(int docNo);
+    @Update("UPDATE DOCUMENT SET DEL_YN ='Y' WHERE DOC_NO = #{docNo} AND WRITER_NO=#{loginUserNo}")
+    int deleteDocumentByNo(int docNo, String  loginUserNo);
 }

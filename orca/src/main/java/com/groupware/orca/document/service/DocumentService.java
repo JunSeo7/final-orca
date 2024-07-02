@@ -39,9 +39,9 @@ public class DocumentService {
     }
 
     //전체목록
-    public List<DocumentVo> getDocumentList() {
+    public List<DocumentVo> getDocumentList(String loginUserNo) {
         // 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-        List<DocumentVo> documentList = dao.getDocumentList();
+        List<DocumentVo> documentList = dao.getDocumentList(loginUserNo);
         System.out.println("documentList = " + documentList);
         for (DocumentVo document : documentList) {
             int docNo = document.getDocNo();
@@ -78,7 +78,7 @@ public class DocumentService {
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    public int deleteDocumentByNo(int docNo) {
-        return dao.deleteDocumentByNo(docNo);
+    public int deleteDocumentByNo(int docNo,  String loginUserNo) {
+        return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
 }
