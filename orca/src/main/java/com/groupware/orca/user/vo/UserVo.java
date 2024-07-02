@@ -201,7 +201,7 @@ public class UserVo {
         this.religion = religion;
     }
 
-    public String getSalary() {
+    public double getSalary() {
         return salary;
     }
 
