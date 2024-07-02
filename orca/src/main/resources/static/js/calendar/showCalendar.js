@@ -92,6 +92,7 @@ function toggleCalendarBar(range, index) {
 //-- 캘린더 변수 설정
 const calendarElement = document.getElementById('calendar');
 const sidebarCalendarElement = document.getElementById('sidebarCalendar');
+
 const date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
@@ -215,6 +216,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
                         eventBar.addEventListener('click', function () {
                             handleEventBarClick(event, eventBar); // 이벤트 바 클릭 시 호출할 함수
                         });
+                        
                     }
                 }
             });
@@ -225,6 +227,12 @@ function renderCalendar(calendarEl, year, month, events = []) {
 
     // 이벤트 바 클릭 시 호출할 함수
     function handleEventBarClick(event, barDiv) {
+        const viewDeleteButton = document.querySelector('.view-delete-button');
+        viewDeleteButton.addEventListener('click', function(){
+            viewDeleteButton.removeEventListener('click', deleteEvent);
+            deleteEvent(event);
+        })
+
         // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
         console.log('이벤트 바를 클릭했습니다:', event.title);
         const titleElement = document.querySelector('.view-calendar-title');
@@ -235,7 +243,9 @@ function renderCalendar(calendarEl, year, month, events = []) {
         const startDateElement = document.getElementById('viewStartDate');
         const endDateElement = document.getElementById('viewEndDate');
         const rangeElement = document.getElementById('viewRange');
-        
+
+
+
         console.log(enrollDateElement);
         console.log(event.enrollDate);
 
@@ -255,10 +265,22 @@ function renderCalendar(calendarEl, year, month, events = []) {
         } else if (viewCnt % 2 != 0) {
             showNewEventView(barDiv);
         }
+        
     }
-
     calendarEl.appendChild(grid);
+
 }
+
+//일정 삭제
+function deleteEvent(event) {
+    console.log(viewCnt);
+    console.log("삭제 이벤트 발생");
+
+    viewCnt++;
+    hideNewEventView();
+}
+
+
 //일정 상세 조회 View
 function showNewEventView(barDiv) {
     const form = document.getElementById('viewEventDetailsForm');
@@ -295,12 +317,6 @@ function closeViewEvent() {
     viewCnt++;
     hideNewEventView();
 }
-//일정 삭제
-function deleteEvent() {
-    viewCnt++;
-    hideNewEventView();
-}
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('viewEventDetailsForm');
@@ -660,7 +676,8 @@ calendarBars.forEach(function (bar) {
     });
 });
 //--------------------------------------------------------------
-//일정 조회
+//일정 삭제
+
 
 
 

@@ -155,7 +155,7 @@
                     </div>
                     <div class="view-form-footer">
                         <button class="view-edit-button" onclick="editEvent()">수정</button>
-                        <button class="view-delete-button" onclick="deleteEvent()">삭제</button>
+                        <button class="view-delete-button">삭제</button>
                     </div>
                 </div>
             </div>
