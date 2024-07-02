@@ -62,14 +62,12 @@ CalendarBar[2].addEventListener('click', function () {
 function toggleCalendarBar(range, index) {
     isCalendarBarVisible[index] = !isCalendarBarVisible[index];
     if (isCalendarBarVisible[index]) {
-        console.log(range);
         $.ajax({
             type: 'get',
             url: '/orca/calendar/showCalendarBarContent',
             dataType: 'json',
             data: { range: range },
             success: function (response) {
-                console.log('CalendarBar 클릭 성공:', response);
                 calendarBar[range] = response;  // response 데이터를 calendarBar에 저장
                 //저장된 데이터를 객체화 해서 변수에 저장
                 let combinedEvents = [].concat(...Object.values(calendarBar));
@@ -81,11 +79,9 @@ function toggleCalendarBar(range, index) {
             }
         });
     } else {
-        console.log("데이터 비워주기");
         calendarBar[range] = []; // 해당 범위 배열 초기화
         let combinedEvents = [].concat(...Object.values(calendarBar));
         renderCalendar(calendarElement, year, month, combinedEvents);
-        console.log(calendarBar);
         todayText();
     }
 }
@@ -98,6 +94,8 @@ let year = date.getFullYear();
 let month = date.getMonth();
 let lastClickedview = null;
 let viewCnt = 0;
+let originalData = {};
+let isEditCalendar = false;
 
 function renderCalendar(calendarEl, year, month, events = []) {
     calendarEl.innerHTML = '';
@@ -209,14 +207,11 @@ function renderCalendar(calendarEl, year, month, events = []) {
                         if (el.classList.contains('other-month')) {
                             eventBar.classList.add('other-bar');
                         }
-
                         el.querySelector('.empty').appendChild(eventBar);
-
                         // 클릭 이벤트 핸들러 추가
                         eventBar.addEventListener('click', function () {
                             handleEventBarClick(event, eventBar); // 이벤트 바 클릭 시 호출할 함수
                         });
-
                     }
                 }
             });
@@ -229,19 +224,12 @@ function renderCalendar(calendarEl, year, month, events = []) {
     function handleEventBarClick(event, barDiv) {
 
         const viewDeleteButton = document.querySelector('.view-delete-button');
-        // 기존의 이벤트 리스너 제거
-        const newDeleteEventListener = function () {
-            deleteEvent(event);
-        };
-
         // 새로운 이벤트 리스너 추가
         viewDeleteButton.removeEventListener('click', viewDeleteButton.currentListener);
         viewDeleteButton.currentListener = newDeleteEventListener;
         viewDeleteButton.addEventListener('click', newDeleteEventListener);
 
-
         // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
-        console.log('이벤트 바를 클릭했습니다:', event.title);
         const titleElement = document.querySelector('.view-calendar-title');
         const enrollDateElement = document.querySelector('.view-calendar-enroll-date');
         const writerElement = document.querySelector('.view-calendar-writer');
@@ -250,10 +238,8 @@ function renderCalendar(calendarEl, year, month, events = []) {
         const startDateElement = document.getElementById('viewStartDate');
         const endDateElement = document.getElementById('viewEndDate');
         const rangeElement = document.getElementById('viewRange');
-
-        console.log(enrollDateElement);
-        console.log(event.enrollDate);
-
+        console.log(event);
+        console.log(titleElement);
         titleElement.textContent = event.title;
         enrollDateElement.textContent = event.enrollDate;
         writerElement.textContent = event.writer;
@@ -263,7 +249,15 @@ function renderCalendar(calendarEl, year, month, events = []) {
         endDateElement.value = event.endDate;
         rangeElement.value = event.range;
 
-        console.log(barDiv);
+        originalData = {
+            calendarNo: event.calendarNo,
+            title: event.title,
+            content: event.content,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            range: event.range
+        };
+
         viewCnt++;
         if (viewCnt % 2 == 0) {
             hideNewEventView();
@@ -273,17 +267,26 @@ function renderCalendar(calendarEl, year, month, events = []) {
 
     }
     calendarEl.appendChild(grid);
-
 }
-document.querySelector
-document.getElementById
+const newDeleteEventListener = function () {
+    let range = originalData.range;
+    if (range === 'company') {
+        alert("관련 부서에 문의바랍니다.")
+    } else {
+        const userResponse = confirm("정말로 삭제하시겠습니까?");
+        if (userResponse) {
+            deleteEvent(originalData);
+        } else {
+
+        }
+    }
+};
 
 //일정 삭제
-function deleteEvent(event) {
+function deleteEvent(originalData) {
     viewCnt++;
     hideNewEventView();
-    let calendarNo = event.calendarNo;
-    console.log(calendarNo);
+    let calendarNo = originalData.calendarNo;
     $.ajax({
         type: 'post',
         url: '/orca/calendar/deleteCalendarEvent',
@@ -308,6 +311,136 @@ function deleteEvent(event) {
             alert("캘린더 삭제 실패!");
         }
     });
+}
+const viewEditButton = document.querySelector('.view-edit-button');
+viewEditButton.addEventListener('click', function () {
+    if (isEditCalendar === false) {
+        editEvent(originalData);
+    }
+});
+//일정 수정
+function editEvent(originalData) {
+    let range = originalData.range;
+    if (range === 'company') {
+        alert("관련 부서에 문의바랍니다.")
+    } else {
+        isEditCalendar = true;
+        // 일정 제목을 input 요소로 변환
+        const titleSpan = document.querySelector('.view-calendar-title');
+        const titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        titleInput.value = originalData.title; // 현재 텍스트 값을 가져와서 설정
+        titleInput.classList.add('edit-title');
+        titleSpan.parentNode.replaceChild(titleInput, titleSpan);
+
+        // readOnly 속성 제거
+        document.getElementById('viewEventContent').readOnly = false;
+        document.getElementById('viewStartDate').readOnly = false;
+        document.getElementById('viewEndDate').readOnly = false;
+
+        // 공유 범위를 select 요소로 변환
+        const viewRangeContainer = document.getElementById('viewRange');
+        const selectElement = document.createElement('select');
+        selectElement.id = 'edit-range';
+        selectElement.name = 'range';
+
+        // 옵션 추가
+        const individualOption = document.createElement('option');
+        individualOption.value = 'individual';
+        individualOption.textContent = '개인';
+        selectElement.appendChild(individualOption);
+
+        const teamOption = document.createElement('option');
+        teamOption.value = 'team';
+        teamOption.textContent = '팀';
+        selectElement.appendChild(teamOption);
+
+        // 기존 readOnly input 요소를 숨기고 select 요소를 추가
+        viewRangeContainer.parentNode.replaceChild(selectElement, viewRangeContainer);
+
+        // 버튼 텍스트 변경 및 이벤트 리스너 추가
+        const viewEditButton = document.querySelector('.view-edit-button');
+        const viewDeleteButton = document.querySelector('.view-delete-button');
+        const viewCancelButton = document.querySelector('.view-cancel-button');
+        const viewCalendarForm = document.querySelector('.view-calendar-form');
+
+        viewCalendarForm.style.height = '540px'; 
+
+        viewEditButton.textContent = '확인';
+        viewDeleteButton.textContent = '취소';
+
+        viewEditButton.removeEventListener('click', handleEditButtonClick);
+        viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
+        viewDeleteButton.removeEventListener('click', newDeleteEventListener);
+
+        viewEditButton.addEventListener('click', handleEditButtonClick);
+        viewDeleteButton.addEventListener('click', handleCancelButtonClick);
+
+        viewCancelButton.removeEventListener('click', newCancelEventListener);
+        viewCancelButton.addEventListener('click', newCancelEventListener);
+
+        function handleEditButtonClick() {
+            restoreOriginalState();
+            // AJAX 요청 보내기 (여기서는 가정)
+
+        }
+
+        function handleCancelButtonClick() {
+            // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
+            restoreOriginalState();
+        }
+
+        function newCancelEventListener() {
+            // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
+            restoreOriginalState();
+        }
+
+        function restoreOriginalState() {
+            viewCalendarForm.style.height = '518px'; 
+            isEditCalendar = false;
+            // 일정 제목을 다시 span 요소로 변환
+            const editedTitle = document.querySelector('.edit-title');
+            const titleSpan = document.createElement('span');
+            titleSpan.classList.add('view-calendar-title');
+            titleSpan.textContent = originalData.title;
+            editedTitle.parentNode.replaceChild(titleSpan, editedTitle);
+            
+            // readOnly 속성 추가
+            let content = document.getElementById('viewEventContent')
+            let startDate = document.getElementById('viewStartDate')
+            let endDate =  document.getElementById('viewEndDate')
+
+            content.readOnly = true;
+            startDate.readOnly = true;
+            endDate.readOnly = true;
+
+            content.value = originalData.content;
+            startDate.value = originalData.startDate;
+            endDate.value = originalData.endDate;
+
+            // select 요소를 다시 readOnly input 요소로 변경
+            const readOnlyInput = document.createElement('input');
+            readOnlyInput.type = 'text';
+            readOnlyInput.id = 'viewRange';
+            readOnlyInput.name = 'range';
+            readOnlyInput.value = originalData.range;
+            readOnlyInput.readOnly = true;
+
+            selectElement.parentNode.replaceChild(readOnlyInput, selectElement);
+
+            // 버튼 텍스트를 원래대로 변경
+            viewEditButton.textContent = '수정';
+            viewDeleteButton.textContent = '삭제';
+
+            // 이전의 이벤트 리스너를 다시 추가
+            viewEditButton.removeEventListener('click', handleEditButtonClick);
+            viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
+
+            viewCancelButton.removeEventListener('click', newCancelEventListener);
+            viewDeleteButton.addEventListener('click', newDeleteEventListener);
+
+        }
+    }
 }
 
 
@@ -344,18 +477,18 @@ let viewX = 0;
 let viewY = 0;
 //일정 상세 조회 close
 function closeViewEvent() {
-    viewCnt++;
-    hideNewEventView();
+    if (isEditCalendar) {
+    } else {
+        viewCnt++;
+        hideNewEventView();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('viewEventDetailsForm');
 
-    console.log(form);
-
     form.addEventListener('mousedown', function (event) {
         if (event.target.classList.contains('view-form-header') || event.target.closest('.view-form-header')) {
-            console.log("넘어옴2");
             isDraggingView = true;
             viewClickX = event.clientX;
             viewClickY = event.clientY;
@@ -537,7 +670,6 @@ function createCalendar() {
             range: range.value
         },
         success: function (response) {
-            console.log(response);
             if (response === 1) {
                 alert("일정이 등록되었습니다.");
                 isCalendarBarVisible[0] = !isCalendarBarVisible[0];
@@ -707,7 +839,7 @@ function checkInputs() {
             submitBtn.disabled = true;
             alert("시작일은 종료일보다 빨라야합니다.");
             submitBtn.style.backgroundColor = '#6eadff';
-        }else{
+        } else {
             submitBtn.classList.add('opacity');
             submitBtn.style.backgroundColor = '#1c76ec';
             submitBtn.disabled = false;
@@ -766,16 +898,10 @@ function handleMonthChange() {
 }
 
 let calendarBars = document.querySelectorAll('.empty .event-bar');
-console.log(calendarBars);
 // 각 calendarBars 요소에 클릭 이벤트 핸들러 추가
 calendarBars.forEach(function (bar) {
     bar.addEventListener('click', function (event) {
-        console.log(bar);
-        // 클릭 이벤트가 발생했을 때 이벤트 버블링을 중지시킴
         event.stopPropagation();
-        // 클릭 이벤트 발생 시 수행할 작업
-        console.log('calendar bar를 클릭했습니다.');
-        // 추가적인 작업 수행 가능
     });
 });
 //--------------------------------------------------------------

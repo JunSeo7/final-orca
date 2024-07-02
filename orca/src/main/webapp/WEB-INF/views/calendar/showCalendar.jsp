@@ -143,10 +143,10 @@
                     </div>
                     <div class="view-form-group">
                         <label for="viewRange">공유 범위</label>
-                        <input type="text" id="viewRange" name="range" readonly>
+                        <input type="text" id="viewRange" class="edit-range" name="range" readonly>
                     </div>
                     <div class="view-form-footer">
-                        <button class="view-edit-button" onclick="editEvent()">수정</button>
+                        <button class="view-edit-button">수정</button>
                         <button class="view-delete-button">삭제</button>
                     </div>
                 </div>
