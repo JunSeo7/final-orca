@@ -23,15 +23,10 @@ public class CalendarController {
         return "calendar/showCalendar";
     }
 
-    @GetMapping("showCalendarBar")
+    @GetMapping("showCalendarBarContent")
     @ResponseBody
-    public List<CalendarVo> showCalendarBar(@RequestParam("range") String range){
-        System.out.println("range : " + range);
-        List<CalendarVo> calendarBarlist = service.showCalendarBar(range);
-        for(CalendarVo vo : calendarBarlist){
-            System.out.println("vo = " + vo);
-        }
-        System.out.println("컨트롤러 도착함");
+    public List<CalendarVo> showCalendarBarContent(@RequestParam("range") String range){
+        List<CalendarVo> calendarBarlist = service.showCalendarBarContent(range);
         return calendarBarlist;
     }
 
@@ -45,5 +40,17 @@ public class CalendarController {
             return "redirect:/orca/calendar/showCalendar";
         }
         return "calendar/showCalendar";
+    }
+
+    @PostMapping("deleteCalendarEvent")
+    @ResponseBody
+    public String deleteCalendarEvent(@RequestParam("calendarNo") int calendarNo, Model model){
+        System.out.println(calendarNo);
+        int result = service.deleteCalendarEvent(calendarNo);
+        if(result != 1){
+            model.addAttribute("message", "다시 작성해주세요.");
+            return "redirect:/orca/calendar/showCalendar";
+        }
+        return "1";
     }
 }

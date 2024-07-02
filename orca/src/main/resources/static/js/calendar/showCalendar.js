@@ -65,7 +65,7 @@ function toggleCalendarBar(range, index) {
         console.log(range);
         $.ajax({
             type: 'get',
-            url: '/orca/calendar/showCalendarBar',
+            url: '/orca/calendar/showCalendarBarContent',
             dataType: 'json',
             data: { range: range },
             success: function (response) {
@@ -216,7 +216,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
                         eventBar.addEventListener('click', function () {
                             handleEventBarClick(event, eventBar); // 이벤트 바 클릭 시 호출할 함수
                         });
-                        
+
                     }
                 }
             });
@@ -227,11 +227,18 @@ function renderCalendar(calendarEl, year, month, events = []) {
 
     // 이벤트 바 클릭 시 호출할 함수
     function handleEventBarClick(event, barDiv) {
+
         const viewDeleteButton = document.querySelector('.view-delete-button');
-        viewDeleteButton.addEventListener('click', function(){
-            viewDeleteButton.removeEventListener('click', deleteEvent);
+        // 기존의 이벤트 리스너 제거
+        const newDeleteEventListener = function () {
             deleteEvent(event);
-        })
+        };
+
+        // 새로운 이벤트 리스너 추가
+        viewDeleteButton.removeEventListener('click', viewDeleteButton.currentListener);
+        viewDeleteButton.currentListener = newDeleteEventListener;
+        viewDeleteButton.addEventListener('click', newDeleteEventListener);
+
 
         // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
         console.log('이벤트 바를 클릭했습니다:', event.title);
@@ -243,8 +250,6 @@ function renderCalendar(calendarEl, year, month, events = []) {
         const startDateElement = document.getElementById('viewStartDate');
         const endDateElement = document.getElementById('viewEndDate');
         const rangeElement = document.getElementById('viewRange');
-
-
 
         console.log(enrollDateElement);
         console.log(event.enrollDate);
@@ -265,19 +270,41 @@ function renderCalendar(calendarEl, year, month, events = []) {
         } else if (viewCnt % 2 != 0) {
             showNewEventView(barDiv);
         }
-        
+
     }
     calendarEl.appendChild(grid);
 
 }
+document.querySelector
+document.getElementById
 
 //일정 삭제
 function deleteEvent(event) {
-    console.log(viewCnt);
-    console.log("삭제 이벤트 발생");
-
     viewCnt++;
     hideNewEventView();
+    let calendarNo = event.calendarNo;
+    console.log(calendarNo);
+    $.ajax({
+        type: 'post',
+        url: '/orca/calendar/deleteCalendarEvent',
+        dataType: 'json',
+        data: { calendarNo : calendarNo },
+        success: function (response) {
+            if(response === 1){
+                alert("캘린더 삭제 성공!");
+                isCalendarBarVisible[0] = !isCalendarBarVisible[0];
+                isCalendarBarVisible[1] = !isCalendarBarVisible[1];
+                isCalendarBarVisible[2] = !isCalendarBarVisible[2];
+                toggleCalendarBar("company", 0);
+                toggleCalendarBar("individual", 1);
+                toggleCalendarBar("team", 2);
+            }
+
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 }
 
 

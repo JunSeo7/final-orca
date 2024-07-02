@@ -18,8 +18,11 @@ public class CalendarService {
         return dao.createCalendar(vo);
     }
 
-    public List<CalendarVo> showCalendarBar(String range) {
-        System.out.println("서비스 넘어옴");
-       return dao.showCalendarBar(range);
+    public List<CalendarVo> showCalendarBarContent(String range) {
+       return dao.showCalendarBarContent(range);
+    }
+
+    public int deleteCalendarEvent(int calendarNo) {
+        return dao.deleteCalendarEvent(calendarNo);
     }
 }
