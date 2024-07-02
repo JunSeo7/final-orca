@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 결재선 등록 결재양식 제목 가져오기
+    // 결재 등록 결재양식 제목 가져오기
     function fetchTemplatesByCategory(categoryNo) {
         $.ajax({
             url: '/orca/document/template/list',
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 결재선 등록 카테고리 가져오기
+    // 결재 등록 카테고리 가져오기
     function fetchCategories() {
         $.ajax({
             url: '/orca/document/categorie/list',
@@ -53,8 +53,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 결재 양식 내용 불러오기
+    // 결재 양식 내용, 결재선 불러오기
     function fetchTemplateContent(templateNo) {
+        // 결재 양식 내용 불러오기
         $.ajax({
             url: '/orca/document/template/content',
             method: 'GET',
@@ -63,9 +64,45 @@ document.addEventListener("DOMContentLoaded", function() {
                 $('#title').val(data.title); // 템플릿의 제목
                 $('#content').val(data.content); // 템플릿의 내용
                 $('#templateNo').val(data.templateNo);
+
+                // 결재선 불러오기
+                fetchApprovalLine(templateNo);
             },
             error: function() {
                 alert('결재 양식 내용 불러오기 오류가 발생했습니다.');
+            }
+        });
+    }
+
+    // 결재선 불러오기
+    function fetchApprovalLine(templateNo) {
+        $.ajax({
+            url: '/orca/document/template/apprline',
+            method: 'GET',
+            data: { templateNo: templateNo },
+            success: function(data) {
+                updateApprovalProcess(data.approverVoList);
+            },
+            error: function() {
+                alert('결재선 불러오기 오류가 발생했습니다.');
+            }
+        });
+    }
+
+    // 결재선 프로세스 업데이트
+    function updateApprovalProcess(approvers) {
+        const processContainer = document.querySelector('.approval-process');
+        processContainer.innerHTML = '';
+
+        approvers.forEach((approver, index) => {
+            const approverDiv = document.createElement('div');
+            approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
+            processContainer.appendChild(approverDiv);
+
+            if (index < approvers.length - 1) {
+                const arrowDiv = document.createElement('div');
+                arrowDiv.classList.add('arrow');
+                processContainer.appendChild(arrowDiv);
             }
         });
     }

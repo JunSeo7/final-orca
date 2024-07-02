@@ -32,6 +32,22 @@ public class DocumentDao {
     public TemplateVo getTemplateContent(int templateNo) {
         return mapper.getTemplateContent(templateNo);
     }
+    // 결재 작성 결재선 가져오기
+    // 결재선 전체목록 (결재선)
+    public ApprovalLineVo getTemplateApprLine(int templateNo) {
+        ApprovalLineVo apprline = mapper.getTemplateApprLine(templateNo);
+        System.out.println("apprline = " + apprline);
+        return apprline;
+    }
+
+    // 결재선 전체목록 (결재자 여러명)
+    public List<ApproverVo> getApproverList(int apprLineNo) {
+        List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
+        System.out.println("approvers = " + approvers);
+        if(approvers ==null){
+            System.out.println("approverLineVoList= " + approvers);
+        } return approvers;
+    }
 
     // 결재 작성
     @Transactional
@@ -39,9 +55,9 @@ public class DocumentDao {
         return mapper.writeDocument(vo);
     }
     //전체목록
-    // 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    public List<DocumentVo> getDocumentList() {
-        return mapper.getDocumentList();
+    // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    public List<DocumentVo> getDocumentList(String loginUserNo) {
+        return mapper.getDocumentList(loginUserNo);
     }
     // 문서목록 - 결재선 목록 넣기
     public List<ApprovalLineVo> getApprovalLineList(int docNo) {
@@ -69,8 +85,8 @@ public class DocumentDao {
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    public int deleteDocumentByNo(int docNo) {
-        return mapper.deleteDocumentByNo(docNo);
+    public int deleteDocumentByNo(int docNo, String loginUserNo) {
+        return mapper.deleteDocumentByNo(docNo, loginUserNo);
     }
 
 
