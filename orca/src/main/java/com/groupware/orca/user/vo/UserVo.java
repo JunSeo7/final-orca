@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserVo {
 
-    private String empNo;
+    private int empNo;
     private String name;
     private String positionCode;
     private String deptCode;
@@ -33,4 +33,4 @@ public class UserVo {
     private String partName;
     private String nameOfPosition;
     private String teamName;
-
+}
