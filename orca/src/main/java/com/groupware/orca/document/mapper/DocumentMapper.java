@@ -1,10 +1,7 @@
 package com.groupware.orca.document.mapper;
 
 import com.groupware.orca.document.vo.*;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,7 +34,13 @@ public interface DocumentMapper {
             "VALUES (SEQ_DOCUMENT.NEXTVAL, #{loginUserNo}, #{templateNo}, #{status}, #{title}, #{content}, #{urgent}, SYSDATE" +
             "<if test='status == 2'>, SYSDATE</if>)" +
             "</script>")
+    @Options(useGeneratedKeys = true, keyProperty = "docNo", keyColumn = "DOC_NO")
     int writeDocument(DocumentVo vo);
+    // 결재 작성 - 결재선 업로드
+    int writeDocumentApprLine(List<ApprovalLineVo> vo);
+
+    // 결재 작성 - 파일 업로드
+    int writeDocumentFile(List<DocFileVo> vo);
 
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("SELECT D.DOC_NO ,D.WRITER_NO ,D.STATUS ,D.TITLE ,D.CONTENT ,D.ENROLL_DATE,D.CREDIT_DATE,STATUS\n" +

@@ -61,7 +61,9 @@ public class DocumentController {
     }
     // 결재 작성
     @PostMapping("write")
-    public String writeDocument(DocumentVo vo, HttpSession httpSession){
+    public String writeDocument(@RequestBody DocumentVo vo, HttpSession httpSession){
+        System.out.println("DocumentController.writeDocument");
+        System.out.println("vo = " + vo);
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(Integer.parseInt(loginUserNo));
         System.out.println("DocumentController.writeDocument");

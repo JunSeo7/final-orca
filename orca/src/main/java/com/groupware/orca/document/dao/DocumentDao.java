@@ -49,11 +49,22 @@ public class DocumentDao {
         } return approvers;
     }
 
+
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {
         return mapper.writeDocument(vo);
     }
+    // 결재 작성 - 결재선 업로드
+    public int writeDocumentApprLine(List<ApprovalLineVo> vo){
+        return mapper.writeDocumentApprLine(vo);
+    }
+    // 결재 작성 - 파일 업로드
+    public int writeDocumentFile(List<DocFileVo> vo){
+        return mapper.writeDocumentFile(vo);
+    }
+
+
     //전체목록
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public List<DocumentVo> getDocumentList(String loginUserNo) {

@@ -45,7 +45,15 @@ public class DocumentService {
 
     // 결재 작성
     public int writeDocument(DocumentVo vo) {
-        return dao.writeDocument(vo);
+         int writeDocument = dao.writeDocument(vo);
+         List<ApprovalLineVo> apprLineList = vo.getApprovalLineVoList();
+         List<DocFileVo> fileList = vo.getFiles();
+        // 결재 작성 - 결재선 업로드
+        int writeDocumentApprLine = dao.writeDocumentApprLine(apprLineList);
+        // 결재 작성 - 파일 업로드
+        int writeDocumentFile= dao.writeDocumentFile(fileList);
+        int result = writeDocument+writeDocumentApprLine+writeDocumentFile;
+        return result;
     }
 
     //전체목록
