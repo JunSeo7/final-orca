@@ -16,16 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -72,21 +69,39 @@ public class BoardController {
     public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
         String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setInsertUserNo(Integer.parseInt(insertUserNo));
-        if (vo.getCategoryNo() == 3) {
-            vo.setIsAnonymous('Y');
-        } else {
-            vo.setIsAnonymous('N');
+
+        // CATEGORY_NO 값이 유효한지 확인
+        if (vo.getCategoryNo() == 0) {
+            model.addAttribute("message", "Invalid category number.");
+            return "board/insert";
         }
+
+        if (vo.getCategoryNo() == 3) {
+            vo.setIsAnonymous("Y");
+        } else {
+            vo.setIsAnonymous("N");
+        }
+
+        // 게시글 삽입
         boardService.boardInsert(vo);
+
+        // 세션에서 파일 정보 가져오기
+        List<BoardFileVo> fileList = (List<BoardFileVo>) httpSession.getAttribute("uploadedFiles");
+        if (fileList != null) {
+            for (BoardFileVo fileVo : fileList) {
+                fileVo.setBoardNo(vo.getBoardNo()); // 생성된 게시글 번호 설정
+                boardFileService.insertFile(fileVo);
+            }
+            // 파일 정보 세션에서 제거
+            httpSession.removeAttribute("uploadedFiles");
+        }
+
         return "redirect:/board";
     }
-
-
     @PostMapping("/uploadImage")
     @ResponseBody
-    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
+    public Map<String, Object> uploadImage(HttpSession httpSession, @RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
         Map<String, Object> response = new HashMap<>();
-
         // 파일이 업로드된 경우
         if (!file.isEmpty()) {
             // 파일을 서버에 저장하기
@@ -94,9 +109,9 @@ public class BoardController {
             InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
 
             ServletContext context = req.getServletContext();
-            String path = context.getRealPath("/orca/resources/upload/");
+            String path = context.getRealPath("/resources/upload/");
 
-            java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
+            File dir = new File(path); // 파일 저장 경로의 디렉토리 객체 생성
             if (!dir.exists()) {
                 dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
             }
@@ -104,8 +119,7 @@ public class BoardController {
             String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
             String ext = originFileName.substring(originFileName.lastIndexOf(".")); // 파일 확장자를 가져옴
             String changeName = System.currentTimeMillis() + "_" + random + ext; // 현재 시간과 랜덤 문자열을 조합하여 고유한 파일 이름 생성
-            FileOutputStream fos = new FileOutputStream(path + changeName); // 파일 저장을 위한 출력 스트림 생성
-            System.out.println(path + changeName);
+            FileOutputStream fos = new FileOutputStream(path + "/" + changeName); // 파일 저장을 위한 출력 스트림 생성
             byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
             int size = 0;
             while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
@@ -115,16 +129,23 @@ public class BoardController {
             is.close(); // 입력 스트림 닫기
             fos.close(); // 출력 스트림 닫기
 
-            // DB에 파일 정보 저장
+            // DB에 파일 정보 저장 (세션에 저장)
             BoardFileVo fileVo = new BoardFileVo();
-            fileVo.setBoardNo(null); // 게시판 번호, 필요하다면 설정
             fileVo.setFileOriginName(originFileName);
             fileVo.setFileSaveName(changeName);
             fileVo.setFileDelYn("N");
-            boardFileService.insertFile(fileVo);
+
+            // 세션에 업로드된 파일 정보 저장
+            List<BoardFileVo> uploadedFiles = (List<BoardFileVo>) httpSession.getAttribute("uploadedFiles");
+            if (uploadedFiles == null) {
+                uploadedFiles = new ArrayList<>();
+            }
+            uploadedFiles.add(fileVo);
+            httpSession.setAttribute("uploadedFiles", uploadedFiles);
 
             // 파일 접근 URL 반환
-            response.put("link", "/orca/resources/upload/" + changeName);
+            response.put("link", "/resources/upload/" + changeName);
+            response.put("message", "File uploaded successfully.");
         } else {
             response.put("message", "No file uploaded.");
         }
@@ -168,7 +189,7 @@ public class BoardController {
         return boardService.getStatsByDate();
     }
 
-    //조회수 증가
+    // 조회수 증가
     @PostMapping("/hit/{boardNo}")
     public ResponseEntity<String> hit(@PathVariable("boardNo") int boardNo) {
         boardService.hit(boardNo);

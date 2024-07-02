@@ -1,12 +1,7 @@
 package com.groupware.orca.board.mapper;
 
 import com.groupware.orca.board.vo.BoardVo;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +26,7 @@ public interface BoardMapper {
 
     @Insert("INSERT INTO BOARD (BOARD_NO, TITLE, CONTENT, CATEGORY_NO, INSERT_USER_NO, LATITUDE, LONGITUDE, IS_ANONYMOUS) " +
             "VALUES (SEQ_BOARD.NEXTVAL, #{title}, #{content}, #{categoryNo}, #{insertUserNo}, #{latitude}, #{longitude}, #{isAnonymous})")
+    @Options(useGeneratedKeys = true, keyProperty = "boardNo", keyColumn = "BOARD_NO")
     int boardInsert(BoardVo vo);
 
     @Update("UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}, IS_ANONYMOUS = #{isAnonymous} WHERE BOARD_NO = #{boardNo}")
