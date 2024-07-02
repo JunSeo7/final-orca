@@ -35,9 +35,11 @@
             <tr>
                 <th>결재선</th>
                 <td>
-                    <select id="approver" name="approver" required>
-                        <!-- 디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌 -->
-                    </select>
+
+                        <!-- <select id="approver" name="approver" required>
+                        디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌
+                        </select>-->
+
                 </td>
                  <th>긴급 여부</th>
                     <td>
@@ -48,17 +50,18 @@
                  <tr>
                     <th>결재선 프로세스</th>
                     <td colspan='3'>
-                        <div class="approval-process">
+                        <div class="approval-process" name="approvalLineVoList">
                             <!-- 결재선 프로세스 -->
                         </div>
+                        <input type="button" value="수정">
                     </td>
                 </tr>
                 <tr>
                     <th>공람(참조인)</th>
                     <td colspan='3'>
-                        <select id="approver" name="approver" required>
+                        <!-- <select id="approver" name="approver" required>
                             <!-- 디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌 -->
-                        </select>
+                        </select> -->
                     </td>
                 </tr>
             </table>
@@ -95,7 +98,7 @@
         </table>
         <br>
         <br>
-        <button type="button" onclick="submitDocument()" class="approval-btn">기안</button>
+        <button type="summit" class="approval-btn">기안</button>
     </form>
 </main>
 </body>

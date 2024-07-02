@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 결재선 프로세스 업데이트
     function updateApprovalProcess(approvers) {
-        const processContainer = document.querySelector('.approval-process');
+        const processCon7ntainer = document.querySelector('.approval-process');
         processContainer.innerHTML = '';
 
         approvers.forEach((approver, index) => {
@@ -109,32 +109,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 카테고리 변경 - 템플릿 목록 업데이트
     $('#categoryNo').change(function() {
-        var categoryNo = $(this).val();
+        let categoryNo = $(this).val();
         fetchTemplatesByCategory(categoryNo);
     });
 
     // 결재 양식 선택 - 내용 업데이트
     $('#templateNo').change(function() {
-        var templateNo = $(this).val();
+        let templateNo = $(this).val();
         fetchTemplateContent(templateNo);
     });
 
     fetchCategories(); // 페이지 로드 - 카테고리 가져오기
 });
-
-function submitDocument() {
-    var formData = $('#documentForm').serialize();
-    $.ajax({
-        url: '/orca/document/write',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(formData),
-        success: function() {
-            alert('결재 작성이 완료되었습니다.');
-            window.location.href = '/orca/document/list';
-        },
-        error: function() {
-            alert('결재 작성 중 오류가 발생했습니다.');
-        }
-    });
-}
