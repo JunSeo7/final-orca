@@ -45,4 +45,6 @@ public class BoardDao {
     public List<Map<String, Object>> getStatsByDate() {
         return mapper.getStatsByDate();
     }
-}
+
+    }
+

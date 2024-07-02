@@ -16,7 +16,7 @@ public class BoardService {
 
     public BoardVo getBoardDetail(int boardNo) {
         BoardVo boardVo = dao.getBoardDetail(boardNo);
-        if (boardVo.getIsAnonymous() == 'Y') {
+        if (boardVo.getIsAnonymous() == "Y") {
             boardVo.setEmployeeName("***");
         }
         return boardVo;
@@ -46,7 +46,7 @@ public class BoardService {
     public List<BoardVo> getBoardList(int categoryNo) {
         List<BoardVo> boardList = dao.getBoardList(categoryNo);
         for (BoardVo board : boardList) {
-            if (board.getIsAnonymous() == 'Y') {
+            if (board.getIsAnonymous() == "Y") {
                 board.setEmployeeName("***");
             }
         }
@@ -56,4 +56,6 @@ public class BoardService {
     public List<Map<String, Object>> getStatsByDate() {
         return dao.getStatsByDate();
     }
+
+
 }

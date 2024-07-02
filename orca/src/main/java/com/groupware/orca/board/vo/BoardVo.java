@@ -21,5 +21,5 @@ public class BoardVo {
     private String employeeName;
     private String departmentName;
     private String teamName;
-    private char isAnonymous;  // 익명 여부 추가
+    private String isAnonymous;  // 익명 여부 추가
 }

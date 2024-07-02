@@ -8,5 +8,5 @@ public class BoardFileVo {
     private String fileOriginName;
     private String fileSaveName;
     private String fileDelYn;
-    private Integer boardNo; // int -> Integer로 변경
+    private int boardNo;
 }
