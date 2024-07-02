@@ -21,9 +21,7 @@ public class CalendarDao {
         return voList;
     }
 
-
     public int deleteCalendarEvent(int calendarNo) {
         return mapper.deleteCalendarEvent(calendarNo);
     }
 }
-;

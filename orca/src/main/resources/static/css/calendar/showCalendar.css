@@ -168,10 +168,7 @@ nav ul li a:hover {
     box-shadow: 0 4px 8px rgba(92, 91, 91, 0.24);
     margin-top: 20px;
 }
-.new-schedule:hover{
-    background-color: #368dff;
-    cursor: pointer;
-}
+
 .selectContainer{
     display: flex;
     justify-content: center;
@@ -370,8 +367,6 @@ nav ul li a:hover {
 /* today-text표시 */
 .today-text{
     font-size: 10px;
-    
-    
 }
 .side-today{
     color: #2672e8;
@@ -389,7 +384,7 @@ nav ul li a:hover {
     padding: 15px;
     max-width: 350px;
     width: 90%;
-    height: 560px;
+    height: 499px;
     z-index: 1000;
     border-radius: 10px;
     font-family: 'Arial', sans-serif;
@@ -467,16 +462,16 @@ nav ul li a:hover {
 .form-footer button {
     padding: 8px 16px;
     font-size: 0.9rem;
-    background-color: #368dff;
+    background-color: #6eadff;
     color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.form-footer button:hover {
-    background-color: #2672e8;
+.opacity:hover{
+    background-color: #0c4a9a;
+    cursor: pointer;
 }
 /* --------------------------------------------------------------------- */
 /* 이벤트 바 */
