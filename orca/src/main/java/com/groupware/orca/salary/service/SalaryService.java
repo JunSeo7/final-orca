@@ -33,8 +33,8 @@
 //    private double calculateEmployement (double Salary, double employmentPercentage){
 //        return Salary * employmentPercentage;
 //    }
-
-    // 소득세 (단계 많음.. 1. 소득 공제 2. 공제 다 더하기== 과세표준 3. 소득세율 적용 4. 범위에 해당하는 소득세율 다 더하기 == 근로소득세)
+//
+//     //소득세 (단계 많음.. 1. 소득 공제 2. 공제 다 더하기== 과세표준 3. 소득세율 적용 4. 범위에 해당하는 소득세율 다 더하기 == 근로소득세)
 //    private double calculateIncomeTax (double incomTax, UserVo vo,SalaryVo svo){
 //        double incomTaxCalcul = vo.getSalary()*12 - (svo.getMeals()+ svo.getEmployementInsurance());
 //
@@ -46,8 +46,8 @@
 //
 //
 //        }
-
-
+//
+//
 //
 //
 //
