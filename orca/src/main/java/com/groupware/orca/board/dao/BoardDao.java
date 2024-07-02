@@ -3,7 +3,6 @@ package com.groupware.orca.board.dao;
 import com.groupware.orca.board.mapper.BoardMapper;
 import com.groupware.orca.board.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,8 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardDao {
 
-    @Autowired
-    private BoardMapper mapper;
+    private final BoardMapper mapper;
 
     public BoardVo getBoardDetail(int boardNo) {
         return mapper.getBoardDetail(boardNo);

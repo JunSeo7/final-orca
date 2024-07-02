@@ -14,4 +14,6 @@ public class CalendarVo {
     private String enrollDate;
     private String delDate;
     private String range;
+    private String writer;
+    private String partName;
 }
