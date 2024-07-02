@@ -16,11 +16,14 @@ public class CalendarDao {
         return mapper.createCalendar(vo);
     }
 
-    public List<CalendarVo> showCalendarBar(String range) {
-        System.out.println("다오 넘어옴");
-        System.out.println("rangeDao= " + range);
-        List<CalendarVo> voList = mapper.showCalendarBar(range);
-        System.out.println(voList.size());
+    public List<CalendarVo> showCalendarBarContent(String range) {
+        List<CalendarVo> voList = mapper.showCalendarBarContent(range);
         return voList;
     }
+
+
+    public int deleteCalendarEvent(int calendarNo) {
+        return mapper.deleteCalendarEvent(calendarNo);
+    }
 }
+;

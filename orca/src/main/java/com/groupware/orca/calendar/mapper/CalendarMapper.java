@@ -1,10 +1,7 @@
 package com.groupware.orca.calendar.mapper;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,5 +17,8 @@ public interface CalendarMapper {
             "JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
             "JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE\n" +
             "WHERE RANGE = #{range}")
-    List<CalendarVo> showCalendarBar(String range);
+    List<CalendarVo> showCalendarBarContent(String range);
+
+    @Delete("DELETE CALENDAR WHERE CALENDAR_NO = #{calendarNo}")
+    int deleteCalendarEvent(int calendarNo);
 }
