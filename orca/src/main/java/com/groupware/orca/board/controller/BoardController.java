@@ -6,6 +6,8 @@ import com.groupware.orca.board.service.CommentService;
 import com.groupware.orca.board.vo.BoardFileVo;
 import com.groupware.orca.board.vo.BoardVo;
 import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +18,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 
 @Slf4j
 @Controller
@@ -66,7 +72,7 @@ public class BoardController {
     public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
         String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setInsertUserNo(Integer.parseInt(insertUserNo));
-        if (vo.getCategoryNo() == 3) { // 익명 게시판일 경우
+        if (vo.getCategoryNo() == 3) {
             vo.setIsAnonymous('Y');
         } else {
             vo.setIsAnonymous('N');
@@ -75,29 +81,57 @@ public class BoardController {
         return "redirect:/board";
     }
 
+
     @PostMapping("/uploadImage")
     @ResponseBody
-    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest req) throws IOException {
         Map<String, Object> response = new HashMap<>();
-        String uploadDir = "C:/dev/setup/uploads/";
-        String fileName = file.getOriginalFilename();
-        File dest = new File(uploadDir, fileName);
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
+
+        // 파일이 업로드된 경우
+        if (!file.isEmpty()) {
+            // 파일을 서버에 저장하기
+            String originFileName = file.getOriginalFilename(); // 원본 파일 이름을 가져옴
+            InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
+
+            ServletContext context = req.getServletContext();
+            String path = context.getRealPath("/orca/resources/upload/");
+
+            java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
+            if (!dir.exists()) {
+                dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
+            }
+
+            String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
+            String ext = originFileName.substring(originFileName.lastIndexOf(".")); // 파일 확장자를 가져옴
+            String changeName = System.currentTimeMillis() + "_" + random + ext; // 현재 시간과 랜덤 문자열을 조합하여 고유한 파일 이름 생성
+            FileOutputStream fos = new FileOutputStream(path + changeName); // 파일 저장을 위한 출력 스트림 생성
+            System.out.println(path + changeName);
+            byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
+            int size = 0;
+            while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
+                fos.write(buf, 0, size); // 버퍼에 있는 데이터를 출력 스트림에 씀
+            }
+
+            is.close(); // 입력 스트림 닫기
+            fos.close(); // 출력 스트림 닫기
+
+            // DB에 파일 정보 저장
+            BoardFileVo fileVo = new BoardFileVo();
+            fileVo.setBoardNo(null); // 게시판 번호, 필요하다면 설정
+            fileVo.setFileOriginName(originFileName);
+            fileVo.setFileSaveName(changeName);
+            fileVo.setFileDelYn("N");
+            boardFileService.insertFile(fileVo);
+
+            // 파일 접근 URL 반환
+            response.put("link", "/orca/resources/upload/" + changeName);
+        } else {
+            response.put("message", "No file uploaded.");
         }
-        file.transferTo(dest);
 
-        // DB에 파일 정보 저장
-        BoardFileVo fileVo = new BoardFileVo();
-        fileVo.setBoardNo(null); // null로 설정
-        fileVo.setFileOriginName(fileName);
-        fileVo.setFileSaveName(fileName);
-        fileVo.setFileDelYn("N");
-        boardFileService.insertFile(fileVo);
-
-        response.put("link", "/uploads/" + fileName);
         return response;
     }
+
 
     @PostMapping("/update")
     public String updateBoard(@ModelAttribute BoardVo boardVo, HttpSession httpSession) {
