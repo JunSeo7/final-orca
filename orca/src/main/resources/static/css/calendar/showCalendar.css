@@ -527,7 +527,7 @@ nav ul li a:hover {
     padding: 15px;
     max-width: 400px;
     width: 95%;
-    height: 510px;
+    height: 518px;
     z-index: 1000;
     border-radius: 10px;
     font-family: 'Arial', sans-serif;
@@ -601,7 +601,9 @@ nav ul li a:hover {
 
 .view-calendar-form input[type="text"],
 .view-calendar-form input[type="date"],
-.view-calendar-form textarea {
+.view-calendar-form textarea,
+#edit-range
+{
     width: 100%;
     padding: 8px;
     font-size: 0.9rem;

@@ -16,7 +16,8 @@ public interface CalendarMapper {
             "FROM CALENDAR C\n" +
             "JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
             "JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE\n" +
-            "WHERE RANGE = #{range}")
+            "WHERE RANGE = #{range}" +
+            "ORDER BY ENROLL_DATE")
     List<CalendarVo> showCalendarBarContent(String range);
 
     @Delete("DELETE CALENDAR WHERE CALENDAR_NO = #{calendarNo}")
