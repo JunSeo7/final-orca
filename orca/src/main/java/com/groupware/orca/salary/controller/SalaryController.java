@@ -19,7 +19,7 @@ public class SalaryController {
 
     //급여계산 입력
     @GetMapping("write")
-    public double salaryInsert(@RequestParam("sal","holidayTime","overTime") UserVo vo, SalaryVo svo, RatesVo rvo, double holidayTime, double overTime){
+    public double salaryInsert(@RequestParam("sal"+"holidayTime"+"overTime") UserVo vo, SalaryVo svo, RatesVo rvo, double holidayTime, double overTime){
         double result = service.salaryWrite(vo,svo,rvo,holidayTime,overTime);
         return result;
 

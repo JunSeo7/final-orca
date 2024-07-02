@@ -33,5 +33,4 @@ public class UserVo {
     private String partName;
     private String nameOfPosition;
     private String teamName;
-}
 
