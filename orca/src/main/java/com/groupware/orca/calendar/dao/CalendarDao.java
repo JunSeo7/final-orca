@@ -21,7 +21,11 @@ public class CalendarDao {
         return voList;
     }
 
-    public int deleteCalendarEvent(int calendarNo) {
-        return mapper.deleteCalendarEvent(calendarNo);
+    public int deleteCalendar(int calendarNo) {
+        return mapper.deleteCalendar(calendarNo);
+    }
+
+    public int editCalendar(CalendarVo vo) {
+        return mapper.editCalendar(vo);
     }
 }

@@ -21,5 +21,8 @@ public interface CalendarMapper {
     List<CalendarVo> showCalendarBarContent(String range);
 
     @Delete("DELETE CALENDAR WHERE CALENDAR_NO = #{calendarNo}")
-    int deleteCalendarEvent(int calendarNo);
+    int deleteCalendar(int calendarNo);
+
+    @Update("")
+    int editCalendar(CalendarVo vo);
 }

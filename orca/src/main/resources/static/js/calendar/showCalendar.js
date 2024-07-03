@@ -289,7 +289,7 @@ function deleteEvent(originalData) {
     let calendarNo = originalData.calendarNo;
     $.ajax({
         type: 'post',
-        url: '/orca/calendar/deleteCalendarEvent',
+        url: '/orca/calendar/deleteCalendar',
         dataType: 'json',
         data: { calendarNo: calendarNo },
         success: function (response) {
@@ -343,7 +343,6 @@ function editEvent(originalData) {
         const selectElement = document.createElement('select');
         selectElement.id = 'edit-range';
         selectElement.name = 'range';
-
         // 옵션 추가
         const individualOption = document.createElement('option');
         individualOption.value = 'individual';
@@ -364,7 +363,7 @@ function editEvent(originalData) {
         const viewCancelButton = document.querySelector('.view-cancel-button');
         const viewCalendarForm = document.querySelector('.view-calendar-form');
 
-        viewCalendarForm.style.height = '540px'; 
+        viewCalendarForm.style.height = '540px';
 
         viewEditButton.textContent = '확인';
         viewDeleteButton.textContent = '취소';
@@ -380,9 +379,67 @@ function editEvent(originalData) {
         viewCancelButton.addEventListener('click', newCancelEventListener);
 
         function handleEditButtonClick() {
-            restoreOriginalState();
-            // AJAX 요청 보내기 (여기서는 가정)
+            const titleElement = document.querySelector('.edit-title').textContent;
+            const contentElement = document.querySelector('.viewEventContent').textContent;
+            const startDateElement = document.querySelector('.viewStartDate').value;
+            const endDateElement = document.querySelector('.viewEndDate').value;
+            const rangeElement = document.querySelector('#edit-range').value;
 
+            console.log(titleElement);
+            console.log(contentElement);
+            console.log(startDateElement);
+            console.log(endDateElement);
+            console.log(rangeElement);
+
+            const updatedData = {};
+            if (titleElement !== originalData.title) {
+                updatedData.title = titleElement;
+            }
+            if (contentElement !== originalData.content) {
+                updatedData.content = contentElement;
+            }
+            if (startDateElement !== originalData.startDate) {
+                updatedData.startDate = startDateElement;
+            }
+            if (endDateElement !== originalData.endDate) {
+                updatedData.endDate = endDateElement;
+            }
+            if (rangeElement !== originalData.range) {
+                updatedData.range = rangeElement;
+            }
+
+            restoreOriginalState();
+
+            $.ajax({
+                type: 'post',
+                url: '/orca/calendar/editCalendar',
+                dataType: 'json',
+                data:
+                {
+                    updatedData
+                },
+                success: function (response) {
+                    if (response === 1) {
+                        let title = document.querySelector('.view-calendar-title');
+                        let content = document.getElementById('viewEventContent')
+                        let startDate = document.getElementById('viewStartDate')
+                        let endDate = document.getElementById('viewEndDate')
+                        let range = document.getElementById('viewRange');
+                        title.textContent = response.title;
+                        content.value = response.content;
+                        startDate.value = response.startDate;
+                        endDate.value = response.endDate;
+                        range.textContent = response.range;
+                    } else {
+                        alert("캘린더 삭제 실패!");
+                    }
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert("캘린더 삭제 실패!");
+                }
+            })
         }
 
         function handleCancelButtonClick() {
@@ -396,7 +453,7 @@ function editEvent(originalData) {
         }
 
         function restoreOriginalState() {
-            viewCalendarForm.style.height = '518px'; 
+            viewCalendarForm.style.height = '518px';
             isEditCalendar = false;
             // 일정 제목을 다시 span 요소로 변환
             const editedTitle = document.querySelector('.edit-title');
@@ -404,11 +461,11 @@ function editEvent(originalData) {
             titleSpan.classList.add('view-calendar-title');
             titleSpan.textContent = originalData.title;
             editedTitle.parentNode.replaceChild(titleSpan, editedTitle);
-            
+
             // readOnly 속성 추가
             let content = document.getElementById('viewEventContent')
             let startDate = document.getElementById('viewStartDate')
-            let endDate =  document.getElementById('viewEndDate')
+            let endDate = document.getElementById('viewEndDate')
 
             content.readOnly = true;
             startDate.readOnly = true;
