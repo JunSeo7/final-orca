@@ -74,38 +74,39 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 결재선 불러오기
-    function fetchApprovalLine(templateNo) {
-        $.ajax({
-            url: '/orca/document/template/apprline',
-            method: 'GET',
-            data: { templateNo: templateNo },
-            success: function(data) {
-                updateApprovalProcess(data.approverVoList);
-            },
-            error: function() {
-                alert('결재선 불러오기 오류가 발생했습니다.');
-            }
-        });
-    }
+     // 결재선 불러오기
+        function fetchApprovalLine(templateNo) {
+            $.ajax({
+                url: '/orca/document/template/apprline',
+                method: 'GET',
+                data: { templateNo: templateNo },
+                success: function(data) {
+                    updateApprovalProcess(data.approverVoList);
+                },
+                error: function() {
+                    alert('결재선 불러오기 오류가 발생했습니다.');
+                }
+            });
+        }
 
-    // 결재선 프로세스 업데이트
-    function updateApprovalProcess(approvers) {
-        const processCon7ntainer = document.querySelector('.approval-process');
-        processContainer.innerHTML = '';
+        // 결재선 프로세스 업데이트
+        function updateApprovalProcess(approvers) {
+            const processContainer = document.querySelector('.approval-process');
+            processContainer.innerHTML = '';
 
-        approvers.forEach((approver, index) => {
-            const approverDiv = document.createElement('div');
-            approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
-            processContainer.appendChild(approverDiv);
+            approvers.forEach((approver, index) => {
+                const approverDiv = document.createElement('div');
+                approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
+                processContainer.appendChild(approverDiv);
 
-            if (index < approvers.length - 1) {
-                const arrowDiv = document.createElement('div');
-                arrowDiv.classList.add('arrow');
-                processContainer.appendChild(arrowDiv);
-            }
-        });
-    }
+                if (index < approvers.length - 1) {
+                    const arrowDiv = document.createElement('div');
+                    arrowDiv.classList.add('arrow');
+                    arrowDiv.textContent = '→'; // 화살표 추가
+                    processContainer.appendChild(arrowDiv);
+                }
+            });
+        }
 
     // 카테고리 변경 - 템플릿 목록 업데이트
     $('#categoryNo').change(function() {
