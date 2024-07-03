@@ -21,8 +21,8 @@ public class BoardFileDao {
         return mapper.insertFile(file);
     }
 
-    public int deleteFile(Long fileNo) {
-        return mapper.deleteFile(fileNo);
+    public int deleteFile(int boardNo) {
+        return mapper.deleteFile(boardNo);
     }
 
     public int updateBoardNo(Integer fileId, Integer boardNo) {

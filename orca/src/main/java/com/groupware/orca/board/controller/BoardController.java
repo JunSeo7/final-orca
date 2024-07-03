@@ -1,5 +1,6 @@
 package com.groupware.orca.board.controller;
 
+import com.groupware.orca.board.mapper.BoardFileMapper;
 import com.groupware.orca.board.service.BoardFileService;
 import com.groupware.orca.board.service.BoardService;
 import com.groupware.orca.board.service.CommentService;
@@ -109,7 +110,7 @@ public class BoardController {
             InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
 
             ServletContext context = req.getServletContext();
-            String path = context.getRealPath("/resources/upload/");
+            String path = context.getRealPath("/resources/static/upload/");
 
             File dir = new File(path); // 파일 저장 경로의 디렉토리 객체 생성
             if (!dir.exists()) {
@@ -144,7 +145,7 @@ public class BoardController {
             httpSession.setAttribute("uploadedFiles", uploadedFiles);
 
             // 파일 접근 URL 반환
-            response.put("link", "/resources/upload/" + changeName);
+            response.put("link", "/resources/static/upload/" + changeName);
             response.put("message", "File uploaded successfully.");
         } else {
             response.put("message", "No file uploaded.");
@@ -166,6 +167,8 @@ public class BoardController {
     public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo) {
         // 댓글 먼저 삭제
         commentService.deleteCommentsByBoardNo(boardNo);
+        //사진 삭제
+       boardFileService.deleteFile(boardNo);
         // 게시글 삭제
         boardService.boardDelete(boardNo);
         return "게시물이 삭제되었습니다.";
@@ -195,4 +198,5 @@ public class BoardController {
         boardService.hit(boardNo);
         return ResponseEntity.ok("조회수 증가 성공");
     }
+
 }

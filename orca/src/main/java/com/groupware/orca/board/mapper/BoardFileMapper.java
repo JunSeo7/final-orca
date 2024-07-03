@@ -15,8 +15,8 @@ public interface BoardFileMapper {
             "VALUES (SEQ_BOARD_FILE.NEXTVAL, #{fileOriginName}, #{fileSaveName}, #{fileDelYn}, #{boardNo})")
     int insertFile(BoardFileVo file);
 
-    @Delete("DELETE FROM BOARD_FILE WHERE FILE_NO = #{fileNo}")
-    int deleteFile(@Param("fileNo") Long fileNo);
+    @Delete("DELETE FROM BOARD_FILE WHERE BOARD_NO = #{boardNo}")
+    int deleteFile(@Param("boardNo") int boardNo);
 
     @Update("UPDATE BOARD_FILE SET BOARD_NO = #{boardNo} WHERE FILE_NO = #{fileId}")
     int updateBoardNo(@Param("fileId") Integer fileId, @Param("boardNo") Integer boardNo);

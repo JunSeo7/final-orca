@@ -7,6 +7,7 @@
     <title>게시물 및 조회수 통계</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .chart-container {
             width: 80%;
@@ -23,9 +24,12 @@
     </div>
 
     <script>
-        async function fetchStatsByDate() {
-            const response = await fetch('/board/statsByDate');
-            return response.json();
+        function ajaxStatsByDate() {
+            return $.ajax({
+                url: '/board/statsByDate',
+                method: 'GET',
+                dataType: 'json'
+            });
         }
 
         function renderChart(data) {
@@ -65,8 +69,8 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchStatsByDate().then(data => {
+        $(document).ready(function() {
+            ajaxStatsByDate().done(function(data) {
                 renderChart(data);
             });
         });
