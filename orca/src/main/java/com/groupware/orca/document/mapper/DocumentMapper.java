@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+@Mapper
 public interface DocumentMapper {
 
     // 결재선 등록 템플릿 카테고리 가져오기
@@ -34,13 +35,14 @@ public interface DocumentMapper {
             "VALUES (SEQ_DOCUMENT.NEXTVAL, #{writerNo}, #{templateNo}, #{status}, #{title}, #{content}, #{urgent}, SYSDATE" +
             "<if test='status == 2'>, SYSDATE</if>)" +
             "</script>")
+    // 결재 시쿼스 번호 가져오기
     @SelectKey(statement = "SELECT SEQ_DOCUMENT.CURRVAL FROM dual", keyProperty = "docNo", before = false, resultType = int.class)
     int writeDocument(DocumentVo vo);
     // 결재 작성 - 결재선 업로드
     @Insert("INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, " +
             "APPROVAL_DATE, \"COMMENT\",  APPROVER_CLASSIFICATION_NO) " +
             "VALUES (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq},#{approverNo}, #{approvalStage}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})")
-    int writeDocumentApprLine(List<ApprovalLineVo> vo);
+    int writeDocumentApprover(List<ApproverVo> vo);
     // 결재 작성 - 참조자 업로드
     @Insert("INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) " +
             "VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, #{docNo}, #{referrerNo})")
@@ -61,8 +63,8 @@ public interface DocumentMapper {
             "    LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO \n" +
             "    LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE \n" +
             "    LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE \n" +
-            "    WHERE D.DEL_YN ='N' AND D.CREDIT_DATE IS NULL AND D.WRITER_NO = #{loginUserNo}\n" +
-            "    ORDER BY CREDIT_DATE")
+            "    WHERE D.DEL_YN ='N' AND D.WRITER_NO = #{loginUserNo}\n" +
+            "    ORDER BY D.CREDIT_DATE")
     List<DocumentVo> getDocumentList(String loginUserNo);
 
     // 결재선 목록 조회

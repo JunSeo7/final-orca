@@ -31,6 +31,7 @@ public class DocumentVo {
 
     private int apprLineNo;            //결재선 번호
     private List<ApprovalLineVo> approvalLineVoList; //결재선 리스트
+    private List<ApproverVo> approverVoList; //결재선(결재자) 리스트
 
     // File and Reference Information (파일 및 참조자 정보)
     private List<DocFileVo> files;           // 파일 리스트

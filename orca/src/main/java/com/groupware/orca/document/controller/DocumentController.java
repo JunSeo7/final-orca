@@ -76,8 +76,10 @@ public class DocumentController {
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = "1";
+            //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
         System.out.println("documentList = " + documentList);
         return "document/list";

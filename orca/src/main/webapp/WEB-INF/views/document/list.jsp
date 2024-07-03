@@ -28,7 +28,7 @@
 
         <c:forEach var="document" items="${documentList}">
             <div class="approval_status">
-                <p>${document.enrollDate}</p>
+              <p>${document.creditDate}</p>
                 <div class="status_box">
                     <div class="status_details">
                         <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">

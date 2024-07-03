@@ -56,8 +56,8 @@ public class DocumentDao {
         return mapper.writeDocument(vo);
     }
     // 결재 작성 - 결재선 업로드
-    public int writeDocumentApprLine(List<ApprovalLineVo> vo){
-        return mapper.writeDocumentApprLine(vo);
+    public int writeDocumentApprover(List<ApproverVo> vo){
+        return mapper.writeDocumentApprover(vo);
     }
     // 결재 작성 - 참조인 업로드
     public int writeDocumentReferrer(List<ReferencerVo> vo){

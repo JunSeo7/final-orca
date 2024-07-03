@@ -51,21 +51,21 @@ public class DocumentService {
         int docNo = vo.getDocNo();
         System.out.println("Generated docNo = " + docNo);
 
-        List<ApprovalLineVo> apprLineList = vo.getApprovalLineVoList();
+        List<ApproverVo> approverList = vo.getApproverVoList();
         List<ReferencerVo> referencerList = vo.getReferencerVoList();
         List<DocFileVo> fileList = vo.getFiles();
 
-        System.out.println("apprLineList = " + apprLineList);
+        System.out.println("approverList = " + approverList);
         System.out.println("referencerList = " + referencerList);
         System.out.println("fileList = " + fileList);
 
         // 방금 만든 문서 번호 사용해서 결재선, 참조인, 파일 등록
-        if (apprLineList != null) {
-            for (ApprovalLineVo apprLine : apprLineList) {
-                apprLine.setDocNo(docNo);
-                System.out.println("apprLine = " + apprLine);
+        if (approverList != null) {
+            for (ApproverVo approver : approverList) {
+                approver.setDocNo(docNo);
+                System.out.println("apprLine = " + approver);
             }
-            dao.writeDocumentApprLine(apprLineList);
+            dao.writeDocumentApprover(approverList);
         }
         if (referencerList != null) {
             for (ReferencerVo referencer : referencerList) {
