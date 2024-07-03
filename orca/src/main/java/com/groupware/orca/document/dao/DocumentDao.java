@@ -39,7 +39,6 @@ public class DocumentDao {
         System.out.println("apprline = " + apprline);
         return apprline;
     }
-
     // 결재선 전체목록 (결재자 여러명)
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
@@ -48,8 +47,6 @@ public class DocumentDao {
             System.out.println("approverLineVoList= " + approvers);
         } return approvers;
     }
-
-
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {
@@ -87,7 +84,7 @@ public class DocumentDao {
         return mapper.getDocumentByNo(docNo);
     }
     // 문서 - 결재선 목록 조회
-    public List<ApprovalLineVo> getApprovalLineByNo(int docNo) {
+    public List<ApproverVo> getApprovalLineByNo(int docNo) {
         return mapper.getApprovalLineByNo(docNo);
     }
     // 문서 - 참조인 목록 조회

@@ -63,7 +63,7 @@ public class DocumentService {
         if (approverList != null) {
             for (ApproverVo approver : approverList) {
                 approver.setDocNo(docNo);
-                System.out.println("apprLine = " + approver);
+                System.out.println("approverList = " + approver);
             }
             dao.writeDocumentApprover(approverList);
         }
@@ -92,9 +92,9 @@ public class DocumentService {
         for (DocumentVo document : documentList) {
             int docNo = document.getDocNo();
             // 문서목록 - 결재선 목록 넣기
-            List<ApprovalLineVo> apprLineList = dao.getApprovalLineList(docNo);
-            System.out.println("apprLineList = " + apprLineList);
-            document.setApprovalLineVoList(apprLineList);
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
             // 문서목록 - 참조인 목록 조회
             List<ReferencerVo> references = dao.getReferencerList(docNo);
             System.out.println("references = " + references);
@@ -110,9 +110,9 @@ public class DocumentService {
         DocumentVo documentVo = dao.getDocumentByNo(docNo);
         System.out.println("documentVo = " + documentVo);
         // 문서 - 결재선 목록 넣기
-        List<ApprovalLineVo> apprLineList = dao.getApprovalLineByNo(docNo);
+        List<ApproverVo> apprLineList = dao.getApprovalLineByNo(docNo);
         System.out.println("apprLineList = " + apprLineList);
-        documentVo.setApprovalLineVoList(apprLineList);
+        documentVo.setApproverVoList(apprLineList);
         // 문서 - 참조인 목록 넣기
         List<ReferencerVo> references = dao.getReferencerByNo(docNo);
         System.out.println("references = " + references);

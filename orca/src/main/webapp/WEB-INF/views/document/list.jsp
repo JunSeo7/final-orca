@@ -32,18 +32,20 @@
                 <div class="status_box">
                     <div class="status_details">
                         <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
-                        <span class="approval_title">[${document.categoryName}]${document.title}</span>
+                        <span class="approval_title">[${document.categoryName}]</span>
+                        <span class="approval_title">긴급여부: ${document.urgent}</span>
                         <div class="status_steps">
                             <div class="status_step">
-                                <p>기안</p>
+                                <p>${document.statusName}</p>
                                 <p>${document.writerName}</p>
                                 <p>${document.enrollDate}</p>
                             </div>
                             <!-- 결재 진행 상태 추가 -->
-                            <c:forEach var="approverLine" items="${document.approvalLineVoList}">
+                            <c:forEach var="approverLine" items="${document.approverVoList}">
                                 <div class="status_step">
-                                    <p>${approverLine.approvalStage}</p>
-                                    <p>${approverLine.approverName}</p>
+                                    <p>${approverLine.apprStageName}</p>
+                                    <p>${approverLine.deptName}</p>
+                                    <p>${approverLine.approverName}[${approverLine.positionName}]</p>
                                     <p>${approverLine.approvalDate}</p>
                                 </div>
                             </c:forEach>
