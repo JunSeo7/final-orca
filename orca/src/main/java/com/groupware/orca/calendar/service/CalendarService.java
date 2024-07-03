@@ -22,7 +22,11 @@ public class CalendarService {
        return dao.showCalendarBarContent(range);
     }
 
-    public int deleteCalendarEvent(int calendarNo) {
-        return dao.deleteCalendarEvent(calendarNo);
+    public int deleteCalendar(int calendarNo) {
+        return dao.deleteCalendar(calendarNo);
+    }
+
+    public int editCalendar(CalendarVo vo) {
+        return dao.editCalendar(vo);
     }
 }

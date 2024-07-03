@@ -40,11 +40,17 @@ public class CalendarController {
         return result;
     }
 
-    @PostMapping("deleteCalendarEvent")
+    @PostMapping("deleteCalendar")
     @ResponseBody
-    public int deleteCalendarEvent(@RequestParam("calendarNo") int calendarNo, Model model){
-        int result = service.deleteCalendarEvent(calendarNo);
+    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, Model model){
+        int result = service.deleteCalendar(calendarNo);
+        return result;
+    }
 
+    @PostMapping("editCalendar")
+    @ResponseBody
+    public int editCalendar(CalendarVo vo, HttpSession httpSession){
+        int result = service.editCalendar(vo);
         return result;
     }
 }
