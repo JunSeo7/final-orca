@@ -4,6 +4,7 @@ import com.groupware.orca.document.dao.DocumentDao;
 import com.groupware.orca.document.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,16 +45,43 @@ public class DocumentService {
     }
 
     // 결재 작성
+    @Transactional
     public int writeDocument(DocumentVo vo) {
-         int writeDocument = dao.writeDocument(vo);
-         List<ApprovalLineVo> apprLineList = vo.getApprovalLineVoList();
-         List<DocFileVo> fileList = vo.getFiles();
-        // 결재 작성 - 결재선 업로드
-        int writeDocumentApprLine = dao.writeDocumentApprLine(apprLineList);
-        // 결재 작성 - 파일 업로드
-        int writeDocumentFile= dao.writeDocumentFile(fileList);
-        int result = writeDocument+writeDocumentApprLine+writeDocumentFile;
-        return result;
+        dao.writeDocument(vo);
+        int docNo = vo.getDocNo();
+        System.out.println("Generated docNo = " + docNo);
+
+        List<ApprovalLineVo> apprLineList = vo.getApprovalLineVoList();
+        List<ReferencerVo> referencerList = vo.getReferencerVoList();
+        List<DocFileVo> fileList = vo.getFiles();
+
+        System.out.println("apprLineList = " + apprLineList);
+        System.out.println("referencerList = " + referencerList);
+        System.out.println("fileList = " + fileList);
+
+        // 방금 만든 문서 번호 사용해서 결재선, 참조인, 파일 등록
+        if (apprLineList != null) {
+            for (ApprovalLineVo apprLine : apprLineList) {
+                apprLine.setDocNo(docNo);
+                System.out.println("apprLine = " + apprLine);
+            }
+            dao.writeDocumentApprLine(apprLineList);
+        }
+        if (referencerList != null) {
+            for (ReferencerVo referencer : referencerList) {
+                referencer.setDocNo(docNo);
+                System.out.println("referencer = " + referencer);
+            }
+            dao.writeDocumentReferrer(referencerList);
+        }
+        if (fileList != null) {
+            for (DocFileVo file : fileList) {
+                file.setDocNo(docNo);
+                System.out.println("file = " + file);
+            }
+            dao.writeDocumentFile(fileList);
+        }
+        return docNo;
     }
 
     //전체목록

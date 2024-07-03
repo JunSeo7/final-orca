@@ -31,15 +31,23 @@ public interface DocumentMapper {
     @Insert("<script>" +
             "INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, URGENT, ENROLL_DATE" +
             "<if test='status == 2'>, CREDIT_DATE</if>) " +
-            "VALUES (SEQ_DOCUMENT.NEXTVAL, #{loginUserNo}, #{templateNo}, #{status}, #{title}, #{content}, #{urgent}, SYSDATE" +
+            "VALUES (SEQ_DOCUMENT.NEXTVAL, #{writerNo}, #{templateNo}, #{status}, #{title}, #{content}, #{urgent}, SYSDATE" +
             "<if test='status == 2'>, SYSDATE</if>)" +
             "</script>")
-    @Options(useGeneratedKeys = true, keyProperty = "docNo", keyColumn = "DOC_NO")
+    @SelectKey(statement = "SELECT SEQ_DOCUMENT.CURRVAL FROM dual", keyProperty = "docNo", before = false, resultType = int.class)
     int writeDocument(DocumentVo vo);
     // 결재 작성 - 결재선 업로드
+    @Insert("INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, " +
+            "APPROVAL_DATE, \"COMMENT\",  APPROVER_CLASSIFICATION_NO) " +
+            "VALUES (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq},#{approverNo}, #{approvalStage}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})")
     int writeDocumentApprLine(List<ApprovalLineVo> vo);
-
+    // 결재 작성 - 참조자 업로드
+    @Insert("INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) " +
+            "VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, #{docNo}, #{referrerNo})")
+    int writeDocumentReferrer(List<ReferencerVo> vo);
     // 결재 작성 - 파일 업로드
+    @Insert("INSERT INTO DOC_FILES( FILE_NO ,DOC_NO ,CHANGE_NAME ,ORIGIN_NAME ) " +
+            "VALUES (SEQ_DOC_FILES.NEXTVAL,#{docNo}, #{changeName},#{originName})")
     int writeDocumentFile(List<DocFileVo> vo);
 
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
