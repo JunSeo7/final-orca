@@ -95,10 +95,6 @@ public class DocumentService {
             List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
             System.out.println("apprLineList = " + approverList);
             document.setApproverVoList(approverList);
-            // 문서목록 - 참조인 목록 조회
-            List<ReferencerVo> references = dao.getReferencerList(docNo);
-            System.out.println("references = " + references);
-            document.setReferencerVoList(references);
         }
         return documentList;
     }
