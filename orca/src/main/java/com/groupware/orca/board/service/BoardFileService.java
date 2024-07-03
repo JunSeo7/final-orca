@@ -21,8 +21,8 @@ public class BoardFileService {
         return dao.insertFile(file);
     }
 
-    public int deleteFile(Long fileNo) {
-        return dao.deleteFile(fileNo);
+    public int deleteFile(int boardNo) {
+        return dao.deleteFile(boardNo);
     }
 
     public int updateBoardNo(Integer fileId, Integer boardNo) {

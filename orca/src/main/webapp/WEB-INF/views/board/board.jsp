@@ -10,19 +10,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/board/board.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script defer src="/js/board/board.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=417c2d6869f3c660f4e0370cf828ba62&libraries=services,places"></script>
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script type="module" src="path/to/your/javascript/file.js"></script>
-
-    <!-- Firebase 초기화 -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script defer src="/js/board/board.js"></script>
 </head>
 <body>
     <header>
@@ -272,20 +265,27 @@
                 styleUI: 'jQueryUI',
                 datatype: "json",
                 colModel: [
-                    {label: 'No', name: 'boardNo', width: 30},
-                    {label: 'Title', name: 'title', key: true, width: 75, formatter: titleFormatter},
-                    {label: 'Views', name: 'hit', width: 50},
+
+                     {label: 'Image', name: 'content', width: 50, formatter: extractImage},
+                  {label: '조회수 ', name: 'hit', width: 50},
+                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                       {label :'작성시간' , name:'enrollDate',width:30}
                 ],
                 viewrecords: true,
                 width: 1400,
                 height: 600,
-                rowNum: 20,
+                rowNum: 50,
                 pager: "#jqGridPager"
             });
         }
 
         function titleFormatter(cellvalue, options, rowObject) {
             return "<a href='javascript:;' onclick='showModal(" + rowObject.boardNo + ")'>" + cellvalue + "</a>";
+        }
+
+        function extractImage(cellValue, options, rowObject) {
+            var imgTag = $(cellValue).find('img').prop('outerHTML');
+            return imgTag ? imgTag : '';
         }
 
         function showModal(boardNo) {
@@ -351,7 +351,7 @@
             var employeeName = comment.employeeName;
             var teamName = comment.teamName;
 
-            if (comment.isAnonymous === 'Y') {
+            if (comment.isAnonymous === "Y") {
                 employeeName = '***';
                 teamName = '***';
             } else if (!employeeName) {
@@ -363,8 +363,8 @@
             html += '<div>' + comment.enrollDate + '</div>';
             html += '<div>' + comment.content + '</div>';
 
-                html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
-                html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
+            html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
+            html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
 
             html += '</div>';
             return html;
@@ -380,12 +380,12 @@
             var comment = {
                 boardNo: boardNo,
                 content: content,
-                isAnonymous: 'N' // 기본값 설정
+                isAnonymous: "N" // 기본값 설정
             };
 
             var categoryNo = $("#categorySelect").val();
             if (categoryNo == '3') {
-                comment.isAnonymous = 'Y';
+                comment.isAnonymous = "Y";
             }
 
             $.ajax({
