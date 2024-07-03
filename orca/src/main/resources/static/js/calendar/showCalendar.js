@@ -193,6 +193,9 @@ function renderCalendar(calendarEl, year, month, events = []) {
                     (afterMonth && el.classList.contains('after-month'))) {
 
                     if (dayNumber === day) {
+
+
+
                         let eventBar = document.createElement('div');
                         eventBar.classList.add('event-bar');
                         eventBar.textContent = event.title;
@@ -229,6 +232,15 @@ function renderCalendar(calendarEl, year, month, events = []) {
         viewDeleteButton.currentListener = newDeleteEventListener;
         viewDeleteButton.addEventListener('click', newDeleteEventListener);
 
+        originalData = {
+            calendarNo: event.calendarNo,
+            title: event.title,
+            content: event.content,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            range: event.range
+        };
+
         // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
         const titleElement = document.querySelector('.view-calendar-title');
         const enrollDateElement = document.querySelector('.view-calendar-enroll-date');
@@ -248,15 +260,6 @@ function renderCalendar(calendarEl, year, month, events = []) {
         startDateElement.value = event.startDate;
         endDateElement.value = event.endDate;
         rangeElement.value = event.range;
-
-        originalData = {
-            calendarNo: event.calendarNo,
-            title: event.title,
-            content: event.content,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            range: event.range
-        };
 
         viewCnt++;
         if (viewCnt % 2 == 0) {
@@ -319,8 +322,8 @@ viewEditButton.addEventListener('click', function () {
     }
 });
 //일정 수정
-function editEvent(originalData) {
-    let range = originalData.range;
+function editEvent(Data) {
+    let range = Data.range;
     if (range === 'company') {
         alert("관련 부서에 문의바랍니다.")
     } else {
@@ -329,7 +332,7 @@ function editEvent(originalData) {
         const titleSpan = document.querySelector('.view-calendar-title');
         const titleInput = document.createElement('input');
         titleInput.type = 'text';
-        titleInput.value = originalData.title; // 현재 텍스트 값을 가져와서 설정
+        titleInput.value = Data.title; // 현재 텍스트 값을 가져와서 설정
         titleInput.classList.add('edit-title');
         titleSpan.parentNode.replaceChild(titleInput, titleSpan);
 
@@ -343,6 +346,7 @@ function editEvent(originalData) {
         const selectElement = document.createElement('select');
         selectElement.id = 'edit-range';
         selectElement.name = 'range';
+        
         // 옵션 추가
         const individualOption = document.createElement('option');
         individualOption.value = 'individual';
@@ -354,6 +358,10 @@ function editEvent(originalData) {
         teamOption.textContent = '팀';
         selectElement.appendChild(teamOption);
 
+        if(range === 'team'){
+            selectElement.value = 'team';
+        }
+        
         // 기존 readOnly input 요소를 숨기고 select 요소를 추가
         viewRangeContainer.parentNode.replaceChild(selectElement, viewRangeContainer);
 
@@ -379,67 +387,63 @@ function editEvent(originalData) {
         viewCancelButton.addEventListener('click', newCancelEventListener);
 
         function handleEditButtonClick() {
-            const titleElement = document.querySelector('.edit-title').textContent;
-            const contentElement = document.querySelector('.viewEventContent').textContent;
-            const startDateElement = document.querySelector('.viewStartDate').value;
-            const endDateElement = document.querySelector('.viewEndDate').value;
+            const titleElement = document.querySelector('.edit-title').value;
+            const contentElement = document.querySelector('#viewEventContent').value;
+            const startDateElement = document.querySelector('#viewStartDate').value;
+            const endDateElement = document.querySelector('#viewEndDate').value;
             const rangeElement = document.querySelector('#edit-range').value;
 
-            console.log(titleElement);
-            console.log(contentElement);
-            console.log(startDateElement);
-            console.log(endDateElement);
-            console.log(rangeElement);
+            let vo = {
+                calendarNo: Data.calendarNo
+            }
 
-            const updatedData = {};
-            if (titleElement !== originalData.title) {
-                updatedData.title = titleElement;
+            let updateCnt = 0;
+
+            if (titleElement !== Data.title) {
+                vo.title = titleElement;
+                updateCnt++;
             }
-            if (contentElement !== originalData.content) {
-                updatedData.content = contentElement;
+            if (contentElement !== Data.content) {
+                vo.content = contentElement;
+                updateCnt++;
             }
-            if (startDateElement !== originalData.startDate) {
-                updatedData.startDate = startDateElement;
+            if (startDateElement !== Data.startDate) {
+                vo.startDate = startDateElement;
+                updateCnt++;
             }
-            if (endDateElement !== originalData.endDate) {
-                updatedData.endDate = endDateElement;
+            if (endDateElement !== Data.endDate) {
+                vo.endDate = endDateElement;
+                updateCnt++;
             }
-            if (rangeElement !== originalData.range) {
-                updatedData.range = rangeElement;
+            if (rangeElement !== Data.range) {
+                vo.range = rangeElement;
+                updateCnt++;
             }
 
             restoreOriginalState();
 
-            $.ajax({
-                type: 'post',
-                url: '/orca/calendar/editCalendar',
-                dataType: 'json',
-                data:
-                {
-                    updatedData
-                },
-                success: function (response) {
-                    if (response === 1) {
-                        let title = document.querySelector('.view-calendar-title');
-                        let content = document.getElementById('viewEventContent')
-                        let startDate = document.getElementById('viewStartDate')
-                        let endDate = document.getElementById('viewEndDate')
-                        let range = document.getElementById('viewRange');
-                        title.textContent = response.title;
-                        content.value = response.content;
-                        startDate.value = response.startDate;
-                        endDate.value = response.endDate;
-                        range.textContent = response.range;
-                    } else {
+            if (updateCnt < 1) {
+                alert("수정된 내용이 없습니다.");
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: '/orca/calendar/editCalendar',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(vo),
+                    success: function (response) {
+                        if (response === 1) {
+                            getCalendarDetail();
+                        } else {
+                            alert("캘린더 삭제 실패!");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
                         alert("캘린더 삭제 실패!");
                     }
-
-                },
-                error: function (error) {
-                    console.log(error);
-                    alert("캘린더 삭제 실패!");
-                }
-            })
+                })
+            }
         }
 
         function handleCancelButtonClick() {
@@ -499,6 +503,17 @@ function editEvent(originalData) {
         }
     }
 }
+function getCalendarDetail() {
+    isCalendarBarVisible[0] = !isCalendarBarVisible[0];
+    isCalendarBarVisible[1] = !isCalendarBarVisible[1];
+    isCalendarBarVisible[2] = !isCalendarBarVisible[2];
+    toggleCalendarBar("company", 0);
+    toggleCalendarBar("individual", 1);
+    toggleCalendarBar("team", 2);
+    closeViewEvent();
+}
+
+
 
 
 //일정 상세 조회 View

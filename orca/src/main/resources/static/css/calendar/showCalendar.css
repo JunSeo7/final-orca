@@ -168,7 +168,9 @@ nav ul li a:hover {
     box-shadow: 0 4px 8px rgba(92, 91, 91, 0.24);
     margin-top: 20px;
 }
-
+.new-schedule:hover{
+    cursor: pointer;
+}
 .selectContainer{
     display: flex;
     justify-content: center;
@@ -527,7 +529,6 @@ nav ul li a:hover {
     padding: 15px;
     max-width: 400px;
     width: 95%;
-    height: 518px;
     z-index: 1000;
     border-radius: 10px;
     font-family: 'Arial', sans-serif;

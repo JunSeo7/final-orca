@@ -49,8 +49,11 @@ public class CalendarController {
 
     @PostMapping("editCalendar")
     @ResponseBody
-    public int editCalendar(CalendarVo vo, HttpSession httpSession){
+    public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession){
+        System.out.println("vo = " + vo);
         int result = service.editCalendar(vo);
         return result;
     }
+
+
 }
