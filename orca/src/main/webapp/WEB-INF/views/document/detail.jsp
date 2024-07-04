@@ -17,57 +17,30 @@
 <main>
       <div class="document-content">
         <!-- 문서 내용 표시 -->
-        <table class="document-header">
-          <!-- Header -->
-          <tbody>
-            <tr>
-              <td class="form-title" colspan="2">${document.templateTitle}</td>
-            </tr>
-            <tr>
-              <td class="sign-area">
-                <div id="agreementWrap" class="sign-type"></div>
-              </td>
-              <td class="approval-section">
-                <table class="approval-table">
-                  <thead>
-                    <tr>
-                      <th>팀원</th>
-                      <th>팀원</th>
-                      <th>팀장</th>
-                      <th>이사</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>양파</td>
-                      <td>버섯</td>
-                      <td>벚꽃</td>
-                      <td>포도</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p>기안</p>
-                        <p>24-06-20</p>
-                      </td>
-                      <td>
-                        <p>합의(승인)</p>
-                        <p>24-06-20</p>
-                      </td>
-                      <td>
-                        <p>결재(승인)</p>
-                        <p>24-06-20</p>
-                      </td>
-                      <td>
-                        <p>결재(대기)</p>
-                        <p></p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="document-header">
+                  <!-- Header -->
+                  <div class="form-title">${document.templateTitle}</div>
+                  <div class="approval-section">
+                      <div class="approval-row">
+                       <div class="approval-cell">
+                            <p>${document.statusName}</p>
+                            <p>${document.deptName}</p>
+                            <p>${document.writerName}[${document.positionName}]</p>
+                            <p>${document.creditDate}</p>
+                            </div>
+                          <c:forEach var="approver" items="${document.approverVoList}">
+                              <div class="approval-cell">
+                              <p>${approver.seq}</p>
+                              <p>${approver.approverClassificationNo}</p>
+                              <p>${approver.apprStageName}</p>
+                              <p>${approver.deptName}</p>
+                              <p>${approver.approverName}[${approver.positionName}]</p>
+                              <p>${approver.approvalDate}</p>
+                              </div>
+                          </c:forEach>
+                      </div>
+                  </div>
+              </div>
 
         <table class="document-body">
           <!-- User -->
