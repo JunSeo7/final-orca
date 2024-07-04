@@ -4,7 +4,10 @@
 //import com.groupware.orca.salary.vo.RatesVo;
 //import com.groupware.orca.salary.vo.SalaryVo;
 //import com.groupware.orca.user.vo.UserVo;
+//import jakarta.servlet.http.HttpSession;
 //import lombok.RequiredArgsConstructor;
+//import org.apache.catalina.Session;
+//import org.apache.catalina.User;
 //import org.springframework.web.bind.annotation.*;
 //
 //import java.util.List;
@@ -24,18 +27,19 @@
 //    //급여계산 입력
 //    @PostMapping("write")
 //    public double salaryWrite(
-//            UserVo vo,
-//            SalaryVo svo,
-//            RatesVo rvo,
 //            @RequestParam (value = "holidayTime" , required = false) double holidayTime,
 //            @RequestParam (value = "overTime", required = false) double overTime,
 //            @RequestParam (value = "person",required = false) double person,
 //            @RequestParam (value = "position", required = false) double position,
-//            @RequestParam (value = "bonus", required = false) double bonus,
-//            @RequestParam(value = "meals", required = false) double meals){
+//            HttpSession httpSession
+//    )
+//    {
+//
 //        System.out.println("SalaryController.salaryWrite");
 //
-//        double result = service.salaryWrite(vo,svo,rvo,holidayTime,overTime,person,position,bonus,meals);
+//        UserVo vo = service.getUserVo();
+//
+//        double result = service.salaryWrite(vo, holidayTime,overTime,person,position);
 //        return result;
 //                //TODO 화면에서 자녀수에 따른 공제내역 사진 띄우고 적게 하기, param은 다 금액으로 입력받게 하기
 //    }
@@ -44,6 +48,7 @@
 //    @GetMapping("ratesInsert")
 //    public int ratesInsert(RatesVo vo){
 //        int result = service.ratesWrite(vo);
+//
 //        return result;
 //    }
 //

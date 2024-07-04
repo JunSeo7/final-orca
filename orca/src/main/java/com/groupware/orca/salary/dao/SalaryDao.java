@@ -15,9 +15,9 @@
 //
 //    private final SalaryMapper mapper;
 //
-//    public double salaryWrite(UserVo vo, SalaryVo svo, RatesVo rvo, double holidayTime, double overTime, double person, double position, double bonus, double meals) {
+//    public double salaryWrite(UserVo vo, SalaryVo svo, RatesVo rvo, double holidayTime, double overTime, double person, double position) {
 //        System.out.println("SalaryDao.salaryWrite");
-//        return mapper.salaryWrite(vo,svo,rvo,holidayTime,overTime,person,position,bonus,meals);
+//        return mapper.salaryWrite(vo,svo,rvo,holidayTime,overTime,person,position);
 //
 //    }
 //
@@ -28,5 +28,18 @@
 //    public List<SalaryVo> getSalaryList() {
 //        System.out.println("SalaryDao.getSalaryList");
 //        return mapper.getSalaryList();
+//    }
+//
+//    public SalaryVo getSalaryVo() {
+//        return mapper.getSalaryVo();
+//    }
+//
+//
+//    public RatesVo getRatesVo() {
+//        return mapper.getRatesVo();
+//    }
+//
+//    public UserVo getUserVo() {
+//        return mapper.getUserVo();
 //    }
 //}
