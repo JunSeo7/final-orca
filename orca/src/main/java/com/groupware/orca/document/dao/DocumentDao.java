@@ -66,6 +66,7 @@ public class DocumentDao {
     }
 
 
+
     //전체목록
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public List<DocumentVo> getDocumentList(String loginUserNo) {
@@ -75,14 +76,13 @@ public class DocumentDao {
     public List<ApprovalLineVo> getApprovalLineList(int docNo) {
         return mapper.getApprovalLineList(docNo);
     }
-    // 문서목록 - 참조인 목록 조회
-    public List<ReferencerVo> getReferencerList(int docNo) {
-        return mapper.getReferencerList(docNo);
-    }
+    
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo) {
         return mapper.getDocumentByNo(docNo);
     }
+
+    // 문서 상세보기
     // 문서 - 결재선 목록 조회
     public List<ApproverVo> getApprovalLineByNo(int docNo) {
         return mapper.getApprovalLineByNo(docNo);
@@ -95,7 +95,6 @@ public class DocumentDao {
     public List<DocFileVo> getDocFileByNo (int docNo) {
         return mapper.getDocFileByNo(docNo);
     }
-
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     public int deleteDocumentByNo(int docNo, String loginUserNo) {

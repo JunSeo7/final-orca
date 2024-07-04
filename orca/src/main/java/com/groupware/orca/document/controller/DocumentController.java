@@ -97,9 +97,9 @@ public class DocumentController {
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
     public String getDocumentByNo(Model model){
-        int docNo =1;
-        DocumentVo documentList = service.getDocumentByNo(docNo);
-        model.addAttribute("documentList", documentList);
+        int docNo =8;
+        DocumentVo document = service.getDocumentByNo(docNo);
+        model.addAttribute("document", document);
         return "document/detail";
     }
 
