@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,7 +111,7 @@ public class BoardController {
             InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
 
             ServletContext context = req.getServletContext();
-            String path = context.getRealPath("/resources/static/upload/");
+            String path = context.getRealPath("/static/upload/");
 
             File dir = new File(path); // 파일 저장 경로의 디렉토리 객체 생성
             if (!dir.exists()) {
@@ -145,7 +146,8 @@ public class BoardController {
             httpSession.setAttribute("uploadedFiles", uploadedFiles);
 
             // 파일 접근 URL 반환
-            response.put("link", "/resources/static/upload/" + changeName);
+            response.put("link", "/static/upload/" + changeName);
+
             response.put("message", "File uploaded successfully.");
         } else {
             response.put("message", "No file uploaded.");
