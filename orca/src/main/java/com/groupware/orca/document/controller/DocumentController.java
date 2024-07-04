@@ -87,9 +87,17 @@ public class DocumentController {
 
     // 올린 결재
 
-
     // 받은 결재
-
+    @GetMapping("/received")
+    public String getSendDocumentList(Model model, HttpSession httpSession) {
+        String loginUserNo = "15";
+            //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
 
     // 검색(기안자/제목/내용/카테고리)
 

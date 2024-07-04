@@ -97,7 +97,40 @@ public interface DocumentMapper {
 //            "    ORDER BY D.CREDIT_DATE DESC")
 //    List<DocumentVo> getDocumentList(String loginUserNo);
 
-    // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
+    // 내가 받은 결재
+    @Select("""
+            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS,
+                  D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, D.STATUS, DSL.DOC_STATUS_NAME statusName,
+                  PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO
+           FROM DOCUMENT D
+           JOIN APPR_LINE A ON D.DOC_NO = A.DOC_NO
+           JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
+           JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
+           JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
+           JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
+           LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO
+           LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
+           LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
+           WHERE A.APPROVER_NO = #{loginUserNo}
+             AND D.CREDIT_DATE IS NOT NULL
+             AND A.APPROVAL_STAGE = 1
+             AND D.STATUS = '2'
+             AND (
+                 A.SEQ <= 1 OR
+                 A.DOC_NO IN (
+                     SELECT AL.DOC_NO
+                     FROM APPR_LINE AL
+                     WHERE AL.DOC_NO = A.DOC_NO
+                       AND AL.SEQ = A.SEQ - 1
+                       AND AL.APPROVAL_STAGE = 3
+                 )
+             )
+           ORDER BY D.CREDIT_DATE DESC
+           """)
+    List<DocumentVo> getSendDocumentList(String loginUserNo);
+
+    // 상세보기
+    // 결재 문서 조회(카테고리, 양식, 기안자관련)
     @Select("SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS,\n" +
             "D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,\n" +
             "PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO\n" +
@@ -111,6 +144,7 @@ public interface DocumentMapper {
             "LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE\n" +
             "WHERE D.DOC_NO = #{docNo}")
     DocumentVo getDocumentByNo(int docNo);
+
     // 결재선 목록 조회
     @Select("SELECT AL.DOC_NO AS approvalDocNo \n" +
             "    ,AL.SEQ ,AL.APPROVAL_DATE ,AL.APPROVER_CLASSIFICATION_NO ,PI.NAME approverName ,DEPT.PARTNAME deptName \n" +
@@ -124,7 +158,6 @@ public interface DocumentMapper {
             "    ORDER BY AL.SEQ")
     List<ApproverVo> getApprovalLineByNo(int docNo);
 
-    // 상세보기 - 추가코드
     // 참조인 목록 조회
     @Select("SELECT DL.DOC_NO,PI.NAME AS writerName ,DEPT.PARTNAME AS deptName \n" +
             "   ,P.NAME_OF_POSITION AS positionName ,DRL.REFERRER_NO references\n" +
@@ -141,6 +174,19 @@ public interface DocumentMapper {
     List<DocFileVo> getDocFileByNo(int docNo);
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    @Update("UPDATE DOCUMENT SET DEL_YN ='Y' WHERE DOC_NO = #{docNo} AND WRITER_NO=#{loginUserNo}")
-    int deleteDocumentByNo(int docNo, String  loginUserNo);
+    @Update("""
+            UPDATE DOCUMENT 
+            SET DEL_YN = 'Y' 
+            WHERE DOC_NO = #{docNo} 
+            AND WRITER_NO = #{loginUserNo}
+            AND DOC_NO NOT 
+                IN (
+                SELECT DOC_NO 
+                FROM APPR_LINE 
+                WHERE DOC_NO = #{docNo} 
+                AND APPROVAL_STAGE != 1
+            )
+            """)
+    int deleteDocumentByNo(int docNo, String loginUserNo);
+
 }

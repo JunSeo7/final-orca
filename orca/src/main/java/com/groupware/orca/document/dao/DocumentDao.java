@@ -82,6 +82,12 @@ public class DocumentDao {
         return mapper.getDocumentByNo(docNo);
     }
 
+    //받은 결재
+    public List<DocumentVo> getSendDocumentList(String loginUserNo) {
+        return mapper.getSendDocumentList(loginUserNo);
+    }
+
+
     // 문서 상세보기
     // 문서 - 결재선 목록 조회
     public List<ApproverVo> getApprovalLineByNo(int docNo) {
@@ -100,6 +106,7 @@ public class DocumentDao {
     public int deleteDocumentByNo(int docNo, String loginUserNo) {
         return mapper.deleteDocumentByNo(docNo, loginUserNo);
     }
+
 
 
 }
