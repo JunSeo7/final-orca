@@ -37,16 +37,18 @@
                         <div class="status_steps">
                             <div class="status_step">
                                 <p>${document.statusName}</p>
-                                <p>${document.writerName}</p>
-                                <p>${document.enrollDate}</p>
+                                <p>${document.deptName}</p>
+                                <p>${document.writerName}[${document.positionName}]</p>
+                                <p>${document.creditDate}</p>
                             </div>
                             <!-- 결재 진행 상태 추가 -->
-                            <c:forEach var="approverLine" items="${document.approverVoList}">
+                            <c:forEach var="approver" items="${document.approverVoList}">
                                 <div class="status_step">
-                                    <p>${approverLine.apprStageName}</p>
-                                    <p>${approverLine.deptName}</p>
-                                    <p>${approverLine.approverName}[${approverLine.positionName}]</p>
-                                    <p>${approverLine.approvalDate}</p>
+                                    <p>${approver.seq}</p>
+                                    <p>${approver.apprStageName}</p>
+                                    <p>${approver.deptName}</p>
+                                    <p>${approver.approverName}[${approver.positionName}]</p>
+                                    <p>${approver.approvalDate}</p>
                                 </div>
                             </c:forEach>
                         </div>
