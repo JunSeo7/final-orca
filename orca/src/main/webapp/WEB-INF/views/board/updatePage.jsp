@@ -10,7 +10,7 @@
 <body>
     <div class="form-container">
         <h1>게시물 수정</h1>
-        <form id="postForm" action="/board/update" method="post">
+        <form id="postForm" action="/orca/board/update" method="post">
             <input type="hidden" id="boardNo" name="boardNo" value="${board.boardNo}">
             <input type="hidden" id="categoryNo" name="categoryNo" value="${board.categoryNo}">
 
@@ -29,7 +29,7 @@
     <script>
         $(document).ready(function() {
             var editor = new FroalaEditor('#edit', {
-                imageUploadURL: '/board/uploadImage',
+                imageUploadURL: '/orca/board/uploadImage',
                 imageUploadParam: 'file',
                 imageUploadMethod: 'POST',
                 imageAllowedTypes: ['jpeg', 'jpg', 'png'],

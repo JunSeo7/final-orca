@@ -27,7 +27,7 @@
     <nav class="top-nav">
         <ul>
             <li><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
-            <li><a href="">게시판</a></li>
+            <li><a href="/orca/board">게시판</a></li>
             <li><a href="/orca/document/list">전자결재</a></li>
             <li><a href="">급여관리</a></li>
             <li><a href="/orca/work/workInfo">근태관리</a></li>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/board/comment")
+@RequestMapping("/orca/board/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -22,7 +22,7 @@ public class CommentController {
         commentVo.setInsertUserNo(Integer.parseInt(userVo.getEmpNo()));
 
         int categoryNo = commentService.getCategoryNoByBoardNo(commentVo.getBoardNo());
-        if (categoryNo == 3) { // 익명 게시판일 경우
+        if (categoryNo == 3) {
             commentVo.setIsAnonymous('Y');
         } else {
             commentVo.setIsAnonymous('N');

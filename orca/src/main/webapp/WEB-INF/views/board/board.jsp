@@ -58,7 +58,7 @@
                 <li><a href="#" onclick="loadPage('drive.jsp')">드라이브</a></li>
                 <li><a href="#" onclick="loadPage('mail.jsp')">메일</a></li>
                 <li><a href="#" onclick="loadPage('settings.jsp')">설정</a></li>
-                <li><a href="/board/statistics">통계</a></li>
+                <li><a href="/orca/board/statistics">통계</a></li>
             </ul>
         </nav>
     </aside>
@@ -71,8 +71,8 @@
         </select>
         <input type="text" id="searchTitle" placeholder="제목으로 검색">
         <button id="searchBtn">검색</button>
-        <a href="/board/insert">게시물 작성하기</a>
-        <a href="/board/statistics">게시물 통계보기</a>
+        <a href="/orca/board/insert">게시물 작성하기</a>
+        <a href="/orca/board/statistics">게시물 통계보기</a>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </main>
@@ -87,6 +87,7 @@
             <div id="teamName"></div>
             <div class="post-actions">
                 <i class="far fa-heart like-button" id="like-button" onclick="toggleLike()"></i>
+                <i class="far fa-bookmark bookmark-button" id="bookmark-button" onclick="toggleBookmark()"></i>
             </div>
             <div class="post-likes">
                 <span id="like-count">0</span> 좋아요
@@ -104,7 +105,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBDpdglycOaD-K2xeciSs3e0DvNvgQyGk",
@@ -117,86 +120,94 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
         const db = getFirestore(app);
 
-        window.toggleLike = async function() {
-            const boardNo = document.getElementById('modal-title').dataset.boardNo;
-            const likeRef = doc(db, 'posts', boardNo);
+        function checkAuthState() {
+            return new Promise((resolve, reject) => {
+                onAuthStateChanged(auth, user => {
+                    if (user) {
+                        resolve(user);
+                    } else {
+                        reject('로그인 필요');
+                    }
+                });
+            });
+        }
 
-            try {
-                const docSnap = await getDoc(likeRef);
-                if (docSnap.exists()) {
-                    await updateDoc(likeRef, {
-                        likes: increment(1)
-                    });
-                    document.getElementById('like-button').classList.add('liked');
-                    updateLikeCount(boardNo, 1);
-                } else {
-                    console.log("No such document!");
-                }
-            } catch (error) {
-                console.error("Error updating document: ", error);
-            }
+        window.toggleLike = function() {
+            checkAuthState().then(user => {
+                const boardNo = document.getElementById('modal-title').dataset.boardNo;
+                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
+
+                getDoc(likeRef).then(docSnap => {
+                    if (docSnap.exists()) {
+                        deleteDoc(likeRef).then(() => {
+                            document.getElementById('like-button').classList.remove('liked');
+                            updateLikeCount(boardNo, -1);
+                        });
+                    } else {
+                        setDoc(likeRef, { liked: true }).then(() => {
+                            document.getElementById('like-button').classList.add('liked');
+                            updateLikeCount(boardNo, 1);
+                        });
+                    }
+                });
+            }).catch(error => {
+                alert(error + " 후 이용해 주세요.");
+            });
+        }
+
+        window.toggleBookmark = function() {
+            checkAuthState().then(user => {
+                const boardNo = document.getElementById('modal-title').dataset.boardNo;
+                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
+
+                getDoc(bookmarkRef).then(docSnap => {
+                    if (docSnap.exists()) {
+                        deleteDoc(bookmarkRef).then(() => {
+                            document.getElementById('bookmark-button').classList.remove('bookmarked');
+                        });
+                    } else {
+                        setDoc(bookmarkRef, { saved: true }).then(() => {
+                            document.getElementById('bookmark-button').classList.add('bookmarked');
+                        });
+                    }
+                });
+            }).catch(error => {
+                alert(error + " 후 이용해 주세요.");
+            });
+        }
+
+        window.checkLikeStatus = function(boardNo) {
+            checkAuthState().then(user => {
+                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
+
+                getDoc(likeRef).then(docSnap => {
+                    if (docSnap.exists()) {
+                        document.getElementById('like-button').classList.add('liked');
+                    }
+                });
+            });
+        }
+
+        window.checkBookmarkStatus = function(boardNo) {
+            checkAuthState().then(user => {
+                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
+
+                getDoc(bookmarkRef).then(docSnap => {
+                    if (docSnap.exists()) {
+                        document.getElementById('bookmark-button').classList.add('bookmarked');
+                    }
+                });
+            });
         }
 
         window.updateLikeCount = function(boardNo, delta) {
             const likeCountElement = document.getElementById('like-count');
             const currentCount = parseInt(likeCountElement.textContent, 10);
             likeCountElement.textContent = currentCount + delta;
-        }
-
-        window.showModal = function(boardNo) {
-            $.ajax({
-                url: "/board/" + boardNo,
-                method: "GET",
-                dataType: "json",
-                success: function(response) {
-                    $('#modal-title').text(response.title).data('boardNo', boardNo);
-                    $('#hit').text(response.hit);
-                    $('#teamName').text(response.teamName);
-                    $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
-                    $('#enrolldate').text(response.enrollDate);
-                    $('#insert-name').text(response.employeeName);
-
-                    $('.modal').removeClass('modal-close');
-                    const lat = parseFloat(response.latitude);
-                    const lng = parseFloat(response.longitude);
-                    if (!isNaN(lat) && !isNaN(lng)) {
-                        $('#map').show();
-                        map.relayout();
-                        var moveLatLon = new kakao.maps.LatLng(lat, lng);
-                        map.setCenter(moveLatLon);
-                        var marker = new kakao.maps.Marker({
-                            position: new kakao.maps.LatLng(lat, lng)
-                        });
-                        marker.setMap(map);
-                    } else {
-                        $('#map').hide();
-                    }
-                    showComments(boardNo);
-                    checkLikeStatus(boardNo);
-                },
-                error: function() {
-                    alert("게시물 상세 정보를 불러오는데 실패했습니다.");
-                }
-            });
-        }
-
-        window.checkLikeStatus = async function(boardNo) {
-            const likeRef = doc(db, 'posts', boardNo);
-            try {
-                const docSnap = await getDoc(likeRef);
-                if (docSnap.exists()) {
-                    const likeData = docSnap.data();
-                    if (likeData && likeData.likes) {
-                        document.getElementById('like-count').textContent = likeData.likes;
-                    }
-                } else {
-                    console.log("No such document!");
-                }
-            } catch (error) {
-                console.error("Error getting document: ", error);
-            }
         }
     </script>
 
@@ -224,7 +235,7 @@
             $("#categorySelect").on("change", function () {
                 categoryNo = $(this).val();
                 $("#jqGrid").jqGrid('setGridParam', {
-                    url: '/board/list/' + categoryNo,
+                    url: '/orca/board/list/' + categoryNo,
                     page: 1
                 }).trigger('reloadGrid');
             });
@@ -237,7 +248,7 @@
                     return;
                 }
                 $("#jqGrid").jqGrid('setGridParam', {
-                    url: 'board/search',
+                    url: '/orca/board/search',
                     postData: {
                         title: encodeURIComponent(title),
                         categoryNo: categoryNo
@@ -249,16 +260,15 @@
 
         function loadGrid(categoryNo) {
             $("#jqGrid").jqGrid({
-                url: '/board/list/' + categoryNo,
+                url: '/orca/board/list/' + categoryNo,
                 mtype: "GET",
                 styleUI: 'jQueryUI',
                 datatype: "json",
                 colModel: [
-
-                     {label: 'Image', name: 'content', width: 50, formatter: extractImage},
-                  {label: '조회수 ', name: 'hit', width: 50},
-                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
-                       {label :'작성시간' , name:'enrollDate',width:30}
+                    {label: 'No', name: 'boardNo', width: 30},
+                    {label: 'Title', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                    {label: 'Views', name: 'hit', width: 50},
+                    {label: 'Image', name: 'content', width: 100, formatter: extractImage}
                 ],
                 viewrecords: true,
                 width: 1400,
@@ -279,7 +289,7 @@
 
         function showModal(boardNo) {
             $.ajax({
-                url: "/board/" + boardNo,
+                url: "/orca/board/" + boardNo,
                 method: "GET",
                 dataType: "json",
                 success: function (response) {
@@ -309,6 +319,7 @@
                     }
                     showComments(boardNo);
                     checkLikeStatus(boardNo);
+                    checkBookmarkStatus(boardNo);
                 },
                 error: function () {
                     alert("게시물 상세 정보를 불러오는데 실패했습니다.");
@@ -318,7 +329,7 @@
 
         function showComments(boardNo) {
             $.ajax({
-                url: "/board/comment/list?boardNo=" + boardNo,
+                url: "/orca/board/comment/list?boardNo=" + boardNo,
                 method: "GET",
                 dataType: "json",
                 success: function (response) {
@@ -368,7 +379,7 @@
             var comment = {
                 boardNo: boardNo,
                 content: content,
-                isAnonymous: "N" // 기본값 설정
+                isAnonymous: "N"
             };
 
             var categoryNo = $("#categorySelect").val();
@@ -377,7 +388,7 @@
             }
 
             $.ajax({
-                url: "/board/comment/add",
+                url: "/orca/board/comment/add",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(comment),
@@ -396,7 +407,7 @@
             var newContent = prompt("댓글 내용을 수정하세요:", currentContent);
             if (newContent !== null) {
                 $.ajax({
-                    url: "/board/comment/edit",
+                    url: "/orca/board/comment/edit",
                     method: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({boardChatNo: boardChatNo, content: newContent}),
@@ -413,7 +424,7 @@
         function deleteComment(boardChatNo) {
             if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
                 $.ajax({
-                    url: "/board/comment/delete",
+                    url: "/orca/board/comment/delete",
                     method: "POST",
                     data: {boardChatNo: boardChatNo},
                     success: function () {
@@ -432,7 +443,7 @@
 
         function redirectToUpdatePage() {
             var boardNo = $('#modal-title').data('boardNo');
-            window.location.href = '/board/updatePage?boardNo=' + boardNo;
+            window.location.href = '/orca/board/updatePage?boardNo=' + boardNo;
         }
 
         Kakao.init('417c2d6869f3c660f4e0370cf828ba62');
@@ -441,7 +452,7 @@
             if (confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
                 var boardNo = $('#modal-title').data('boardNo');
                 $.ajax({
-                    url: "/board/" + boardNo,
+                    url: "/orca/board/" + boardNo,
                     method: "DELETE",
                     success: function () {
                         closeModal();
@@ -458,7 +469,7 @@
             var boardNo = $('#modal-title').data('boardNo');
             var title = $('#modal-title').text();
             var description = $('#modal-content').text().substring(0, 100);
-            var linkUrl = 'http://127.0.0.1:8080/board/' + boardNo;
+            var linkUrl = 'http://127.0.0.1:8080/orca/board/' + boardNo;
             var imageUrl = 'https://via.placeholder.com/300';
 
             Kakao.Link.sendDefault({
