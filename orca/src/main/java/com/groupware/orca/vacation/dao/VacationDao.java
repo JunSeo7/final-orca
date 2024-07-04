@@ -14,4 +14,6 @@ public class VacationDao {
     public int enrollVacation(VacationVo vo) {
         return mapper.enrollVacation(vo);
     }
+
+
 }
