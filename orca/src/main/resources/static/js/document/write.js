@@ -135,3 +135,110 @@ document.addEventListener("DOMContentLoaded", function() {
 
     fetchCategories(); // 페이지 로드 - 카테고리 가져오기
 });
+
+
+// 참조인(조직도 가져오기)
+// 모달 열기
+    function openOrganizationModal() {
+        document.getElementById('organizationModal').style.display = 'block';
+        fetchOrganization();
+    }
+
+    // 모달 닫기
+    function closeOrganizationModal() {
+        document.getElementById('organizationModal').style.display = 'none';
+    }
+
+    // 조직도 가져오기
+    function fetchOrganization() {
+        $.ajax({
+            url: '/orca/apprline/organization/list',
+            method: 'GET',
+            success: function(data) {
+                const treeData = buildTreeData(data);
+                $('#jstree').jstree({
+                    'core' : {
+                        'data' : treeData
+                    },
+                    "checkbox" : {
+                        "keep_selected_style" : false
+                    },
+                    "plugins" : [ "wholerow", "checkbox" ]
+                });
+            },
+            error: function(error) {
+                console.error('error:', error);
+            }
+        });
+    }
+
+    // 트리 데이터 빌드
+    function buildTreeData(data) {
+        const tree = [];
+        const departments = {};
+
+        data.forEach(user => {
+            if (!departments[user.partName]) {
+                departments[user.partName] = {
+                    text: `${user.partName}`,
+                    icon: "fas fa-folder",
+                    children: []
+                };
+                tree.push(departments[user.partName]);
+            }
+
+            const department = departments[user.partName];
+
+            let team = department.children.find(team => team.text.startsWith(user.teamName));
+            if (!team) {
+                team = {
+                    text: `${user.teamName}`,
+                    icon: "fas fa-folder",
+                    children: []
+                };
+                department.children.push(team);
+            }
+
+            const userNode = {
+                id: `user_${user.empNo}`,
+                text: `${user.name} (${user.nameOfPosition})`,
+                icon: "fas fa-user"
+            };
+            team.children.push(userNode);
+        });
+
+        return tree;
+    }
+
+    // 선택한 참조인 추가
+    function confirmSelection() {
+        const selectedNodes = $('#jstree').jstree("get_checked", true);
+        const selectedReferrers = selectedNodes.map(node => ({
+            id: node.id,
+            text: node.text
+        }));
+
+        addReferrers(selectedReferrers);
+        closeOrganizationModal();
+    }
+
+    function addReferrers(referrers) {
+        const referrerList = document.getElementById('referrerList');
+        referrerList.innerHTML = '';  // 초기화
+        referrers.forEach(referrer => {
+            const referrerDiv = document.createElement('div');
+            referrerDiv.innerText = referrer.text;
+            referrerList.appendChild(referrerDiv);
+
+            // 추가된 참조인을 숨겨진 input에 저장
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'referrers';
+            hiddenInput.value = referrer.id.replace('user_', '');  // id에서 'user_' 제거
+            document.getElementById('documentForm').appendChild(hiddenInput);
+        });
+
+        // 추가 버튼을 수정 버튼으로 변경
+        document.querySelector('button[onclick="openOrganizationModal()"]').innerText = '수정';
+    }
+
