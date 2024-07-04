@@ -57,12 +57,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>공람(참조인)</th>
-                    <td colspan='3'>
-                        <!-- <select id="approver" name="approver" required>
-                            <!-- 디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌 -->
-                        </select> -->
-                    </td>
+               <th>공람(참조인)</th>
+                   <td colspan="3">
+                       <button type="button" onclick="openOrganizationModal()">추가</button>
+                       <div id="referrerList">
+                           <!-- 참조인 목록 -->
+                       </div>
+                   </td>
                 </tr>
             </table>
             <table class="document-table">
@@ -101,5 +102,19 @@
         <button type="summit" class="approval-btn">기안</button>
     </form>
 </main>
+
+
+
+
 </body>
 </html>
+
+<div id="organizationModal" class="modal" hidden>
+    <div class="modal-content">
+        <span class="close" onclick="closeOrganizationModal()">&times;</span>
+        <h2>참조인 추가</h2>
+        <div id="jstree"></div>
+        <button type="button" onclick="confirmSelection()">확인</button>
+    </div>
+</div>
+
