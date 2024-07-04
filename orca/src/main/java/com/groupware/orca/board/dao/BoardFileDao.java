@@ -13,9 +13,9 @@ public class BoardFileDao {
 
     private final BoardFileMapper mapper;
 
-    public List<BoardFileVo> getFilesByBoardNo(Long boardNo) {
-        return mapper.getFilesByBoardNo(boardNo);
-    }
+   // public List<BoardFileVo> getFilesByBoardNo(Long boardNo) {
+  //      return mapper.getFilesByBoardNo(boardNo);
+  //  }
 
     public int insertFile(BoardFileVo file) {
         return mapper.insertFile(file);
@@ -25,12 +25,12 @@ public class BoardFileDao {
         return mapper.deleteFile(boardNo);
     }
 
-    public int updateBoardNo(Integer fileId, Integer boardNo) {
-        return mapper.updateBoardNo(fileId, boardNo);
+  //  public int updateBoardNo(Integer fileId, Integer boardNo) {
+        //return mapper.updateBoardNo(fileId, boardNo);
     }
 
-    public int updateBoardNoByTemp(int newBoardNo) {
-        return mapper.updateBoardNoByTemp(newBoardNo);
-    }
+  //  public int updateBoardNoByTemp(int newBoardNo) {
+  //      return mapper.updateBoardNoByTemp(newBoardNo);
+  //  }
 
-}
+//}

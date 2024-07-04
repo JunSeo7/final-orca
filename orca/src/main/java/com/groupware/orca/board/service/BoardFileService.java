@@ -13,9 +13,9 @@ public class BoardFileService {
 
     private final BoardFileDao dao;
 
-    public List<BoardFileVo> getFilesByBoardNo(Long boardNo) {
-        return dao.getFilesByBoardNo(boardNo);
-    }
+   /// public List<BoardFileVo> getFilesByBoardNo(Long boardNo) {
+      //  return dao.getFilesByBoardNo(boardNo);
+  //  }
 
     public int insertFile(BoardFileVo file) {
         return dao.insertFile(file);
@@ -25,13 +25,13 @@ public class BoardFileService {
         return dao.deleteFile(boardNo);
     }
 
-    public int updateBoardNo(Integer fileId, Integer boardNo) {
-        return dao.updateBoardNo(fileId, boardNo);
+  //  public int updateBoardNo(Integer fileId, Integer boardNo) {
+      //  return dao.updateBoardNo(fileId, boardNo);
     }
 
-    public int updateBoardNoByTemp(int newBoardNo) {
-        return dao.updateBoardNoByTemp(newBoardNo);
-    }
+ //   public int updateBoardNoByTemp(int newBoardNo) {
+   //     return dao.updateBoardNoByTemp(newBoardNo);
+ //   }
 
 
-}
+//}

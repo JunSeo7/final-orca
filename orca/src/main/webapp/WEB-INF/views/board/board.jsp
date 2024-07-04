@@ -87,7 +87,6 @@
             <div id="teamName"></div>
             <div class="post-actions">
                 <i class="far fa-heart like-button" id="like-button" onclick="toggleLike()"></i>
-                <i class="far fa-bookmark bookmark-button" id="bookmark-button" onclick="toggleBookmark()"></i>
             </div>
             <div class="post-likes">
                 <span id="like-count">0</span> 좋아요
@@ -105,9 +104,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBDpdglycOaD-K2xeciSs3e0DvNvgQyGk",
@@ -120,94 +117,86 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth();
         const db = getFirestore(app);
 
-        function checkAuthState() {
-            return new Promise((resolve, reject) => {
-                onAuthStateChanged(auth, user => {
-                    if (user) {
-                        resolve(user);
-                    } else {
-                        reject('로그인 필요');
-                    }
-                });
-            });
-        }
+        window.toggleLike = async function() {
+            const boardNo = document.getElementById('modal-title').dataset.boardNo;
+            const likeRef = doc(db, 'posts', boardNo);
 
-        window.toggleLike = function() {
-            checkAuthState().then(user => {
-                const boardNo = document.getElementById('modal-title').dataset.boardNo;
-                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
-
-                getDoc(likeRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        deleteDoc(likeRef).then(() => {
-                            document.getElementById('like-button').classList.remove('liked');
-                            updateLikeCount(boardNo, -1);
-                        });
-                    } else {
-                        setDoc(likeRef, { liked: true }).then(() => {
-                            document.getElementById('like-button').classList.add('liked');
-                            updateLikeCount(boardNo, 1);
-                        });
-                    }
-                });
-            }).catch(error => {
-                alert(error + " 후 이용해 주세요.");
-            });
-        }
-
-        window.toggleBookmark = function() {
-            checkAuthState().then(user => {
-                const boardNo = document.getElementById('modal-title').dataset.boardNo;
-                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
-
-                getDoc(bookmarkRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        deleteDoc(bookmarkRef).then(() => {
-                            document.getElementById('bookmark-button').classList.remove('bookmarked');
-                        });
-                    } else {
-                        setDoc(bookmarkRef, { saved: true }).then(() => {
-                            document.getElementById('bookmark-button').classList.add('bookmarked');
-                        });
-                    }
-                });
-            }).catch(error => {
-                alert(error + " 후 이용해 주세요.");
-            });
-        }
-
-        window.checkLikeStatus = function(boardNo) {
-            checkAuthState().then(user => {
-                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
-
-                getDoc(likeRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        document.getElementById('like-button').classList.add('liked');
-                    }
-                });
-            });
-        }
-
-        window.checkBookmarkStatus = function(boardNo) {
-            checkAuthState().then(user => {
-                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
-
-                getDoc(bookmarkRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        document.getElementById('bookmark-button').classList.add('bookmarked');
-                    }
-                });
-            });
+            try {
+                const docSnap = await getDoc(likeRef);
+                if (docSnap.exists()) {
+                    await updateDoc(likeRef, {
+                        likes: increment(1)
+                    });
+                    document.getElementById('like-button').classList.add('liked');
+                    updateLikeCount(boardNo, 1);
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
         }
 
         window.updateLikeCount = function(boardNo, delta) {
             const likeCountElement = document.getElementById('like-count');
             const currentCount = parseInt(likeCountElement.textContent, 10);
             likeCountElement.textContent = currentCount + delta;
+        }
+
+        window.showModal = function(boardNo) {
+            $.ajax({
+                url: "/board/" + boardNo,
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    $('#modal-title').text(response.title).data('boardNo', boardNo);
+                    $('#hit').text(response.hit);
+                    $('#teamName').text(response.teamName);
+                    $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
+                    $('#enrolldate').text(response.enrollDate);
+                    $('#insert-name').text(response.employeeName);
+
+                    $('.modal').removeClass('modal-close');
+                    const lat = parseFloat(response.latitude);
+                    const lng = parseFloat(response.longitude);
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        $('#map').show();
+                        map.relayout();
+                        var moveLatLon = new kakao.maps.LatLng(lat, lng);
+                        map.setCenter(moveLatLon);
+                        var marker = new kakao.maps.Marker({
+                            position: new kakao.maps.LatLng(lat, lng)
+                        });
+                        marker.setMap(map);
+                    } else {
+                        $('#map').hide();
+                    }
+                    showComments(boardNo);
+                    checkLikeStatus(boardNo);
+                },
+                error: function() {
+                    alert("게시물 상세 정보를 불러오는데 실패했습니다.");
+                }
+            });
+        }
+
+        window.checkLikeStatus = async function(boardNo) {
+            const likeRef = doc(db, 'posts', boardNo);
+            try {
+                const docSnap = await getDoc(likeRef);
+                if (docSnap.exists()) {
+                    const likeData = docSnap.data();
+                    if (likeData && likeData.likes) {
+                        document.getElementById('like-count').textContent = likeData.likes;
+                    }
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error getting document: ", error);
+            }
         }
     </script>
 
@@ -320,7 +309,6 @@
                     }
                     showComments(boardNo);
                     checkLikeStatus(boardNo);
-                    checkBookmarkStatus(boardNo);
                 },
                 error: function () {
                     alert("게시물 상세 정보를 불러오는데 실패했습니다.");
