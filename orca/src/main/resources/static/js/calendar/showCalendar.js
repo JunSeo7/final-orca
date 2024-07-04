@@ -224,6 +224,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
     });
 
     // 이벤트 바 클릭 시 호출할 함수
+    // 일정 상세조회
     function handleEventBarClick(event, barDiv) {
 
         const viewDeleteButton = document.querySelector('.view-delete-button');
@@ -259,7 +260,13 @@ function renderCalendar(calendarEl, year, month, events = []) {
         contentElement.value = event.content;
         startDateElement.value = event.startDate;
         endDateElement.value = event.endDate;
-        rangeElement.value = event.range;
+        if(event.range === 'company'){
+            rangeElement.value = '사내';
+        }else if(event.range === 'team'){
+            rangeElement.value = '팀';
+        }else if(event.range === 'individual'){
+            rangeElement.value = '개인';
+        }
 
         viewCnt++;
         if (viewCnt % 2 == 0) {
@@ -346,7 +353,7 @@ function editEvent(Data) {
         const selectElement = document.createElement('select');
         selectElement.id = 'edit-range';
         selectElement.name = 'range';
-        
+
         // 옵션 추가
         const individualOption = document.createElement('option');
         individualOption.value = 'individual';
@@ -358,29 +365,83 @@ function editEvent(Data) {
         teamOption.textContent = '팀';
         selectElement.appendChild(teamOption);
 
-        if(range === 'team'){
+        if (range === 'team') {
             selectElement.value = 'team';
         }
-        
+
         // 기존 readOnly input 요소를 숨기고 select 요소를 추가
         viewRangeContainer.parentNode.replaceChild(selectElement, viewRangeContainer);
 
+        //일정 수정 유효성 검사
+        // 등록 버튼과 관련된 요소를 가져옵니다.
+        const editSubmitBtn = document.querySelector('.view-edit-button');
+        const editTitleInput = document.querySelector('.edit-title');
+        const editContentInput = document.getElementById('viewEventContent');
+        const editStartDateInput = document.getElementById('viewStartDate');
+        const editEndDateInput = document.getElementById('viewEndDate');
+        // 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
+        function checkInputs() {
+            const eventTitle = editTitleInput;
+            const eventContent = editContentInput;
+            const startDateValue = editStartDateInput.value;
+            const endDateValue = editEndDateInput.value;
+            const startDate = new Date(editStartDateInput.value);
+            const endDate = new Date(editEndDateInput.value);
+
+            if (eventTitle.value.length > 13) {
+                eventTitle.value = eventTitle.value.substring(0, 13);
+                editSubmitBtn.classList.remove('opacity');
+                editSubmitBtn.disabled = true;
+                alert("글자수가 최대입니다.");
+                editSubmitBtn.style.backgroundColor = '#6eadff';
+            }
+            if (eventContent.value.length > 332) {
+                eventTitle.value = eventTitle.value.substring(0, 332);
+                editSubmitBtn.classList.remove('opacity');
+                editSubmitBtn.disabled = true;
+                alert("글자수가 최대입니다.");
+                editSubmitBtn.style.backgroundColor = '#6eadff';
+            }
+
+            if (eventTitle.value !== '' && startDateValue !== '' && endDateValue !== '') {
+
+                if (endDate < startDate) {
+                    editSubmitBtn.classList.remove('opacity');
+                    editSubmitBtn.disabled = true;
+                    alert("시작일은 종료일보다 빨라야합니다.");
+                    editSubmitBtn.style.backgroundColor = '#6eadff';
+                } else {
+                    editSubmitBtn.classList.add('opacity');
+                    editSubmitBtn.disabled = false;
+                }
+            } else {
+                editSubmitBtn.classList.remove('opacity');
+                editSubmitBtn.disabled = true;
+                editSubmitBtn.style.backgroundColor = '#6eadff';
+            }
+        }
+
+        // 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
+        editTitleInput.addEventListener('input', checkInputs);
+        editContentInput.addEventListener('input', checkInputs);
+        editStartDateInput.addEventListener('change', checkInputs);
+        editEndDateInput.addEventListener('change', checkInputs);
+
         // 버튼 텍스트 변경 및 이벤트 리스너 추가
-        const viewEditButton = document.querySelector('.view-edit-button');
         const viewDeleteButton = document.querySelector('.view-delete-button');
         const viewCancelButton = document.querySelector('.view-cancel-button');
         const viewCalendarForm = document.querySelector('.view-calendar-form');
 
         viewCalendarForm.style.height = '540px';
 
-        viewEditButton.textContent = '확인';
+        editSubmitBtn.textContent = '확인';
         viewDeleteButton.textContent = '취소';
 
-        viewEditButton.removeEventListener('click', handleEditButtonClick);
+        editSubmitBtn.removeEventListener('click', handleEditButtonClick);
         viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
         viewDeleteButton.removeEventListener('click', newDeleteEventListener);
 
-        viewEditButton.addEventListener('click', handleEditButtonClick);
+        editSubmitBtn.addEventListener('click', handleEditButtonClick);
         viewDeleteButton.addEventListener('click', handleCancelButtonClick);
 
         viewCancelButton.removeEventListener('click', newCancelEventListener);
@@ -484,7 +545,13 @@ function editEvent(Data) {
             readOnlyInput.type = 'text';
             readOnlyInput.id = 'viewRange';
             readOnlyInput.name = 'range';
-            readOnlyInput.value = originalData.range;
+            if(originalData.range === 'company'){
+                readOnlyInput.value = '사내';
+            }else if(originalData.range === 'team'){
+                readOnlyInput.value = '팀';
+            }else if(originalData.range === 'individual'){
+                readOnlyInput.value = '개인';
+            }
             readOnlyInput.readOnly = true;
 
             selectElement.parentNode.replaceChild(readOnlyInput, selectElement);
@@ -513,6 +580,12 @@ function getCalendarDetail() {
     closeViewEvent();
 }
 
+
+
+
+
+
+//--------------------------------------------------------------------------------------
 
 
 
@@ -893,19 +966,35 @@ function onStopDragForm() {
 // 등록 버튼과 관련된 요소를 가져옵니다.
 const submitBtn = document.getElementById('submitBtn');
 const eventTitleInput = document.getElementById('eventTitle');
+const eventContentInput = document.getElementById('eventContent');
 const startDateInput = document.getElementById('startDate');
 const endDateInput = document.getElementById('endDate');
-
 // 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
 function checkInputs() {
-    const eventTitleValue = eventTitleInput.value.trim();
+    const eventTitle = eventTitleInput;
+    const eventContent = eventContentInput;
     const startDateValue = startDateInput.value;
     const endDateValue = endDateInput.value;
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
 
+    if (eventTitle.value.length > 13) {
+        eventTitle.value = eventTitle.value.substring(0, 13);
+        submitBtn.classList.remove('opacity');
+        submitBtn.disabled = true;
+        alert("글자수가 최대입니다.");
+        submitBtn.style.backgroundColor = '#6eadff';
+    }
+    if (eventContent.value.length > 332) {
+        eventTitle.value = eventTitle.value.substring(0, 332);
+        submitBtn.classList.remove('opacity');
+        submitBtn.disabled = true;
+        alert("글자수가 최대입니다.");
+        submitBtn.style.backgroundColor = '#6eadff';
+    }
 
-    if (eventTitleValue !== '' && startDateValue !== '' && endDateValue !== '') {
+    if (eventTitle.value !== '' && startDateValue !== '' && endDateValue !== '') {
+
         if (endDate < startDate) {
             submitBtn.classList.remove('opacity');
             submitBtn.disabled = true;
@@ -913,20 +1002,19 @@ function checkInputs() {
             submitBtn.style.backgroundColor = '#6eadff';
         } else {
             submitBtn.classList.add('opacity');
-            submitBtn.style.backgroundColor = '#1c76ec';
             submitBtn.disabled = false;
         }
     } else {
         submitBtn.classList.remove('opacity');
         submitBtn.disabled = true;
         submitBtn.style.backgroundColor = '#6eadff';
+
     }
-
-
 }
 
 // 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
 eventTitleInput.addEventListener('input', checkInputs);
+eventContentInput.addEventListener('input', checkInputs);
 startDateInput.addEventListener('change', checkInputs);
 endDateInput.addEventListener('change', checkInputs);
 
