@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재 양식 목록</title>
+    <title>결재 목록</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
         <!--파비콘-->
         <link rel="icon" href="/img/logo.png" type="image/png">
@@ -28,22 +28,24 @@
 
         <c:forEach var="document" items="${documentList}">
             <div class="approval_status">
-                <p>${document.enrollDate}</p>
+              <p>${document.creditDate}</p>
                 <div class="status_box">
                     <div class="status_details">
                         <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
-                        <span class="approval_title">[${document.categoryName}]${document.title}</span>
+                        <span class="approval_title">[${document.categoryName}]</span>
+                        <span class="approval_title">긴급여부: ${document.urgent}</span>
                         <div class="status_steps">
                             <div class="status_step">
-                                <p>기안</p>
+                                <p>${document.statusName}</p>
                                 <p>${document.writerName}</p>
                                 <p>${document.enrollDate}</p>
                             </div>
                             <!-- 결재 진행 상태 추가 -->
-                            <c:forEach var="approverLine" items="${document.approvalLineVoList}">
+                            <c:forEach var="approverLine" items="${document.approverVoList}">
                                 <div class="status_step">
-                                    <p>${approverLine.approvalStage}</p>
-                                    <p>${approverLine.approverName}</p>
+                                    <p>${approverLine.apprStageName}</p>
+                                    <p>${approverLine.deptName}</p>
+                                    <p>${approverLine.approverName}[${approverLine.positionName}]</p>
                                     <p>${approverLine.approvalDate}</p>
                                 </div>
                             </c:forEach>
