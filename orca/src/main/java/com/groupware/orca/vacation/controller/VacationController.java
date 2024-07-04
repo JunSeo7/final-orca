@@ -18,4 +18,7 @@ public class VacationController {
     public String vacationWrite() {
         return "/vacation/vacationWrite";
     }
+
+
 }
+
