@@ -399,7 +399,9 @@ nav ul li a:hover {
     align-items: center;
     margin-bottom: 15px;
 }
-
+.form-header{
+    cursor: move;
+}
 .form-header h2 {
     margin: 0;
     font-size: 1.2rem;
@@ -506,7 +508,7 @@ nav ul li a:hover {
 .company-bar{
     background-color: #c8a8ed;
 }
-.team-bar{
+.department-bar{
     background-color: #e87e7e;
 }
 .other-bar{
@@ -542,7 +544,9 @@ nav ul li a:hover {
     margin-bottom: 19px;
     width: 100%;
 }
-
+.view-form-header:hover{
+    cursor: move;
+}
 .view-calendar-name{
     display: flex;
     justify-content: end;

@@ -71,7 +71,7 @@
                                 <span class="showCalendarBar" onclick="toggleCheck(this); return false;">내 캘린더</span>
                             </li>
                             <li>
-                                <span class="showCalendarBar" onclick="toggleCheck(this); return false;">팀 캘린더</span>
+                                <span class="showCalendarBar" onclick="toggleCheck(this); return false;">부서 캘린더</span>
                             </li>
                         </div>
                     </ul>
@@ -108,7 +108,7 @@
                         <label for="range">공유 범위</label>
                         <select id="range" name="range">
                             <option value="individual">개인</option>
-                            <option value="team">팀</option>
+                            <option value="department">부서</option>
                         </select>
                     </div>
                     <div class="form-footer">

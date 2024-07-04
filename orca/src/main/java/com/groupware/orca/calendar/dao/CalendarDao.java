@@ -2,6 +2,7 @@ package com.groupware.orca.calendar.dao;
 
 import com.groupware.orca.calendar.mapper.CalendarMapper;
 import com.groupware.orca.calendar.vo.CalendarVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,16 +17,16 @@ public class CalendarDao {
         return mapper.createCalendar(vo);
     }
 
-    public List<CalendarVo> showCalendarBarContent(String range) {
-        List<CalendarVo> voList = mapper.showCalendarBarContent(range);
+    public List<CalendarVo> showCalendarBarContent(String range, UserVo userVo) {
+        List<CalendarVo> voList = mapper.showCalendarBarContent(range, userVo);
         return voList;
     }
 
-    public int deleteCalendar(int calendarNo) {
-        return mapper.deleteCalendar(calendarNo);
+    public int deleteCalendar(int calendarNo, String writerNo) {
+        return mapper.deleteCalendar(calendarNo, writerNo);
     }
 
-    public int editCalendar(CalendarVo vo) {
-        return mapper.editCalendar(vo);
+    public int editCalendar(CalendarVo vo, String writerNo) {
+        return mapper.editCalendar(vo, writerNo);
     }
 }

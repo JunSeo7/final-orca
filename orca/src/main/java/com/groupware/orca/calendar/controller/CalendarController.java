@@ -18,14 +18,20 @@ public class CalendarController {
     private final CalendarService service;
 
     @GetMapping("showCalendar")
-    public String showCalendar(){
+    public String showCalendar(HttpSession httpSession){
+        if(httpSession.getAttribute("loginUserVo") == null){
+            return "redirect:/orca/user/login";
+        }
         return "calendar/showCalendar";
     }
 
     @GetMapping("showCalendarBarContent")
     @ResponseBody
-    public List<CalendarVo> showCalendarBarContent(@RequestParam("range") String range){
-        List<CalendarVo> calendarBarlist = service.showCalendarBarContent(range);
+    public List<CalendarVo> showCalendarBarContent(@RequestParam("range") String range, HttpSession httpSession){
+        UserVo userVo = (UserVo)httpSession.getAttribute("loginUserVo");
+        System.out.println("userVo = " + userVo);
+        List<CalendarVo> calendarBarlist = service.showCalendarBarContent(range, userVo);
+        System.out.println("사이즈 : " + calendarBarlist.size());
         return calendarBarlist;
     }
 
@@ -42,8 +48,9 @@ public class CalendarController {
 
     @PostMapping("deleteCalendar")
     @ResponseBody
-    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, Model model){
-        int result = service.deleteCalendar(calendarNo);
+    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, HttpSession httpSession){
+        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int result = service.deleteCalendar(calendarNo, writerNo);
         return result;
     }
 
@@ -51,7 +58,8 @@ public class CalendarController {
     @ResponseBody
     public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession){
         System.out.println("vo = " + vo);
-        int result = service.editCalendar(vo);
+        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int result = service.editCalendar(vo, writerNo);
         return result;
     }
 

@@ -15,4 +15,8 @@ public class UserDao {
         UserVo userVo = mapper.login(vo);
         return userVo;
     }
+
+    public UserVo getUserVo(String userNo) {
+        return mapper.getUserVo(userNo);
+    }
 }

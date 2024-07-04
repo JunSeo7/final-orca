@@ -1,6 +1,7 @@
 package com.groupware.orca.calendar.mapper;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
+import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -12,16 +13,39 @@ public interface CalendarMapper {
             "VALUES(SEQ_CALENDAR_NO.NEXTVAL, #{writerNo}, #{title}, #{content}, #{startDate}, #{endDate}, #{range})")
     int createCalendar(CalendarVo vo);
 
-    @Select("SELECT C.CALENDAR_NO, C.TITLE, C.CONTENT, TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE, C.START_DATE, C.END_DATE, C.RANGE, P.NAME AS WRITER, D.PARTNAME\n" +
-            "FROM CALENDAR C\n" +
-            "JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
-            "JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE\n" +
-            "WHERE RANGE = #{range}" +
-            "ORDER BY ENROLL_DATE")
-    List<CalendarVo> showCalendarBarContent(String range);
+    @Select(
+            """
+                    <script>
+                    SELECT 
+                        C.CALENDAR_NO
+                        , C.TITLE
+                        , C.CONTENT
+                        , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE
+                        , C.START_DATE
+                        , C.END_DATE
+                        , C.RANGE
+                        , P.NAME AS WRITER
+                        , C.WRITER_NO
+                        , D.PARTNAME
+                    FROM CALENDAR C
+                    JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO
+                    JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE
+                    WHERE RANGE = #{range}
+                    AND DEL_DATE IS NULL
+                    <if test='range == "individual"'>
+                        AND C.WRITER_NO = #{vo.empNo}
+                    </if>
+                    <if test='range == "department"'>
+                        AND D.PARTNAME = #{vo.partName}
+                    </if>
+                    ORDER BY ENROLL_DATE
+                    </script>
+            """
+    )
+    List<CalendarVo> showCalendarBarContent(@Param("range") String range, @Param("vo") UserVo userVo);
 
-    @Delete("DELETE CALENDAR WHERE CALENDAR_NO = #{calendarNo}")
-    int deleteCalendar(int calendarNo);
+    @Delete("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo} AND WRITER_NO = #{writerNo}")
+    int deleteCalendar(@Param("calendarNo") int calendarNo, @Param("writerNo") String writerNo);
 
     @Update({
             "<script>",
@@ -34,7 +58,8 @@ public interface CalendarMapper {
             "<if test='vo.range != null'>RANGE = #{vo.range},</if>",
             "</set>",
             "WHERE CALENDAR_NO = #{vo.calendarNo}",
+            "AND WRITER_NO = #{writerNo}",
             "</script>"
     })
-    int editCalendar(@Param("vo") CalendarVo vo);
+    int editCalendar(@Param("vo") CalendarVo vo, @Param("writerNo") String writerNo);
 }

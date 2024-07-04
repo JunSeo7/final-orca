@@ -2,6 +2,7 @@ package com.groupware.orca.calendar.service;
 
 import com.groupware.orca.calendar.dao.CalendarDao;
 import com.groupware.orca.calendar.vo.CalendarVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +19,15 @@ public class CalendarService {
         return dao.createCalendar(vo);
     }
 
-    public List<CalendarVo> showCalendarBarContent(String range) {
-       return dao.showCalendarBarContent(range);
+    public List<CalendarVo> showCalendarBarContent(String range, UserVo userVo) {
+       return dao.showCalendarBarContent(range, userVo);
     }
 
-    public int deleteCalendar(int calendarNo) {
-        return dao.deleteCalendar(calendarNo);
+    public int deleteCalendar(int calendarNo, String writerNo) {
+        return dao.deleteCalendar(calendarNo, writerNo);
     }
 
-    public int editCalendar(CalendarVo vo) {
-        return dao.editCalendar(vo);
+    public int editCalendar(CalendarVo vo, String writerNo) {
+        return dao.editCalendar(vo, writerNo);
     }
 }

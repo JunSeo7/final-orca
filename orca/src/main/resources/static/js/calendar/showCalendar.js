@@ -27,6 +27,23 @@ function hideProfile() {
         profileDetail.classList.add('hidden');  // 프로필 숨김
     }
 }
+
+const loginUserVo = {};
+
+$.ajax({
+    type: 'post',
+    url: '/orca/user/getUserVo',
+    dataType: 'json',
+    success: function (response) {
+        Object.assign(loginUserVo, response);
+    },
+    error: function (error) {
+        console.error('유저 데이터 로드 실패', error);
+    }
+});
+
+
+
 function logout() {
     alert('로그아웃 되었습니다.');
 }
@@ -44,7 +61,7 @@ let showCalendarBarCnt = [0, 0, 0];
 let calendarBar = {
     company: [],
     individual: [],
-    team: []
+    department: []
 };
 let isCalendarBarVisible = [false, false, false];  // 각 범위의 클릭 상태를 저장
 
@@ -56,7 +73,7 @@ CalendarBar[1].addEventListener('click', function () {
     toggleCalendarBar("individual", 1);
 });
 CalendarBar[2].addEventListener('click', function () {
-    toggleCalendarBar("team", 2);
+    toggleCalendarBar("department", 2);
 });
 
 function toggleCalendarBar(range, index) {
@@ -193,17 +210,14 @@ function renderCalendar(calendarEl, year, month, events = []) {
                     (afterMonth && el.classList.contains('after-month'))) {
 
                     if (dayNumber === day) {
-
-
-
                         let eventBar = document.createElement('div');
                         eventBar.classList.add('event-bar');
                         eventBar.textContent = event.title;
 
                         if (range === 'company') {
                             eventBar.classList.add('company-bar');
-                        } else if (range === 'team') {
-                            eventBar.classList.add('team-bar');
+                        } else if (range === 'department') {
+                            eventBar.classList.add('department-bar');
                         } else if (range === 'individual') {
 
                         }
@@ -239,7 +253,8 @@ function renderCalendar(calendarEl, year, month, events = []) {
             content: event.content,
             startDate: event.startDate,
             endDate: event.endDate,
-            range: event.range
+            range: event.range,
+            writerNo: event.writerNo
         };
 
         // 클릭한 이벤트 바에 대한 처리를 여기에 구현합니다.
@@ -251,8 +266,7 @@ function renderCalendar(calendarEl, year, month, events = []) {
         const startDateElement = document.getElementById('viewStartDate');
         const endDateElement = document.getElementById('viewEndDate');
         const rangeElement = document.getElementById('viewRange');
-        console.log(event);
-        console.log(titleElement);
+
         titleElement.textContent = event.title;
         enrollDateElement.textContent = event.enrollDate;
         writerElement.textContent = event.writer;
@@ -260,11 +274,11 @@ function renderCalendar(calendarEl, year, month, events = []) {
         contentElement.value = event.content;
         startDateElement.value = event.startDate;
         endDateElement.value = event.endDate;
-        if(event.range === 'company'){
+        if (event.range === 'company') {
             rangeElement.value = '사내';
-        }else if(event.range === 'team'){
-            rangeElement.value = '팀';
-        }else if(event.range === 'individual'){
+        } else if (event.range === 'department') {
+            rangeElement.value = '부서';
+        } else if (event.range === 'individual') {
             rangeElement.value = '개인';
         }
 
@@ -283,11 +297,15 @@ const newDeleteEventListener = function () {
     if (range === 'company') {
         alert("관련 부서에 문의바랍니다.")
     } else {
-        const userResponse = confirm("정말로 삭제하시겠습니까?");
-        if (userResponse) {
-            deleteEvent(originalData);
+        if (originalData.writerNo != loginUserVo.empNo) {
+            alert("권한이 부족합니다.");
         } else {
+            const userResponse = confirm("정말로 삭제하시겠습니까?");
+            if (userResponse) {
+                deleteEvent(originalData);
+            } else {
 
+            }
         }
     }
 };
@@ -310,7 +328,7 @@ function deleteEvent(originalData) {
                 isCalendarBarVisible[2] = !isCalendarBarVisible[2];
                 toggleCalendarBar("company", 0);
                 toggleCalendarBar("individual", 1);
-                toggleCalendarBar("team", 2);
+                toggleCalendarBar("department", 2);
             } else {
                 alert("캘린더 삭제 실패!");
             }
@@ -330,243 +348,243 @@ viewEditButton.addEventListener('click', function () {
 });
 //일정 수정
 function editEvent(Data) {
-    let range = Data.range;
-    if (range === 'company') {
-        alert("관련 부서에 문의바랍니다.")
+    if (originalData.writerNo != loginUserVo.empNo) {
+        alert("작성자가 아닙니다.");
     } else {
-        isEditCalendar = true;
-        // 일정 제목을 input 요소로 변환
-        const titleSpan = document.querySelector('.view-calendar-title');
-        const titleInput = document.createElement('input');
-        titleInput.type = 'text';
-        titleInput.value = Data.title; // 현재 텍스트 값을 가져와서 설정
-        titleInput.classList.add('edit-title');
-        titleSpan.parentNode.replaceChild(titleInput, titleSpan);
+        let range = Data.range;
+        if (range === 'company') {
+            alert("관련 부서에 문의바랍니다.")
+        } else {
+            isEditCalendar = true;
+            // 일정 제목을 input 요소로 변환
+            const titleSpan = document.querySelector('.view-calendar-title');
+            const titleInput = document.createElement('input');
+            titleInput.type = 'text';
+            titleInput.value = Data.title; // 현재 텍스트 값을 가져와서 설정
+            titleInput.classList.add('edit-title');
+            titleSpan.parentNode.replaceChild(titleInput, titleSpan);
 
-        // readOnly 속성 제거
-        document.getElementById('viewEventContent').readOnly = false;
-        document.getElementById('viewStartDate').readOnly = false;
-        document.getElementById('viewEndDate').readOnly = false;
+            // readOnly 속성 제거
+            document.getElementById('viewEventContent').readOnly = false;
+            document.getElementById('viewStartDate').readOnly = false;
+            document.getElementById('viewEndDate').readOnly = false;
 
-        // 공유 범위를 select 요소로 변환
-        const viewRangeContainer = document.getElementById('viewRange');
-        const selectElement = document.createElement('select');
-        selectElement.id = 'edit-range';
-        selectElement.name = 'range';
+            // 공유 범위를 select 요소로 변환
+            const viewRangeContainer = document.getElementById('viewRange');
+            const selectElement = document.createElement('select');
+            selectElement.id = 'edit-range';
+            selectElement.name = 'range';
 
-        // 옵션 추가
-        const individualOption = document.createElement('option');
-        individualOption.value = 'individual';
-        individualOption.textContent = '개인';
-        selectElement.appendChild(individualOption);
+            // 옵션 추가
+            const individualOption = document.createElement('option');
+            individualOption.value = 'individual';
+            individualOption.textContent = '개인';
+            selectElement.appendChild(individualOption);
 
-        const teamOption = document.createElement('option');
-        teamOption.value = 'team';
-        teamOption.textContent = '팀';
-        selectElement.appendChild(teamOption);
+            const departmentOption = document.createElement('option');
+            departmentOption.value = 'department';
+            departmentOption.textContent = '부서';
+            selectElement.appendChild(departmentOption);
 
-        if (range === 'team') {
-            selectElement.value = 'team';
-        }
-
-        // 기존 readOnly input 요소를 숨기고 select 요소를 추가
-        viewRangeContainer.parentNode.replaceChild(selectElement, viewRangeContainer);
-
-        //일정 수정 유효성 검사
-        // 등록 버튼과 관련된 요소를 가져옵니다.
-        const editSubmitBtn = document.querySelector('.view-edit-button');
-        const editTitleInput = document.querySelector('.edit-title');
-        const editContentInput = document.getElementById('viewEventContent');
-        const editStartDateInput = document.getElementById('viewStartDate');
-        const editEndDateInput = document.getElementById('viewEndDate');
-        // 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
-        function checkInputs() {
-            const eventTitle = editTitleInput;
-            const eventContent = editContentInput;
-            const startDateValue = editStartDateInput.value;
-            const endDateValue = editEndDateInput.value;
-            const startDate = new Date(editStartDateInput.value);
-            const endDate = new Date(editEndDateInput.value);
-
-            if (eventTitle.value.length > 13) {
-                eventTitle.value = eventTitle.value.substring(0, 13);
-                editSubmitBtn.classList.remove('opacity');
-                editSubmitBtn.disabled = true;
-                alert("글자수가 최대입니다.");
-                editSubmitBtn.style.backgroundColor = '#6eadff';
-            }
-            if (eventContent.value.length > 332) {
-                eventTitle.value = eventTitle.value.substring(0, 332);
-                editSubmitBtn.classList.remove('opacity');
-                editSubmitBtn.disabled = true;
-                alert("글자수가 최대입니다.");
-                editSubmitBtn.style.backgroundColor = '#6eadff';
+            if (range === 'tedepartmentam') {
+                selectElement.value = 'department';
             }
 
-            if (eventTitle.value !== '' && startDateValue !== '' && endDateValue !== '') {
+            // 기존 readOnly input 요소를 숨기고 select 요소를 추가
+            viewRangeContainer.parentNode.replaceChild(selectElement, viewRangeContainer);
 
-                if (endDate < startDate) {
+            //일정 수정 유효성 검사
+            // 등록 버튼과 관련된 요소를 가져옵니다.
+            const editSubmitBtn = document.querySelector('.view-edit-button');
+            const editTitleInput = document.querySelector('.edit-title');
+            const editContentInput = document.getElementById('viewEventContent');
+            const editStartDateInput = document.getElementById('viewStartDate');
+            const editEndDateInput = document.getElementById('viewEndDate');
+            // 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
+            function checkInputs() {
+                const eventTitle = editTitleInput;
+                const eventContent = editContentInput;
+                const startDateValue = editStartDateInput.value;
+                const endDateValue = editEndDateInput.value;
+                const startDate = new Date(editStartDateInput.value);
+                const endDate = new Date(editEndDateInput.value);
+
+                if (eventTitle.value.length > 13) {
+                    eventTitle.value = eventTitle.value.substring(0, 13);
                     editSubmitBtn.classList.remove('opacity');
                     editSubmitBtn.disabled = true;
-                    alert("시작일은 종료일보다 빨라야합니다.");
-                    editSubmitBtn.style.backgroundColor = '#6eadff';
-                } else {
-                    editSubmitBtn.classList.add('opacity');
-                    editSubmitBtn.disabled = false;
+                    alert("글자수가 최대입니다.");
                 }
-            } else {
-                editSubmitBtn.classList.remove('opacity');
-                editSubmitBtn.disabled = true;
-                editSubmitBtn.style.backgroundColor = '#6eadff';
-            }
-        }
+                if (eventContent.value.length > 332) {
+                    eventTitle.value = eventTitle.value.substring(0, 332);
+                    editSubmitBtn.classList.remove('opacity');
+                    editSubmitBtn.disabled = true;
+                    alert("글자수가 최대입니다.");
+                }
 
-        // 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
-        editTitleInput.addEventListener('input', checkInputs);
-        editContentInput.addEventListener('input', checkInputs);
-        editStartDateInput.addEventListener('change', checkInputs);
-        editEndDateInput.addEventListener('change', checkInputs);
+                if (eventTitle.value !== '' && startDateValue !== '' && endDateValue !== '') {
 
-        // 버튼 텍스트 변경 및 이벤트 리스너 추가
-        const viewDeleteButton = document.querySelector('.view-delete-button');
-        const viewCancelButton = document.querySelector('.view-cancel-button');
-        const viewCalendarForm = document.querySelector('.view-calendar-form');
-
-        viewCalendarForm.style.height = '540px';
-
-        editSubmitBtn.textContent = '확인';
-        viewDeleteButton.textContent = '취소';
-
-        editSubmitBtn.removeEventListener('click', handleEditButtonClick);
-        viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
-        viewDeleteButton.removeEventListener('click', newDeleteEventListener);
-
-        editSubmitBtn.addEventListener('click', handleEditButtonClick);
-        viewDeleteButton.addEventListener('click', handleCancelButtonClick);
-
-        viewCancelButton.removeEventListener('click', newCancelEventListener);
-        viewCancelButton.addEventListener('click', newCancelEventListener);
-
-        function handleEditButtonClick() {
-            const titleElement = document.querySelector('.edit-title').value;
-            const contentElement = document.querySelector('#viewEventContent').value;
-            const startDateElement = document.querySelector('#viewStartDate').value;
-            const endDateElement = document.querySelector('#viewEndDate').value;
-            const rangeElement = document.querySelector('#edit-range').value;
-
-            let vo = {
-                calendarNo: Data.calendarNo
-            }
-
-            let updateCnt = 0;
-
-            if (titleElement !== Data.title) {
-                vo.title = titleElement;
-                updateCnt++;
-            }
-            if (contentElement !== Data.content) {
-                vo.content = contentElement;
-                updateCnt++;
-            }
-            if (startDateElement !== Data.startDate) {
-                vo.startDate = startDateElement;
-                updateCnt++;
-            }
-            if (endDateElement !== Data.endDate) {
-                vo.endDate = endDateElement;
-                updateCnt++;
-            }
-            if (rangeElement !== Data.range) {
-                vo.range = rangeElement;
-                updateCnt++;
-            }
-
-            restoreOriginalState();
-
-            if (updateCnt < 1) {
-                alert("수정된 내용이 없습니다.");
-            } else {
-                $.ajax({
-                    type: 'post',
-                    url: '/orca/calendar/editCalendar',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(vo),
-                    success: function (response) {
-                        if (response === 1) {
-                            getCalendarDetail();
-                        } else {
-                            alert("캘린더 삭제 실패!");
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
-                        alert("캘린더 삭제 실패!");
+                    if (endDate < startDate) {
+                        editSubmitBtn.classList.remove('opacity');
+                        editSubmitBtn.disabled = true;
+                        alert("시작일은 종료일보다 빨라야합니다.");
+                    } else {
+                        editSubmitBtn.classList.add('opacity');
+                        editSubmitBtn.disabled = false;
                     }
-                })
+                } else {
+                    editSubmitBtn.classList.remove('opacity');
+                    editSubmitBtn.disabled = true;
+                }
             }
-        }
 
-        function handleCancelButtonClick() {
-            // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
-            restoreOriginalState();
-        }
+            // 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
+            editTitleInput.addEventListener('input', checkInputs);
+            editContentInput.addEventListener('input', checkInputs);
+            editStartDateInput.addEventListener('change', checkInputs);
+            editEndDateInput.addEventListener('change', checkInputs);
 
-        function newCancelEventListener() {
-            // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
-            restoreOriginalState();
-        }
+            // 버튼 텍스트 변경 및 이벤트 리스너 추가
+            const viewDeleteButton = document.querySelector('.view-delete-button');
+            const viewCancelButton = document.querySelector('.view-cancel-button');
+            const viewCalendarForm = document.querySelector('.view-calendar-form');
 
-        function restoreOriginalState() {
-            viewCalendarForm.style.height = '518px';
-            isEditCalendar = false;
-            // 일정 제목을 다시 span 요소로 변환
-            const editedTitle = document.querySelector('.edit-title');
-            const titleSpan = document.createElement('span');
-            titleSpan.classList.add('view-calendar-title');
-            titleSpan.textContent = originalData.title;
-            editedTitle.parentNode.replaceChild(titleSpan, editedTitle);
+            viewCalendarForm.style.height = '540px';
 
-            // readOnly 속성 추가
-            let content = document.getElementById('viewEventContent')
-            let startDate = document.getElementById('viewStartDate')
-            let endDate = document.getElementById('viewEndDate')
+            editSubmitBtn.textContent = '확인';
+            viewDeleteButton.textContent = '취소';
 
-            content.readOnly = true;
-            startDate.readOnly = true;
-            endDate.readOnly = true;
-
-            content.value = originalData.content;
-            startDate.value = originalData.startDate;
-            endDate.value = originalData.endDate;
-
-            // select 요소를 다시 readOnly input 요소로 변경
-            const readOnlyInput = document.createElement('input');
-            readOnlyInput.type = 'text';
-            readOnlyInput.id = 'viewRange';
-            readOnlyInput.name = 'range';
-            if(originalData.range === 'company'){
-                readOnlyInput.value = '사내';
-            }else if(originalData.range === 'team'){
-                readOnlyInput.value = '팀';
-            }else if(originalData.range === 'individual'){
-                readOnlyInput.value = '개인';
-            }
-            readOnlyInput.readOnly = true;
-
-            selectElement.parentNode.replaceChild(readOnlyInput, selectElement);
-
-            // 버튼 텍스트를 원래대로 변경
-            viewEditButton.textContent = '수정';
-            viewDeleteButton.textContent = '삭제';
-
-            // 이전의 이벤트 리스너를 다시 추가
-            viewEditButton.removeEventListener('click', handleEditButtonClick);
+            editSubmitBtn.removeEventListener('click', handleEditButtonClick);
             viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
+            viewDeleteButton.removeEventListener('click', newDeleteEventListener);
+
+            editSubmitBtn.addEventListener('click', handleEditButtonClick);
+            viewDeleteButton.addEventListener('click', handleCancelButtonClick);
 
             viewCancelButton.removeEventListener('click', newCancelEventListener);
-            viewDeleteButton.addEventListener('click', newDeleteEventListener);
+            viewCancelButton.addEventListener('click', newCancelEventListener);
 
+            function handleEditButtonClick() {
+                const titleElement = document.querySelector('.edit-title').value;
+                const contentElement = document.querySelector('#viewEventContent').value;
+                const startDateElement = document.querySelector('#viewStartDate').value;
+                const endDateElement = document.querySelector('#viewEndDate').value;
+                const rangeElement = document.querySelector('#edit-range').value;
+
+                let vo = {
+                    calendarNo: Data.calendarNo
+                }
+
+                let updateCnt = 0;
+
+                if (titleElement !== Data.title) {
+                    vo.title = titleElement;
+                    updateCnt++;
+                }
+                if (contentElement !== Data.content) {
+                    vo.content = contentElement;
+                    updateCnt++;
+                }
+                if (startDateElement !== Data.startDate) {
+                    vo.startDate = startDateElement;
+                    updateCnt++;
+                }
+                if (endDateElement !== Data.endDate) {
+                    vo.endDate = endDateElement;
+                    updateCnt++;
+                }
+                if (rangeElement !== Data.range) {
+                    vo.range = rangeElement;
+                    updateCnt++;
+                }
+
+                restoreOriginalState();
+
+                if (updateCnt < 1) {
+                    alert("수정된 내용이 없습니다.");
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: '/orca/calendar/editCalendar',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        data: JSON.stringify(vo),
+                        success: function (response) {
+                            if (response === 1) {
+                                getCalendarDetail();
+                            } else {
+                                alert("캘린더 수정 실패!");
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            alert("캘린더 수정 실패!");
+                        }
+                    })
+                }
+            }
+
+            function handleCancelButtonClick() {
+                // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
+                restoreOriginalState();
+            }
+
+            function newCancelEventListener() {
+                // 취소 버튼 클릭 시 원래의 HTML 형식으로 복원
+                restoreOriginalState();
+            }
+
+            function restoreOriginalState() {
+                viewCalendarForm.style.height = '518px';
+                isEditCalendar = false;
+                // 일정 제목을 다시 span 요소로 변환
+                const editedTitle = document.querySelector('.edit-title');
+                const titleSpan = document.createElement('span');
+                titleSpan.classList.add('view-calendar-title');
+                titleSpan.textContent = originalData.title;
+                editedTitle.parentNode.replaceChild(titleSpan, editedTitle);
+
+                // readOnly 속성 추가
+                let content = document.getElementById('viewEventContent')
+                let startDate = document.getElementById('viewStartDate')
+                let endDate = document.getElementById('viewEndDate')
+
+                content.readOnly = true;
+                startDate.readOnly = true;
+                endDate.readOnly = true;
+
+                content.value = originalData.content;
+                startDate.value = originalData.startDate;
+                endDate.value = originalData.endDate;
+
+                // select 요소를 다시 readOnly input 요소로 변경
+                const readOnlyInput = document.createElement('input');
+                readOnlyInput.type = 'text';
+                readOnlyInput.id = 'viewRange';
+                readOnlyInput.name = 'range';
+                if (originalData.range === 'company') {
+                    readOnlyInput.value = '사내';
+                } else if (originalData.range === 'department') {
+                    readOnlyInput.value = '부서';
+                } else if (originalData.range === 'individual') {
+                    readOnlyInput.value = '개인';
+                }
+                readOnlyInput.readOnly = true;
+
+                selectElement.parentNode.replaceChild(readOnlyInput, selectElement);
+
+                // 버튼 텍스트를 원래대로 변경
+                viewEditButton.textContent = '수정';
+                viewDeleteButton.textContent = '삭제';
+
+                // 이전의 이벤트 리스너를 다시 추가
+                viewEditButton.removeEventListener('click', handleEditButtonClick);
+                viewDeleteButton.removeEventListener('click', handleCancelButtonClick);
+
+                viewCancelButton.removeEventListener('click', newCancelEventListener);
+                viewDeleteButton.addEventListener('click', newDeleteEventListener);
+
+            }
         }
     }
 }
@@ -576,7 +594,7 @@ function getCalendarDetail() {
     isCalendarBarVisible[2] = !isCalendarBarVisible[2];
     toggleCalendarBar("company", 0);
     toggleCalendarBar("individual", 1);
-    toggleCalendarBar("team", 2);
+    toggleCalendarBar("department", 2);
     closeViewEvent();
 }
 
@@ -600,11 +618,16 @@ function showNewEventView(barDiv) {
     if (left + formRect.width > window.innerWidth + 300) {
         left = rect.left - formRect.width + 185;
     }
+
     let top = rect.top + 145;
 
     if (top < 0) {
         top = 0;
     }
+    if (rect.bottom + formRect.height > window.innerHeight + 100) {
+        top = rect.top - formRect.height + 380; // 20은 임의로 정한 값, 조정 가능
+    }
+
     form.style.left = `${left}px`;
     form.style.top = `${top}px`;
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -822,7 +845,7 @@ function createCalendar() {
                 isCalendarBarVisible[2] = !isCalendarBarVisible[2];
                 toggleCalendarBar("company", 0);
                 toggleCalendarBar("individual", 1);
-                toggleCalendarBar("team", 2);
+                toggleCalendarBar("department", 2);
                 document.getElementById('eventTitle').value = "";
                 document.getElementById('eventContent').value = "";
                 document.getElementById('startDate').value = "";
@@ -848,13 +871,14 @@ document.addEventListener('DOMContentLoaded', function () {
     calendarDiv.addEventListener('click', function (event) {
         const clickedDiv = event.target.closest('.date');
         const clickedDivBar = event.target.closest('.event-bar');
+        const clickDay = clickedDiv.querySelector('.number').textContent;
 
         if (clickedDiv && !clickedDivBar) {
             KeyCnt++;
             if (KeyCnt % 2 == 0) {
                 hideNewEventForm();
             } else if (KeyCnt % 2 != 0) {
-                showNewEventForm(clickedDiv);
+                showNewEventForm(clickedDiv, clickDay);
             }
         }
     });
@@ -880,7 +904,18 @@ function showNewEventForm() {
     form.style.top = `${top}px`;
 }
 
-function showNewEventForm(dateDiv) {
+function showNewEventForm(dateDiv, clickDay) {
+    const startDate = document.querySelector('#startDate');
+
+    let clickDate = new Date(year, month, clickDay);
+    const newYear = clickDate.getFullYear();
+    const newMonth = (clickDate.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더함
+    const newDay = clickDate.getDate().toString().padStart(2, '0');
+
+    // 날짜 형식을 'YYYY-MM-DD'로 설정
+    const formattedDate = newYear + '-' + newMonth + '-' + newDay;
+    startDate.value = formattedDate;
+
     const form = document.getElementById('newEventForm');
     form.style.display = 'block';
     const rect = dateDiv.getBoundingClientRect();
@@ -891,8 +926,8 @@ function showNewEventForm(dateDiv) {
         left = rect.left - formRect.width + 185;
     }
     let top = rect.top + 145;
-    if (top < 0) {
-        top = 0;
+    if (top > 200) {
+        top = 399.40000915527344;
     }
     form.style.left = `${left}px`;
     form.style.top = `${top}px`;
