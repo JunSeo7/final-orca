@@ -170,6 +170,7 @@ nav ul li a:hover {
 }
 .new-schedule:hover{
     cursor: pointer;
+    background-color: #368dff;
 }
 .selectContainer{
     display: flex;
@@ -472,7 +473,7 @@ nav ul li a:hover {
 }
 
 .opacity:hover{
-    background-color: #0c4a9a;
+    background-color: #368dff;
     cursor: pointer;
 }
 /* --------------------------------------------------------------------- */
