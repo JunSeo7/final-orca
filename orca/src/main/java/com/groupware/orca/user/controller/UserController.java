@@ -34,4 +34,17 @@ public class UserController {
         httpSession.setAttribute("loginUserVo", loginUserVo);
         return "redirect:/orca/home";
     }
+
+    @PostMapping("getUserVo")
+    @ResponseBody
+    public UserVo getUserVo(HttpSession httpSession){
+        System.out.println("요청 넘어옴");
+        String userNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+
+        UserVo userVo = service.getUserVo(userNo);
+        System.out.println("userVo = " + userVo);
+        return userVo;
+    }
+
+
 }

@@ -14,4 +14,8 @@ public class UserService {
         UserVo userVo = dao.login(vo);
         return  userVo;
     }
+
+    public UserVo getUserVo(String userNo) {
+        return dao.getUserVo(userNo);
+    }
 }
