@@ -8,7 +8,7 @@ public class VacationVo {
     private String vacationNo;
     private String vacationCode;
     private String empNo;
-    private String docNo;
+    private int docNo;
     private String regDate;
     private String startDate;
     private String expiryDate;

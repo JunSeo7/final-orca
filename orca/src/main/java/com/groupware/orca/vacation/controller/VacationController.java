@@ -13,6 +13,7 @@ public class VacationController {
 
     private final VacationService service;
 
+    // 휴가 신청서 화면
     @GetMapping("vacationWrite")
     public String vacationWrite() {
         return "/vacation/vacationWrite";
