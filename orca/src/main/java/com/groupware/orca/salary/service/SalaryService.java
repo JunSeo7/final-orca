@@ -58,10 +58,12 @@
 //    //연장근로수당 (입력칸 있음 - 몇 시간 더 연장근무 한건지 )
 //
 //
-//    public double salaryWrite(UserVo vo, SalaryVo svo, RatesVo rvo, double holidayTime, double overTime, double person, double position, double bonus, double meals) {
+//    public double salaryWrite(UserVo vo, double holidayTime, double overTime, double person, double position) {
+//        SalaryVo svo = dao.getSalaryVo();
+//        RatesVo rvo = dao.getRatesVo();
+//        UserVo vo = dao.getUserVo();
 //
 //        // 공제 항목 계산
-//
 //        double incomeTax = IncomeTaxBASES(vo,svo) - person;  // 소득세 계산 메소드 호출
 //        double localIncomeTax = calculateLocalIncomeTax(incomeTax, rvo);
 //
@@ -95,7 +97,7 @@
 //        System.out.println("person "+person);
 //
 //        try {
-//            int result = (int) dao.salaryWrite(vo, svo, rvo, holidayTime, overTime, person, position, bonus, meals);
+//            int result = (int) dao.salaryWrite(vo, svo, rvo, holidayTime, overTime, person, position);
 //            if (result > 0) {
 //                System.out.println("SalaryService.salaryWrite: 성공적으로 저장되었습니다.");
 //            } else {
@@ -118,4 +120,7 @@
 //
 //        return dao.getSalaryList();
 //    }
+//
+//
+//
 //}
