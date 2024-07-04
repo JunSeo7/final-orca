@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시물 작성</title>
-    <a href="/board">게시물 목록보기</a>
+    <a href="/orca/board">게시물 목록보기</a>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/froala-editor/css/froala_editor.pkgd.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/froala-editor/js/froala_editor.pkgd.min.js"></script>
@@ -17,7 +17,7 @@
 <body>
     <div class="form-container">
         <h1>게시물 작성</h1>
-        <form id="postForm" action="/board/insert" method="post" enctype="multipart/form-data">
+        <form id="postForm" action="/orca/board/insert" method="post" enctype="multipart/form-data">
             <label for="categoryNo">카테고리</label>
             <select id="categoryNo" name="categoryNo" required>
                 <option value="1">자유 게시판</option>
@@ -51,9 +51,9 @@
 
         $(document).ready(function() {
             var editor = new FroalaEditor('#edit', {
-                height: 400, /* 원하는 높이 값으로 설정 */
-                width: '100%', /* 원하는 너비 값으로 설정 */
-                imageUploadURL: '/board/uploadImage',
+                height: 400,
+                width: '100%',
+                imageUploadURL: '/orca/board/uploadImage',
                 imageUploadParams: function() {
                     return {
                         boardNo: $('#boardNo').val()
@@ -68,7 +68,6 @@
             $('#postForm').on('submit', function() {
                 $('#content').val(editor.html.get());
 
-                // 카테고리가 익명 게시판이면 isAnonymous를 'Y'로 설정
                 if ($('#categoryNo').val() == '3') {
                     $('#isAnonymous').val('Y');
                 } else {
@@ -78,7 +77,7 @@
 
             var mapContainer = document.getElementById('map');
             var mapOption = {
-                center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울 중심 좌표
+                center: new kakao.maps.LatLng(37.5665, 126.9780),
                 level: 3
             };
 
@@ -99,20 +98,17 @@
         function searchAddress() {
             new daum.Postcode({
                 oncomplete: function(data) {
-                    var addr = data.address; // 최종 주소 변수
+                    var addr = data.address;
                     document.getElementById("address").value = addr;
 
-                    // 주소로 좌표를 검색합니다
                     var geocoder = new kakao.maps.services.Geocoder();
                     geocoder.addressSearch(data.address, function(results, status) {
                         if (status === kakao.maps.services.Status.OK) {
-                            var result = results[0]; // 첫 번째 결과의 값을 활용합니다
+                            var result = results[0];
                             var coords = new kakao.maps.LatLng(result.y, result.x);
 
-                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                             map.setCenter(coords);
 
-                            // 마커를 결과값으로 받은 위치로 옮깁니다
                             marker.setPosition(coords);
                             $('#latitude').val(result.y);
                             $('#longitude').val(result.x);

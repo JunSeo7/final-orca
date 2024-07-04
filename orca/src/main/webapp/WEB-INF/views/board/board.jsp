@@ -58,7 +58,7 @@
                 <li><a href="#" onclick="loadPage('drive.jsp')">드라이브</a></li>
                 <li><a href="#" onclick="loadPage('mail.jsp')">메일</a></li>
                 <li><a href="#" onclick="loadPage('settings.jsp')">설정</a></li>
-                <li><a href="/board/statistics">통계</a></li>
+                <li><a href="/orca/board/statistics">통계</a></li>
             </ul>
         </nav>
     </aside>
@@ -71,8 +71,8 @@
         </select>
         <input type="text" id="searchTitle" placeholder="제목으로 검색">
         <button id="searchBtn">검색</button>
-        <a href="/board/insert">게시물 작성하기</a>
-        <a href="/board/statistics">게시물 통계보기</a>
+        <a href="/orca/board/insert">게시물 작성하기</a>
+        <a href="/orca/board/statistics">게시물 통계보기</a>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </main>
@@ -235,7 +235,7 @@
             $("#categorySelect").on("change", function () {
                 categoryNo = $(this).val();
                 $("#jqGrid").jqGrid('setGridParam', {
-                    url: '/board/list/' + categoryNo,
+                    url: '/orca/board/list/' + categoryNo,
                     page: 1
                 }).trigger('reloadGrid');
             });
@@ -248,7 +248,7 @@
                     return;
                 }
                 $("#jqGrid").jqGrid('setGridParam', {
-                    url: 'board/search',
+                    url: '/orca/board/search',
                     postData: {
                         title: encodeURIComponent(title),
                         categoryNo: categoryNo
@@ -260,16 +260,15 @@
 
         function loadGrid(categoryNo) {
             $("#jqGrid").jqGrid({
-                url: '/board/list/' + categoryNo,
+                url: '/orca/board/list/' + categoryNo,
                 mtype: "GET",
                 styleUI: 'jQueryUI',
                 datatype: "json",
                 colModel: [
-
-                     {label: 'Image', name: 'content', width: 50, formatter: extractImage},
-                  {label: '조회수 ', name: 'hit', width: 50},
-                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
-                       {label :'작성시간' , name:'enrollDate',width:30}
+                    {label: 'No', name: 'boardNo', width: 30},
+                    {label: 'Title', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                    {label: 'Views', name: 'hit', width: 50},
+                    {label: 'Image', name: 'content', width: 100, formatter: extractImage}
                 ],
                 viewrecords: true,
                 width: 1400,
@@ -290,7 +289,7 @@
 
         function showModal(boardNo) {
             $.ajax({
-                url: "/board/" + boardNo,
+                url: "/orca/board/" + boardNo,
                 method: "GET",
                 dataType: "json",
                 success: function (response) {
@@ -330,7 +329,7 @@
 
         function showComments(boardNo) {
             $.ajax({
-                url: "/board/comment/list?boardNo=" + boardNo,
+                url: "/orca/board/comment/list?boardNo=" + boardNo,
                 method: "GET",
                 dataType: "json",
                 success: function (response) {
@@ -380,7 +379,7 @@
             var comment = {
                 boardNo: boardNo,
                 content: content,
-                isAnonymous: "N" // 기본값 설정
+                isAnonymous: "N"
             };
 
             var categoryNo = $("#categorySelect").val();
@@ -389,7 +388,7 @@
             }
 
             $.ajax({
-                url: "/board/comment/add",
+                url: "/orca/board/comment/add",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(comment),
@@ -408,7 +407,7 @@
             var newContent = prompt("댓글 내용을 수정하세요:", currentContent);
             if (newContent !== null) {
                 $.ajax({
-                    url: "/board/comment/edit",
+                    url: "/orca/board/comment/edit",
                     method: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({boardChatNo: boardChatNo, content: newContent}),
@@ -425,7 +424,7 @@
         function deleteComment(boardChatNo) {
             if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
                 $.ajax({
-                    url: "/board/comment/delete",
+                    url: "/orca/board/comment/delete",
                     method: "POST",
                     data: {boardChatNo: boardChatNo},
                     success: function () {
@@ -444,7 +443,7 @@
 
         function redirectToUpdatePage() {
             var boardNo = $('#modal-title').data('boardNo');
-            window.location.href = '/board/updatePage?boardNo=' + boardNo;
+            window.location.href = '/orca/board/updatePage?boardNo=' + boardNo;
         }
 
         Kakao.init('417c2d6869f3c660f4e0370cf828ba62');
@@ -453,7 +452,7 @@
             if (confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
                 var boardNo = $('#modal-title').data('boardNo');
                 $.ajax({
-                    url: "/board/" + boardNo,
+                    url: "/orca/board/" + boardNo,
                     method: "DELETE",
                     success: function () {
                         closeModal();
@@ -470,7 +469,7 @@
             var boardNo = $('#modal-title').data('boardNo');
             var title = $('#modal-title').text();
             var description = $('#modal-content').text().substring(0, 100);
-            var linkUrl = 'http://127.0.0.1:8080/board/' + boardNo;
+            var linkUrl = 'http://127.0.0.1:8080/orca/board/' + boardNo;
             var imageUrl = 'https://via.placeholder.com/300';
 
             Kakao.Link.sendDefault({

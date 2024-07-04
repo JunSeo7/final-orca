@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface BoardFileMapper {
 
-    @Select("SELECT * FROM BOARD_FILE WHERE BOARD_NO = #{boardNo}")
-    List<BoardFileVo> getFilesByBoardNo(@Param("boardNo") Long boardNo);
+   // @Select("SELECT * FROM BOARD_FILE WHERE BOARD_NO = #{boardNo}")
+ //   List<BoardFileVo> getFilesByBoardNo(@Param("boardNo") Long boardNo);
 
     @Insert("INSERT INTO BOARD_FILE(FILE_NO, FILE_ORIGIN_NAME, FILE_SAVE_NAME, FILE_DEL_YN, BOARD_NO) " +
             "VALUES (SEQ_BOARD_FILE.NEXTVAL, #{fileOriginName}, #{fileSaveName}, #{fileDelYn}, #{boardNo})")
@@ -18,10 +18,10 @@ public interface BoardFileMapper {
     @Delete("DELETE FROM BOARD_FILE WHERE BOARD_NO = #{boardNo}")
     int deleteFile(@Param("boardNo") int boardNo);
 
-    @Update("UPDATE BOARD_FILE SET BOARD_NO = #{boardNo} WHERE FILE_NO = #{fileId}")
-    int updateBoardNo(@Param("fileId") Integer fileId, @Param("boardNo") Integer boardNo);
+  //  @Update("UPDATE BOARD_FILE SET BOARD_NO = #{boardNo} WHERE FILE_NO = #{fileId}")
+   /// int updateBoardNo(@Param("fileId") Integer fileId, @Param("boardNo") Integer boardNo);
 
-    @Update("UPDATE BOARD_FILE SET BOARD_NO = #{newBoardNo} WHERE BOARD_NO IS NULL")
-    int updateBoardNoByTemp(@Param("newBoardNo") int newBoardNo);
+  //  @Update("UPDATE BOARD_FILE SET BOARD_NO = #{newBoardNo} WHERE BOARD_NO IS NULL")
+ //   int updateBoardNoByTemp(@Param("newBoardNo") int newBoardNo);
 
 }

@@ -13,6 +13,7 @@ public class ApproverVo {
     private int approverClassificationNo; // 결재자 분류 번호 (1: 결재자, 2: 합의자)
     private String approverName;        // 결재자 이름
     private int approvalStage;          // 결재 단계
+    private String apprStageName;          // 결재 단계
     private int deptCode;               // 부서 코드
     private String deptName;            // 부서 이름
     private int positionCode;           // 직위 코드

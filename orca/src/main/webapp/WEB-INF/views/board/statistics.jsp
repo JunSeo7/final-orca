@@ -19,14 +19,14 @@
 <body>
     <div class="chart-container">
         <h2>총 게시물 및 조회수 통계</h2>
-       <a href="/board">게시물 목록 돌아가기</a>
+       <a href="/orca/board">게시물 목록 돌아가기</a>
         <canvas id="statsChart" width="400" height="200"></canvas>
     </div>
 
     <script>
         function ajaxStatsByDate() {
             return $.ajax({
-                url: '/board/statsByDate',
+                url: '/orca/board/statsByDate',
                 method: 'GET',
                 dataType: 'json'
             });
@@ -34,9 +34,9 @@
 
         function renderChart(data) {
             const ctx = document.getElementById('statsChart').getContext('2d');
-            const labels = data.map(item => item.ENROLL_DATE_STR);  // 날짜를 라벨로 사용
-            const postCounts = data.map(item => item.POST_COUNT);  // 게시물 수 데이터
-            const viewCounts = data.map(item => item.VIEWS);  // 조회수 데이터
+            const labels = data.map(item => item.ENROLL_DATE_STR);
+            const postCounts = data.map(item => item.POST_COUNT);
+            const viewCounts = data.map(item => item.VIEWS);
 
             new Chart(ctx, {
                 type: 'bar',

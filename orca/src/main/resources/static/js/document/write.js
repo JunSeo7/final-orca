@@ -94,19 +94,32 @@ document.addEventListener("DOMContentLoaded", function() {
             const processContainer = document.querySelector('.approval-process');
             processContainer.innerHTML = '';
 
-            approvers.forEach((approver, index) => {
-                const approverDiv = document.createElement('div');
-                approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
-                processContainer.appendChild(approverDiv);
+                    approvers.forEach((approver, index) => {
+                        const approverDiv = document.createElement('div');
+                        approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
+                        processContainer.appendChild(approverDiv);
 
-                if (index < approvers.length - 1) {
-                    const arrowDiv = document.createElement('div');
-                    arrowDiv.classList.add('arrow');
-                    arrowDiv.textContent = '→'; // 화살표 추가
-                    processContainer.appendChild(arrowDiv);
-                }
-            });
-        }
+                    // 인풋태그 - 숨길 정보 만들기
+                    const hiddenInputs = `
+                        <input type="hidden" name="approvalLineVoList[${index}].seq" value="${approver.seq}">
+                        <input type="hidden" name="approvalLineVoList[${index}].approverNo" value="${approver.approverNo}">
+                        <input type="hidden" name="approvalLineVoList[${index}].deptCode" value="${approver.deptCode}">
+                        <input type="hidden" name="approvalLineVoList[${index}].positionCode" value="${approver.positionCode}">
+                        <input type="hidden" name="approvalLineVoList[${index}].approverClassificationNo" value="${approver.approverClassificationNo}">
+                        <input type="hidden" name="approvalLineVoList[${index}].comment" value="${approver.comment}">
+                    `;
+
+                    processContainer.innerHTML += hiddenInputs;
+
+                    if (index < approvers.length - 1) {
+                        const arrowDiv = document.createElement('span');
+                        arrowDiv.classList.add('arrow');
+                        arrowDiv.textContent = '⇨'; // 화살표 추가
+                        processContainer.appendChild(arrowDiv);
+                    }
+                });
+            }
+
 
     // 카테고리 변경 - 템플릿 목록 업데이트
     $('#categoryNo').change(function() {

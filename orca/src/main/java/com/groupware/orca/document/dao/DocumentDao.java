@@ -39,7 +39,6 @@ public class DocumentDao {
         System.out.println("apprline = " + apprline);
         return apprline;
     }
-
     // 결재선 전체목록 (결재자 여러명)
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
@@ -48,16 +47,14 @@ public class DocumentDao {
             System.out.println("approverLineVoList= " + approvers);
         } return approvers;
     }
-
-
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {
         return mapper.writeDocument(vo);
     }
     // 결재 작성 - 결재선 업로드
-    public int writeDocumentApprLine(List<ApprovalLineVo> vo){
-        return mapper.writeDocumentApprLine(vo);
+    public int writeDocumentApprover(List<ApproverVo> vo){
+        return mapper.writeDocumentApprover(vo);
     }
     // 결재 작성 - 참조인 업로드
     public int writeDocumentReferrer(List<ReferencerVo> vo){
@@ -69,6 +66,7 @@ public class DocumentDao {
     }
 
 
+
     //전체목록
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public List<DocumentVo> getDocumentList(String loginUserNo) {
@@ -78,16 +76,15 @@ public class DocumentDao {
     public List<ApprovalLineVo> getApprovalLineList(int docNo) {
         return mapper.getApprovalLineList(docNo);
     }
-    // 문서목록 - 참조인 목록 조회
-    public List<ReferencerVo> getReferencerList(int docNo) {
-        return mapper.getReferencerList(docNo);
-    }
+    
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo) {
         return mapper.getDocumentByNo(docNo);
     }
+
+    // 문서 상세보기
     // 문서 - 결재선 목록 조회
-    public List<ApprovalLineVo> getApprovalLineByNo(int docNo) {
+    public List<ApproverVo> getApprovalLineByNo(int docNo) {
         return mapper.getApprovalLineByNo(docNo);
     }
     // 문서 - 참조인 목록 조회
