@@ -19,7 +19,13 @@ public interface DocumentMapper {
     @Select("SELECT TEMPLATE_NO, TITLE, CONTENT FROM DOC_TEMPLATE WHERE TEMPLATE_NO = #{templateNo}")
     TemplateVo getTemplateContent(int templateNo);
     // 결재 작성 결재선 가져오기
-    @Select("SELECT AT.APPR_LINE_NO, AT.APPR_LINE_NAME , AT.CREATED_DATE, DT.TEMPLATE_NO , DT.TITLE , DT.CONTENT ,DTC.CATEGORY_NO, DTC.NAME AS CATEGORY_NAME FROM APPR_LINE_TEMPLATE AT JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO WHERE AT.TEMPLATE_NO = #{templateNo} AND WRITER_NO IS NULL")
+    @Select("""
+            SELECT AT.APPR_LINE_NO, AT.APPR_LINE_NAME , AT.CREATED_DATE, DT.TEMPLATE_NO , DT.TITLE 
+            , DT.CONTENT ,DTC.CATEGORY_NO, DTC.NAME AS CATEGORY_NAME 
+            FROM APPR_LINE_TEMPLATE AT JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO 
+            JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO WHERE AT.TEMPLATE_NO = #{templateNo} 
+            AND AT.WRITER_NO IS NULL
+            """)
     ApprovalLineVo getTemplateApprLine(int templateNo);
     // 결재 작성 결재자 여러명 가져오기
     @Select("""
@@ -47,18 +53,13 @@ public interface DocumentMapper {
     int writeDocument(DocumentVo vo);
     // 결재 작성 - 결재선 업로드
     @Insert("""
-    <script>
-    INSERT ALL
-    <foreach item="vo" collection="list">
-     INTO APPR_LINE
-    (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, DEPT_CODE, POSITION_CODE, APPROVAL_DATE, "COMMENT", APPROVER_CLASSIFICATION_NO)
-    VALUES
-    (SEQ_APPR_LINE.NEXTVAL, #{vo.docNo}, #{vo.seq}, #{vo.approverNo}, #{vo.deptCode}, #{vo.positionCode}, SYSDATE, #{vo.comment}, #{vo.approverClassificationNo})
-    </foreach>
-    SELECT * FROM DUAL
-    </script>
-    """)
-    int writeDocumentApprover(@Param("list") List<ApproverVo> approverList);
+        INSERT INTO APPR_LINE
+        (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, DEPT_CODE, POSITION_CODE, APPROVAL_DATE, "COMMENT", APPROVER_CLASSIFICATION_NO)
+        VALUES
+        (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq}, #{approverNo}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})
+        """)
+    int writeDocumentApprover(ApproverVo vo);
+
     // 결재 작성 - 참조자 업로드
     @Insert("INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) " +
             "VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, #{docNo}, #{referrerNo})")

@@ -53,8 +53,12 @@ public class DocumentDao {
         return mapper.writeDocument(vo);
     }
     // 결재 작성 - 결재선 업로드
-    public int writeDocumentApprover(List<ApproverVo> vo){
-        return mapper.writeDocumentApprover(vo);
+    public int writeDocumentApprover(List<ApproverVo> voList){
+        int result = 0 ;
+        for (ApproverVo approver : voList) {
+           result += mapper.writeDocumentApprover(approver);
+        }
+        return result;
     }
     // 결재 작성 - 참조인 업로드
     public int writeDocumentReferrer(List<ReferencerVo> vo){
