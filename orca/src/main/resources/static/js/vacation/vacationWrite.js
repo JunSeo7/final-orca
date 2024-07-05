@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (categories.length > 0) {
-                    fetchTemplatesByCategory(categories[1].categoryNo);
+                    fetchTemplatesByCategory(categories[0].categoryNo);
                 }
             },
             error: function(error) {
