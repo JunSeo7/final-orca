@@ -1,5 +1,6 @@
 package com.groupware.orca.filters;
 
+import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.*;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.annotation.WebFilter;
@@ -29,9 +30,9 @@ public class LoggingFilter implements Filter {
 
         // 로그인 체크를 위한 로직
         if (!path.equals("/orca/user/login") && !path.startsWith("/resources")) { // 로그인 페이지 및 정적 자원은 예외 처리
-            String loggedInUser = (String) httpRequest.getSession().getAttribute("loginUserVo");
+            UserVo loggedInUser = (UserVo) httpRequest.getSession().getAttribute("loginUserVo");
             System.out.println(loggedInUser);
-            if (loggedInUser == null || !loggedInUser.equals("admin")) {
+            if (loggedInUser == null) {
                 httpResponse.sendRedirect(contextPath + "/orca/user/login");
                 return;
             }
