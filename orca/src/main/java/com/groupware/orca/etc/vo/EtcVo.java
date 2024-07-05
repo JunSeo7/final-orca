@@ -8,7 +8,7 @@ public class EtcVo {
     private String etcNo;
     private String etcCode;
     private String empNo;
-    private String docNo;
+    private int docNo;
     private String regDate;
     private String startDate;
     private String expiryDate;

@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("orca/sick")
 public class SickController {
 
-    @GetMapping("sickWrite")
+    // 병가 신청 화면
+    @GetMapping("sickLeave")
     public String sickWrite(){
-        return "/sick/sickWrite";
+        return "/sick/sickLeave";
     }
 
 }

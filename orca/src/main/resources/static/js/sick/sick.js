@@ -45,33 +45,6 @@ function toggleSubMenu(menuId) {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 휴가 종류 가져오기
-        function fetchVacationCodes(vacationCode) {
-            $.ajax({
-                url: '/orca/re/vacation',
-                method: 'GET',
-                data: { vacationCode: vacationCode },
-                success: function(vacationCodes) {
-                    const vacationCodeSelect = document.querySelector('#vacationCode');
-                    vacationCodeSelect.innerHTML = '';
-                    vacationCodes.forEach(vacation => {
-                        const option = document.createElement('option');
-                        option.value = vacation.vacationCode;
-                        option.text = vacation.vacationName;
-                        vacationCodeSelect.appendChild(option);
-                    });
-
-                    // 기본 - 첫 번째 내용으로 로드
-                    if (vacationCodes.length > 0) {
-                        fetchVacationName(vacationCodes[0].vacationCode);
-                    }
-                },
-                error: function(error) {
-                    console.error('Error fetching vacationCodes:', error);
-                }
-            });
-        }
-
     // 결재 등록 결재양식 제목 가져오기
     function fetchTemplatesByCategory(categoryNo) {
         $.ajax({
@@ -116,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
 
                 if (categories.length > 0) {
-                    fetchTemplatesByCategory(categories[1].categoryNo);
+                    fetchTemplatesByCategory(categories[0].categoryNo);
                 }
             },
             error: function(error) {
@@ -196,3 +169,20 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchCategories(); // 페이지 로드 - 카테고리 가져오기
     fetchVacationCodes();
 });
+
+function submitDocument() {
+    var formData = $('#documentForm').serialize();
+    $.ajax({
+        url: '/orca/document/write',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function() {
+            alert('결재 작성이 완료되었습니다.');
+            window.location.href = '/orca/document/list';
+        },
+        error: function() {
+            alert('결재 작성 중 오류가 발생했습니다.');
+        }
+    });
+}
