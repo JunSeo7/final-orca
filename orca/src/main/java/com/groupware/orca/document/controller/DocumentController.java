@@ -73,6 +73,7 @@ public class DocumentController {
         return "redirect:/orca/document/list";
     }
 
+    // 올린결재
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession){
@@ -84,8 +85,29 @@ public class DocumentController {
         System.out.println("documentList = " + documentList);
         return "document/list";
     }
+    // (임시저장) 내가 작성한 결재 문서 목록 조회
+    @GetMapping("temp")
+    public String getTempDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getTempDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
 
-    // 올린 결재
+    }
+    // (결재취소) 내가 작성한 결재 문서 목록 조회
+    @GetMapping("cencel")
+    public String getCancelDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getCancelDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
 
     // 받은 결재
     @GetMapping("/received")

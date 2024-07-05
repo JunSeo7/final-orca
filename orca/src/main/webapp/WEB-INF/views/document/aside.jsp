@@ -37,13 +37,13 @@
             <ul class="nav-list">
                 <li class="nav-item"><i class="bi bi-folder"></i> 결재현황
                     <ul class="sub-nav-list">
-                        <li class="nav-item"><a href="#" onclick="loadPage('/orca/document/temp')"><i class="bi bi-file-earmark"></i> 임시 보관함</a></li>
+                        <li class="nav-item"><a href="/orca/document/temp"><i class="bi bi-file-earmark"></i> 임시 보관함</a></li>
                         <li class="nav-item"><a href="/orca/document/list"><i class="bi bi-file-earmark"></i> 기안</a></li>
                         <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 결재</a></li>
-                        <li class="nav-item"><a href="#" onclick="loadPage('/orca/document/progress')"><i class="bi bi-file-earmark"></i> 진행</a></li>
-                        <li class="nav-item"><a href="#" onclick="loadPage('/orca/document/completed')"><i class="bi bi-file-earmark"></i> 종결</a></li>
-                        <li class="nav-item"><a href="#" onclick="loadPage('/orca/document/rejected')"><i class="bi bi-file-earmark"></i> 반려</a></li>
-                        <li class="nav-item"><a href="#" onclick="loadPage('/orca/document/deleted')"><i class="bi bi-file-earmark"></i> 삭제함</a></li>
+                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 진행</a></li>
+                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 종결</a></li>
+                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 반려</a></li>
+                        <li class="nav-item"><a href="/orca/document/cencel"><i class="bi bi-file-earmark"></i> 삭제함</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><i class="bi bi-gear"></i> 사용자 설정
