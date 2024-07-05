@@ -82,10 +82,24 @@ public class DocumentDao {
     public List<DocumentVo> getTempDocumentList(String loginUserNo) {
         return mapper.getTempDocumentList(loginUserNo);
     }
+
+    public List<DocumentVo> getCloseDocumentList(String loginUserNo) {
+        return mapper.getCloseDocumentList(loginUserNo);
+    }
+
+    public List<DocumentVo> getRetrunDocumentList(String loginUserNo) {
+        return mapper.getRetrunDocumentList(loginUserNo);
+    }
+
     // (결재취소) 내가 작성한 결재 문서 목록 조회
     public List<DocumentVo> getCancelDocumentList(String loginUserNo) {
         return mapper.getCancelDocumentList(loginUserNo);
     }
+
+    public List<DocumentVo> getDeleteDocumentList(String loginUserNo) {
+        return mapper.getDeleteDocumentList(loginUserNo);
+    }
+
     //받은 결재
     public List<DocumentVo> getSendDocumentList(String loginUserNo) {
         return mapper.getSendDocumentList(loginUserNo);
@@ -115,4 +129,6 @@ public class DocumentDao {
     public int deleteDocumentByNo(int docNo, String loginUserNo) {
         return mapper.deleteDocumentByNo(docNo, loginUserNo);
     }
+
+
 }

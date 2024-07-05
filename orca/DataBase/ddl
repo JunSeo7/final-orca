@@ -280,7 +280,7 @@ COMMENT ON COLUMN DOCUMENT.STATUS IS '1: 임시저장 2: 기안(대기) 3: 결�
 -- APPR_LINE 테이블 (결재선 정보)
 CREATE TABLE APPR_LINE (
     APPR_LINE_NO           NUMBER   NOT NULL
-   ,DOC_NO                   NUMBER   NOT NULL
+   ,DOC_NO                 NUMBER   NOT NULL
    ,SEQ                    NUMBER NOT NULL
    ,APPROVER_NO            NUMBER
    ,APPROVAL_STAGE         NUMBER NOT NULL

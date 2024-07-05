@@ -107,13 +107,26 @@
                    </td>
                </tr>
            </c:forEach>
-
+       <form id="approvalForm" method="post" action="/orca/document/status">
+          <tr>
+              <td class="document-body-header">${sessionScope.loginUser.name}[${sessionScope.loginUser.nameOfPosition}]</td>
+               <td class="document-body-data">
+                   <textarea id="myComment" name="myComment" placeholder="코멘트를 작성하세요"></textarea>
+               </td>
+         </tr>
         </table>
     </div>
     <div class="button-container">
-        <button type="submit" class="approval-btn">승인</button>
-        <button type="submit" class="approval-btn">반려</button>
-        <button type="submit" class="approval-btn">결재 취소</button>
+       <c:if test="${sessionScope.loginUser.empNo == document.writerNo}">
+           <button type="button" class="approval-btn" onclick="submitForm(4)">결재 취소</button> <!-- 4: 결재 취소 -->
+       </c:if>
+
+       <c:forEach var="approver" items="${document.approverVoList}">
+           <c:if test="${sessionScope.loggedInUser.empNo == approver.approverNo}">
+               <button type="button" class="approval-btn" onclick="submitForm(3)">승인</button> <!-- 3: 승인 -->
+               <button type="button" class="approval-btn" onclick="submitForm(2)">반려</button> <!-- 2: 반려 -->
+           </c:if>
+       </c:forEach>
     </div>
 </main>
 </body>

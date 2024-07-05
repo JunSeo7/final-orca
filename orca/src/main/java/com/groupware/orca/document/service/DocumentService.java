@@ -113,6 +113,34 @@ public class DocumentService {
          }
         return documentList;
     }
+    // (종결)
+    public List<DocumentVo> getCloseDocumentList(String loginUserNo) {
+        // (종결) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getCloseDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+    // (반려)
+    public List<DocumentVo> getRetrunDocumentList(String loginUserNo) {
+        // (반려) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getRetrunDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
 
     // (결재취소)
     public List<DocumentVo> getCancelDocumentList(String loginUserNo) {
@@ -125,6 +153,21 @@ public class DocumentService {
                 List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
                 System.out.println("apprLineList = " + approverList);
                 document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+
+    // (삭제함)
+    public List<DocumentVo> getDeleteDocumentList(String loginUserNo) {
+        // (삭제함) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getDeleteDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
         }
         return documentList;
     }
