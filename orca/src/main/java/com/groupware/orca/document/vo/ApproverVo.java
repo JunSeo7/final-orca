@@ -24,5 +24,4 @@ public class ApproverVo {
     private String apprLineName;        // 결재선 이름
     private String createdDate;         // 생성 날짜
 
-
 }

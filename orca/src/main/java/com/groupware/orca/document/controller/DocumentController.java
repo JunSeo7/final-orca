@@ -73,6 +73,7 @@ public class DocumentController {
         return "redirect:/orca/document/list";
     }
 
+    // 올린결재
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession){
@@ -84,8 +85,59 @@ public class DocumentController {
         System.out.println("documentList = " + documentList);
         return "document/list";
     }
+    // (임시저장) 내가 작성한 결재 문서 목록 조회
+    @GetMapping("temp")
+    public String getTempDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getTempDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
 
-    // 올린 결재
+    // (종결) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    public String getCloseDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getCloseDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
+    // (반려) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    public String getRetrunDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getRetrunDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
+    // (결재취소) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    @GetMapping("cencel")
+    public String getCancelDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getCancelDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
+    // (삭제함) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    public String getDeleteDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getDeleteDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        model.addAttribute("documentList", documentList);
+        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
 
     // 받은 결재
     @GetMapping("/received")
@@ -104,12 +156,16 @@ public class DocumentController {
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
-    public String getDocumentByNo(Model model){
+    public String getDocumentByNo(Model model, HttpSession httpSession){
+        String loginUserNo = "10";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         int docNo =8;
         DocumentVo document = service.getDocumentByNo(docNo);
         model.addAttribute("document", document);
         return "document/detail";
     }
+
+
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PutMapping("delete")

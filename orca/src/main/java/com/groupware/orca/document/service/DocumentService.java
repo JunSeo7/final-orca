@@ -98,6 +98,80 @@ public class DocumentService {
         }
         return documentList;
     }
+
+    // (임시저장)
+    public List<DocumentVo> getTempDocumentList(String loginUserNo) {
+        // (임시저장) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getTempDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+         }
+        return documentList;
+    }
+    // (종결)
+    public List<DocumentVo> getCloseDocumentList(String loginUserNo) {
+        // (종결) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getCloseDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+    // (반려)
+    public List<DocumentVo> getRetrunDocumentList(String loginUserNo) {
+        // (반려) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getRetrunDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+
+    // (결재취소)
+    public List<DocumentVo> getCancelDocumentList(String loginUserNo) {
+            // (결재취소) 내가 작성한 결재 문서 목록 조회
+            List<DocumentVo> documentList = dao.getCancelDocumentList(loginUserNo);
+            System.out.println("documentList = " + documentList);
+            for (DocumentVo document : documentList) {
+                int docNo = document.getDocNo();
+                // 문서목록 - 결재선 목록 넣기
+                List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+                System.out.println("apprLineList = " + approverList);
+                document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+
+    // (삭제함)
+    public List<DocumentVo> getDeleteDocumentList(String loginUserNo) {
+        // (삭제함) 내가 작성한 결재 문서 목록 조회
+        List<DocumentVo> documentList = dao.getDeleteDocumentList(loginUserNo);
+        System.out.println("documentList = " + documentList);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            System.out.println("apprLineList = " + approverList);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+
     // 받은 결재
     public List<DocumentVo> getSendDocumentList(String loginUserNo) {
         // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
@@ -132,6 +206,7 @@ public class DocumentService {
         documentVo.setFiles(DocFiles);
         return documentVo;
     }
+
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {

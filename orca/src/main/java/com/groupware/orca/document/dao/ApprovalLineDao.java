@@ -58,6 +58,18 @@ public class ApprovalLineDao {
     } return approvers;
   }
 
+    // 결재선 - 승인처리, 반려처리
+    public int updateStatusApprLine(ApproverVo vo) {
+        return mapper.updateStatusApprLine(vo);
+    }
+    public List<ApproverVo> getApprovalLinesByDocNo(int docNo) {
+        return mapper.getApprovalLinesByDocNo(docNo);
+    }
+    // 문서 - 승인처리, 반려처리
+    public int updateStatusDocument(int docNo, int status) {
+        return mapper.updateStatusDocument(docNo, status);
+    }
+
     // 결재선 삭제
     public void deleteApprLine(int apprLineNo) {
         mapper.deleteApprLine(apprLineNo);
