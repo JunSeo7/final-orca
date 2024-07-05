@@ -12,10 +12,6 @@ public class HomeController {
 
     @GetMapping("home")
     public String home(HttpSession httpSession, Model model){
-        if(httpSession.getAttribute("loginUserVo") == null){
-            model.addAttribute("message", "로그인 후 이용해주세요.");
-            return "redirect:/orca/user/login";
-        }
         return "home";
     }
 }
