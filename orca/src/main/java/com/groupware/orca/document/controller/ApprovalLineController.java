@@ -6,6 +6,8 @@ import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +75,25 @@ public class ApprovalLineController {
         System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
         return "apprline/list";
+    }
+
+    // 결재선 - 승인처리, 반려처리
+    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
+    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
+    @PostMapping("status")
+    public void updateStatusApprLine(ApproverVo vo){
+        int result = service.updateStatusApprLine(vo);
+        System.out.println("result = " + result);
+
+    }
+    // 문서 - 승인처리, 반려처리
+    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
+    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
+    @PostMapping("document/status")
+    public String updateStatusDocument(ApproverVo vo) {
+        int result = service.updateStatusApprLine(vo);
+        System.out.println("result = " + result);
+        return "redirect:/orca/document/list";
     }
 
     // 결재선 삭제

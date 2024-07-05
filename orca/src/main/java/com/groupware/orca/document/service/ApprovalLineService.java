@@ -59,8 +59,47 @@ public class ApprovalLineService {
         return approvalLines;
     }
 
+    // 결재선 - 승인처리, 반려처리
+    public int updateStatusApprLine(ApproverVo vo) {
+        return dao.updateStatusApprLine(vo);
+    }
+    public List<ApproverVo> getApprovalLinesByDocNo(int docNo) {
+        return dao.getApprovalLinesByDocNo(docNo);
+    }
+    // 문서 - 승인처리, 반려처리
+//    public int updateStatusDocument(int docNo, int status) {
+//        return dao.updateStatusDocument(docNo, status);
+//    }
+    public void finalizeDocumentStatus(int docNo) {
+        List<ApproverVo> approvers = getApprovalLinesByDocNo(docNo);
+
+        // 모든 결재자 승인 확인
+        boolean allApproved = true;
+        // 1명이라도 반려 여부
+        boolean anyRejected = false;
+
+        // 결재선 상태 확인
+        for (ApproverVo approver : approvers) {
+            if (approver.getApprovalStage() == 2) {  // 반려(2)여부
+                anyRejected = true;
+                break;
+            } else if (approver.getApprovalStage() != 3) {  // 모든 결재자 승인(3) 확인
+                allApproved = false;
+            }
+        }
+
+        if (anyRejected) {
+            // 결재자 중 한 명이라도 반려했을 경우 문서 상태를 반려 상태(4)로 업데이트합니다.
+            dao.updateStatusDocument(docNo, 4);  // Assuming 4 is the status for rejection
+        } else if (allApproved) {
+            // 모든 결재자가 승인했을 경우 문서 상태를 종결 상태(3)로 업데이트합니다.
+            dao.updateStatusDocument(docNo, 3);  // Assuming 3 is the status for approval
+        }
+    }
+
     // 결재선 삭제
     public void deleteApprLine(int apprLineNo) {
         dao.deleteApprLine(apprLineNo);
     }
+
 }

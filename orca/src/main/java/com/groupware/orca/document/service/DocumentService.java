@@ -164,11 +164,11 @@ public class DocumentService {
         return documentVo;
     }
 
+
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
-
 
 
 }

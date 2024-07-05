@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface DocumentMapper {
 
+
     // 결재선 등록 템플릿 카테고리 가져오기
     @Select("SELECT CATEGORY_NO ,NAME categoryName FROM  DOC_TEMPLATE_CATEGORY WHERE DEL_YN='N'")
     List<TemplateVo> getCategory();
@@ -57,6 +58,7 @@ public interface DocumentMapper {
     @Insert("INSERT INTO DOC_FILES( FILE_NO ,DOC_NO ,CHANGE_NAME ,ORIGIN_NAME ) " +
             "VALUES (SEQ_DOC_FILES.NEXTVAL,#{docNo}, #{changeName},#{originName})")
     int writeDocumentFile(List<DocFileVo> vo);
+
 
     // (기안 완) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("""
@@ -121,6 +123,7 @@ public interface DocumentMapper {
             """)
     List<DocumentVo> getCancelDocumentList(String loginUserNo);
 
+
     // 내가 받은 결재
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS,
@@ -149,6 +152,7 @@ public interface DocumentMapper {
            ORDER BY D.CREDIT_DATE DESC
            """)
     List<DocumentVo> getSendDocumentList(String loginUserNo);
+
 
     // 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련)
@@ -198,6 +202,7 @@ public interface DocumentMapper {
     // 파일 목록 조회
     @Select("SELECT * FROM DOC_FILES WHERE DOC_NO = #{docNo} AND DEL_YN ='N'")
     List<DocFileVo> getDocFileByNo(int docNo);
+
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @Update("""

@@ -95,7 +95,6 @@ public class DocumentController {
         model.addAttribute("documentList", documentList);
         System.out.println("documentList = " + documentList);
         return "document/list";
-
     }
     // (결재취소) 내가 작성한 결재 문서 목록 조회
     @GetMapping("cencel")
@@ -132,6 +131,8 @@ public class DocumentController {
         model.addAttribute("document", document);
         return "document/detail";
     }
+
+
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PutMapping("delete")
