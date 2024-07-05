@@ -14,7 +14,6 @@ import java.util.List;
 public class VacationService {
 
     private final VacationDao dao;
-    private final DocumentDao DDao;
 
     public void enrollVacation(VacationVo vo) {
         dao.enrollVacation(vo);

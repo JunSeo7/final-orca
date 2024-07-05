@@ -12,8 +12,18 @@ import java.util.List;
 public interface VacationMapper {
 
     // 휴가 신청
-    @Insert("INSERT INTO VACATION_MANAGEMENT ( VACATION_NO , VACATION_CODE , EMP_NO , DOC_NO , REG_DATE , START_DATE , EXPIRY_DATE ) " +
-            "VALUES ( SEQ_VACATION_MANAGEMENT.NEXTVAL , #{vacationCode} , #{empNo} , #{docNo} , SYSDATE , #{startDate} , #{expiryDate} )")
+    @Insert("""
+                <script>
+                    INSERT INTO VACATION_MANAGEMENT (
+                    VACATION_NO, VACATION_CODE, EMP_NO, DOC_NO, REG_DATE, START_DATE, EXPIRY_DATE
+                        <if test="reason != null"> , REASON </if>
+                    )
+                    VALUES (
+                    SEQ_VACATION_MANAGEMENT.NEXTVAL, #{vacationCode}, #{empNo}, #{docNo}, SYSDATE, #{startDate}, #{expiryDate}
+                        <if test="reason != null">, #{reason} </if>
+                    )
+                </script>
+            """)
     void enrollVacation(VacationVo vo);
 
     // 휴가 코드 불러오기
