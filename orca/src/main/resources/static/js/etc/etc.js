@@ -48,22 +48,22 @@ document.addEventListener("DOMContentLoaded", function() {
     // 휴가 종류 가져오기
         function fetchVacationCodes(vacationCode) {
             $.ajax({
-                url: '/orca/re/vacation',
+                url: '/orca/re/etc',
                 method: 'GET',
-                data: { vacationCode: vacationCode },
-                success: function(vacationCodes) {
-                    const vacationCodeSelect = document.querySelector('#vacationCode');
-                    vacationCodeSelect.innerHTML = '';
-                    vacationCodes.forEach(vacation => {
+                data: { etcCode: etcCode },
+                success: function(etcCodes) {
+                    const etcCodeSelect = document.querySelector('#etcCode');
+                    etcCodeSelect.innerHTML = '';
+                    etcCodes.forEach(etc => {
                         const option = document.createElement('option');
-                        option.value = vacation.vacationCode;
-                        option.text = vacation.vacationName;
-                        vacationCodeSelect.appendChild(option);
+                        option.value = etc.etcCode;
+                        option.text = etc.etcName;
+                        etcCodeSelect.appendChild(option);
                     });
 
                     // 기본 - 첫 번째 내용으로 로드
-                    if (vacationCodes.length > 0) {
-                        fetchVacationName(vacationCodes[0].vacationCode);
+                    if (etcCodes.length > 0) {
+                        fetchVacationName(etcCodes[0].etcCode);
                     }
                 },
                 error: function(error) {

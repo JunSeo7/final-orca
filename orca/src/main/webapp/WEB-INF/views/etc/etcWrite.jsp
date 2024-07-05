@@ -3,12 +3,13 @@
         <html>
 
         <head>
-            <title>기타 신청 작성</title>
+            <title>휴가서 작성</title>
             <!-- 파비콘 -->
             <link rel="icon" href="img/logo.png" type="image/png">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <script defer src="/js/vacation/vacationWrite.js"></script>
-            <link rel="stylesheet" href="/css/vacation/vacationWrite.css">
+            <script defer src="/js/etc/etcWrite.js"></script>
+            <link rel="stylesheet" href="/css/etc/etcWrite.css">
 
         </head>
 
@@ -37,9 +38,9 @@
                             <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
                                 <ul id="attendanceMenu" class="submenu hidden">
                                     <li><a href="#" onclick="loadPage('workInfo.jsp')">근무정보</a></li>
-                                    <li><a href="#" onclick="loadPage('vacation.jsp')">휴가신청</a></li>
+                                    <li><a href="#" onclick="loadPage('vacationWrite.jsp')">휴가신청</a></li>
                                     <li><a href="#" onclick="loadPage('sickLeave.jsp')">병가신청</a></li>
-                                    <li><a href="#" onclick="loadPage('etc.jsp')">기타신청</a></li>
+                                    <li><a href="#" onclick="loadPage('etcWrite.jsp')">기타신청</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -47,7 +48,7 @@
                 </aside>
 
                 <main>
-                    <h1>기타 신청서</h1>
+                    <h1>휴가 신청서</h1>
                     <form id="documentForm" method="post" action="/orca/vacation/vacationWrite">
                         <table class="document-table">
                             <tr>
@@ -55,13 +56,13 @@
                                 <td>
                                     <select id="categoryNo" name="categoryNo"
                                         onChange="fetchTemplatesByCategory(this.value)">
-                                        <!-- 카테고리 옵션들이 여기 추가될 예정 -->
+                                        <!-- 카테고리 옵션 -->
                                     </select>
                                 </td>
                                 <th>결재 양식</th>
                                 <td>
                                     <select id="templateNo" name="templateNo">
-                                        <!-- 결재 양식 옵션들이 여기 추가될 예정 -->
+                                        <!-- 결재 양식 옵션 -->
                                     </select>
                                 </td>
                             </tr>
@@ -71,6 +72,15 @@
                                     <select id="approver" name="approver" required>
                                         <!-- 디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌 -->
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>결재선 프로세스</th>
+                                <td colspan='3'>
+                                    <div class="approval-process" name="approvalLineVoList">
+                                        <!-- 결재선 프로세스 -->
+                                    </div>
+                                    <input type="button" value="수정">
                                 </td>
                             </tr>
                             <tr>
@@ -85,18 +95,15 @@
                         <table class="document-table">
                             <tr>
                                 <th>제목</th>
-                                <td colspan='2'>
+                                <td>
                                     <input type="text" name="title" id="title">
                                 </td>
+                                <th>휴가 종류</th>
                                 <td>
-                                    <select id="codeSelect" name="code" onchange="updateCodeName()">
-                                        <option value="">선택하세요</option>
-                                        <option value="001">코드1</option>
-                                        <option value="002">코드2</option>
-                                        <option value="003">코드3</option>
-                                        <!-- 추가적인 코드 항목을 여기에 추가 -->
+                                    <select id="vacationCode" name="vacationCode"
+                                    onChange="fetchVacationCode(this.value)">
+
                                     </select>
-                                    <input type="text" id="codeName" name="codeName" readonly>
                                 </td>
                             </tr>
                             <tr>
@@ -104,16 +111,16 @@
                             </tr>
                             <tr>
                                 <th>날짜 선택</th>
-                                <td colspan='3'>
+                                <td colspan='4'>
                                     시작 날짜 : <input type="date" id="start-date" name="start-date"
                                         style="color: dimgray;">
-                                        <br>
+                                    <br>
                                     종료 날짜 : <input type="date" id="end-date" name="end-date" style="color: dimgray;">
                                 </td>
                             </tr>
                             <tr>
                                 <th>사유</th>
-                                <td colspan='3'><textarea name="reason" id="reason" style="width: 100%;"></textarea>
+                                <td colspan='4'><textarea name="reason" id="reason" style="width: 100%;"></textarea>
                                 </td>
                             </tr>
                             </td>
@@ -136,7 +143,9 @@
                         </table>
                         <br>
                         <br>
-                        <button type="button" onclick="submitDocument()" class="approval-btn">기안</button>
+                        <div class="div-container">
+                            <button type="button" onclick="submitDocument()" class="approval-btn">기안</button>
+                        </div>
                     </form>
                 </main>
         </body>

@@ -38,9 +38,9 @@
                             <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
                                 <ul id="attendanceMenu" class="submenu hidden">
                                     <li><a href="#" onclick="loadPage('workInfo.jsp')">근무정보</a></li>
-                                    <li><a href="#" onclick="loadPage('vacation.jsp')">휴가신청</a></li>
+                                    <li><a href="#" onclick="loadPage('vacationWrite.jsp')">휴가신청</a></li>
                                     <li><a href="#" onclick="loadPage('sickLeave.jsp')">병가신청</a></li>
-                                    <li><a href="#" onclick="loadPage('etc.jsp')">기타신청</a></li>
+                                    <li><a href="#" onclick="loadPage('etcWrite.jsp')">기타신청</a></li>
                                 </ul>
                             </li>
                         </ul>
