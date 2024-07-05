@@ -2,6 +2,7 @@ package com.groupware.orca.document.controller;
 
 import com.groupware.orca.document.service.DocumentService;
 import com.groupware.orca.document.vo.ApprovalLineVo;
+import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.DocumentVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -61,7 +63,38 @@ public class DocumentController {
     }
     // 결재 작성
     @PostMapping("write")
-    public String writeDocument(DocumentVo vo, HttpSession httpSession){
+    public String writeDocument(
+            DocumentVo vo
+            , HttpSession httpSession
+            , String[] seq
+            , String[] approverNo
+            , String[] deptCode
+            , String[] positionCode
+            , String[] approverClassificationNo
+            , String[] comment
+            ){
+
+        System.out.println("=================================");
+        List<ApproverVo> approverVoList = new ArrayList<>();
+        for (int i = 0 ; i < seq.length; ++i) {
+            ApproverVo avo = new ApproverVo();
+            avo.setSeq(Integer.parseInt(seq[i]));
+            avo.setApproverNo(Integer.parseInt(approverNo[i]));
+            avo.setDeptCode(Integer.parseInt(deptCode[i]));
+            avo.setPositionCode(Integer.parseInt(positionCode[i]));
+            avo.setApproverClassificationNo(Integer.parseInt(approverClassificationNo[i]));
+            avo.setComment(comment[i]);
+
+            approverVoList.add(avo);
+        }
+
+        System.out.println("approverVoList = " + approverVoList);
+        vo.setApproverVoList(approverVoList);
+        System.out.println("approverVoList = " + approverVoList);
+
+
+        System.out.println("=================================");
+
         System.out.println("DocumentController.writeDocument");
         System.out.println("작성 vo = " + vo);
         String loginUserNo = "1";
@@ -70,6 +103,7 @@ public class DocumentController {
         System.out.println("DocumentController.writeDocument");
         System.out.println("작성 vo = " + vo);
         int result = service.writeDocument(vo);
+        System.out.println("result = " + result);
         return "redirect:/orca/document/list";
     }
 

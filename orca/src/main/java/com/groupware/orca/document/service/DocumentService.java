@@ -47,9 +47,10 @@ public class DocumentService {
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {
+        int result = 0;
         dao.writeDocument(vo);
         int docNo = vo.getDocNo();
-        System.out.println("Generated docNo = " + docNo);
+        System.out.println("작성된 docNo = " + docNo);
 
         List<ApproverVo> approverList = vo.getApproverVoList();
         List<ReferencerVo> referencerList = vo.getReferencerVoList();
@@ -63,26 +64,37 @@ public class DocumentService {
         if (approverList != null) {
             for (ApproverVo approver : approverList) {
                 approver.setDocNo(docNo);
+                System.out.println("approver.getDocNo = " + approver.getDocNo());
                 System.out.println("approverList = " + approver);
             }
-            dao.writeDocumentApprover(approverList);
+            int approverResult = dao.writeDocumentApprover(approverList);
+            result += approverResult;
+            System.out.println("결재선 등록 결과 = " + approverResult);
         }
         if (referencerList != null) {
             for (ReferencerVo referencer : referencerList) {
                 referencer.setDocNo(docNo);
+                System.out.println("approver.getDocNo = " + referencer.getDocNo());
                 System.out.println("referencer = " + referencer);
             }
-            dao.writeDocumentReferrer(referencerList);
+            int referencerResult = dao.writeDocumentReferrer(referencerList);
+            result += referencerResult;
+            System.out.println("참조인 등록 결과 = " + referencerResult);
         }
         if (fileList != null) {
             for (DocFileVo file : fileList) {
                 file.setDocNo(docNo);
+                System.out.println("approver.getDocNo = " + file.getDocNo());
                 System.out.println("file = " + file);
             }
-            dao.writeDocumentFile(fileList);
+            int fileResult = dao.writeDocumentFile(fileList);
+            result += fileResult;
+            System.out.println("파일 등록 결과 = " + fileResult);
         }
-        return docNo;
+        System.out.println("최종 결과 = " + result);
+        return result;
     }
+
 
     //전체목록
     public List<DocumentVo> getDocumentList(String loginUserNo) {

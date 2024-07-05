@@ -99,7 +99,7 @@
         </table>
         <br>
         <br>
-        <button type="summit" class="approval-btn">기안</button>
+        <button type="submit" class="approval-btn">기안</button>
     </form>
 </main>
 
