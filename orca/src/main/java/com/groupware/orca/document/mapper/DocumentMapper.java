@@ -23,8 +23,8 @@ public interface DocumentMapper {
     ApprovalLineVo getTemplateApprLine(int templateNo);
     // 결재 작성 결재자 여러명 가져오기
     @Select("""
-            SELECT AI.APPROVER_INFO_NO, AI.APPR_LINE_NO, AI.SEQ, AI.APPROVER_CLASSIFICATION_NO, PI.NAME approverName,
-            D.DEPT_CODE, D.PARTNAME AS DEPT_NAME, P.NAME_OF_POSITION positionName
+            SELECT AI.APPROVER_INFO_NO , AI.APPR_LINE_NO, AI.SEQ, AI.APPROVER_CLASSIFICATION_NO, PI.NAME approverName,
+            D.DEPT_CODE, D.PARTNAME AS DEPT_NAME, P.NAME_OF_POSITION positionName, AI.APPROVER_NO, PI.POSITION_CODE
             FROM APPROVER_INFO AI
             JOIN PERSONNEL_INFORMATION PI ON AI.APPROVER_NO = PI.EMP_NO
             JOIN DEPARTMENT D ON D.DEPT_CODE = PI.DEPT_CODE
@@ -46,10 +46,19 @@ public interface DocumentMapper {
     @SelectKey(statement = "SELECT SEQ_DOCUMENT.CURRVAL FROM dual", keyProperty = "docNo", before = false, resultType = int.class)
     int writeDocument(DocumentVo vo);
     // 결재 작성 - 결재선 업로드
-    @Insert("INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, " +
-            "APPROVAL_DATE, \"COMMENT\",  APPROVER_CLASSIFICATION_NO) " +
-            "VALUES (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq},#{approverNo}, #{approvalStage}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})")
-    int writeDocumentApprover(List<ApproverVo> vo);
+    @Insert("""
+    <script>
+    INSERT ALL
+    <foreach item="vo" collection="list">
+     INTO APPR_LINE
+    (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, DEPT_CODE, POSITION_CODE, APPROVAL_DATE, "COMMENT", APPROVER_CLASSIFICATION_NO)
+    VALUES
+    (SEQ_APPR_LINE.NEXTVAL, #{vo.docNo}, #{vo.seq}, #{vo.approverNo}, #{vo.deptCode}, #{vo.positionCode}, SYSDATE, #{vo.comment}, #{vo.approverClassificationNo})
+    </foreach>
+    SELECT * FROM DUAL
+    </script>
+    """)
+    int writeDocumentApprover(@Param("list") List<ApproverVo> approverList);
     // 결재 작성 - 참조자 업로드
     @Insert("INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) " +
             "VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, #{docNo}, #{referrerNo})")

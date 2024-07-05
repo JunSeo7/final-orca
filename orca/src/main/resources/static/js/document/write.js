@@ -82,6 +82,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 data: { templateNo: templateNo },
                 success: function(data) {
                     updateApprovalProcess(data.approverVoList);
+                    console.log(data);
+                    console.log(data.approverVoList);
                 },
                 error: function() {
                     alert('결재선 불러오기 오류가 발생했습니다.');
@@ -99,14 +101,14 @@ document.addEventListener("DOMContentLoaded", function() {
                         approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
                         processContainer.appendChild(approverDiv);
 
-                    // 인풋태그 - 숨길 정보 만들기
+                    // 인풋태그 - 결재선 정보 숨기기
                     const hiddenInputs = `
-                        <input type="hidden" name="approvalLineVoList[${index}].seq" value="${approver.seq}">
-                        <input type="hidden" name="approvalLineVoList[${index}].approverNo" value="${approver.approverNo}">
-                        <input type="hidden" name="approvalLineVoList[${index}].deptCode" value="${approver.deptCode}">
-                        <input type="hidden" name="approvalLineVoList[${index}].positionCode" value="${approver.positionCode}">
-                        <input type="hidden" name="approvalLineVoList[${index}].approverClassificationNo" value="${approver.approverClassificationNo}">
-                        <input type="hidden" name="approvalLineVoList[${index}].comment" value="${approver.comment}">
+                        <input  name="seq" value="${approver.seq}">
+                        <input  name="approverNo" value="${approver.approverNo}">
+                        <input  name="deptCode" value="${approver.deptCode}">
+                        <input  name="positionCode" value="${approver.positionCode}">
+                        <input  name="approverClassificationNo" value="${approver.approverClassificationNo}">
+                        <input  name="comment" value="${approver.comment}">
                     `;
 
                     processContainer.innerHTML += hiddenInputs;
@@ -116,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         arrowDiv.classList.add('arrow');
                         arrowDiv.textContent = '⇨'; // 화살표 추가
                         processContainer.appendChild(arrowDiv);
+
                     }
                 });
             }
