@@ -11,5 +11,6 @@ public class CommentVo {
     private String enrollDate;
     private String employeeName;
     private char isAnonymous;
-    private String teamName; // 팀 이름 필드 추가
+    private String teamName;
+    private Integer ReplyCommentNo; // 널처리 위해 인티저
 }

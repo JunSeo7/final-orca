@@ -15,12 +15,16 @@ public interface CommentMapper {
             "FROM BOARD_COMMENTS c " +
             "JOIN PERSONNEL_INFORMATION e ON c.INSERT_USER_NO = e.EMP_NO " +
             "LEFT JOIN DEPARTMENT_TEAM t ON e.TEAM_CODE = t.TEAM_CODE " +
-            "WHERE c.BOARD_NO = #{boardNo}")
+            "WHERE c.BOARD_NO = #{boardNo} " +
+            "ORDER BY c.REPLY_COMMENT_NO NULLS FIRST, c.ENROLL_DATE")
     List<CommentVo> getCommentsByBoardNo(@Param("boardNo") int boardNo);
 
-    @Insert("INSERT INTO BOARD_COMMENTS(BOARD_CHAT_NO, CONTENT, BOARD_NO, INSERT_USER_NO, ENROLL_DATE, IS_ANONYMOUS) " +
-            "VALUES (SEQ_BOARD_COMMENTS.NEXTVAL, #{content}, #{boardNo}, #{insertUserNo}, SYSDATE, #{isAnonymous})")
+
+    @Insert("INSERT INTO BOARD_COMMENTS(BOARD_CHAT_NO, CONTENT, BOARD_NO, INSERT_USER_NO, ENROLL_DATE, IS_ANONYMOUS, REPLY_COMMENT_NO) " +
+            "VALUES (SEQ_BOARD_COMMENTS.NEXTVAL, #{content}, #{boardNo}, #{insertUserNo}, SYSDATE, #{isAnonymous}, #{ReplyCommentNo})")
+    @Options(useGeneratedKeys = true, keyProperty = "boardChatNo", keyColumn = "BOARD_CHAT_NO")
     int insertComment(CommentVo commentVo);
+
 
     @Update("UPDATE BOARD_COMMENTS SET CONTENT = #{content}, MODIFY_DATE = SYSDATE WHERE BOARD_CHAT_NO = #{boardChatNo}")
     int updateComment(CommentVo commentVo);

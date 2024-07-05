@@ -2,6 +2,7 @@ package com.groupware.orca.board.controller;
 
 import com.groupware.orca.board.service.BoardFileService;
 import com.groupware.orca.board.service.BoardService;
+import com.groupware.orca.board.service.BookmarkService;
 import com.groupware.orca.board.service.CommentService;
 import com.groupware.orca.board.vo.BoardFileVo;
 import com.groupware.orca.board.vo.BoardVo;
@@ -32,6 +33,7 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardFileService boardFileService;
     private final CommentService commentService;
+
 
     @GetMapping
     public String getBoard() {
@@ -183,4 +185,6 @@ public class BoardController {
         boardService.hit(boardNo);
         return ResponseEntity.ok("조회수 증가 성공");
     }
+
+
 }
