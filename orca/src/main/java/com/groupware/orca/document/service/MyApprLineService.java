@@ -48,8 +48,8 @@ public class MyApprLineService {
     }
 
     // 결재선 전체목록 (결재선/결재자)
-    public List<ApprovalLineVo> getApprovalLines() {
-        List<ApprovalLineVo> approvalLines = dao.getApprovalLineList();
+    public List<ApprovalLineVo> getApprovalLines(String loginUserNo) {
+        List<ApprovalLineVo> approvalLines = dao.getApprovalLineList(loginUserNo);
         for (ApprovalLineVo line : approvalLines) {
             List<ApproverVo> approvers = dao.getApproverList(line.getApprLineNo());
             line.setApproverVoList(approvers);

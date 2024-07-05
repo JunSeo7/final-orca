@@ -4,6 +4,7 @@ import com.groupware.orca.document.service.MyApprLineService;
 import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,8 +68,10 @@ public class MyApprLineController {
 
     // 결재선 전체목록 (양식/결재라인)
     @GetMapping("list")
-    public String getApprLines(Model model) {
-        List<ApprovalLineVo> approvalLines = service.getApprovalLines();
+    public String getApprLines(Model model, HttpSession httpSession) {
+        String loginUserNo = "1";
+        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
         System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
         return "myapprline/list";
