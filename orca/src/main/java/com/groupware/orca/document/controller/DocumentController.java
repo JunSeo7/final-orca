@@ -63,12 +63,12 @@ public class DocumentController {
     @PostMapping("write")
     public String writeDocument(DocumentVo vo, HttpSession httpSession){
         System.out.println("DocumentController.writeDocument");
-        System.out.println("vo = " + vo);
+        System.out.println("작성 vo = " + vo);
         String loginUserNo = "1";
                 //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(Integer.parseInt(loginUserNo));
         System.out.println("DocumentController.writeDocument");
-        System.out.println("vo = " + vo);
+        System.out.println("작성 vo = " + vo);
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }

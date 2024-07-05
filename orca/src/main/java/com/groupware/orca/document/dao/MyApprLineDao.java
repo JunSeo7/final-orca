@@ -42,8 +42,8 @@ public class MyApprLineDao {
     }
 
     // 결재선 전체목록 (결재선)
-    public List<ApprovalLineVo> getApprovalLineList() {
-        List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList();
+    public List<ApprovalLineVo> getApprovalLineList(String loginUserNo) {
+        List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList(loginUserNo);
         System.out.println("approvalLines = " + approvalLines);
         return approvalLines;
     }

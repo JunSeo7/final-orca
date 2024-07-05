@@ -33,8 +33,8 @@ public interface MyApprLineMapper {
     // 마이결재선 전체목록 (결재선) - userNo입력
     @Select("SELECT AT.APPR_LINE_NO, AT.APPR_LINE_NAME , AT.CREATED_DATE, DT.TEMPLATE_NO , DT.TITLE , DT.CONTENT " +
             ", DTC.CATEGORY_NO, DTC.NAME AS CATEGORY_NAME FROM APPR_LINE_TEMPLATE AT JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO " +
-            "JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO")
-    List<ApprovalLineVo> getApprovalLineList();
+            "JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO WHERE AT.WRITER_NO = #{loginUserNo}")
+    List<ApprovalLineVo> getApprovalLineList(String loginUserNo);
     // 마이결재선 전체목록 (결재자 여러명)
     @Select("SELECT AI.APPROVER_INFO_NO, AI.APPR_LINE_NO, AI.SEQ , AI.APPROVER_CLASSIFICATION_NO, PI.NAME approverName " +
             ", D.DEPT_CODE, D.PARTNAME AS DEPT_NAME, P.NAME_OF_POSITION positionName FROM APPROVER_INFO AI " +
