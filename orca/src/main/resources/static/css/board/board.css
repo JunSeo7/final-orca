@@ -236,3 +236,38 @@ body {
         .post-likes {
             margin-top: 10px;
         }
+
+
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .comment.reply {
+            margin-left: 20px;
+            border-left: 2px solid #ddd;
+            padding-left: 10px;
+        }
+
+        .comment-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .comment .author {
+            font-weight: bold;
+        }
+
+        .comment .content {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .comment .actions {
+            margin-top: 5px;
+        }
+
+        .reply-container {
+            margin-left: 20px;
+        }

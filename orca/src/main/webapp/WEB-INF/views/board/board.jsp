@@ -10,6 +10,33 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/board/board.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+        .comment.reply {
+            margin-left: 20px;
+            border-left: 2px solid #ddd;
+            padding-left: 10px;
+        }
+        .comment-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .reply-container {
+            margin-left: 20px;
+            border-left: 2px solid #ddd;
+            padding-left: 10px;
+        }
+        .bookmark-button {
+            cursor: pointer;
+            color: #ffbb33;
+        }
+        .bookmarked {
+            color: #ffbb33;
+        }
+    </style>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
@@ -59,6 +86,7 @@
                 <li><a href="#" onclick="loadPage('mail.jsp')">메일</a></li>
                 <li><a href="#" onclick="loadPage('settings.jsp')">설정</a></li>
                 <li><a href="/orca/board/statistics">통계</a></li>
+                <li><a href="#" onclick="loadBookmarks()">북마크 목록</a></li>
             </ul>
         </nav>
     </aside>
@@ -68,6 +96,7 @@
             <option value="1">자유 게시판</option>
             <option value="2">팀 게시판</option>
             <option value="3">익명 게시판</option>
+            <option value="bookmark">북마크</option>
         </select>
         <input type="text" id="searchTitle" placeholder="제목으로 검색">
         <button id="searchBtn">검색</button>
@@ -87,7 +116,7 @@
             <div id="teamName"></div>
             <div class="post-actions">
                 <i class="far fa-heart like-button" id="like-button" onclick="toggleLike()"></i>
-                <i class="far fa-bookmark bookmark-button" id="bookmark-button" onclick="toggleBookmark()"></i>
+                <i class="far fa-bookmark bookmark-button" data-board-no="" onclick="toggleBookmark(this)"></i>
             </div>
             <div class="post-likes">
                 <span id="like-count">0</span> 좋아요
@@ -95,14 +124,13 @@
             <div id="hit-container">조회수: <span id="hit"></span></div>
             <hr>
             <div id="modal-content"></div>
-            <div id="comments-container" class="comments"></div>
+            <div id="comments-container" class="comment-container"></div>
             <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
             <button onclick="addComment()">댓글 작성</button>
             <div id="map"></div>
             <button id="btn-kakao" class="kakao-share-button">💬</button>
         </div>
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
@@ -134,7 +162,7 @@
                     }
                 });
             });
-        }
+       }
 
         window.toggleLike = function() {
             checkAuthState().then(user => {
@@ -158,62 +186,10 @@
                 alert(error + " 후 이용해 주세요.");
             });
         }
-
-        window.toggleBookmark = function() {
-            checkAuthState().then(user => {
-                const boardNo = document.getElementById('modal-title').dataset.boardNo;
-                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
-
-                getDoc(bookmarkRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        deleteDoc(bookmarkRef).then(() => {
-                            document.getElementById('bookmark-button').classList.remove('bookmarked');
-                        });
-                    } else {
-                        setDoc(bookmarkRef, { saved: true }).then(() => {
-                            document.getElementById('bookmark-button').classList.add('bookmarked');
-                        });
-                    }
-                });
-            }).catch(error => {
-                alert(error + " 후 이용해 주세요.");
-            });
-        }
-
-        window.checkLikeStatus = function(boardNo) {
-            checkAuthState().then(user => {
-                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
-
-                getDoc(likeRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        document.getElementById('like-button').classList.add('liked');
-                    }
-                });
-            });
-        }
-
-        window.checkBookmarkStatus = function(boardNo) {
-            checkAuthState().then(user => {
-                const bookmarkRef = doc(db, 'bookmarks', user.uid, 'posts', boardNo);
-
-                getDoc(bookmarkRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        document.getElementById('bookmark-button').classList.add('bookmarked');
-                    }
-                });
-            });
-        }
-
-        window.updateLikeCount = function(boardNo, delta) {
-            const likeCountElement = document.getElementById('like-count');
-            const currentCount = parseInt(likeCountElement.textContent, 10);
-            likeCountElement.textContent = currentCount + delta;
-        }
     </script>
-
     <script type="text/javascript">
         var map;
-        var currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() %>';
+        var currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
 
         $(document).ready(function () {
             var mapContainer = document.getElementById('map'),
@@ -234,15 +210,19 @@
 
             $("#categorySelect").on("change", function () {
                 categoryNo = $(this).val();
-                $("#jqGrid").jqGrid('setGridParam', {
-                    url: '/orca/board/list/' + categoryNo,
-                    page: 1
-                }).trigger('reloadGrid');
+                if (categoryNo === 'bookmark') {
+                    loadBookmarks();
+                } else {
+                    $("#jqGrid").jqGrid('setGridParam', {
+                        url: '/orca/board/list/' + categoryNo,
+                        page: 1
+                    }).trigger('reloadGrid');
+                }
             });
 
             $("#searchBtn").on("click", function () {
                 var title = $("#searchTitle").val();
-                var categoryNo = parseInt($("#categorySelect").val(), 10);
+                var categoryNo = $("#categorySelect").val();
                 if (isNaN(categoryNo)) {
                     alert("카테고리 번호가 잘못되었습니다.");
                     return;
@@ -265,10 +245,10 @@
                 styleUI: 'jQueryUI',
                 datatype: "json",
                 colModel: [
-                    {label: 'No', name: 'boardNo', width: 30},
-                    {label: 'Title', name: 'title', key: true, width: 75, formatter: titleFormatter},
-                    {label: 'Views', name: 'hit', width: 50},
-                    {label: 'Image', name: 'content', width: 100, formatter: extractImage}
+                    {label: '게시판 번호', name: 'boardNo', width: 30},
+                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                    {label: '조회수', name: 'hit', width: 50},
+                    {label: '썸네일', name: 'content', width: 50, formatter: extractImage}
                 ],
                 viewrecords: true,
                 width: 1400,
@@ -293,14 +273,14 @@
                 method: "GET",
                 dataType: "json",
                 success: function (response) {
-                    kakao.maps.load();
                     $('#modal-title').text(response.title);
                     $('#hit').text(response.hit);
                     $('#teamName').text(response.teamName);
                     $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
-                    $('#modal-title').data('boardNo', boardNo);
+                    $('#modal-title').attr('data-board-no', boardNo); // 여기서 attr 사용
                     $('#enrolldate').text(response.enrollDate);
                     $('#insert-name').text(response.employeeName);
+                    $('#bookmark-button').attr('data-board-no', boardNo); // 여기서 attr 사용
 
                     $('.modal').removeClass('modal-close');
                     const lat = parseFloat(response.latitude);
@@ -327,26 +307,11 @@
             });
         }
 
-        function showComments(boardNo) {
-            $.ajax({
-                url: "/orca/board/comment/list?boardNo=" + boardNo,
-                method: "GET",
-                dataType: "json",
-                success: function (response) {
-                    var commentsHtml = '';
-                    response.forEach(function (comment) {
-                        commentsHtml += getCommentHtml(comment);
-                    });
-                    $('#comments-container').html(commentsHtml);
-                },
-                error: function () {
-                    alert("댓글을 불러오는데 실패했습니다.");
-                }
-            });
-        }
-
         function getCommentHtml(comment) {
-            var html = '<div class="comment" data-comment-no="' + comment.boardChatNo + '">';
+            var isReply = comment.replyCommentNo !== null;
+            var commentClass = isReply ? 'comment reply' : 'comment';
+
+            var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
             var employeeName = comment.employeeName;
             var teamName = comment.teamName;
 
@@ -357,16 +322,59 @@
                 employeeName = '알 수 없음';
             }
 
-            html += '<div>작성자: ' + employeeName + '</div>';
-            html += '<div>팀: ' + teamName + '</div>';
-            html += '<div>' + comment.enrollDate + '</div>';
-            html += '<div>' + comment.content + '</div>';
+            html += '<div class="author">작성자: ' + employeeName + '</div>';
+            html += '<div class="team">팀: ' + teamName + '</div>';
+            html += '<div class="date">' + comment.enrollDate + '</div>';
+            html += '<div class="content">' + comment.content + '</div>';
 
+            html += '<div class="actions">';
             html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
             html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
+            html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
+            html += '</div>';
 
             html += '</div>';
+
             return html;
+        }
+
+        function showComments(boardNo) {
+            $.ajax({
+                url: "/orca/board/comment/list?boardNo=" + boardNo,
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                    var commentsHtml = '';
+                    var commentMap = {};
+
+                    response.forEach(function (comment) {
+                        commentMap[comment.boardChatNo] = comment;
+                        comment.replies = [];
+                    });
+
+                    response.forEach(function (comment) {
+                        if (comment.replyCommentNo !== null) {
+                            commentMap[comment.replyCommentNo].replies.push(comment);
+                        }
+                    });
+
+                    response.forEach(function (comment) {
+                        if (comment.replyCommentNo === null) {
+                            commentsHtml += getCommentHtml(comment);
+                            commentsHtml += '<div class="reply-container">';
+                            comment.replies.forEach(function (reply) {
+                                commentsHtml += getCommentHtml(reply);
+                            });
+                            commentsHtml += '</div>';
+                        }
+                    });
+
+                    $('#comments-container').html(commentsHtml);
+                },
+                error: function () {
+                    alert("댓글을 불러오는데 실패했습니다.");
+                }
+            });
         }
 
         function addComment() {
@@ -379,7 +387,8 @@
             var comment = {
                 boardNo: boardNo,
                 content: content,
-                isAnonymous: "N"
+                isAnonymous: "N",
+                replyCommentNo: null // 부모 댓글이 없음을 나타냄
             };
 
             var categoryNo = $("#categorySelect").val();
@@ -400,6 +409,37 @@
                     alert("댓글 작성에 실패했습니다.");
                 }
             });
+        }
+
+        function replyComment(replyCommentNo) {
+            var content = prompt("답글 내용을 입력하세요:");
+            if (content) {
+                var boardNo = $('#modal-title').data('boardNo');
+                var comment = {
+                    boardNo: boardNo,
+                    content: content,
+                    isAnonymous: "N",
+                    replyCommentNo: replyCommentNo
+                };
+
+                var categoryNo = $("#categorySelect").val();
+                if (categoryNo == '3') {
+                    comment.isAnonymous = "Y";
+                }
+
+                $.ajax({
+                    url: "/orca/board/comment/add",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(comment),
+                    success: function () {
+                        showComments(boardNo);
+                    },
+                    error: function () {
+                        alert("답글 작성에 실패했습니다.");
+                    }
+                });
+            }
         }
 
         function editComment(boardChatNo) {
@@ -494,6 +534,88 @@
                 ]
             });
         });
+
+        function checkBookmarkStatus(boardNo) {
+            $.ajax({
+                url: "/orca/bookmark/list",
+                method: "GET",
+                success: function (response) {
+                    $('.bookmark-button').each(function () {
+                        const btnBoardNo = $(this).data('boardNo');
+                        if (response.some(bookmark => bookmark.boardNo == btnBoardNo)) {
+                            $(this).addClass('bookmarked');
+                        } else {
+                            $(this).removeClass('bookmarked');
+                        }
+                    });
+                },
+                error: function () {
+                    console.error("북마크 상태를 확인하는데 실패했습니다.");
+                }
+            });
+        }
+
+        function toggleBookmark(element) {
+            const boardNo = document.getElementById('modal-title').dataset.boardNo; // dataset 사용
+            const isBookmarked = $(element).hasClass('bookmarked');
+
+            if (isBookmarked) {
+                $.ajax({
+                    url: "/orca/bookmark/deleteByBoardNo/" + boardNo,
+                    method: "DELETE",
+                    success: function () {
+                        $(element).removeClass('bookmarked');
+                    },
+                    error: function () {
+                        alert("북마크 삭제에 실패했습니다.");
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "/orca/bookmark/add",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ boardNo: boardNo }),
+                    success: function () {
+                        $(element).addClass('bookmarked');
+                    },
+                    error: function () {
+                        alert("북마크 추가에 실패했습니다.");
+                    }
+                });
+            }
+        }
+
+        function loadBookmarks() {
+            $("#jqGrid").jqGrid('setGridParam', {
+                url: '/orca/bookmark/list',
+                mtype: "GET",
+                datatype: "json",
+                colModel: [
+                    {label: 'No', name: 'boardNo', width: 30},
+                    {label: 'Title', name: 'title', key: true, width: 75, formatter: titleFormatter}
+
+                ],
+                viewrecords: true,
+                width: 1400,
+                height: 600,
+                rowNum: 50,
+                pager: "#jqGridPager"
+            }).trigger('reloadGrid');
+        }
+
+        function deleteBookmark(bookmarkNo) {
+            $.ajax({
+                url: "/orca/bookmark/delete/" + bookmarkNo,
+                method: "DELETE",
+                success: function () {
+                    loadBookmarks();
+                },
+                error: function () {
+                    alert("북마크 삭제에 실패했습니다.");
+                }
+            });
+        }
     </script>
 </body>
 </html>

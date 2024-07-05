@@ -23,6 +23,7 @@
                 <option value="1">자유 게시판</option>
                 <option value="2">팀 게시판</option>
                 <option value="3">익명 게시판</option>
+
             </select>
             <label for="title">제목</label>
             <input type="text" id="title" name="title" required>
