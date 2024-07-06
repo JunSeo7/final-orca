@@ -64,9 +64,7 @@ public class DocumentController {
             , String[] approverNo
             , String[] deptCode
             , String[] positionCode
-            , String[] approverClassificationNo
-            , String[] comment
-            ) {
+            , String[] approverClassificationNo ) {
 
         System.out.println("=================================");
         List<ApproverVo> approverVoList = new ArrayList<>();
@@ -77,8 +75,6 @@ public class DocumentController {
             avo.setDeptCode(Integer.parseInt(deptCode[i]));
             avo.setPositionCode(Integer.parseInt(positionCode[i]));
             avo.setApproverClassificationNo(Integer.parseInt(approverClassificationNo[i]));
-            avo.setComment(comment[i]);
-
             approverVoList.add(avo);
         }
 
@@ -147,15 +143,26 @@ public class DocumentController {
         return "document/list";
     }
 
+    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
+    @GetMapping("/public")
+    public String getPublicDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getPublicDocumentList(loginUserNo);
+        model.addAttribute("documentList", documentList);
+        return "document/list";
+    }
+
     // 검색(기안자/제목/내용/카테고리)
 
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
-    public String getDocumentByNo(Model model, HttpSession httpSession){
+    public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        int docNo =8;
+        System.out.println("상세loginUserNo = " + loginUserNo);
+        System.out.println("상세docNo = " + docNo);
         DocumentVo document = service.getDocumentByNo(docNo);
+        System.out.println("상세document = " + document);
         model.addAttribute("document", document);
         return "document/detail";
     }

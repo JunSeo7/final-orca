@@ -173,8 +173,18 @@ public class DocumentService {
 
     // 받은 결재
     public List<DocumentVo> getSendDocumentList(String loginUserNo) {
-        // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
         List<DocumentVo> documentList = dao.getSendDocumentList(loginUserNo);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임  
+    public List<DocumentVo> getPublicDocumentList(String loginUserNo) {
+        List<DocumentVo> documentList = dao.getPublicDocumentList(loginUserNo);
         for (DocumentVo document : documentList) {
             int docNo = document.getDocNo();
             // 문서목록 - 결재선 목록 넣기
@@ -190,9 +200,11 @@ public class DocumentService {
         DocumentVo documentVo = dao.getDocumentByNo(docNo);
         // 문서 - 결재선 목록 넣기
         List<ApproverVo> apprLineList = dao.getApprovalLineByNo(docNo);
+        System.out.println("상세 apprLineList = " + apprLineList);
         documentVo.setApproverVoList(apprLineList);
         // 문서 - 참조인 목록 넣기
         List<ReferencerVo> references = dao.getReferencerByNo(docNo);
+        System.out.println("상세 references = " + references);
         documentVo.setReferencerVoList(references);
         // 문서 - 파일 목록 넣기
         List<DocFileVo> DocFiles = dao.getDocFileByNo( docNo);
@@ -213,6 +225,7 @@ public class DocumentService {
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
+
 
 
 }

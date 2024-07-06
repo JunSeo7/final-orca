@@ -32,7 +32,8 @@
                 <div class="status_box">
                     <div class="status_details">
                         <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
-                        <span class="approval_title">[${document.categoryName}]</span>
+                        <span class="approval_title">${document.title}</span>
+                        <span class="approval_title">[${document.categoryName}] ${document.templateTitle}</span>
                         <span class="approval_title">긴급여부: ${document.urgent}</span>
                         <div class="status_steps">
                             <div class="status_step">

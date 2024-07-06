@@ -110,6 +110,11 @@ public class DocumentDao {
         return mapper.getSendDocumentList(loginUserNo);
     }
 
+    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
+    public List<DocumentVo> getPublicDocumentList(String loginUserNo) {
+        return mapper.getPublicDocumentList(loginUserNo);
+    }
+
 
     // 문서 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
@@ -144,6 +149,7 @@ public class DocumentDao {
     public int deleteDocumentByNo(int docNo, String loginUserNo) {
         return mapper.deleteDocumentByNo(docNo, loginUserNo);
     }
+
 
 
 }

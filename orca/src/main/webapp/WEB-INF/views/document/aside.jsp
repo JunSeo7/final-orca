@@ -50,7 +50,7 @@
                     <ul class="sub-nav-list">
                         <li class="nav-item"><a href="#"><i class="bi bi-file-earmark"></i> 개인환경설정</a></li>
                         <li class="nav-item"><a href="/orca/myapprline/list"><i class="bi bi-file-earmark"></i> 개인 결재선</a></li>
-                        <li class="nav-item"><a href="#"><i class="bi bi-file-earmark"></i> 공유함 관리</a></li>
+                        <li class="nav-item"><a href="/orca/document/public"><i class="bi bi-file-earmark"></i> 공유함 관리</a></li>
                     </ul>
                 </li>
             </ul>
