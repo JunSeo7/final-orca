@@ -25,7 +25,6 @@ public class TemplateDao {
     public TemplateVo templateDetail(String templateNo) {
         // Template 정보 가져오기
         TemplateVo templateVo = mapper.templateDetail(templateNo);
-        System.out.println("templateVo = " + templateVo);
         return templateVo;
     }
     public List<ApprovalLineVo> selectApproverLineVo(int apprLineNo) {
@@ -33,7 +32,7 @@ public class TemplateDao {
         List<ApprovalLineVo> approvalLineVoList = mapper.selectApproverLineVo(apprLineNo);
         System.out.println("approverLineVoList = " + approvalLineVoList);
         if(approvalLineVoList ==null){
-            System.out.println("approverLineVoList nulllllllllll= " + approvalLineVoList);
+            System.out.println("approverLineVoList null= " + approvalLineVoList);
         }
         return approvalLineVoList;
     }
@@ -44,6 +43,4 @@ public class TemplateDao {
     public int deleteTemplate(int templateNo) {
         return mapper.deleteTemplate(templateNo);
     }
-
-
 }

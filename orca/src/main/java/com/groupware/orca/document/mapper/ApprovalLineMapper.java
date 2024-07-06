@@ -24,15 +24,18 @@ public interface ApprovalLineMapper {
     @Select("SELECT CATEGORY_NO ,TEMPLATE_NO ,TITLE FROM DOC_TEMPLATE WHERE DEL_YN='N' AND CATEGORY_NO=#{categoryNo}")
     List<TemplateVo> getTemplateByCategoryNo(int categoryNo);
 
+    // 기본 결재선 등록 전 - 기본 결재선 존재 여부 확인 - 0이여야 insert 될 수 있도록 함.
+    @Select("SELECT COUNT(*) FROM APPR_LINE_TEMPLATE WHERE TEMPLATE_NO = #{templateNo} AND WRITER_NO IS NULL AND DEL_YN = 'N'")
+    int countBasicApprovalLine(int templateNo);
     // 기본 결재선 등록
     @Insert("INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) " +
             "VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, #{templateNo}, #{apprLineName}, SYSDATE)")
     @Options(useGeneratedKeys = true, keyProperty = "apprLineNo", keyColumn = "APPR_LINE_NO")
-    void insertApprovalLine(ApprovalLineVo approvalLine);
+    int insertApprovalLine(ApprovalLineVo approvalLine);
     // 결재자 등록
     @Insert("INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) " +
             "VALUES (SEQ_APPROVER_INFO.NEXTVAL, #{approverNo}, #{apprLineNo}, #{seq}, #{approverClassificationNo})")
-    void insertApprover(ApproverVo approver);
+    int insertApprover(ApproverVo approver);
 
     // 결재선 전체목록 (결재선)
     @Select("SELECT AT.APPR_LINE_NO, AT.APPR_LINE_NAME , AT.CREATED_DATE, DT.TEMPLATE_NO , DT.TITLE , DT.CONTENT " +
@@ -58,12 +61,9 @@ public interface ApprovalLineMapper {
     @Update("UPDATE DOCUMENT SET STATUS = #{status} WHERE DOC_NO = #{docNo}")
     int updateStatusDocument(int docNo, int status);
 
-    // 결재선 삭제
-    @Delete("UPDATE SET APPROVER_INFO WHERE APPR_LINE_NO = #{apprLineNo}")
+    // 기본 결재선 삭제
+    @Delete("UPDATE APPR_LINE_TEMPLATE SET DEL_YN ='Y' WHERE APPR_LINE_NO = #{apprLineNo} AND WRITER_NO IS NULL")
     void deleteApprLine(int apprLineNo);
-
-
-
 
 }
 

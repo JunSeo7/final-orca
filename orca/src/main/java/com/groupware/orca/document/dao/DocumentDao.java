@@ -36,13 +36,11 @@ public class DocumentDao {
     // 결재선 전체목록 (결재선)
     public ApprovalLineVo getTemplateApprLine(int templateNo) {
         ApprovalLineVo apprline = mapper.getTemplateApprLine(templateNo);
-        System.out.println("apprline = " + apprline);
         return apprline;
     }
     // 결재선 전체목록 (결재자 여러명)
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
-        System.out.println("approvers = " + approvers);
         if(approvers ==null){
             System.out.println("approverLineVoList= " + approvers);
         } return approvers;
@@ -52,6 +50,7 @@ public class DocumentDao {
     public int writeDocument(DocumentVo vo) {
         return mapper.writeDocument(vo);
     }
+
     // 결재 작성 - 결재선 업로드
     public int writeDocumentApprover(List<ApproverVo> voList){
         int result = 0 ;
@@ -61,14 +60,21 @@ public class DocumentDao {
         return result;
     }
     // 결재 작성 - 참조인 업로드
-    public int writeDocumentReferrer(List<ReferencerVo> vo){
-        return mapper.writeDocumentReferrer(vo);
+    public int writeDocumentReferrer(List<ReferencerVo> voList){
+        int result = 0 ;
+        for (ReferencerVo referencer : voList) {
+            result += mapper.writeDocumentReferrer(referencer);
+        }
+        return result;
     }
     // 결재 작성 - 파일 업로드
-    public int writeDocumentFile(List<DocFileVo> vo){
-        return mapper.writeDocumentFile(vo);
+    public int writeDocumentFile(List<DocFileVo> voList){
+        int result = 0 ;
+        for (DocFileVo file : voList) {
+            result += mapper.writeDocumentFile(file);
+        }
+        return result;
     }
-
 
 
     //전체목록
@@ -76,11 +82,6 @@ public class DocumentDao {
     public List<DocumentVo> getDocumentList(String loginUserNo) {
         return mapper.getDocumentList(loginUserNo);
     }
-    // 문서목록 - 결재선 목록 넣기
-    public List<ApprovalLineVo> getApprovalLineList(int docNo) {
-        return mapper.getApprovalLineList(docNo);
-    }
-    
 
     // (임시저장) 내가 작성한 결재 문서 목록 조회
     public List<DocumentVo> getTempDocumentList(String loginUserNo) {
@@ -128,6 +129,16 @@ public class DocumentDao {
         return mapper.getDocFileByNo(docNo);
     }
 
+
+    // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
+    public int editDocument(DocumentVo vo) {
+        return mapper.editDocument(vo);
+
+    }
+    // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 )
+    public int updateStatusDocument(DocumentVo vo) {
+        return mapper.updateStatusDocument(vo);
+    }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     public int deleteDocumentByNo(int docNo, String loginUserNo) {

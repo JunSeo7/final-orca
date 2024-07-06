@@ -53,21 +53,21 @@ public interface DocumentMapper {
     int writeDocument(DocumentVo vo);
     // 결재 작성 - 결재선 업로드
     @Insert("""
-        INSERT INTO APPR_LINE
-        (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, DEPT_CODE, POSITION_CODE, APPROVAL_DATE, "COMMENT", APPROVER_CLASSIFICATION_NO)
-        VALUES
-        (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq}, #{approverNo}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})
-        """)
+            INSERT INTO APPR_LINE
+            (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, DEPT_CODE, POSITION_CODE, APPROVAL_DATE, "COMMENT", APPROVER_CLASSIFICATION_NO)
+            VALUES
+            (SEQ_APPR_LINE.NEXTVAL, #{docNo}, #{seq}, #{approverNo}, #{deptCode}, #{positionCode}, SYSDATE, #{comment}, #{approverClassificationNo})
+            """)
     int writeDocumentApprover(ApproverVo vo);
 
     // 결재 작성 - 참조자 업로드
     @Insert("INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) " +
             "VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, #{docNo}, #{referrerNo})")
-    int writeDocumentReferrer(List<ReferencerVo> vo);
+    int writeDocumentReferrer(ReferencerVo vo);
     // 결재 작성 - 파일 업로드
     @Insert("INSERT INTO DOC_FILES( FILE_NO ,DOC_NO ,CHANGE_NAME ,ORIGIN_NAME ) " +
             "VALUES (SEQ_DOC_FILES.NEXTVAL,#{docNo}, #{changeName},#{originName})")
-    int writeDocumentFile(List<DocFileVo> vo);
+    int writeDocumentFile(DocFileVo vo);
 
 
     // (기안 완) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
@@ -85,21 +85,6 @@ public interface DocumentMapper {
             ORDER BY D.CREDIT_DATE DESC
             """)
     List<DocumentVo> getDocumentList(String loginUserNo);
-
-    // 결재선 목록 조회
-    @Select("""
-            SELECT AL.DOC_NO AS approvalDocNo
-            ,AL.SEQ ,AL.APPROVAL_DATE ,AL.APPROVER_CLASSIFICATION_NO ,PI.NAME AS writerName ,DEPT.PARTNAME AS dept
-            ,P.NAME_OF_POSITION AS positionName ,DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME
-            FROM APPR_LINE AL JOIN APPR_STAGE_LIST ASL ON AL.APPROVAL_STAGE = ASL.APPR_STAGE_NO
-            JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO
-            LEFT JOIN DOC_REFERENCE_LIST DRL ON DRL.REFERRER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = AL.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = AL.POSITION_CODE
-            WHERE AL.DOC_NO = #{docNo}" +
-            ORDER BY AL.SEQ
-            """)
-    List<ApprovalLineVo> getApprovalLineList(int docNo);
 
     // (임시저장) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("""
@@ -231,7 +216,7 @@ public interface DocumentMapper {
 
     // 결재선 목록 조회
     @Select("""
-            SELECT AL.DOC_NO AS approvalDocNo
+            SELECT DISTINCT AL.DOC_NO AS approvalDocNo
             ,AL.SEQ ,AL.APPROVAL_DATE ,AL.APPROVER_CLASSIFICATION_NO ,PI.NAME approverName ,DEPT.PARTNAME deptName
             ,P.NAME_OF_POSITION positionName ,DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME apprStageName
             FROM APPR_LINE AL JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO
@@ -261,6 +246,34 @@ public interface DocumentMapper {
     @Select("SELECT * FROM DOC_FILES WHERE DOC_NO = #{docNo} AND DEL_YN ='N'")
     List<DocFileVo> getDocFileByNo(int docNo);
 
+    // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
+    @Update("""
+        <script>
+        UPDATE DOCUMENT
+        <set>
+            <if test="title != null">TITLE = #{title},</if>
+            <if test="content != null">CONTENT = #{content},</if>
+            <if test="urgent != null">URGENT = #{urgent},</if>
+            <if test="templateNo != null">TEMPLATE_NO = #{templateNo},</if>
+            <if test="status != null">STATUS = #{status},</if>
+        </set>
+        WHERE DOC_NO = #{docNo}
+        AND WRITER_NO = #{writerNo}
+        AND STATUS = 1
+        </script>
+        """)
+    int editDocument(DocumentVo vo);
+
+    // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 )
+    @Update("""
+        <script>
+        UPDATE DOCUMENT SET STATUS = #{status}
+        WHERE DOC_NO = #{docNo}
+        AND WRITER_NO = #{writerNo}
+        AND STATUS = 1
+        </script>
+        """)
+    int updateStatusDocument(DocumentVo vo);
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @Update("""
@@ -277,5 +290,4 @@ public interface DocumentMapper {
             )
             """)
     int deleteDocumentByNo(int docNo, String loginUserNo);
-
 }

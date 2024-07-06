@@ -29,8 +29,18 @@ public interface TemplateMapper {
     List<ApprovalLineVo> selectApproverLineVo(int apprLineNo);
 
 
-    @Update("UPDATE DOC_TEMPLATE SET TITLE=#{title} ,CONTENT=#{templateContent} WHERE TEMPLATE_NO = #{templateNo}")
+    @Update("""
+        <script>
+        UPDATE DOC_TEMPLATE
+        <set>
+            <if test="title != null">TITLE = #{title},</if>
+            <if test="templateContent != null">CONTENT = #{templateContent},</if>
+        </set>
+        WHERE TEMPLATE_NO = #{templateNo}
+        </script>
+    """)
     int editTemplate(TemplateVo vo);
+
 
     @Delete("UPDATE DOC_TEMPLATE SET DEL_YN='Y' WHERE TEMPLATE_NO = #{templateNo}")
     int deleteTemplate(int templateNo);

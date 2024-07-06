@@ -21,19 +21,20 @@ public interface MyApprLineMapper {
     @Select("SELECT CATEGORY_NO ,TEMPLATE_NO ,TITLE FROM DOC_TEMPLATE WHERE DEL_YN='N' AND CATEGORY_NO=#{categoryNo}")
     List<TemplateVo> getTemplateByCategoryNo(int categoryNo);
 
-    // 나만의 결재선 등록- userNo입력
+    // 나만의 결재선 등록
     @Insert("INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO,TEMPLATE_NO, WRITER_NO, APPR_LINE_NAME, CREATED_DATE) " +
             "VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL,#{templateNo}, #{writerNo}, #{apprLineName}, SYSDATE)")
     @Options(useGeneratedKeys = true, keyProperty = "apprLineNo", keyColumn = "APPR_LINE_NO")
-    void insertApprovalLine(ApprovalLineVo approvalLine);
+    int insertApprovalLine(ApprovalLineVo approvalLine);
     // 결재자 등록
     @Insert("INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, #{approverNo}, #{apprLineNo}, #{seq}, #{approverClassificationNo})")
-    void insertApprover(ApproverVo approver);
+    int insertApprover(ApproverVo approver);
 
     // 마이결재선 전체목록 (결재선) - userNo입력
     @Select("SELECT AT.APPR_LINE_NO, AT.APPR_LINE_NAME , AT.CREATED_DATE, DT.TEMPLATE_NO , DT.TITLE , DT.CONTENT " +
             ", DTC.CATEGORY_NO, DTC.NAME AS CATEGORY_NAME FROM APPR_LINE_TEMPLATE AT JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO " +
-            "JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO WHERE AT.WRITER_NO = #{loginUserNo}")
+            "JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO WHERE AT.WRITER_NO = #{loginUserNo}" +
+            "ORDER BY AT.APPR_LINE_NO DESC")
     List<ApprovalLineVo> getApprovalLineList(String loginUserNo);
     // 마이결재선 전체목록 (결재자 여러명)
     @Select("SELECT AI.APPROVER_INFO_NO, AI.APPR_LINE_NO, AI.SEQ , AI.APPROVER_CLASSIFICATION_NO, PI.NAME approverName " +
@@ -43,12 +44,7 @@ public interface MyApprLineMapper {
             "ORDER BY AI.APPR_LINE_NO, AI.SEQ")
     List<ApproverVo> getApproverList(int apprLineNo);
 
-    // 결재선 삭제 - userNo입력
-    @Delete("UPDATE SET APPR_LINE_TEMPLATE WHERE APPR_LINE_NO = #{apprLineNo}")
-    void deleteApprLine(int apprLineNo);
-
-
-
+    // 결재선 삭제
+    @Delete("UPDATE APPR_LINE_TEMPLATE SET DEL_YN ='Y' WHERE APPR_LINE_NO = #{apprLineNo} AND WRITER_NO= #{loginUserNo}")
+    void deleteApprLine(int apprLineNo, String loginUserNo);
 }
-
-

@@ -30,38 +30,32 @@ public class MyApprLineDao {
         return mapper.getTemplateByCategoryNo(categoryNo);
     }
 
-    // 기본 결재선 등록
-    public void insertApprovalLine(ApprovalLineVo approvalLine) {
-        System.out.println("ApprovalLineDao.insertApprovalLine");
-        mapper.insertApprovalLine(approvalLine);
+    // 마이 결재선 등록
+    public int insertApprovalLine(ApprovalLineVo approvalLine) {
+        return mapper.insertApprovalLine(approvalLine);
     }
     // 결재선 - 결재자 여러명 등록
-    public void insertApprover(ApproverVo approver) {
-        System.out.println("ApprovalLineDao.insertApprover");
-        mapper.insertApprover(approver);
+    public int insertApprover(ApproverVo approver) {
+        return mapper.insertApprover(approver);
     }
 
     // 결재선 전체목록 (결재선)
     public List<ApprovalLineVo> getApprovalLineList(String loginUserNo) {
         List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList(loginUserNo);
-        System.out.println("approvalLines = " + approvalLines);
         return approvalLines;
     }
 
     // 결재선 전체목록 (결재자 여러명)
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
-        System.out.println("approvers = " + approvers);
         if(approvers ==null){
-            System.out.println("approverLineVoList nulllllllllll= " + approvers);
+            System.out.println("approverLineVoList null= " + approvers);
     } return approvers;
   }
 
     // 결재선 삭제
-    public void deleteApprLine(int apprLineNo) {
-        mapper.deleteApprLine(apprLineNo);
+    public void deleteApprLine(int apprLineNo, String loginUserNo) {
+        mapper.deleteApprLine(apprLineNo, loginUserNo);
     }
-
-
 
 }
