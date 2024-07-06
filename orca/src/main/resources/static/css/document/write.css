@@ -68,49 +68,302 @@ input[type="text"], select {
 }
 
 // 참조인 추가 모달창
-  /* 모달 스타일 */
-     .modal {
-         display: none;
-         position: fixed;
-         z-index: 1;
-         left: 0;
-         top: 0;
-         width: 100%;
-         height: 100%;
-         overflow: auto;
-         background-color: rgb(0,0,0);
-         background-color: rgba(0,0,0,0.4);
-         padding-top: 60px;
-     }
+  /* 모달창 기본 스타일 */
+  .modal {
+      display: none; /* 기본적으로 숨김 */
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; /* 팝업 너비 조정 */
+      height: 600px; /* 팝업 높이 조정 */
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 10px; /* 모서리를 둥글게 */
+  }
 
-     .modal-content {
-         background-color: #fefefe;
-         margin: 5% auto;
-         padding: 20px;
-         border: 1px solid #888;
-         width: 80%;
-     }
+  /* 모달창 오버레이 */
+  .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+  }
 
-     .close {
-         color: #aaa;
-         float: right;
-         font-size: 28px;
-         font-weight: bold;
-     }
+  /* 모달창 헤더 스타일 */
+  .modal-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
 
-     .close:hover,
-     .close:focus {
-         color: black;
-         text-decoration: none;
-         cursor: pointer;
-     }
+  .modal-content .close {
+      cursor: pointer;
+      align-self: flex-end;
+      font-size: 1.5em;
+      color: #333;
+  }
 
-     .hidden {
-         display: none;
-     }
+  .modal-content h2 {
+      margin: 0 0 20px 0;
+      font-size: 1.5em;
+      color: #1E90FF; /* 타이틀 색상을 파란색으로 */
+  }
 
-     .selected-referrers {
-         margin-top: 20px;
-         border: 1px dashed #ccc;
-         padding: 10px;
-     }
+  /* jstree 스타일 */
+  .jstree-container {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+  }
+
+  .jstree-icon {
+      font-size: 1.2em;
+      color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
+  }
+
+  /* 확인 버튼 스타일 */
+  .modal-content button {
+      align-self: flex-end;
+      padding: 10px 20px;
+      background-color: #1E90FF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+  }
+
+  .modal-content button:hover {
+      background-color: #1C86EE; /* 버튼 호버 색상 변경 */
+  }
+
+  /* 추가된 CSS 스타일 */
+  /* 모달창 기본 스타일 */
+  #organizationModal {
+      display: none; /* 기본적으로 숨김 */
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; /* 팝업 너비 조정 */
+      height: 600px; /* 팝업 높이 조정 */
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 10px; /* 모서리를 둥글게 */
+  }
+
+  /* 모달창 오버레이 */
+  #organizationModal .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+  }
+
+  /* 모달창 헤더 스타일 */
+  #organizationModal .modal-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+
+  #organizationModal .modal-content .close {
+      cursor: pointer;
+      align-self: flex-end;
+      font-size: 1.5em;
+      color: #333;
+  }
+
+  #organizationModal .modal-content h2 {
+      margin: 0 0 20px 0;
+      font-size: 1.5em;
+      color: #1E90FF; /* 타이틀 색상을 파란색으로 */
+  }
+
+  /* jstree 스타일 */
+  #organizationModal #jstree {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+  }
+
+  .jstree-icon {
+      font-size: 1.2em;
+      color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
+  }
+
+  /* 확인 버튼 스타일 */
+  #organizationModal button {
+      align-self: flex-end;
+      padding: 10px 20px;
+      background-color: #1E90FF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+  }
+
+  #organizationModal button:hover {
+      background-color: #1C86EE; /* 버튼 호버 색상 변경 */
+  }
+
+  /* 추가된 CSS 스타일 */
+  .popup {
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      width: 700px; /* 팝업 너비 조정 */
+      height: 600px; /* 팝업 높이 조정 */
+      border-radius: 10px; /* 모서리를 둥글게 */
+  }
+
+  .popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .popup-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 2fr 1fr;
+      height: calc(100% - 100px); /* 하단의 결재선 선택 영역을 제외한 높이 */
+  }
+
+  .popup-body-left {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      overflow-y: auto;
+  }
+
+  .t-title {
+      font-weight: bold;
+  }
+
+  .popup-body-left p {
+      font-size: 12px;
+  }
+
+  .popup-body-right {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      width: 100%;
+      height: 95%;
+      overflow-y: auto;
+  }
+
+  .popup-body-bottom {
+      width: 100%;
+      height: 30%;
+      grid-column: span 2;
+  }
+
+  .popup-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+  }
+
+  .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+  }
+
+  .approval-line {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .approval-line > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+  }
+
+  .approval-selection {
+      height: 100px;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  .approval-selection .slot {
+      border: 1px dashed #bbb;
+      padding: 5px;
+      margin: 5px;
+      width: 100px;
+      text-align: center;
+      flex-grow: 1;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .approval-selection .slot.dragover {
+      border-color: #1E90FF;
+  }
+
+  .approval-role {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+  }
+
+  .approval-role label {
+      margin-right: 10px;
+  }
+
+  .approval-role select {
+      margin-left: 5px;
+  }
+
+  .slot-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+  }
+
+  .role-select {
+      width: 80px;
+      margin-top: 5px;
+  }
+
+  input, select {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+  }

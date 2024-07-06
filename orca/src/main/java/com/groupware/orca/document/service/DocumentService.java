@@ -182,7 +182,7 @@ public class DocumentService {
         }
         return documentList;
     }
-    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임  
+    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     public List<DocumentVo> getPublicDocumentList(String loginUserNo) {
         List<DocumentVo> documentList = dao.getPublicDocumentList(loginUserNo);
         for (DocumentVo document : documentList) {

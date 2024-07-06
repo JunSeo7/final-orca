@@ -61,6 +61,7 @@
                    <td colspan="3">
                        <button type="button" onclick="openOrganizationModal()">추가</button>
                        <div id="referrerList">
+<input type="number" name="referencerNo">
                            <!-- 참조인 목록 -->
                        </div>
                    </td>
