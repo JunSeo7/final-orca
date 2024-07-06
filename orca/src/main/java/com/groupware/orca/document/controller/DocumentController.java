@@ -31,19 +31,14 @@ public class DocumentController {
     @GetMapping("categorie/list")
     @ResponseBody
     public List<TemplateVo> getCategory() {
-        System.out.println("ApprovalLineController.getCategory");
         List<TemplateVo> templateVoList = service.getCategory();
-        System.out.println("templateVoList = " + templateVoList);
         return templateVoList;
     }
     // 결재 작성 결재양식 제목 가져오기
     @GetMapping("template/list")
     @ResponseBody
     public List<TemplateVo> getTemplateByCategoryNo(@RequestParam int categoryNo) {
-        System.out.println("ApprovalLineController.getTemplateByCategoryNo");
-        System.out.println("categoryNo = " + categoryNo);
         List<TemplateVo> templateVoList= service.getTemplateByCategoryNo(categoryNo);
-        System.out.println("templateVoList = " + templateVoList);
         return service.getTemplateByCategoryNo(categoryNo);
     }
     // 결재 작성 템플릿 내용 가져오기
@@ -57,7 +52,6 @@ public class DocumentController {
     @GetMapping("template/apprline")
     @ResponseBody
     public ApprovalLineVo getTemplateApprLine(@RequestParam("templateNo") int templateNo){
-        System.out.println("templateNo = " + templateNo);
         ApprovalLineVo apprline = service.getTemplateApprLine(templateNo);
         return apprline;
     }
@@ -70,9 +64,7 @@ public class DocumentController {
             , String[] approverNo
             , String[] deptCode
             , String[] positionCode
-            , String[] approverClassificationNo
-            , String[] comment
-            ){
+            , String[] approverClassificationNo ) {
 
         System.out.println("=================================");
         List<ApproverVo> approverVoList = new ArrayList<>();
@@ -83,27 +75,14 @@ public class DocumentController {
             avo.setDeptCode(Integer.parseInt(deptCode[i]));
             avo.setPositionCode(Integer.parseInt(positionCode[i]));
             avo.setApproverClassificationNo(Integer.parseInt(approverClassificationNo[i]));
-            avo.setComment(comment[i]);
-
             approverVoList.add(avo);
         }
 
-        System.out.println("approverVoList = " + approverVoList);
         vo.setApproverVoList(approverVoList);
-        System.out.println("approverVoList = " + approverVoList);
 
-
-        System.out.println("=================================");
-
-        System.out.println("DocumentController.writeDocument");
-        System.out.println("작성 vo = " + vo);
-        String loginUserNo = "1";
-                //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(Integer.parseInt(loginUserNo));
-        System.out.println("DocumentController.writeDocument");
-        System.out.println("작성 vo = " + vo);
         int result = service.writeDocument(vo);
-        System.out.println("result = " + result);
         return "redirect:/orca/document/list";
     }
 
@@ -111,77 +90,65 @@ public class DocumentController {
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-            //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
     // (임시저장) 내가 작성한 결재 문서 목록 조회
     @GetMapping("temp")
     public String getTempDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getTempDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
 
     // (종결) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public String getCloseDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getCloseDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
     // (반려) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public String getRetrunDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getRetrunDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
     // (결재취소) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @GetMapping("cencel")
     public String getCancelDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getCancelDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
     // (삭제함) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     public String getDeleteDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDeleteDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
         return "document/list";
     }
 
     // 받은 결재
     @GetMapping("/received")
     public String getSendDocumentList(Model model, HttpSession httpSession) {
-        String loginUserNo = "15";
-            //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
-        System.out.println("documentList = " + documentList);
+        return "document/list";
+    }
+
+    // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
+    @GetMapping("/public")
+    public String getPublicDocumentList(Model model, HttpSession httpSession){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getPublicDocumentList(loginUserNo);
+        model.addAttribute("documentList", documentList);
         return "document/list";
     }
 
@@ -190,16 +157,33 @@ public class DocumentController {
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
-    public String getDocumentByNo(Model model, HttpSession httpSession){
-        String loginUserNo = "10";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        int docNo =8;
+    public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        System.out.println("상세loginUserNo = " + loginUserNo);
+        System.out.println("상세docNo = " + docNo);
         DocumentVo document = service.getDocumentByNo(docNo);
+        System.out.println("상세document = " + document);
         model.addAttribute("document", document);
         return "document/detail";
     }
 
+    // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
+    @PostMapping("edit")
+    public String editDocument(DocumentVo vo, HttpSession httpSession){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(Integer.parseInt(loginUserNo));
+        int result = service.editDocument(vo);
+        return "redirect:/orca/document/list";
+    }
 
+    // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 )
+    @PostMapping("updateStatus")
+    public String updateStatusDocument(DocumentVo vo, HttpSession httpSession){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(Integer.parseInt(loginUserNo));
+        int result = service.updateStatusDocument(vo);
+        return "redirect:/orca/document/list";
+    }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PutMapping("delete")

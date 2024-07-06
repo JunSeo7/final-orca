@@ -16,9 +16,6 @@
         <label for="apprLineName">결재선 이름:</label>
         <input type="text" id="apprLineName" name="apprLineName">
 
-        <label for="apprLineName">기안자 번호:</label>
-        <input type="number" id="writerNo" name="writerNo">
-
         <label for="categoryNo">카테고리:</label>
         <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
             <!-- 카테고리 옵션들이 여기 추가될 예정 -->

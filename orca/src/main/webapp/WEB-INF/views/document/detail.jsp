@@ -23,7 +23,7 @@
                     <div class="approval-cell">
                         <p>${document.statusName}</p>
                         <p>${document.deptName}</p>
-                        <p>${document.writerName}[${document.positionName}]</p>
+                        <p>${document.writerName} ${document.positionName}</p>
                         <p>${document.creditDate}</p>
                     </div>
                     <c:forEach var="approver" items="${document.approverVoList}">
@@ -32,7 +32,7 @@
                             <p>${approver.approverClassificationNo}</p>
                             <p>${approver.apprStageName}</p>
                             <p>${approver.deptName}</p>
-                            <p>${approver.approverName}[${approver.positionName}]</p>
+                            <p>${approver.approverName} ${approver.positionName}</p>
                             <p>${approver.approvalDate}</p>
                         </div>
                     </c:forEach>
@@ -54,8 +54,21 @@
                 <td class="user-info-data">${document.creditDate}</td>
             </tr>
             <tr>
-                <td class="user-info-header">공람(참조인)</td>
-                <td class="user-info-data" colspan="5">참조인 이름 (부서) 리스트~</td>
+                <td class="user-info-header">공람(참조자)</td>
+                <td class="user-info-data" colspan="5">
+
+                <c:set var="referencers" value="${document.referencerVoList}" />
+                    <c:choose>
+                        <c:when test="${empty referencers}">
+                            <p>참조인이 없습니다.</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="referencer" items="${referencers}">
+                               [${referencer.deptName}] ${referencer.referrerName} ${referencer.positionName},
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -107,27 +120,32 @@
                    </td>
                </tr>
            </c:forEach>
-       <form id="approvalForm" method="post" action="/orca/document/status">
-          <tr>
-              <td class="document-body-header">${sessionScope.loginUser.name}[${sessionScope.loginUser.nameOfPosition}]</td>
-               <td class="document-body-data">
-                   <textarea id="myComment" name="myComment" placeholder="코멘트를 작성하세요"></textarea>
-               </td>
-         </tr>
-        </table>
-    </div>
-    <div class="button-container">
-       <c:if test="${sessionScope.loginUser.empNo == document.writerNo}">
-           <button type="button" class="approval-btn" onclick="submitForm(4)">결재 취소</button> <!-- 4: 결재 취소 -->
-       </c:if>
 
-       <c:forEach var="approver" items="${document.approverVoList}">
-           <c:if test="${sessionScope.loggedInUser.empNo == approver.approverNo}">
-               <button type="button" class="approval-btn" onclick="submitForm(3)">승인</button> <!-- 3: 승인 -->
-               <button type="button" class="approval-btn" onclick="submitForm(2)">반려</button> <!-- 2: 반려 -->
-           </c:if>
-       </c:forEach>
-    </div>
+
+                <form id="approvalForm" method="post" action="/orca/apprline/status">
+                     <input name="docNo" value="${document.docNo}">
+                     <input name="approverNo" value="${sessionScope.loginUser.empNo}">
+                    <table>
+                        <tr>
+                            <td class="document-body-header">${sessionScope.loginUser.name}[${sessionScope.loginUser.nameOfPosition}]</td>
+                            <td class="document-body-data">
+                                <textarea id="comment" name="comment" placeholder="코멘트를 작성하세요"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div>
+                        <label for="approvalStatus" class="form-label">결재 상태</label>
+                        <div class="form_toggle row-vh d-flex flex-row justify-content-between">
+                            <input type="radio" name="approvalStatus" id="approve" class="radio-input" value="3" checked="checked" /><!-- 3: 승인 -->
+                            <label for="approve" class="radio-label">승인</label>
+                            <input type="radio" name="approvalStatus" id="reject" class="radio-input" value="2" /><!-- 2: 반려 -->
+                            <label for="reject" class="radio-label">반려</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="approval-btn">결과처리</button>
+               </form>
+
 </main>
 </body>
 </html>

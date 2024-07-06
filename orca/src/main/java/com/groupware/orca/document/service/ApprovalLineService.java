@@ -19,34 +19,41 @@ import java.util.Map;
 public class ApprovalLineService {
 
     private final ApprovalLineDao dao;
+
     // 결재선 등록 조직도 가져오기
     public List<UserVo> getUsers() {
         return dao.getUsers();
     }
+
     // 결재선 등록 템플릿 카테고리 가져오기
     public List<TemplateVo> getCategory() {
         return dao.getCategory();
     }
+
     // 결재선 등록 카테고리번호 - 결재양식 제목 가져오기
     public List<TemplateVo> getTemplateByCategoryNo(int categoryNo) {
         return dao.getTemplateByCategoryNo(categoryNo);
     }
+
     //기본 결재선 등록
     @Transactional
-    public void addApprovalLine(ApprovalLineVo approvalLineVo) {
-        System.out.println("ApprovalLineService.addApprovalLine");
-        dao.insertApprovalLine(approvalLineVo);
+    public int addApprovalLine(ApprovalLineVo approvalLineVo) {
+        int result = 0;
 
+        // 기본 결재선 등록 전 - 기본 결재선 존재 여부 확인 - 0이여야 insert 될 수 있도록 함.
+        int count = dao.countBasicApprovalLine(approvalLineVo.getTemplateNo());
+        if (count > 0) {
+            throw new IllegalStateException("해당 양식에는 이미 기본 결재선이 존재합니다.");
+        }
+
+        result += dao.insertApprovalLine(approvalLineVo);
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
-        System.out.println("approverList = " + approverList);
         if (approverList != null) {
             for (ApproverVo approver : approverList) {
-                System.out.println("approver = " + approver);
                 approver.setApprLineNo(approvalLineVo.getApprLineNo()); // 방금 만든 결재선 번호 사용
-                System.out.println("approvalLineVo.getApprLineNo() = " + approvalLineVo.getApprLineNo());
-                dao.insertApprover(approver);
+                result += dao.insertApprover(approver);
             }
-        }
+        } return result;
     }
 
     // 결재선 전체목록 (결재선/결재자)
@@ -101,5 +108,4 @@ public class ApprovalLineService {
     public void deleteApprLine(int apprLineNo) {
         dao.deleteApprLine(apprLineNo);
     }
-
 }

@@ -29,22 +29,20 @@ public class MyApprLineService {
     public List<TemplateVo> getTemplateByCategoryNo(int categoryNo) {
         return dao.getTemplateByCategoryNo(categoryNo);
     }
+
     //기본 결재선 등록
     @Transactional
-    public void addApprovalLine(ApprovalLineVo approvalLineVo) {
-        System.out.println("ApprovalLineService.addApprovalLine");
-        dao.insertApprovalLine(approvalLineVo);
+    public int addApprovalLine(ApprovalLineVo approvalLineVo) {
+
+        int result = dao.insertApprovalLine(approvalLineVo);
 
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
-        System.out.println("approverList = " + approverList);
         if (approverList != null) {
             for (ApproverVo approver : approverList) {
-                System.out.println("approver = " + approver);
                 approver.setApprLineNo(approvalLineVo.getApprLineNo()); // 방금 만든 결재선 번호 사용
-                System.out.println("approvalLineVo.getApprLineNo() = " + approvalLineVo.getApprLineNo());
-                dao.insertApprover(approver);
+                result += dao.insertApprover(approver);
             }
-        }
+        } return result;
     }
 
     // 결재선 전체목록 (결재선/결재자)
@@ -59,9 +57,8 @@ public class MyApprLineService {
 
 
     // 결재선 삭제
-    public void deleteApprLine(int apprLineNo) {
-        dao.deleteApprLine(apprLineNo);
+    public void deleteApprLine(int apprLineNo, String loginUserNo) {
+        dao.deleteApprLine(apprLineNo, loginUserNo);
     }
-
 
 }

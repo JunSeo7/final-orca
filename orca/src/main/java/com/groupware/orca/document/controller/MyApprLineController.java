@@ -24,7 +24,6 @@ public class MyApprLineController {
     //기본 결재선 등록 - 화면
     @GetMapping("add")
     public String addApprLineView(Model model) {
-        System.out.println("model = " + model);
         model.addAttribute("approvalLine", new ApprovalLineVo());
         return "myapprline/add";
     }
@@ -32,57 +31,47 @@ public class MyApprLineController {
     @GetMapping("organization/list")
     @ResponseBody
     public List<UserVo> getUsers() {
-        System.out.println("ApprovalLineController.getUsers");
         List<UserVo> userVoList = service.getUsers();
-        System.out.println("userVoList = " + userVoList);
         return userVoList;
     }
     // 결재선 등록 카테고리 가져오기
     @GetMapping("categorie/list")
     @ResponseBody
     public List<TemplateVo> getCategory() {
-        System.out.println("ApprovalLineController.getCategory");
         List<TemplateVo> templateVoList = service.getCategory();
-        System.out.println("templateVoList = " + templateVoList);
         return templateVoList;
     }
    // 결재선 등록 결재양식 제목 가져오기
    @GetMapping("template/list")
    @ResponseBody
    public List<TemplateVo> getTemplateByCategoryNo(@RequestParam int categoryNo) {
-       System.out.println("ApprovalLineController.getTemplateByCategoryNo");
-       System.out.println("categoryNo = " + categoryNo);
        List<TemplateVo> templateVoList= service.getTemplateByCategoryNo(categoryNo);
-       System.out.println("templateVoList = " + templateVoList);
        return service.getTemplateByCategoryNo(categoryNo);
    }
 
-    //기본 결재선 등록
+    //마이 결재선 등록
     @PostMapping("add")
-    public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
-        System.out.println("ApprovalLineController.addApprovalLine");
-        System.out.println("approvalLineVo = " + approvalLineVo);
-        service.addApprovalLine(approvalLineVo);
+    public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo, HttpSession httpSession) {
+        approvalLineVo.setWriterNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
+        int result = service.addApprovalLine(approvalLineVo);
+        System.out.println("result = " + result);
        return "redirect:/orca/myapprline/list";
     }
 
     // 결재선 전체목록 (양식/결재라인)
     @GetMapping("list")
     public String getApprLines(Model model, HttpSession httpSession) {
-        String loginUserNo = "1";
-        //((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
-        System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
         return "myapprline/list";
     }
 
     // 결재선 삭제
     @PostMapping("delete")
-    public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
-        service.deleteApprLine(apprLineNo);
+    public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo, HttpSession httpSession) {
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        service.deleteApprLine(apprLineNo, loginUserNo);
         return "redirect:/orca/myapprline/list";
     }
-
-
 }
