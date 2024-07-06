@@ -260,7 +260,7 @@ public interface DocumentMapper {
 
     // 결재선 목록 조회
     @Select("""
-            SELECT DISTINCT AL.DOC_NO AS approvalDocNo, AL.SEQ, AL.APPROVAL_DATE, AL.APPROVER_CLASSIFICATION_NO,
+            SELECT DISTINCT AL.DOC_NO AS approvalDocNo, AL.SEQ, AL.APPROVAL_DATE, AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT",
                             PI.NAME AS approverName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName,
                             DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME AS apprStageName, AL.APPROVER_NO
             FROM APPR_LINE AL

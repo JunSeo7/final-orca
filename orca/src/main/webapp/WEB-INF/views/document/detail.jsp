@@ -123,8 +123,7 @@
 
 
                 <form id="approvalForm" method="post" action="/orca/apprline/status">
-                     <input name="docNo" value="${document.docNo}">
-                     <input name="approverNo" value="${sessionScope.loginUser.empNo}">
+                     <input hidden name="docNo" value="${document.docNo}">
                     <table>
                         <tr>
                             <td class="document-body-header">${sessionScope.loginUser.name}[${sessionScope.loginUser.nameOfPosition}]</td>

@@ -75,30 +75,6 @@ public interface ApprovalLineMapper {
             """)
     List<ApproverVo> getApproverList(int apprLineNo);
 
-    // 결재선 - 승인처리, 반려처리
-    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
-    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
-
-    // UPDATE APPR_LINE
-    //        SET APPROVAL_STAGE = 3, "COMMENT" = '코멘투', APPROVAL_DATE = SYSDATE
-    //        WHERE DOC_NO = 11 AND APPROVER_NO = 11;
-
-    @Update("""
-            UPDATE APPR_LINE
-            SET APPROVAL_STAGE = #{approvalStage}, COMMENT = #{comment}, APPROVAL_DATE = SYSDATE
-            WHERE DOC_NO = #{docNo} AND APPROVER_NO = #{approverNo}
-            """)
-    int updateStatusApprLine(ApproverVo vo);
-
-    @Select("SELECT * FROM APPR_LINE WHERE DOC_NO = #{docNo}")
-    List<ApproverVo> getApprovalLinesByDocNo(int docNo);
-
-    // 문서 - 승인처리, 반려처리
-    @Update("UPDATE DOCUMENT SET STATUS = #{status} WHERE DOC_NO = #{docNo}")
-    int updateStatusDocument(int docNo, int status);
-
-
-
     // 기본 결재선 삭제
     @Delete("""
             UPDATE APPR_LINE_TEMPLATE
@@ -106,4 +82,31 @@ public interface ApprovalLineMapper {
             WHERE APPR_LINE_NO = #{apprLineNo} AND WRITER_NO IS NULL
             """)
     void deleteApprLine(int apprLineNo);
+
+
+
+    // 결재자, 합의자
+    // 결재선 - 승인처리, 반려처리
+
+    @Update("""
+            UPDATE APPR_LINE
+            SET APPROVAL_STAGE = #{approvalStage}, "COMMENT" = #{comment}, APPROVAL_DATE = SYSDATE
+            WHERE DOC_NO = #{docNo} AND APPROVER_NO = #{approverNo}
+            """)
+    int updateStatusApprLine(ApproverVo vo);
+
+
+    // 문서 - 승인처리, 반려처리
+    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
+    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
+
+    // 문서 상태 확인
+    @Select("SELECT * FROM APPR_LINE WHERE DOC_NO = #{docNo}")
+    List<ApproverVo> getApprovalLinesByDocNo(int docNo);
+
+    // 처리중....
+    @Update("UPDATE DOCUMENT SET STATUS = #{status} WHERE DOC_NO = #{docNo}")
+    int updateStatusDocument(int docNo, int status);
+
+
 }
