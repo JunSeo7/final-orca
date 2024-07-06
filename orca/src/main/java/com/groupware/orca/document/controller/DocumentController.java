@@ -111,8 +111,8 @@ public class DocumentController {
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
-
     // (종결) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    @GetMapping("close")
     public String getCloseDocumentList(Model model, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getCloseDocumentList(loginUserNo);
@@ -120,6 +120,7 @@ public class DocumentController {
         return "document/list";
     }
     // (반려) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
+    @GetMapping("retrun")
     public String getRetrunDocumentList(Model model, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getRetrunDocumentList(loginUserNo);

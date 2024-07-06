@@ -5,6 +5,7 @@ import com.groupware.orca.document.vo.ApprovalLineVo;
 import com.groupware.orca.document.vo.ApproverVo;
 import com.groupware.orca.document.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,6 @@ public class ApprovalLineController {
         } catch (IllegalStateException e) {
             // 기본 결재선 중복 등 특정 조건에 대한 예외 처리
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-
         }
     }
 
@@ -73,16 +73,25 @@ public class ApprovalLineController {
         return "apprline/list";
     }
 
+    // 결재선 삭제
+    @GetMapping("delete")
+    public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
+        service.deleteApprLine(apprLineNo);
+        return "redirect:/orca/apprline/list";
+    }
+
+
+    // 결재자, 합의자
     // 결재선 - 승인처리, 반려처리
-    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
-    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
     @PostMapping("status")
-    public String updateStatusApprLine(ApproverVo vo){
+    public String updateStatusApprLine(ApproverVo vo, HttpSession httpSession){
+        vo.setApproverNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
         System.out.println("결재선 - 승인, 반려처리 vo = " + vo);
         int result = service.updateStatusApprLine(vo);
         System.out.println("result = " + result);
         return "redirect:/orca/document/list";
     }
+
     // 문서 - 승인처리, 반려처리
     // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
     // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
@@ -93,10 +102,5 @@ public class ApprovalLineController {
         return "redirect:/orca/document/list";
     }
 
-    // 결재선 삭제
-    @GetMapping("delete")
-    public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
-        service.deleteApprLine(apprLineNo);
-        return "redirect:/orca/apprline/list";
-    }
+
 }
