@@ -103,12 +103,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // 인풋태그 - 결재선 정보 숨기기
                     const hiddenInputs = `
-                        <input  name="seq" value="${approver.seq}">
-                        <input  name="approverNo" value="${approver.approverNo}">
-                        <input  name="deptCode" value="${approver.deptCode}">
-                        <input  name="positionCode" value="${approver.positionCode}">
-                        <input  name="approverClassificationNo" value="${approver.approverClassificationNo}">
-                        <input  name="comment" value="${approver.comment}">
+                        <input hidden name="seq" value="${approver.seq}">
+                        <input hidden name="approverNo" value="${approver.approverNo}">
+                        <input hidden name="deptCode" value="${approver.deptCode}">
+                        <input hidden name="positionCode" value="${approver.positionCode}">
+                        <input hidden name="approverClassificationNo" value="${approver.approverClassificationNo}">
                     `;
 
                     processContainer.innerHTML += hiddenInputs;

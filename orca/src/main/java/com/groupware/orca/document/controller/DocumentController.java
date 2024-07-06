@@ -1,10 +1,7 @@
 package com.groupware.orca.document.controller;
 
 import com.groupware.orca.document.service.DocumentService;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.ApproverVo;
-import com.groupware.orca.document.vo.DocumentVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.document.vo.*;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +61,8 @@ public class DocumentController {
             , String[] approverNo
             , String[] deptCode
             , String[] positionCode
-            , String[] approverClassificationNo ) {
+            , String[] approverClassificationNo
+            , String[] referencerNo) {
 
         System.out.println("=================================");
         List<ApproverVo> approverVoList = new ArrayList<>();
@@ -77,8 +75,18 @@ public class DocumentController {
             avo.setApproverClassificationNo(Integer.parseInt(approverClassificationNo[i]));
             approverVoList.add(avo);
         }
-
         vo.setApproverVoList(approverVoList);
+        System.out.println("approverVoList = " + approverVoList);
+
+
+        List<ReferencerVo> referencerVoList = new ArrayList<>();
+        for(int i = 0; i < referencerNo.length; ++i){
+            ReferencerVo rvo = new ReferencerVo();
+            rvo.setReferrerNo(Integer.parseInt(referencerNo[i]));
+            referencerVoList.add(rvo);
+        }
+        vo.setReferencerVoList(referencerVoList);
+        System.out.println("referencerVoList = " + referencerVoList);
 
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(Integer.parseInt(loginUserNo));
