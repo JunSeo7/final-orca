@@ -53,10 +53,16 @@ public class ApprovalLineController {
 
     //기본 결재선 등록
     @PostMapping("add")
-    public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
-        int result = service.addApprovalLine(approvalLineVo);
-        System.out.println("result = " + result);
-       return "redirect:/orca/apprline/list";
+    public ResponseEntity<String> addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
+        try {
+            int result = service.addApprovalLine(approvalLineVo);
+            System.out.println("result = " + result);
+            return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/orca/apprline/list").build(); // 성공 시 리다이렉트
+        } catch (IllegalStateException e) {
+            // 기본 결재선 중복 등 특정 조건에 대한 예외 처리
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+
+        }
     }
 
     // 결재선 전체목록 (양식/결재라인)
@@ -71,10 +77,11 @@ public class ApprovalLineController {
     // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
     // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
     @PostMapping("status")
-    public void updateStatusApprLine(ApproverVo vo){
+    public String updateStatusApprLine(ApproverVo vo){
+        System.out.println("결재선 - 승인, 반려처리 vo = " + vo);
         int result = service.updateStatusApprLine(vo);
         System.out.println("result = " + result);
-
+        return "redirect:/orca/document/list";
     }
     // 문서 - 승인처리, 반려처리
     // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
