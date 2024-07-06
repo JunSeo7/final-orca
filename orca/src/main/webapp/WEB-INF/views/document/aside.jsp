@@ -40,9 +40,8 @@
                         <li class="nav-item"><a href="/orca/document/temp"><i class="bi bi-file-earmark"></i> 임시 보관함</a></li>
                         <li class="nav-item"><a href="/orca/document/list"><i class="bi bi-file-earmark"></i> 기안</a></li>
                         <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 결재</a></li>
-                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 진행</a></li>
-                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 종결</a></li>
-                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 반려</a></li>
+                        <li class="nav-item"><a href="/orca/document/close"><i class="bi bi-file-earmark"></i> 종결</a></li>
+                        <li class="nav-item"><a href="/orca/document/retrun"><i class="bi bi-file-earmark"></i> 반려</a></li>
                         <li class="nav-item"><a href="/orca/document/cencel"><i class="bi bi-file-earmark"></i> 삭제함</a></li>
                     </ul>
                 </li>
