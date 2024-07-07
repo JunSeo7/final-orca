@@ -15,23 +15,25 @@ document.addEventListener("DOMContentLoaded", function() {
     createSlots();
 
     // 결재선 삭제 버튼 이벤트 바인딩
-    $(document).on('click', '.delete-btn', function(event) {
-        event.stopPropagation();  // 부모 요소 이벤트 전파 막기
-        const apprLineNo = $(this).data('apprline-no');
-        console.log('apprLine No:', apprLineNo);
+   $(document).on('click', '.delete-btn', function(event) {
+       event.stopPropagation();  // 부모 요소 이벤트 전파 막기
+       const apprLineNo = $(this).data('apprline-no');
+       console.log('apprLine No:', apprLineNo);
 
-        $.ajax({
-            url: '/orca/myapprline/delete?apprLineNo=' + apprLineNo,
-            method: 'POST',
-            success: function(data) {
-                console.log('apprLine deleted:', data);
-                location.reload();
-            },
-            error: function(e) {
-                console.error('Error:', e);
-            }
-        });
-    });
+       $.ajax({
+           url: '/orca/myapprline/delete',
+           method: 'POST',
+           data: { apprLineNo: apprLineNo },
+           success: function(data) {
+               console.log('apprLine deleted:', data);
+               location.reload();
+           },
+           error: function(error) {
+               console.error('Error:', error);
+           }
+       });
+   });
+
 
     // 조직도 데이터를 가져오는 함수 호출
     fetchOrganization();
