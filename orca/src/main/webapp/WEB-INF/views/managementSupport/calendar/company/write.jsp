@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <div class="write-calendar-company">
-        <form id="eventForm" action="/orca/humanResources/writeCalendar" method="post">
+        <form id="eventForm" action="/orca/managementSupport/writeCalendar" method="post">
             <h2>사내 캘린더 작성</h2>
             <div class="form-group">
                 <label for="eventTitle">일정 제목</label>

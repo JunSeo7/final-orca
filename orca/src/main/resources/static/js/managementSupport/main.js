@@ -87,7 +87,7 @@ calnedarWrite.addEventListener('click', function () {
     if (alnedarWriteCnt % 2 == 0) {
         $.ajax({
             type: 'get',
-            url: '/orca/humanResources/writeCalendar',
+            url: '/orca/managementSupport/writeCalendar',
             dataType: 'html',
             success: function (response) {
                 while (mainDiv.firstChild) {
