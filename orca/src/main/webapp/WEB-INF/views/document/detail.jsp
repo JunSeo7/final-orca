@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!DOCTYPE html>
 <html>
-<head>
     <title>결재 상세 보기</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
     <!--파비콘-->
