@@ -66,46 +66,49 @@ public class ApprovalLineService {
         return approvalLines;
     }
 
-    // 결재선 - 승인처리, 반려처리
-    public int updateStatusApprLine(ApproverVo vo) {
-        return dao.updateStatusApprLine(vo);
-    }
-    public List<ApproverVo> getApprovalLinesByDocNo(int docNo) {
-        return dao.getApprovalLinesByDocNo(docNo);
-    }
-    // 문서 - 승인처리, 반려처리
-//    public int updateStatusDocument(int docNo, int status) {
-//        return dao.updateStatusDocument(docNo, status);
-//    }
-    public void finalizeDocumentStatus(int docNo) {
-        List<ApproverVo> approvers = getApprovalLinesByDocNo(docNo);
-
-        // 모든 결재자 승인 확인
-        boolean allApproved = true;
-        // 1명이라도 반려 여부
-        boolean anyRejected = false;
-
-        // 결재선 상태 확인
-        for (ApproverVo approver : approvers) {
-            if (approver.getApprovalStage() == 2) {  // 반려(2)여부
-                anyRejected = true;
-                break;
-            } else if (approver.getApprovalStage() != 3) {  // 모든 결재자 승인(3) 확인
-                allApproved = false;
-            }
-        }
-
-        if (anyRejected) {
-            // 결재자 중 한 명이라도 반려했을 경우 문서 상태를 반려 상태(4)로 업데이트합니다.
-            dao.updateStatusDocument(docNo, 4);  // Assuming 4 is the status for rejection
-        } else if (allApproved) {
-            // 모든 결재자가 승인했을 경우 문서 상태를 종결 상태(3)로 업데이트합니다.
-            dao.updateStatusDocument(docNo, 3);  // Assuming 3 is the status for approval
-        }
-    }
-
     // 결재선 삭제
     public void deleteApprLine(int apprLineNo) {
         dao.deleteApprLine(apprLineNo);
     }
+
+    // 결재선 - 승인처리, 반려처리
+    public int updateStatusApprLine(ApproverVo vo) {
+        int result = dao.updateStatusApprLine(vo);
+
+        // 결재선 업데이트가 성공했을 경우 문서 상태를 확인 후 업데이트
+        if (result > 0) {
+            // 해당 문서의 모든 결재 상태를 가져옴
+            List<ApproverVo> apprLines = dao.selectApprLineByDocNo(vo.getDocNo());
+
+            boolean allApproved = true;
+            boolean anyRejected = false;
+
+            for (ApproverVo apprLine : apprLines) {
+                if (apprLine.getApprovalStage() == 3) { // 반려
+                    anyRejected = true;
+                    System.out.println("반려 1개 있어서 반려로 넘어가여 = " + apprLine);
+                    break;
+                } else if (apprLine.getApprovalStage() != 2) { // 승인되지 않은 결재선이 있으면
+                    allApproved = false;
+                    System.out.println("승인안된거 있어서 넘어가여 안녕 = " + apprLine);
+                }
+            }
+
+            // 문서 - 승인처리, 반려처리
+            if (anyRejected) {
+                // 한명이라도 반려했으면 문서 상태를 반려로 변경
+                dao.updateDocumentStatus(vo.getDocNo(), 4); // 4: 반려
+                System.out.println("종결 반려 anyRejected = " + anyRejected);
+            } else if (allApproved) {
+                // 모두 승인했으면 문서 상태를 승인으로 변경
+                dao.updateDocumentStatus(vo.getDocNo(), 3); // 3: 종결
+                System.out.println("종결 승인 anyRejected = " + anyRejected);
+            }
+        }
+
+        return result;
+    }
+
+
+
 }

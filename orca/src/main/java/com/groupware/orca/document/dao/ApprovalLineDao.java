@@ -58,21 +58,26 @@ public class ApprovalLineDao {
     } return approvers;
   }
 
-    // 결재선 - 승인처리, 반려처리
-    public int updateStatusApprLine(ApproverVo vo) {
-        return mapper.updateStatusApprLine(vo);
-    }
-    public List<ApproverVo> getApprovalLinesByDocNo(int docNo) {
-        return mapper.getApprovalLinesByDocNo(docNo);
-    }
-    // 문서 - 승인처리, 반려처리
-    public int updateStatusDocument(int docNo, int status) {
-        return mapper.updateStatusDocument(docNo, status);
-    }
-
     // 결재선 삭제
     public void deleteApprLine(int apprLineNo) {
         mapper.deleteApprLine(apprLineNo);
     }
 
+    // 결재선 - 승인처리, 반려처리
+    public int updateStatusApprLine(ApproverVo vo) {
+        return mapper.updateStatusApprLine(vo);
+    }
+
+    // 문서 - 승인처리, 반려처리
+    // 문서 상태 확인
+    public List<ApproverVo> selectApprLineByDocNo(int docNo) {
+        return mapper.selectApprLineByDocNo(docNo);
+    }
+
+    // 처리중....
+    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
+    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
+    public int updateDocumentStatus(int docNo, int status) {
+        return mapper.updateDocumentStatus(docNo, status);
+    }
 }

@@ -138,6 +138,48 @@ main.full {
     flex: 1;
 }
 
+/* 승인, 반려 버튼 */
+
+.radio-input {
+  display: none;
+}
+
+.radio-label {
+  position: relative;
+  color: #4189e0;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  border: 3px solid #4189e0;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  margin: 0.5em; /* Add margin to separate the labels */
+}
+
+.radio-label:before {
+  content: "";
+  height: 1em;
+  width: 1em;
+  border: 3px solid #4189e0;
+  border-radius: 50%;
+}
+
+.radio-input:checked + .radio-label:before {
+  height: 0.5em;
+  width: 0.5em;
+  border: 0.4em solid #ffffff;
+  background-color: #4189e0;
+}
+
+.radio-input:checked + .radio-label {
+  background-color: #4189e0;
+  color: #ffffff;
+}
+
+
+
 /* 버튼 컨테이너 */
 .button-container {
     display: flex;
@@ -159,45 +201,5 @@ main.full {
 
 .approval-btn:hover {
     background-color: #368dff;
-}
-
-/* 승인, 반려 버튼 */
-
-.radio-input {
-  display: none;
-}
-
-.radio-label {
-  position: relative;
-  color: #4189e0;
-  font-family: "Poppins", sans-serif;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8em;
-  border: 3px solid #4189e0;
-  padding: 1em 2em;
-  border-radius: 0.5em;
-  margin: 0.5em; /* Add margin to separate the labels */
-}
-
-.radio-label:before {
-  content: "";
-  height: 2em;
-  width: 2em;
-  border: 3px solid #4189e0;
-  border-radius: 50%;
-}
-
-.radio-input:checked + .radio-label:before {
-  height: 1em;
-  width: 1em;
-  border: 0.65em solid #ffffff;
-  background-color: #4189e0;
-}
-
-.radio-input:checked + .radio-label {
-  background-color: #4189e0;
-  color: #ffffff;
 }
 

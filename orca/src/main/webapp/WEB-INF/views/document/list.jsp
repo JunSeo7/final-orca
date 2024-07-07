@@ -31,7 +31,7 @@
               <p>${document.creditDate}</p>
                 <div class="status_box">
                     <div class="status_details">
-                        <img src="/img/profile.png" alt="Profile Picture" class="profile-pic-small">
+                        <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic-small">
                         <span class="approval_title">${document.docNo}</span>
                         <span class="approval_title">${document.title}</span>
                         <span class="approval_title">[${document.categoryName}] ${document.templateTitle}</span>

@@ -87,7 +87,6 @@ public interface ApprovalLineMapper {
 
     // 결재자, 합의자
     // 결재선 - 승인처리, 반려처리
-
     @Update("""
             UPDATE APPR_LINE
             SET APPROVAL_STAGE = #{approvalStage}, "COMMENT" = #{comment}, APPROVAL_DATE = SYSDATE
@@ -97,16 +96,14 @@ public interface ApprovalLineMapper {
 
 
     // 문서 - 승인처리, 반려처리
-    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
-    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
-
     // 문서 상태 확인
     @Select("SELECT * FROM APPR_LINE WHERE DOC_NO = #{docNo}")
-    List<ApproverVo> getApprovalLinesByDocNo(int docNo);
+    List<ApproverVo> selectApprLineByDocNo(int docNo);
 
     // 처리중....
+    // 결재자가 모두 승인했을 경우 결재 문서 승인 (종결처리)
+    // 결재자중 한명이라도 반려했을 경우 문서 반려 (종결처리)
     @Update("UPDATE DOCUMENT SET STATUS = #{status} WHERE DOC_NO = #{docNo}")
-    int updateStatusDocument(int docNo, int status);
-
+    int updateDocumentStatus(int docNo, int status);
 
 }
