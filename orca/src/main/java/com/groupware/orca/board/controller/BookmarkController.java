@@ -18,11 +18,6 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
-    @GetMapping
-    public String getBookmarkPage() {
-        return "bookmark/bookmark";
-    }
-
     @GetMapping("/list")
     public @ResponseBody List<BookmarkVo> getBookmarkList(HttpSession session) {
         String empNo = ((UserVo) session.getAttribute("loginUserVo")).getEmpNo();
@@ -33,7 +28,6 @@ public class BookmarkController {
     public @ResponseBody ResponseEntity<String> addBookmark(@RequestBody BookmarkVo bookmarkVo, HttpSession session) {
         String empNo = ((UserVo) session.getAttribute("loginUserVo")).getEmpNo();
         bookmarkVo.setEmpNo(Integer.parseInt(empNo));
-        System.out.println("보드 = " + bookmarkVo);
         bookmarkService.insertBookmark(bookmarkVo);
         return ResponseEntity.ok("북마크가 추가되었습니다.");
     }

@@ -8,23 +8,25 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    @Select("SELECT c.*, " +
+    @Select("SELECT LEVEL AS COMMENT_LEVEL, " +
+            "c.BOARD_CHAT_NO, c.CONTENT, c.BOARD_NO, c.INSERT_USER_NO, " +
+            "TO_CHAR(c.ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ENROLL_DATE, " +
+            "c.IS_ANONYMOUS, c.REPLY_COMMENT_NO, " +
             "CASE WHEN c.IS_ANONYMOUS = 'Y' THEN '***' ELSE e.NAME END AS EMPLOYEE_NAME, " +
-            "CASE WHEN c.IS_ANONYMOUS = 'Y' THEN '***' ELSE t.TEAM_NAME END AS TEAM_NAME, " +
-            "TO_CHAR(c.ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ENROLL_DATE " +
+            "CASE WHEN c.IS_ANONYMOUS = 'Y' THEN '***' ELSE t.TEAM_NAME END AS TEAM_NAME " +
             "FROM BOARD_COMMENTS c " +
             "JOIN PERSONNEL_INFORMATION e ON c.INSERT_USER_NO = e.EMP_NO " +
             "LEFT JOIN DEPARTMENT_TEAM t ON e.TEAM_CODE = t.TEAM_CODE " +
             "WHERE c.BOARD_NO = #{boardNo} " +
-            "ORDER BY c.REPLY_COMMENT_NO NULLS FIRST, c.ENROLL_DATE")
+            "START WITH c.REPLY_COMMENT_NO IS NULL " +
+            "CONNECT BY PRIOR c.BOARD_CHAT_NO = c.REPLY_COMMENT_NO " +
+            "ORDER BY COMMENT_LEVEL, ENROLL_DATE")
     List<CommentVo> getCommentsByBoardNo(@Param("boardNo") int boardNo);
 
-
     @Insert("INSERT INTO BOARD_COMMENTS(BOARD_CHAT_NO, CONTENT, BOARD_NO, INSERT_USER_NO, ENROLL_DATE, IS_ANONYMOUS, REPLY_COMMENT_NO) " +
-            "VALUES (SEQ_BOARD_COMMENTS.NEXTVAL, #{content}, #{boardNo}, #{insertUserNo}, SYSDATE, #{isAnonymous}, #{ReplyCommentNo})")
+            "VALUES (SEQ_BOARD_COMMENTS.NEXTVAL, #{content}, #{boardNo}, #{insertUserNo}, SYSDATE, #{isAnonymous}, #{replyCommentNo})")
     @Options(useGeneratedKeys = true, keyProperty = "boardChatNo", keyColumn = "BOARD_CHAT_NO")
     int insertComment(CommentVo commentVo);
-
 
     @Update("UPDATE BOARD_COMMENTS SET CONTENT = #{content}, MODIFY_DATE = SYSDATE WHERE BOARD_CHAT_NO = #{boardChatNo}")
     int updateComment(CommentVo commentVo);

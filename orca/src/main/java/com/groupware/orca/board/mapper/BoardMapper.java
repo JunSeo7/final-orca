@@ -9,7 +9,7 @@ import java.util.Map;
 @Mapper
 public interface BoardMapper {
 
-    @Select("SELECT * FROM BOARD WHERE CATEGORY_NO=#{categoryNo}")
+    @Select("SELECT * FROM BOARD WHERE CATEGORY_NO=#{categoryNo} ORDER BY ENROLL_DATE DESC")
     List<BoardVo> getBoardList(int categoryNo);
 
     @Select("SELECT B.*, TO_CHAR(B.ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS ENROLL_DATE, " +
