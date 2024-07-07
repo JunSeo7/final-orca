@@ -8,9 +8,9 @@
             <title>Home</title>
             <!-- 파비콘 -->
             <link rel="icon" href="img/logo.png" type="image/png">
-            <link rel="stylesheet" href="/css/humanResources/main.css">
+            <link rel="stylesheet" href="/css/managementSupport/main.css">
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script defer src="/js/humanResources/main.js"></script>
+            <script defer src="/js/managementSupport/main.js"></script>
         </head>
 
         <body>

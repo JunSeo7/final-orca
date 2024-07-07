@@ -1,21 +1,20 @@
-package com.groupware.orca.department.humanResources.controller;
+package com.groupware.orca.department.managementSupport.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("orca/humanResources")
-public class HumanResourcesController {
+@RequestMapping("orca/managementSupport")
+public class ManagementSupportController {
 
     @GetMapping("main")
     public String showHumanResourcesDepartmentMain(){
-        return "humanResources/main";
+        return "managementSupport/main";
     }
 
     @GetMapping("writeCalendar")
     public String writeCalendarCompany(){
-        return "humanResources/calendar/company/write";
+        return "managementSupport/calendar/company/write";
     }
 }
