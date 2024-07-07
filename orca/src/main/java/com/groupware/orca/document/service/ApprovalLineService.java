@@ -67,8 +67,8 @@ public class ApprovalLineService {
     }
 
     // 결재선 삭제
-    public void deleteApprLine(int apprLineNo) {
-        dao.deleteApprLine(apprLineNo);
+    public int deleteApprLine(int apprLineNo) {
+        return dao.deleteApprLine(apprLineNo);
     }
 
     // 결재선 - 승인처리, 반려처리

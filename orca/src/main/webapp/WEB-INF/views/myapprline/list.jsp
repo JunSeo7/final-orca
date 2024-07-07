@@ -1,11 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>나의 결재선 목록</title>
     <link rel="icon" href="/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/myApprovalLine/list.css">
     <script defer src="/js/myApprovalLine/list.js"></script>
+
+    <!--Bootstrap Icons 라이브러리 연결-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!--js 라이브러리 연결-->
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
@@ -47,7 +58,7 @@
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
                 <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘"></a>
-                  <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLine.apprLineNo}">
+                  <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLines.apprLineNo}">
                       <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
                   </a></div>
             </c:forEach>
@@ -55,6 +66,7 @@
         </c:otherwise>
     </c:choose>
 </main>
+
 <!-- 결재선 선택 팝업 -->
 <div class="popup-overlay" id="popupOverlay" onclick="closeApprovalLinePopup()"></div>
 <div class="popup" id="approvalLinePopup">
@@ -129,9 +141,6 @@
                     <td>
                         <select id="modalProcessSelect">
                             <option value="휴가어쩌고">휴가어쩌고</option>
-                            <option value="프로세스2">프로세스 2</option>
-                            <option value="프로세스3">프로세스 3</option>
-                            <option value="프로세스4">프로세스 4</option>
                         </select>
                     </td>
                 </tr>
@@ -167,3 +176,4 @@
 </div>
 </body>
 </html>
+

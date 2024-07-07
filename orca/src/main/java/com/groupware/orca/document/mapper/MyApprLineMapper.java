@@ -61,7 +61,7 @@ public interface MyApprLineMapper {
             FROM APPR_LINE_TEMPLATE AT
             JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO
             JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO
-            WHERE AT.WRITER_NO = #{loginUserNo}
+            WHERE AT.WRITER_NO = #{loginUserNo} AND AT.DEL_YN = 'N'
             ORDER BY AT.APPR_LINE_NO DESC
             """)
     List<ApprovalLineVo> getApprovalLineList(String loginUserNo);

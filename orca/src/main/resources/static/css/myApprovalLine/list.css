@@ -100,12 +100,10 @@ main.full {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr 1fr;
-  height: calc(100% - 100px); /* 하단의 결재선 선택 영역을 제외한 높이 */
+  height: calc(100% - 100px);
 }
 
 .popup-body-left {
-  width: 100%;
-  height: 100%;
   padding: 20px;
   overflow-y: auto;
 }
@@ -121,8 +119,6 @@ main.full {
 .popup-body-right {
   border:1px solid#ddd;
   border-radius: 5px;
-  width: 100%;
-  height: 95%;
   overflow-y: auto;
 }
 
@@ -159,11 +155,6 @@ main.full {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   }
-
-.jstree-icon{
-font-size: 1.2em;
-color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
-}
 
 .approval-line {
   display: flex;
@@ -274,3 +265,14 @@ input, select{
 .modal-body-bottom {
   margin-top: 10px;
 }
+
+/* jstree 스타일 */
+ #jstree {
+    height: 280px;
+    padding: 10px;
+}
+.jstree-icon {
+    font-size: 1.2em;
+    color: #9fcfff;
+}
+

@@ -62,6 +62,7 @@ public class MyApprLineController {
     public String getApprLines(Model model, HttpSession httpSession) {
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
+        System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
         return "myapprline/list";
     }
@@ -70,6 +71,8 @@ public class MyApprLineController {
     @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo, HttpSession httpSession) {
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        System.out.println("loginUserNo = " + loginUserNo);
+        System.out.println("apprLineNo = " + apprLineNo);
         service.deleteApprLine(apprLineNo, loginUserNo);
         return "redirect:/orca/myapprline/list";
     }
