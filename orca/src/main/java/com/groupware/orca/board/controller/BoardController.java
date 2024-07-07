@@ -33,6 +33,7 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardFileService boardFileService;
     private final CommentService commentService;
+    private final BookmarkService bookmarkService;
 
 
     @GetMapping
@@ -155,10 +156,13 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardNo}")
-    public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo) {
+    public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo ,HttpSession session) {
+        String empNo = ((UserVo) session.getAttribute("loginUserVo")).getEmpNo();
+        bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
         commentService.deleteCommentsByBoardNo(boardNo);
         boardFileService.deleteFile(boardNo);
         boardService.boardDelete(boardNo);
+
         return "게시물이 삭제되었습니다.";
     }
 

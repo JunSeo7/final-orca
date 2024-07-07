@@ -2,6 +2,8 @@ package com.groupware.orca.board.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CommentVo {
     private int boardChatNo;
@@ -12,5 +14,6 @@ public class CommentVo {
     private String employeeName;
     private char isAnonymous;
     private String teamName;
-    private Integer ReplyCommentNo; // 널처리 위해 인티저
+    private Integer replyCommentNo; // 부모 댓글 번호 (null일 수 있음)
+    private List<CommentVo> replies; // 자식 댓글 리스트
 }

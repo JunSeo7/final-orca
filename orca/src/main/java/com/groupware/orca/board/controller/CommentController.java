@@ -32,7 +32,6 @@ public class CommentController {
         return commentVo;
     }
 
-
     @PostMapping("/edit")
     public @ResponseBody CommentVo editComment(@RequestBody CommentVo commentVo) {
         commentService.updateComment(commentVo);
