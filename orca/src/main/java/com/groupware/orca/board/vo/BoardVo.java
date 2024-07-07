@@ -21,5 +21,5 @@ public class BoardVo {
     private String employeeName;
     private String departmentName;
     private String teamName;
-    private String isAnonymous;
+    private String isAnonymous = "N";  // 기본값을 "N"으로 설정
 }

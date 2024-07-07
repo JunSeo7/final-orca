@@ -30,21 +30,27 @@ public class BoardDao {
         return mapper.boardDelete(boardNo);
     }
 
-    public List<BoardVo> searchBoard(String title, int categoryNo) {
-        return mapper.searchBoard(title, categoryNo);
+    public List<BoardVo> searchBoard(String title, int categoryNo, int offset, int rows) {
+        return mapper.searchBoard(title, categoryNo, offset, rows);
+    }
+
+    public int getSearchCount(String title, int categoryNo) {
+        return mapper.getSearchCount(title, categoryNo);
     }
 
     public void hit(int boardNo) {
         mapper.hit(boardNo);
     }
 
-    public List<BoardVo> getBoardList(int categoryNo) {
-        return mapper.getBoardList(categoryNo);
+    public List<BoardVo> getBoardList(int categoryNo, int offset, int rows) {
+        return mapper.getBoardList(categoryNo, offset, rows);
+    }
+
+    public int getBoardCount(int categoryNo) {
+        return mapper.getBoardCount(categoryNo);
     }
 
     public List<Map<String, Object>> getStatsByDate() {
         return mapper.getStatsByDate();
     }
-
-    }
-
+}
