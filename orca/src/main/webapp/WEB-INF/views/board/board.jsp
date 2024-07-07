@@ -245,7 +245,7 @@
           viewrecords: true,
           width: 1400,
           height: 600,
-          rowNum: 50,
+          rowNum: 5,
           pager: "#jqGridPager"
       });
   }

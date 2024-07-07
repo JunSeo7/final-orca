@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -34,7 +33,6 @@ public class BoardController {
     private final BoardFileService boardFileService;
     private final CommentService commentService;
     private final BookmarkService bookmarkService;
-
 
     @GetMapping
     public String getBoard() {
@@ -47,8 +45,21 @@ public class BoardController {
     }
 
     @GetMapping("/list/{categoryNo}")
-    public @ResponseBody List<BoardVo> getBoardList(@PathVariable("categoryNo") int categoryNo) {
-        return boardService.getBoardList(categoryNo);
+    public @ResponseBody Map<String, Object> getBoardList(
+            @PathVariable("categoryNo") int categoryNo,
+            @RequestParam("page") int page,
+            @RequestParam("rows") int rows) {
+        List<BoardVo> boardList = boardService.getBoardList(categoryNo, page, rows);
+        int totalRecords = boardService.getBoardCount(categoryNo);
+        int totalPages = (int) Math.ceil((double) totalRecords / rows);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("page", page);
+        result.put("total", totalPages);
+        result.put("records", totalRecords);
+        result.put("rows", boardList);
+
+        return result;
     }
 
     @GetMapping("/{boardNo}")
@@ -59,12 +70,25 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BoardVo>> searchBoardByTitle(@RequestParam("title") String title, @RequestParam("categoryNo") int categoryNo) {
-        List<BoardVo> boardList = boardService.searchBoard(title, categoryNo);
+    public ResponseEntity<Map<String, Object>> searchBoardByTitle(
+            @RequestParam("title") String title,
+            @RequestParam("categoryNo") int categoryNo,
+            @RequestParam("page") int page,
+            @RequestParam("rows") int rows) {
+        List<BoardVo> boardList = boardService.searchBoard(title, categoryNo, page, rows);
+        int totalRecords = boardService.getSearchCount(title, categoryNo);
+        int totalPages = (int) Math.ceil((double) totalRecords / rows);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("page", page);
+        result.put("total", totalPages);
+        result.put("records", totalRecords);
+        result.put("rows", boardList);
+
         if (boardList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(boardList);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/insert")
@@ -189,6 +213,4 @@ public class BoardController {
         boardService.hit(boardNo);
         return ResponseEntity.ok("조회수 증가 성공");
     }
-
-
 }

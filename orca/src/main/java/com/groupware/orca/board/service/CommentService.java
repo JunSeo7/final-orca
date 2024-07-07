@@ -1,5 +1,6 @@
 package com.groupware.orca.board.service;
 
+import com.groupware.orca.board.dao.CommentDao;
 import com.groupware.orca.board.mapper.CommentMapper;
 import com.groupware.orca.board.vo.CommentVo;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final CommentMapper mapper;
+    private final CommentDao commentDao;
 
     public List<CommentVo> getCommentsByBoardNo(int boardNo) {
-        List<CommentVo> comments = mapper.getCommentsByBoardNo(boardNo);
+        List<CommentVo> comments = commentDao.getCommentsByBoardNo(boardNo);
         for (CommentVo comment : comments) {
             if (comment.getIsAnonymous() == 'Y') {
                 comment.setEmployeeName("***");
@@ -24,23 +25,27 @@ public class CommentService {
         return comments;
     }
 
+
     public int insertComment(CommentVo commentVo) {
-        return mapper.insertComment(commentVo);
+        return commentDao.insertComment(commentVo);
     }
+
 
     public int updateComment(CommentVo commentVo) {
-        return mapper.updateComment(commentVo);
+        return commentDao.updateComment(commentVo);
     }
+
 
     public int deleteComment(int boardChatNo) {
-        return mapper.deleteComment(boardChatNo);
+        return commentDao.deleteComment(boardChatNo);
     }
 
+
     public int deleteCommentsByBoardNo(int boardNo) {
-        return mapper.deleteCommentsByBoardNo(boardNo);
+        return commentDao.deleteCommentsByBoardNo(boardNo);
     }
 
     public int getCategoryNoByBoardNo(int boardNo) {
-        return mapper.getCategoryNoByBoardNo(boardNo);
+        return commentDao.getCategoryNoByBoardNo(boardNo);
     }
 }
