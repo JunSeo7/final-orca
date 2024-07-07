@@ -98,13 +98,10 @@ public class DocumentService {
         List<DocumentVo> documentList = dao.getDocumentList(loginUserNo);
         for (DocumentVo document : documentList) {
             int docNo = document.getDocNo();
-            System.out.println("docNo 문서번호 = " + docNo);
             // 문서목록 - 결재선 목록 넣기
             List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
             document.setApproverVoList(approverList);
-            System.out.println("approverList 리스트= " + approverList);
         }
-        System.out.println("documentList 리스트= " + documentList);
         return documentList;
     }
 
@@ -200,11 +197,9 @@ public class DocumentService {
         DocumentVo documentVo = dao.getDocumentByNo(docNo);
         // 문서 - 결재선 목록 넣기
         List<ApproverVo> apprLineList = dao.getApprovalLineByNo(docNo);
-        System.out.println("상세 apprLineList = " + apprLineList);
         documentVo.setApproverVoList(apprLineList);
         // 문서 - 참조인 목록 넣기
         List<ReferencerVo> references = dao.getReferencerByNo(docNo);
-        System.out.println("상세 references = " + references);
         documentVo.setReferencerVoList(references);
         // 문서 - 파일 목록 넣기
         List<DocFileVo> DocFiles = dao.getDocFileByNo( docNo);

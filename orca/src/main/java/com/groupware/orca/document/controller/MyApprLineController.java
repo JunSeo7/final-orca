@@ -54,7 +54,6 @@ public class MyApprLineController {
     public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo, HttpSession httpSession) {
         approvalLineVo.setWriterNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
         int result = service.addApprovalLine(approvalLineVo);
-        System.out.println("result = " + result);
        return "redirect:/orca/myapprline/list";
     }
 
