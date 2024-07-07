@@ -26,8 +26,9 @@ public class ApprovalLineController {
     // 관리자(경영지원부서)
 
     // 기본 결재선 등록 - 화면
+    // 세션 - 관리자 아니면 나가세요 하기
     @GetMapping("add")
-    public String addApprLineView(Model model) {
+    public String addApprLineView(Model model, HttpSession httpSession) {
         return "apprline/add";
     }
     // 결재선 등록 조직도 가져오기
@@ -65,17 +66,20 @@ public class ApprovalLineController {
     }
 
     // 결재선 전체목록 (양식/결재라인)
+    // 세션 - 관리자 아니면 나가세요 하기
     @GetMapping("list")
-    public String getApprLines(Model model) {
+    public String getApprLines(Model model, HttpSession httpSession) {
         List<ApprovalLineVo> approvalLines = service.getApprovalLines();
         model.addAttribute("approvalLines", approvalLines);
         return "apprline/list";
     }
 
     // 결재선 삭제
-    @GetMapping("delete")
+    @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
-        service.deleteApprLine(apprLineNo);
+        System.out.println("apprLineNo = " + apprLineNo);
+        int result = service.deleteApprLine(apprLineNo);
+        System.out.println("result = " + result);
         return "redirect:/orca/apprline/list";
     }
 

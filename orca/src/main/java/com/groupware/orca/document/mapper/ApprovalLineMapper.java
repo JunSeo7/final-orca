@@ -58,7 +58,7 @@ public interface ApprovalLineMapper {
             JOIN DOC_TEMPLATE DT ON AT.TEMPLATE_NO = DT.TEMPLATE_NO
             JOIN DOC_TEMPLATE_CATEGORY DTC ON DT.CATEGORY_NO = DTC.CATEGORY_NO
             WHERE WRITER_NO IS NULL AND AT.DEL_YN = 'N'
-            ORDER BY CREATED_DATE DESC
+            ORDER BY DTC.CATEGORY_NO, CREATED_DATE DESC
             """)
     List<ApprovalLineVo> getApprovalLineList();
 
@@ -81,9 +81,7 @@ public interface ApprovalLineMapper {
             SET DEL_YN = 'Y'
             WHERE APPR_LINE_NO = #{apprLineNo} AND WRITER_NO IS NULL
             """)
-    void deleteApprLine(int apprLineNo);
-
-
+    int deleteApprLine(int apprLineNo);
 
     // 결재자, 합의자
     // 결재선 - 승인처리, 반려처리

@@ -8,20 +8,29 @@
     <link rel="icon" href="/img/logo.png" type="image/png">
         <link rel="stylesheet" href="/css/approvalLine/list.css">
         <script defer src="/js/approvalLine/list.js"></script>
+
+         <!--Bootstrap Icons 라이브러리 연결-->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <!--js 라이브러리 연결-->
+            <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
 <main id="content">
-    <h2>결재선 관리</h2>
+    <h2>기본 결재선 관리</h2>
     <hr>
-    <p>* 개인적으로 사용할 결재선을 등록하고 관리합니다.</p>
+    <p>* 결재양식의 기본 결재선을 등록하고 관리합니다.</p>
     <button class="approval-btn" onclick="showApprovalLinePopup()">+ 결재선 등록</button>
 
 <c:choose>
      <c:when test="${empty approvalLines}">
-            <div class="no-approval-lines">등록된 개인 결재선이 없습니다.</div>
+            <div class="no-approval-lines">등록된 기본 결재선이 없습니다.</div>
     </c:when>
     <c:otherwise>
      <div class="approval-lines-box">
@@ -49,8 +58,9 @@
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
                 <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘"></a>
-                <a class="approval-lines-btn"><img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘"></a>
-
+               <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLines.apprLineNo}">
+                  <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
+               </a>
             </div>
             </c:forEach>
             </div>
@@ -71,21 +81,9 @@
                 <tr>
                     <td class="t-title">결재선 프로세스</td>
                     <td>
-                     <select id="approvalProcess">
-                        <!-- 결재 양식 목록  -->
-                    </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="t-title">결재선 이름</td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td class="t-title">카테고리</td>
-                    <td>
                         <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
                         <!-- 카테고리 옵션들이 여기 추가될 예정 -->
-                    </select>
+                        </select>
                     </td>
                 </tr>
                  <tr>
@@ -96,6 +94,11 @@
                         </select>
                     </td>
                  </tr>
+                <tr>
+                    <td class="t-title">결재선 이름</td>
+                    <td><input type="text"></td>
+                </tr>
+
             </table>
             <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
             <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
@@ -119,7 +122,6 @@
     </div>
     <div class="popup-footer">
         <button onclick="saveApprovalLine()">확인</button>
-        <button onclick="closeApprovalLinePopup()">닫기</button>
     </div>
         </form>
 </div>

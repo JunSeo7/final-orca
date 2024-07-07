@@ -100,7 +100,7 @@ main.full {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr 1fr;
-  height: calc(100% - 100px); /* 하단의 결재선 선택 영역을 제외한 높이 */
+  height: calc(100% - 100px);
 }
 
 .popup-body-left {

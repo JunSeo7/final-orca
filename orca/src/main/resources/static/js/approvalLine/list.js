@@ -1,177 +1,272 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // jstree 노드에 draggable 속성 추가
+    $('#jstree').on('loaded.jstree', function() {
+        $(this).jstree('open_all');
+        $('#jstree li a').attr('draggable', true);
+    });
 
-  $('#jstree').jstree({
-      'core' : {
-          'data' : [
-              {
-                  "text" : "대표이사",
-                  "state" : { "opened" : true },
-                  "icon" : "fas fa-user-tie",
-                  "children" : [
-                      { "text" : "감사팀: 5명", "icon" : "fas fa-folder" },
-                      { "text" : "시스템사업담당: 15명", "icon" : "fas fa-folder" },
-                      {
-                          "text" : "경영지원실: 50명",
-                          "icon" : "fas fa-folder",
-                          "children" : [
-                              { "text" : "재무회계팀: 20명",
-                                "icon" : "fas fa-folder",
-                                "children": [
-                                    { "text": "김철수 팀장", "icon": "fas fa-user", "id": "001" },
-                                        { "text": "이영희 팀원", "icon": "fas fa-user", "id": "002" },
-                                        { "text": "박민수 팀원", "icon": "fas fa-user", "id": "003" },
-                                        { "text": "최수진 팀원", "icon": "fas fa-user", "id": "004" }
-                                ] 
-                              },
-                              { "text" : "인사팀: 15명",
-                                "icon" : "fas fa-folder",
-                                "children": [
-                                    { "text": "이민호 팀장", "icon": "fas fa-user", "id": "005" },
-                                    { "text": "김하늘 팀원", "icon": "fas fa-user", "id": "006" },
-                                    { "text": "정은지 팀원", "icon": "fas fa-user", "id": "007" } 
-                                ]
-                              },
-                              { "text" : "경영관리팀: 15명",
-                                "icon" : "fas fa-folder",
-                                "children": [
-                                    { "text":  "박상우 팀장", "icon": "fas fa-user", "id": "008" },
-                                    { "text": "오지민 팀원", "icon": "fas fa-user", "id": "009" },
-                                    { "text": "유재석 팀원", "icon": "fas fa-user", "id": "010" }
-                                
-                                ]
-                              }
-                          ]
-                      },
-                      {
-                          "text" : "사업총괄: 150명",
-                          "icon" : "fas fa-folder",
-                          "children" : [
-                              { "text" : "사업관리그룹: 40명", "icon" : "fas fa-folder" },
-                              { "text" : "영업본부: 100명", "icon" : "fas fa-folder" },
-                              { "text" : "연구본부: 10명", "icon" : "fas fa-folder" }
-                          ]
-                      },
-                      {
-                          "text" : "연구본부: 189명",
-                          "icon" : "fas fa-folder",
-                          "children" : [
-                              { "text" : "시스템연구소: 60명", "icon" : "fas fa-folder" },
-                              { "text" : "ISS연구소: 60명", "icon" : "fas fa-folder" },
-                              { "text" : "디자인팀: 69명", "icon" : "fas fa-folder" }
-                          ]
-                      },
-                      { "text" : "IT 인프라 팀: 20명", "icon" : "fas fa-folder" },
-                      { "text" : "고객지원팀: 30명", "icon" : "fas fa-folder" },
-                      { "text" : "마케팅 팀: 20명", "icon" : "fas fa-folder" },
-                      { "text" : "제품관리팀: 15명", "icon" : "fas fa-folder" },
-                      { "text" : "법무팀: 10명", "icon" : "fas fa-folder" }
-                  ]
-              }
-          ]
-      }
-  });
+    // 드래그 시작 이벤트
+    $(document).on('dragstart', '#jstree li a', function(event) {
+        var nodeId = $(this).parent().attr('id');
+        event.originalEvent.dataTransfer.setData('text/plain', nodeId);
+    });
 
-  // jstree 노드에 draggable 속성 추가
-  $('#jstree').on('loaded.jstree', function() {
-      $(this).jstree('open_all');
-      $('#jstree li a').attr('draggable', true);
-  });
+    // 초기 슬롯 생성
+    createSlots();
 
-  // 드래그 시작 이벤트
-  $(document).on('dragstart', '#jstree li a', function(event) {
-      var nodeId = $(this).parent().attr('id');
-      event.originalEvent.dataTransfer.setData('text/plain', nodeId);
-  });
+    // 결재선 삭제 버튼 이벤트 바인딩
+   $(document).on('click', '.delete-btn', function(event) {
+       event.stopPropagation();  // 부모 요소 이벤트 전파 막기
+       const apprLineNo = $(this).data('apprline-no');
+       console.log('apprLine No:', apprLineNo);
 
-  // 초기 슬롯 생성
-  createSlots();
+       $.ajax({
+           url: '/orca/apprline/delete',
+           method: 'POST',
+           data: { apprLineNo: apprLineNo },
+           success: function(data) {
+               console.log('apprLine deleted:', data);
+               location.reload();
+           },
+           error: function(error) {
+               console.error('Error:', error);
+           }
+       });
+   });
+
+
+    // 조직도 데이터를 가져오는 함수 호출
+    fetchOrganization();
+
+    // jstree 노드 선택 시 이벤트 핸들러
+    $('#jstree').on("select_node.jstree", function (e, data) {
+        var selectedNode = data.node;
+        addApprovalSelection(selectedNode);
+    });
 });
 
 function allowDrop(event) {
-  event.preventDefault();
-  event.target.classList.add('dragover');
+    event.preventDefault();
+    event.target.classList.add('dragover');
 }
 
 function drop(event) {
-  event.preventDefault();
-  event.target.classList.remove('dragover');
-  var nodeId = event.dataTransfer.getData('text/plain');
-  var node = $('#jstree').jstree('get_node', nodeId);
+    event.preventDefault();
+    event.target.classList.remove('dragover');
+    var nodeId = event.dataTransfer.getData('text/plain');
+    var node = $('#jstree').jstree('get_node', nodeId);
 
-  if (node && !event.target.querySelector(`[data-id="${node.id}"]`)) {
-      var newNode = document.createElement('div');
-      newNode.textContent = node.text;
-      newNode.dataset.id = node.id;
-      newNode.draggable = true;
-      newNode.ondragstart = function(ev) {
-          ev.dataTransfer.setData('text/plain', node.id);
-      };
-      event.target.appendChild(newNode);
-  }
+    if (node && !event.target.querySelector(`[data-id="${node.id}"]`)) {
+        var newNode = document.createElement('div');
+        newNode.textContent = node.text;
+        newNode.dataset.id = node.id;
+        newNode.draggable = true;
+        newNode.ondragstart = function(ev) {
+            ev.dataTransfer.setData('text/plain', node.id);
+        };
+
+        // 삭제 버튼 추가
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = '삭제';
+        deleteButton.className = 'delete-btn';
+        deleteButton.onclick = function() {
+            newNode.remove();
+        };
+
+        newNode.appendChild(deleteButton);
+        event.target.appendChild(newNode);
+    }
 }
 
-//합의 결제 디브 생기기
 function createSlots() {
-  var numSlots = document.getElementById('numSlots').value;
-  var approvalSelection = document.getElementById('approvalSelection');
-  approvalSelection.innerHTML = '';
+    var numSlots = 3; // 임시로 슬롯 개수 설정
+    var approvalSelection = document.getElementById('approvalSelection');
+    approvalSelection.innerHTML = '';
 
-  for (var i = 0; i < numSlots; i++) {
-      var slot = document.createElement('div');
-      slot.className = 'slot';
-      slot.ondrop = drop;
-      slot.ondragover = allowDrop;
+    for (var i = 0; i < numSlots; i++) {
+        var slot = document.createElement('div');
+        slot.className = 'slot';
+        slot.ondrop = drop;
+        slot.ondragover = allowDrop;
 
-      var label = document.createElement('div');
-      label.className = 'slot-label';
-      var select = document.createElement('select');
-      select.className = 'role-select';
-      select.innerHTML = '<option value="합의">합의</option><option value="결재">결재</option>';
-      select.onchange = function() {
-          label.textContent = select.value;
-      };
-      label.textContent = select.value;
-      slot.appendChild(label);
-      slot.appendChild(select);
+        var label = document.createElement('div');
+        label.className = 'slot-label';
+        var select = document.createElement('select');
+        select.className = 'role-select';
+        select.innerHTML = '<option value="합의">합의</option><option value="결재">결재</option>';
+        select.onchange = function() {
+            label.textContent = select.value;
+        };
+        label.textContent = select.value;
+        slot.appendChild(label);
+        slot.appendChild(select);
 
-      approvalSelection.appendChild(slot);
-  }
+        approvalSelection.appendChild(slot);
+    }
 }
 
+// 결재선 등록 결재양식 제목 가져오기
+function fetchTemplatesByCategory(categoryNo) {
+    $.ajax({
+        url: '/orca/apprline/template/list',
+        method: 'GET',
+        data: { categoryNo: categoryNo },
+        success: function(templates) {
+            const templateSelect = document.querySelector('#templateNo');
+            templateSelect.innerHTML = '';
+            templates.forEach(template => {
+                const option = document.createElement('option');
+                option.value = template.templateNo;
+                option.text = template.title;
+                templateSelect.appendChild(option);
+            });
+        },
+        error: function(error) {
+            console.error('Error fetching templates:', error);
+        }
+    });
+}
+
+// 결재선 등록 카테고리 가져오기
+function fetchCategories() {
+    $.ajax({
+        url: '/orca/apprline/categorie/list',
+        method: 'GET',
+        success: function(categories) {
+            const categorySelect = document.querySelector('#categoryNo');
+            categorySelect.innerHTML = '';
+
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.categoryNo;
+                option.text = category.categoryName;
+                categorySelect.appendChild(option);
+            });
+
+            if (categories.length > 0) {
+                fetchTemplatesByCategory(categories[0].categoryNo);
+            }
+        },
+        error: function(error) {
+            console.error('error:', error);
+            console.log(error);
+        }
+    });
+}
+
+// 결재선 등록 조직도 가져오기
+function fetchOrganization() {
+    $.ajax({
+        url: '/orca/apprline/organization/list',
+        method: 'GET',
+        success: function(data) {
+            console.log("data:", data);
+            const treeData = buildTreeData(data);
+            console.log("treeData:", treeData);
+            $('#jstree').jstree({
+                'core' : {
+                    'data' : treeData,
+                    'themes' : {
+                        'name': 'default',
+                        'dots': false,
+                        'icons': true
+                    }
+                }
+            });
+        },
+        error: function(error) {
+            console.error('error:', error);
+        }
+    });
+}
+
+function buildTreeData(data) {
+            const tree = [];
+            const departments = {};
+
+            data.forEach(user => {
+                if (!departments[user.partName]) {
+                    departments[user.partName] = {
+                        text: `${user.partName}`,
+                        icon: "fas fa-user-tie",
+                        state : { "opened" : true },
+                        children: []
+                    };
+                    tree.push(departments[user.partName]);
+                }
+
+                const department = departments[user.partName];
+
+                let team = department.children.find(team => team.text.startsWith(user.teamName));
+                if (!team) {
+                    team = {
+                        text: `${user.teamName}`,
+                        icon: "fas fa-folder",
+                        children: []
+                    };
+                    department.children.push(team);
+                }
+
+                const userNode = {
+                    id: `user_${user.empNo}`,
+                    text: `${user.name} [${user.nameOfPosition}]`,
+                    icon: "fas fa-user"
+                };
+                team.children.push(userNode);
+            });
+
+            return tree;
+        }
+
+// 결재 칸을 동적으로 추가하는 함수
+function addApprovalSelection(node) {
+    var approvalSelection = $('#approvalSelection');
+    var newApproval = $('<div>').addClass('approval-item').text(node.text);
+    approvalSelection.append(newApproval);
+}
+
+// 등록 팝업
 function showApprovalLinePopup() {
-  document.getElementById('popupOverlay').style.display = 'block';
-  document.getElementById('approvalLinePopup').style.display = 'block';
+    document.querySelector('#popupOverlay').style.display = 'block';
+    document.querySelector('#approvalLinePopup').style.display = 'block';
+    fetchCategories();
+    fetchOrganization();
 }
 
 function closeApprovalLinePopup() {
-  document.getElementById('popupOverlay').style.display = 'none';
-  document.getElementById('approvalLinePopup').style.display = 'none';
+    document.querySelector('#popupOverlay').style.display = 'none';
+    document.querySelector('#approvalLinePopup').style.display = 'none';
 }
 
-function saveApprovalLine() {
-  var slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
-  var approvers = [];
-  slots.forEach(function(slot) {
-      approvers.push(slot.dataset.id);
-  });
+function saveApprovalLine(event) {
+    event.preventDefault();
+    let slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
+    let approvers = [];
+    slots.forEach(function(slot) {
+        approvers.push(slot.dataset.id);
+    });
 
-  // AJAX로 사원번호 전송
-  $.ajax({
-      url: 'submitApprovers.jsp',
-      method: 'POST',
-      data: { approvers: approvers },
-      success: function(response) {
-          alert('결재선이 저장되었습니다.');
-          closeApprovalLinePopup();
-      },
-      error: function() {
-          alert('결재선 저장 중 오류가 발생했습니다.');
-      }
-  });
+    $.ajax({
+        url: '/orca/apprline/add',
+        method: 'POST',
+        data: {
+            categoryNo: document.querySelector('#categoryNo').value,
+            templateNo: document.querySelector('#templateNo').value,
+            apprLineName: document.querySelector('#apprLineName').value,
+            approvers: approvers
+        },
+        success: function(response) {
+            alert('결재선이 저장되었습니다.');
+            closeApprovalLinePopup();
+            location.reload();
+        },
+        error: function() {
+            alert('결재선 저장 중 오류가 발생했습니다.');
+        }
+    });
 }
 
-
-//수정팝업
+// 수정팝업
 function openModal() {
     document.getElementById('modalOverlay').style.display = 'block';
     document.getElementById('approvalModal').style.display = 'block';
@@ -182,8 +277,7 @@ function closeModal() {
     document.getElementById('approvalModal').style.display = 'none';
 }
 
-function saveApprovalLine() {
-    // 여기에 결재선을 저장하는 로직을 추가하세요.
+function saveModalApprovalLine() {
     alert('결재선이 저장되었습니다.');
     closeModal();
 }
