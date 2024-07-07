@@ -53,6 +53,7 @@ public class CalendarController {
     @ResponseBody
     public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
         String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        System.out.println("writerNo : " + writerNo);
         int result = service.editCalendar(vo, writerNo);
         return result;
     }

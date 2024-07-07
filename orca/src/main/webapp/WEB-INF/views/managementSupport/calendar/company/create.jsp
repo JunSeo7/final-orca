@@ -1,31 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <div class="write-calendar-company">
-        <form id="eventForm" action="/orca/managementSupport/writeCalendar" method="post">
-            <h2>사내 캘린더 작성</h2>
-            <div class="form-group">
-                <label for="eventTitle">일정 제목</label>
-                <input type="text" id="eventTitle" name="eventTitle" required>
-            </div>
-            <div class="form-group">
-                <label for="eventDescription">일정 내용</label>
-                <textarea id="eventDescription" name="eventDescription" rows="4"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="startDate">시작일</label>
-                <input type="date" id="startDate" name="startDate" required>
-            </div>
-            <div class="form-group">
-                <label for="endDate">종료일</label>
-                <input type="date" id="endDate" name="endDate" required>
-            </div>
-            <div class="form-group">
-            </div>
-            <div class="form-footer">
-                <button type="submit">일정 등록</button>
-            </div>
-        </form>
+        <h2>사내 캘린더 작성</h2>
+        <div class="form-group">
+            <label for="eventTitle">일정 제목</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="content">일정 내용</label>
+            <textarea id="content" name="content" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="startDate">시작일</label>
+            <input type="date" id="startDate" name="startDate" required>
+        </div>
+        <div class="form-group">
+            <label for="endDate">종료일</label>
+            <input type="date" id="endDate" name="endDate" required>
+        </div>
+        <div class="form-footer">
+            <button id="submit" type="submit">일정 등록</button>
+        </div>
     </div>
-
 
     <style>
         .write-calendar-company {

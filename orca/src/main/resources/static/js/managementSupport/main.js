@@ -80,39 +80,12 @@ toggleElements.forEach(function (element) {
         }
     });
 });
-const mainDiv = document.querySelector('.main');
-const calnedarWrite = document.querySelector('.calendar-wirte');
-let alnedarWriteCnt = 0;
-calnedarWrite.addEventListener('click', function () {
-    if (alnedarWriteCnt % 2 == 0) {
-        $.ajax({
-            type: 'get',
-            url: '/orca/managementSupport/writeCalendar',
-            dataType: 'html',
-            success: function (response) {
-                while (mainDiv.firstChild) {
-                    mainDiv.removeChild(mainDiv.firstChild);
-                }
-                mainDiv.innerHTML = response;
-            },
-            error: function (error) {
-                console.error('유저 데이터 로드 실패', error);
-            }
-        });
-    } else {
-        while (mainDiv.firstChild) {
-            while (mainDiv.firstChild) {
-                mainDiv.removeChild(mainDiv.firstChild);
-            }
-        }
-    }
-    alnedarWriteCnt++;
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    const eventForm = document.getElementById('eventForm');
-    const eventTitle = document.getElementById('eventTitle');
-    const eventDescription = document.getElementById('eventDescription');
+
+function setupEventHandlers() {
+    const submit = document.getElementById('submit');
+    const eventTitle = document.getElementById('title');
+    const eventDescription = document.getElementById('content');
     const startDate = document.getElementById('startDate');
     const endDate = document.getElementById('endDate');
 
@@ -131,11 +104,73 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    eventForm.addEventListener('submit', function (event) {
+    submit.addEventListener('click', function (event) {
         // 날짜 유효성 검사
         if (new Date(startDate.value) > new Date(endDate.value)) {
             event.preventDefault();
             alert('시작일은 종료일보다 이전이어야 합니다.');
+        } else {
+            const title = document.getElementById('title');
+            const content = document.getElementById('content');
+            const startDate = document.getElementById('startDate');
+            const endDate = document.getElementById('endDate');
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/orca/managementSupport/createCalendarCompany',
+                data: {
+                    title: title.value,
+                    content: content.value,
+                    startDate: startDate.value,
+                    endDate: endDate.value
+                },
+                success: function (response) {
+                    if (response == 1) {
+                        alert("캘린더 삭제 성공!");
+                        document.getElementById('title').value = '';
+                        document.getElementById('content').value = '';
+                        document.getElementById('startDate').value = '';
+                        document.getElementById('endDate').value = '';
+                    } else {
+                        alert("캘린더 삭제 실패");
+                    }
+                },
+                error: function (error) {
+                    alert("캘린더 삭제 실패");
+                }
+            });
         }
     });
+
+
+}
+
+const mainDiv = document.querySelector('.main');
+const calnedarWrite = document.querySelector('.calendar-wirte');
+let alnedarWriteCnt = 0;
+calnedarWrite.addEventListener('click', function () {
+    if (alnedarWriteCnt % 2 == 0) {
+        $.ajax({
+            type: 'get',
+            url: '/orca/managementSupport/createCalendar',
+            dataType: 'html',
+            success: function (response) {
+                while (mainDiv.firstChild) {
+                    mainDiv.removeChild(mainDiv.firstChild);
+                }
+                mainDiv.innerHTML = response;
+                setupEventHandlers();
+            },
+            error: function (error) {
+                console.error('유저 데이터 로드 실패', error);
+            }
+        });
+    } else {
+        while (mainDiv.firstChild) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+        }
+    }
+    alnedarWriteCnt++;
 });
