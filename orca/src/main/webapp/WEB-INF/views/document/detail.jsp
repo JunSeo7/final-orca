@@ -136,9 +136,9 @@
                     <div>
                         <label for="approvalStatus" class="form-label">결재 상태</label>
                         <div class="form_toggle row-vh d-flex flex-row justify-content-between">
-                            <input type="radio" name="approvalStatus" id="approve" class="radio-input" value="3" checked="checked" /><!-- 3: 승인 -->
+                            <input type="radio" name="approvalStage" id="approve" class="radio-input" value="2" checked="checked" /><!-- 2: 승인 -->
                             <label for="approve" class="radio-label">승인</label>
-                            <input type="radio" name="approvalStatus" id="reject" class="radio-input" value="2" /><!-- 2: 반려 -->
+                            <input type="radio" name="approvalStage" id="reject" class="radio-input" value="3" /><!-- 3: 반려 -->
                             <label for="reject" class="radio-label">반려</label>
                         </div>
                     </div>

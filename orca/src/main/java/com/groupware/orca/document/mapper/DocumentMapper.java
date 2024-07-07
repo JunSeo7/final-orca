@@ -212,7 +212,7 @@ public interface DocumentMapper {
             """)
     List<DocumentVo> getPublicDocumentList(String loginUserNo);
 
-    // 내가 받은 결재
+    // 내가 받은 결재 (앞 결재자의 상태가 2인지 확인 하고, 그러면 보이게하기..)
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS,
                    D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
@@ -226,18 +226,27 @@ public interface DocumentMapper {
             LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
             LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
             WHERE A.APPROVER_NO = #{loginUserNo}
-              AND A.APPROVAL_STAGE = 1
-              AND D.STATUS = 2
-              AND ( A.SEQ = 1 OR
-                    EXISTS (
-                        SELECT 1
-                        FROM APPR_LINE B
-                        WHERE A.DOC_NO = B.DOC_NO
-                          AND A.SEQ - 1 = B.SEQ
-                          AND B.APPROVAL_STAGE = 3
-                    )
-                )
-             ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+              AND A.APPROVAL_STAGE IN (1, 2)
+              AND (D.STATUS = 2 OR D.STATUS = 3 OR D.STATUS = 4)
+              AND (A.SEQ = 1 OR
+                   EXISTS (
+                       SELECT 1
+                       FROM APPR_LINE B
+                       WHERE A.DOC_NO = B.DOC_NO
+                         AND A.SEQ - 1 = B.SEQ
+                         AND B.APPROVAL_STAGE = 2
+                   )
+                  )
+            ORDER BY
+                 CASE
+                     WHEN D.STATUS = 2 THEN 0
+                     ELSE 1
+                 END,
+                 CASE
+                     WHEN D.STATUS = 2 THEN D.URGENT
+                     ELSE NULL
+                 END DESC,
+                 D.CREDIT_DATE DESC
             """)
     List<DocumentVo> getSendDocumentList(String loginUserNo);
 
