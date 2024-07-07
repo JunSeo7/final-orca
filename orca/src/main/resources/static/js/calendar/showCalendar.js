@@ -619,15 +619,25 @@ function showNewEventView(barDiv) {
         left = rect.left - formRect.width + 185;
     }
 
-    let top = rect.top + 145;
+    let top = rect.top + 140;
 
     if (top < 0) {
         top = 0;
     }
-    if (rect.bottom + formRect.height > window.innerHeight + 100) {
-        top = rect.top - formRect.height + 380; // 20은 임의로 정한 값, 조정 가능
-    }
+    console.log("r.b : " + rect.bottom);
+    console.log("f.h : " + formRect.height);
+    console.log("w.i : " + window.innerHeight);
 
+
+    if (rect.bottom + formRect.height > window.innerHeight + 200) {
+        top = 367;
+        console.log("top : " + top);
+    }
+    if (rect.bottom + formRect.height > 890 && rect.bottom + formRect.height < 1060) {
+        top = 393;
+        console.log("top2 : " + top);
+    }
+    console.log("top3 : " + top);
     form.style.left = `${left}px`;
     form.style.top = `${top}px`;
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -850,7 +860,6 @@ function createCalendar() {
                 document.getElementById('eventContent').value = "";
                 document.getElementById('startDate').value = "";
                 document.getElementById('endDate').value = "";
-                document.getElementById('range').value = "";
             } else {
                 alert("일정 등록 실패");
             }
@@ -1004,54 +1013,62 @@ const eventTitleInput = document.getElementById('eventTitle');
 const eventContentInput = document.getElementById('eventContent');
 const startDateInput = document.getElementById('startDate');
 const endDateInput = document.getElementById('endDate');
+
+let alertShown = false; // 알람 메시지가 이미 한 번 떴는지를 체크하는 변수
+
 // 입력 필드에 변화가 생기면 체크하는 함수를 정의합니다.
 function checkInputs() {
-    const eventTitle = eventTitleInput;
-    const eventContent = eventContentInput;
+    const eventTitle = eventTitleInput.value;
+    const eventContent = eventContentInput.value;
     const startDateValue = startDateInput.value;
     const endDateValue = endDateInput.value;
-    const startDate = new Date(startDateInput.value);
-    const endDate = new Date(endDateInput.value);
+    const startDate = new Date(startDateValue);
+    const endDate = new Date(endDateValue);
 
-    if (eventTitle.value.length > 13) {
-        eventTitle.value = eventTitle.value.substring(0, 13);
-        submitBtn.classList.remove('opacity');
-        submitBtn.disabled = true;
-        alert("글자수가 최대입니다.");
-        submitBtn.style.backgroundColor = '#6eadff';
-    }
-    if (eventContent.value.length > 332) {
-        eventTitle.value = eventTitle.value.substring(0, 332);
-        submitBtn.classList.remove('opacity');
-        submitBtn.disabled = true;
-        alert("글자수가 최대입니다.");
-        submitBtn.style.backgroundColor = '#6eadff';
+    // 초기화
+    submitBtn.classList.remove('opacity');
+    submitBtn.disabled = false;
+    submitBtn.style.backgroundColor = '#6eadff';
+
+    // 제목 길이 체크
+    if (eventTitle.length > 13) {
+        eventTitleInput.value = eventTitle.substring(0, 13);
+        alert("제목은 최대 13글자까지 입력 가능합니다.");
     }
 
-    if (eventTitle.value !== '' && startDateValue !== '' && endDateValue !== '') {
+    // 내용 길이 체크
+    if (eventContent.length > 332) {
+        eventContentInput.value = eventContent.substring(0, 332);
+        alert("내용은 최대 332글자까지 입력 가능합니다.");
+    }
 
+    // 날짜 유효성 체크
+    if (startDateValue !== '' && endDateValue !== '') {
         if (endDate < startDate) {
-            submitBtn.classList.remove('opacity');
+            if (!alertShown) {
+                alert("시작일은 종료일보다 빨라야 합니다.");
+                alertShown = true; // 알람 메시지 플래그 설정
+            }
             submitBtn.disabled = true;
-            alert("시작일은 종료일보다 빨라야합니다.");
-            submitBtn.style.backgroundColor = '#6eadff';
-        } else {
-            submitBtn.classList.add('opacity');
-            submitBtn.disabled = false;
+            submitBtn.style.backgroundColor = '#ccc';
         }
     } else {
-        submitBtn.classList.remove('opacity');
         submitBtn.disabled = true;
-        submitBtn.style.backgroundColor = '#6eadff';
-
+        submitBtn.style.backgroundColor = '#ccc';
     }
 }
 
 // 입력 필드의 변화를 감지하여 checkInputs 함수를 호출합니다.
 eventTitleInput.addEventListener('input', checkInputs);
 eventContentInput.addEventListener('input', checkInputs);
-startDateInput.addEventListener('change', checkInputs);
-endDateInput.addEventListener('change', checkInputs);
+startDateInput.addEventListener('change', function () {
+    checkInputs();
+    alertShown = false; // 알람 메시지 플래그 초기화
+});
+endDateInput.addEventListener('change', function () {
+    checkInputs();
+    alertShown = false; // 알람 메시지 플래그 초기화
+});
 
 // 폼이 처음 로드될 때도 한 번 호출하여 초기 상태를 설정합니다.
 checkInputs();
