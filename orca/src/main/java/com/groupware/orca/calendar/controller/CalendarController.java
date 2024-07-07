@@ -20,9 +20,6 @@ public class CalendarController {
 
     @GetMapping("showCalendar")
     public String showCalendar(HttpSession httpSession){
-        if(httpSession.getAttribute("loginUserVo") == null){
-            return "redirect:/orca/user/login";
-        }
         return "calendar/showCalendar";
     }
 

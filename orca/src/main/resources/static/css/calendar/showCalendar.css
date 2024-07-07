@@ -376,6 +376,7 @@ nav ul li a:hover {
 }
 /* ------------------------------------------------------------------------- */
 /* 일정 등록 */
+
 .new-calendar-form {
     display: none;
     position: fixed;
