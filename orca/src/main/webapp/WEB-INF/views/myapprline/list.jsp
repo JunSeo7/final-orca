@@ -46,9 +46,9 @@
                 </c:forEach>
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
-                <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/edit.png" alt="수정 아이콘"></a>
+                <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘"></a>
                   <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLine.apprLineNo}">
-                      <img class="delete_img" src="/img/delete.png" alt="삭제 아이콘">
+                      <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
                   </a></div>
             </c:forEach>
             </div>

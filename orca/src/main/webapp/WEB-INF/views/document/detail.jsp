@@ -126,24 +126,21 @@
                      <input hidden name="docNo" value="${document.docNo}">
                     <table>
                         <tr>
-                            <td class="document-body-header">${sessionScope.loginUser.name}[${sessionScope.loginUser.nameOfPosition}]</td>
                             <td class="document-body-data">
                                 <textarea id="comment" name="comment" placeholder="코멘트를 작성하세요"></textarea>
                             </td>
                         </tr>
                     </table>
 
-                    <div>
-                        <label for="approvalStatus" class="form-label">결재 상태</label>
-                        <div class="form_toggle row-vh d-flex flex-row justify-content-between">
+                        <div>
                             <input type="radio" name="approvalStage" id="approve" class="radio-input" value="2" checked="checked" /><!-- 2: 승인 -->
                             <label for="approve" class="radio-label">승인</label>
                             <input type="radio" name="approvalStage" id="reject" class="radio-input" value="3" /><!-- 3: 반려 -->
                             <label for="reject" class="radio-label">반려</label>
                         </div>
-                    </div>
                     <button type="submit" class="approval-btn">결과처리</button>
                </form>
+
 
 </main>
 </body>
