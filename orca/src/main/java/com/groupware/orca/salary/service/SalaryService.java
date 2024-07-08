@@ -29,8 +29,8 @@ public class SalaryService {
     private double incomeTaxBASES(ClientVo clientVo,UserVo vo){
 
         //비과세 뺌 (인적공제 가격 화면에 보여주기-> 회계팀이 직접 입력)
-        UserVo UserVo = dao.getUserVo(vo.getEmpNo());
-        double incomTaxCalcul = (UserVo.getSalary() * 12) - (clientVo.getMeals() - clientVo.getPerson()); //연봉 - 비과세
+        vo = dao.getUserVo(vo.getEmpNo());
+        double incomTaxCalcul = (vo.getSalary() * 12) - (clientVo.getMeals() - clientVo.getPerson()); //연봉 - 비과세
 // + svo.getEmploymentInsurance()
         //최종 소득세
         return calculateInComeTax(incomTaxCalcul);
@@ -121,10 +121,68 @@ public class SalaryService {
         return dao.ratesWrite(vo);
     }
 
+    //급여 전체 목록조회
     public List<SalaryVo> getSalaryList() {
         return dao.getSalaryList();
     }
 
+
+
+//    //급여 수정
+//    public int salaryUpdate(UserVo vo,RatesVo rvo) {
+//        ClientVo clientVo = new ClientVo();
+//
+//        double nationalPension = vo.getSalary() * rvo.getPensionPercentage();
+//        double healthInsurance = vo.getSalary() * rvo.getHealthInsurancePercentage();
+//        double longCare = vo.getSalary() * rvo.getHealthInsurancePercentage() * rvo.getLongCarePercentage();
+//        double employmentInsurance = vo.getSalary() * rvo.getEmploymentInsurancePercentage();
+//        double incomeTax = incomeTaxBASES(clientVo,vo)/12; // 소득세 계산 메소드 호출
+//        double localIncomeTax = (incomeTaxBASES(clientVo,vo)/12) * rvo.getLocalIncomeTaxPercentage();
+//        double holiday =  9860 * 1.5 * clientVo.getHolidayTime();
+//        double overTimeWork = 9860 * 1.5 * clientVo.getOverTime();
+//
+//        double totalSalary = vo.getSalary() - nationalPension - healthInsurance - longCare - employmentInsurance - incomeTax - localIncomeTax
+//                + clientVo.getPosition() + clientVo.getBonus() + holiday + overTimeWork + clientVo.getMeals();
+//
+//        SalaryVo svo = new SalaryVo();
+//
+//        svo.setNationalPension(nationalPension);
+//        svo.setHealthInsurance(healthInsurance);
+//        svo.setLongCare(longCare);
+//        svo.setEmploymentInsurance(employmentInsurance);
+//        svo.setIncomeTax(incomeTax);
+//        svo.setLocalIncomeTax(localIncomeTax);
+//        svo.setHoliday(holiday);
+//        svo.setOverTimeWork(overTimeWork);
+//        svo.setTotalSalary(totalSalary);
+//        svo.setBonus(clientVo.getBonus());
+//        svo.setPosition(clientVo.getPosition());
+//        svo.setMeals(clientVo.getMeals());
+//
+//        return dao.salaryUpdate(clientVo,vo,rvo);
+//    }
+
+    //4대보험 요율 수정
+    public Integer ratesUpdate(RatesVo rvo) {
+        return dao.ratesEdit(rvo);
+    }
+
+    public List<RatesVo> getRatesList() {
+        return dao.getRatesList();
+    }
+
+    public int delete(String ratesNo) {
+        return dao.delete(ratesNo);
+    }
+
+    public SalaryVo getSalaryByNo(String empNo) {
+        System.out.println("empNo = " + empNo);
+        return dao.getSalaryByNo(empNo);
+    }
+
+    public int getSalaryDelete(String empNo) {
+        return dao.getSalaryDelete(empNo);
+    }
 }
 
 

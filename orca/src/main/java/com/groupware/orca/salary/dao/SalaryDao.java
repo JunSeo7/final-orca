@@ -31,15 +31,39 @@ public class SalaryDao {
         return mapper.getSalaryList();
     }
 
-
+    //급여계산 4대보험 요율 가져오기
     public RatesVo getRatesVo() {
         return mapper.getRatesVo();
     }
-
+    //급여계산 사원 정보 가져오기
     public UserVo getUserVo(String empNo) {
         return mapper.getUserVo(empNo);
     }
 
+    //4대보험 수정
+    public Integer ratesEdit(RatesVo rvo) {
+        return mapper.ratesEdit(rvo);
+    }
 
+    public List<RatesVo> getRatesList() {
+        return mapper.getRatesList();
+    }
 
+    public int delete(String ratesNo) {
+        return mapper.delete(ratesNo);
+    }
+    // 급여계산 상세조회
+    public SalaryVo getSalaryByNo(String empNo) {
+        System.out.println("empNo = " + empNo);
+        return mapper.getSalaryByNo(empNo);
+    }
+
+    public int getSalaryDelete(String empNo) {
+        return mapper.getSalaryDelete(empNo);
+    }
+
+//    //급여 수정
+//    public int salaryUpdate(ClientVo clientVo,UserVo vo,RatesVo rvo) {
+//        return mapper.salaryUpdate(clientVo,vo,rvo);
+//    }
 }

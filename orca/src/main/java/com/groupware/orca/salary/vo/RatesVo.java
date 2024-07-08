@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class RatesVo {
 
+    private String ratesNo;
     private String baseYear;            //기준년도 (4대보험 요율 해당 연도)
     private double pensionPercentage;      //국민연금
     private double healthInsurancePercentage; //HEALTH_INSURANCE_PERCENTAGE;       //건강보험
