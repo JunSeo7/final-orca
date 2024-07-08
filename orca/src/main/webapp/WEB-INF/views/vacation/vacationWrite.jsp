@@ -15,7 +15,6 @@
 
         <body>
             <%@ include file="/WEB-INF/views/layout/header.jsp" %>
-                <button id="toggleSidebar" onclick="toggleSidebar()">메뉴</button>
                 <aside id="sidebar">
                     <div class="profile" onclick="toggleProfile()">
                         <img src="profile.png" alt="Profile Picture" class="profile-pic">
@@ -34,17 +33,17 @@
                         <button onclick="logout()">로그아웃</button>
                     </div>
                     <nav>
-                        <ul>
-                            <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
-                                <ul id="attendanceMenu" class="submenu hidden">
-                                    <li><a href="#" onclick="loadPage('workInfo.jsp')">근무정보</a></li>
-                                    <li><a href="#" onclick="loadPage('vacationWrite.jsp')">휴가신청</a></li>
-                                    <li><a href="#" onclick="loadPage('sickLeave.jsp')">병가신청</a></li>
-                                    <li><a href="#" onclick="loadPage('etcWrite.jsp')">기타신청</a></li>
+                                <ul>
+                                    <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
+                                        <ul id="attendanceMenu" class="submenu hidden">
+                                                <li><a href="/orca/work/workInfo">근무정보</a></li>
+                                                <li><a href="/orca/vacation/vacationWrite">휴가신청</a></li>
+                                                <li><a href="/orca/sick/sickLeave">병가신청</a></li>
+                                                <li><a href="/orca/etc/etcWrite">기타신청</a></li>
+                                            </ul>
+                                    </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                            </nav>
                 </aside>
 
                 <main>
@@ -100,8 +99,8 @@
                                 </td>
                                 <th>휴가 종류</th>
                                 <td>
-                                    <select id="vacationCode" name="vacationCode" 
-                                    onChange="fetchVacationCode(this.value)">
+                                    <select id="vacationCode" name="vacationCode"
+                                        onChange="fetchVacationCode(this.value)">
 
                                     </select>
                                 </td>

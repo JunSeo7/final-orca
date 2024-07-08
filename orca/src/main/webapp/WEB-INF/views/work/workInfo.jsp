@@ -33,11 +33,11 @@
             <ul>
                 <li><a href="#" onclick="toggleSubMenu('attendanceMenu')">근태</a>
                     <ul id="attendanceMenu" class="submenu hidden">
-                        <li><a href="#" onclick="loadPage('workInfo.jsp')">근무정보</a></li>
-                        <li><a href="#" onclick="loadPage('vacation.jsp')">휴가신청</a></li>
-                        <li><a href="#" onclick="loadPage('sickLeave.jsp')">병가신청</a></li>
-                        <li><a href="#" onclick="loadPage('etc.jsp')">기타신청</a></li>
-                    </ul>
+                            <li><a href="/orca/work/workInfo">근무정보</a></li>
+                            <li><a href="/orca/vacation/vacationWrite">휴가신청</a></li>
+                            <li><a href="/orca/sick/sickLeave">병가신청</a></li>
+                            <li><a href="/orca/etc/etcWrite">기타신청</a></li>
+                        </ul>
                 </li>
             </ul>
         </nav>
