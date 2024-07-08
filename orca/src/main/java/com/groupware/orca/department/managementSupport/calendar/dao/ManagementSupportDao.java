@@ -11,7 +11,7 @@ public class ManagementSupportDao {
 
     private final ManagementSupportMapper mapper;
 
-    public int writeCalendarCompany(CalendarVo vo) {
-        return mapper.writeCalendarCompany(vo);
+    public int createCalendarCompany(CalendarVo vo) {
+        return mapper.createCalendarCompany(vo);
     }
 }
