@@ -13,10 +13,20 @@
 
      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+     <!--Bootstrap Icons 라이브러리 연결-->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+     <!--js 라이브러리 연결-->
+     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+
      <%-- 썸머노트 라이브러리 연결 --%>
      <link href="/css/template/summernote/summernote-lite.css" rel="stylesheet">
      <script defer src="/js/template/summernote/summernote-lite.js"></script>
      <script defer src="/js/template/summernote/summernote-ko-KR.js"></script>
+
+    <!-- jsTree Checkbox Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.checkbox.min.js"></script>
 
 
 </head>
@@ -69,11 +79,10 @@
                 <tr>
                <th>공람(참조인)</th>
                    <td colspan="3">
-                       <button type="button" onclick="openOrganizationModal()">추가</button>
                        <div id="referrerList">
-                            <input type="number" name="referencerNo">
                            <!-- 참조인 목록 -->
                        </div>
+                       <button type="button" onclick="openOrganizationModal()">추가</button>
                    </td>
                 </tr>
             </table>
