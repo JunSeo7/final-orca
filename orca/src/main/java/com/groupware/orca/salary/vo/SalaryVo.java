@@ -21,6 +21,4 @@ public class SalaryVo {
     private double totalSalary;           //최종급여
     private String paymentDate;         //지급날짜
 
-
-
 }
