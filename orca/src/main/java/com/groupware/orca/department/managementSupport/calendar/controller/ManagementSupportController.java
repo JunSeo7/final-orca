@@ -17,18 +17,24 @@ public class ManagementSupportController {
     private final ManagementSupportService serivce;
 
     @GetMapping("createCalendar")
-    public String writeCalendarCompany(){
+    public String createCalendar(){
         return "managementSupport/calendar/company/create";
     }
 
     @PostMapping("createCalendarCompany")
     @ResponseBody
-    public int writeCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
+    public int createCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
         String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         System.out.println(vo);
-        int result = serivce.writeCalendarCompany(vo);
+        int result = serivce.createCalendarCompany(vo);
 
         return result;
+    }
+
+    @GetMapping("ListCalendarCompany")
+    public String ListCalendarCompany()
+    {
+        return "managementSupport/calendar/company/list";
     }
 }

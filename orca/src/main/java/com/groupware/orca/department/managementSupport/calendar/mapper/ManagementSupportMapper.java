@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ManagementSupportMapper {
     @Insert("INSERT INTO CALENDAR(CALENDAR_NO, WRITER_NO, TITLE, CONTENT, START_DATE, END_DATE, RANGE) \n" +
             "VALUES(SEQ_CALENDAR_NO.NEXTVAL, #{writerNo}, #{title}, #{content}, #{startDate}, #{endDate}, 'company')")
-    int writeCalendarCompany(CalendarVo vo);
+    int createCalendarCompany(CalendarVo vo);
 }
