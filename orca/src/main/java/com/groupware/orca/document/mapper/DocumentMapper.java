@@ -1,6 +1,7 @@
 package com.groupware.orca.document.mapper;
 
 import com.groupware.orca.document.vo.*;
+import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -347,4 +348,6 @@ public interface DocumentMapper {
               )
             """)
     int deleteDocumentByNo(int docNo, String loginUserNo);
+
+
 }

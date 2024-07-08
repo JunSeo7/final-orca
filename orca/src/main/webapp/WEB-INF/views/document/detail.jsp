@@ -13,7 +13,7 @@
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
-<main>
+<main id="content">
     <div class="document-content">
         <!-- 문서 내용 표시 -->
         <div class="document-header">

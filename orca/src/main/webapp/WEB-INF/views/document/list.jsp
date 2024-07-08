@@ -15,7 +15,7 @@
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
-<main id="content" class="main-content">
+<main id="content">
     <div class="container">
         <h2>기안서 목록</h2>
         <div class="search_box">

@@ -8,9 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("orca/document")
@@ -52,21 +57,25 @@ public class DocumentController {
         ApprovalLineVo apprline = service.getTemplateApprLine(templateNo);
         return apprline;
     }
+
+    // 결재 작성 조직도(참조인) 가져오기 - ApprovalLineController ("orca/apprline/organization/list")
+
     // 결재 작성
     @PostMapping("write")
     public String writeDocument(
-            DocumentVo vo
-            , HttpSession httpSession
-            , String[] seq
-            , String[] approverNo
-            , String[] deptCode
-            , String[] positionCode
-            , String[] approverClassificationNo
-            , String[] referencerNo) {
+            DocumentVo vo,
+            HttpSession httpSession,
+            String[] seq,
+            String[] approverNo,
+            String[] deptCode,
+            String[] positionCode,
+            String[] approverClassificationNo,
+            String[] referencerNo,
+            String[] file) {
 
-        System.out.println("=================================");
+        // 결재자 등록
         List<ApproverVo> approverVoList = new ArrayList<>();
-        for (int i = 0 ; i < seq.length; ++i) {
+        for (int i = 0; i < seq.length; ++i) {
             ApproverVo avo = new ApproverVo();
             avo.setSeq(Integer.parseInt(seq[i]));
             avo.setApproverNo(Integer.parseInt(approverNo[i]));
@@ -76,23 +85,35 @@ public class DocumentController {
             approverVoList.add(avo);
         }
         vo.setApproverVoList(approverVoList);
-        System.out.println("approverVoList = " + approverVoList);
 
-
+        // 참조자 등록
         List<ReferencerVo> referencerVoList = new ArrayList<>();
-        for(int i = 0; i < referencerNo.length; ++i){
-            ReferencerVo rvo = new ReferencerVo();
-            rvo.setReferrerNo(Integer.parseInt(referencerNo[i]));
-            referencerVoList.add(rvo);
+        if(referencerNo !=null) {
+            for (int i = 0; i < referencerNo.length; ++i) {
+                ReferencerVo rvo = new ReferencerVo();
+                rvo.setReferrerNo(Integer.parseInt(referencerNo[i]));
+                referencerVoList.add(rvo);
+            }
+            vo.setReferencerVoList(referencerVoList);
         }
-        vo.setReferencerVoList(referencerVoList);
-        System.out.println("referencerVoList = " + referencerVoList);
+
+        // 파일 등록
+        List<DocFileVo> files = new ArrayList<>();
+        if(file !=null){
+            for (String fileName : file) {
+                DocFileVo fileVo = new DocFileVo();
+                fileVo.setOriginName(fileName);
+                files.add(fileVo);
+            }
+            vo.setFileVoList(files);
+        }
 
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(Integer.parseInt(loginUserNo));
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }
+
 
     // 올린결재
     // 내가 작성한 결재 문서 목록 조회

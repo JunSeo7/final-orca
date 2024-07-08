@@ -38,6 +38,8 @@ public class DocumentVo {
     private List<ApproverVo> approverVoList; //결재선(결재자) 리스트
 
     // File and Reference Information (파일 및 참조자 정보)
-    private List<DocFileVo> files;           // 파일 리스트
+
+    private String file;                     //파일
+    private List<DocFileVo> fileVoList;           // 파일 리스트
     private List<ReferencerVo> referencerVoList;   // 참조자 리스트
 }
