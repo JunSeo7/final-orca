@@ -62,6 +62,7 @@ function fetchTemplateContent(templateNo) {
         data: { templateNo: templateNo },
         success: function(data) {
             $('#title').val(data.title); // 템플릿의 제목
+            $('#summernote').summernote('code', ''); // 내용 초기화
             $('#summernote').summernote("pasteHTML",data.content);// 템플릿의 내용
             $('#templateNo').val(data.templateNo);
 
@@ -151,8 +152,8 @@ function closeOrganizationModal() {
     document.getElementById('organizationModal').style.display = 'none';
 }
 
-  // 결재선 등록 조직도 가져오기
-   function fetchOrganization() {
+// 결재선 등록 조직도 가져오기
+function fetchOrganization() {
        $.ajax({
            url: '/orca/apprline/organization/list',
            method: 'GET',
@@ -161,14 +162,21 @@ function closeOrganizationModal() {
                const treeData = buildTreeData(data);
                console.log("treeData:", treeData);
                $('#jstree').jstree({
-                   'core' : {
-                       'data' : treeData,
-                       'themes' : {
+                   'core': {
+                       'data': treeData,
+                       'themes': {
                            'name': 'default',
                            'dots': false,
                            'icons': true
                        }
-                   }
+                   },
+                   'checkbox': {
+                       'keep_selected_style': false, // 선택된 항목에 스타일 유지 여부
+                       'three_state': false, // 체크박스의 상태를 세 가지로 설정 (부분 선택)
+                       'cascade': 'undetermined', // 부모 및 자식 노드의 체크박스 동작 설정
+                       'tie_selection': false // 체크박스와 노드 선택 상태를 연결할지 여부
+                   },
+                   'plugins': ['checkbox', 'themes', 'json_data']
                });
            },
            error: function(error) {
@@ -229,18 +237,21 @@ function confirmSelection() {
 }
 
 function addReferrers(referrers) {
-    const referrerList = document.getElementById('referrerList');
+    const referrerList = document.querySelector('#referrerList');
     referrerList.innerHTML = '';  // 초기화
     referrers.forEach(referrer => {
         const referrerDiv = document.createElement('div');
         referrerDiv.innerText = referrer.text;
         referrerList.appendChild(referrerDiv);
 
-        // 추가된 참조인을 숨겨진 input에 저장
+        // 추가된 참조인의 empNo를 가져오기
+        const empNo = referrer.id.replace('user_', ''); // "user_" 부분 제거
+
+        // 숨겨진 input에 empNo 저장
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
-        hiddenInput.name = 'referrers';
-        hiddenInput.value = referrer.id.replace('user_', '');  // id에서 'user_' 제거
+        hiddenInput.name = 'referencerNo';
+        hiddenInput.value = empNo;
         document.getElementById('documentForm').appendChild(hiddenInput);
     });
 

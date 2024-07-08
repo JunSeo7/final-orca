@@ -89,6 +89,7 @@ public class DocumentController {
         // 참조자 등록
         List<ReferencerVo> referencerVoList = new ArrayList<>();
         if(referencerNo !=null) {
+            System.out.println("referencerVoList = " + referencerVoList);
             for (int i = 0; i < referencerNo.length; ++i) {
                 ReferencerVo rvo = new ReferencerVo();
                 rvo.setReferrerNo(Integer.parseInt(referencerNo[i]));
