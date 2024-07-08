@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,11 +27,13 @@ public class WorkInfoService {
 
     // 출근
     public void startWork(WorkInfoVo vo) {
+        vo.setStartTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
         dao.startWork(vo);
     }
 
     // 퇴근
     public void endWork(WorkInfoVo vo) {
+        vo.setEndTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
         dao.endWork(vo);
         dao.overTimeWork(vo);
     }

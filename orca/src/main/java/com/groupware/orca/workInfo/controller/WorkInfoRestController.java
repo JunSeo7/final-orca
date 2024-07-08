@@ -5,9 +5,12 @@ import com.groupware.orca.workInfo.service.WorkInfoService;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,31 +36,40 @@ public class WorkInfoRestController {
         }
     }
 
-    // 출근 시간 기록
+    // 출근
     @PostMapping("goWork")
-    public void startWork(WorkInfoVo vo, HttpSession httpSession) {
-        String empNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setEmpNo(empNo);
+    public ResponseEntity<Map<String, Object>> startWork(WorkInfoVo vo, HttpSession httpSession) {
+        Map<String, Object> response = new HashMap<>();
 
-        service.startWork(vo);
+            String empNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+            vo.setEmpNo(empNo);
+            service.startWork(vo);
+            httpSession.setAttribute("workNo", vo.getWorkNo());
+            response.put("success", true);
+            response.put("startWorkTime", vo.getStartTime());
 
-        httpSession.setAttribute("workNo", vo.getWorkNo());
+        return ResponseEntity.ok(response);
     }
 
-    // 퇴근 시간 기록
+    // 퇴근
     @PostMapping("leaveWork")
-    public void endWork(WorkInfoVo vo, HttpSession httpSession) {
-        String empNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setEmpNo(empNo);
+    public ResponseEntity<Map<String, Object>> endWork(WorkInfoVo vo, HttpSession httpSession) {
+        Map<String, Object> response = new HashMap<>();
 
-        String workNo = (String) httpSession.getAttribute("workNo");
-        if(workNo != null){
-            vo.setWorkNo(workNo);
+            String empNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+            vo.setEmpNo(empNo);
+            String workNo = (String) httpSession.getAttribute("workNo");
+            if (workNo != null) {
+                vo.setWorkNo(workNo);
+                service.endWork(vo);
+                response.put("success", true);
+                response.put("endWorkTime", vo.getEndTime()); // 실제 퇴근 시간을 가져오는 로직 추가
+            } else {
+                response.put("success", false);
+                response.put("message", "출근 기록이 없습니다.");
+            }
 
-            service.endWork(vo);
-        } else {
-            throw new RuntimeException("출근 기록이 없습니다.");
-        }
+        return ResponseEntity.ok(response);
     }
 
     // 연장 근무 시간 기록
