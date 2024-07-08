@@ -6,6 +6,7 @@ import com.groupware.orca.salary.vo.RatesVo;
 import com.groupware.orca.salary.vo.SalaryVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,52 @@ public class SalaryController {
                 //TODO 화면에서 자녀수에 따른 공제내역 사진 띄우고 적게 하기, param은 다 금액으로 입력받게 하기
     }
 
+
+//    //급여계산 수정
+//    @PutMapping
+//    public int salaryUpdate(UserVo vo,RatesVo rvo){
+//        int result = service.salaryUpdate(vo,rvo);
+//
+//        return result;
+//    }
+
+
+
+    //급여 목록조회
+    @GetMapping("list")
+    public List<SalaryVo> getSalaryList(){
+        System.out.println("SalaryController.getSalaryList");
+        List<SalaryVo> voList = service.getSalaryList();
+        return voList;
+    }
+
+    //상세조회
+    @GetMapping("detail")
+    public SalaryVo getSalaryByNo(@RequestParam("empNo") String empNo){
+        System.out.println("empNo = " + empNo);
+        System.out.println("SalaryController.getSalaryByNo");
+        SalaryVo vo = service.getSalaryByNo(empNo);
+        return vo;
+    }
+
+    //급여 사원 번호로- 검색
+
+    //급여 삭제
+    @DeleteMapping("delete")
+    public int getSalaryDelete(@RequestParam("empNo") String empNo){
+        int result = service.getSalaryDelete(empNo);
+        return result;
+    }
+
+    //급여 검색
+//    @GetMapping("search")
+//    public void searchSalary(String empNo){
+//
+//    }
+
+    //------------------------------------------------------------------------------------
+
+
     //4대보험 입력
     @GetMapping("ratesInsert")
     public int ratesInsert(RatesVo vo){
@@ -37,32 +84,43 @@ public class SalaryController {
         return result;
     }
 
-    //급여계산 수정
-
-    //4대보험 수정
-
-    //목록조회
-    @GetMapping("list")
-    public List<SalaryVo> getSalaryList(){
-
-        System.out.println("SalaryController.getSalaryList");
-
-        List<SalaryVo> voList = service.getSalaryList();
-
-
+    //4대보험 목록조회
+    @GetMapping("ratesList")
+    public List<RatesVo> getRatesList(){
+        List<RatesVo> voList = service.getRatesList();
         return voList;
     }
 
-    //상세조회
+    //4대보험 요율 수정
+    @PutMapping("ratesUpdate")
+    public Integer ratesEdit(RatesVo rvo){
+        Integer result = service.ratesUpdate(rvo);
+        return result;
+    }
 
-    //급여- 검색
+    //4대보험 요율 삭제
+    @Delete("ratesDelete")
+    public int ratesDelete(String ratesNo){
+        int result = service.delete(ratesNo);
 
-    //퇴직 - 검색
+        return result;
+    }
+
+
+
+
+
+
+    //--------------------------------------------------------------------------------------
+    //퇴직금 입력
+
+    // 퇴직 - 검색
 
     //퇴직금 지급
 
     //목록조회
 
     //상세조회
+
 
 }
