@@ -2,6 +2,7 @@ package com.groupware.orca.document.service;
 
 import com.groupware.orca.document.dao.DocumentDao;
 import com.groupware.orca.document.vo.*;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class DocumentService {
 
         List<ApproverVo> approverList = vo.getApproverVoList();
         List<ReferencerVo> referencerList = vo.getReferencerVoList();
-        List<DocFileVo> fileList = vo.getFiles();
+        List<DocFileVo> fileList = vo.getFileVoList();
 
 
         // 방금 만든 문서 번호 사용해서 결재선, 참조인, 파일 등록
@@ -202,8 +203,8 @@ public class DocumentService {
         List<ReferencerVo> references = dao.getReferencerByNo(docNo);
         documentVo.setReferencerVoList(references);
         // 문서 - 파일 목록 넣기
-        List<DocFileVo> DocFiles = dao.getDocFileByNo( docNo);
-        documentVo.setFiles(DocFiles);
+        List<DocFileVo> DocFiles = dao.getDocFileByNo(docNo);
+        documentVo.setFileVoList(DocFiles);
         return documentVo;
     }
 

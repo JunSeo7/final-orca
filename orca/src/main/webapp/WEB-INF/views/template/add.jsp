@@ -5,16 +5,18 @@
     <title>결재양식 등록</title>
 
      <!--파비콘-->
-        <link rel="icon" href="img/logo.png" type="image/png">
+     <link rel="icon" href="img/logo.png" type="image/png">
 
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.css" rel="stylesheet">
+     <script defer src="/js/template/add.js"></script>
+     <link rel="stylesheet" href="/css/template/add.css">
 
-        <link rel="stylesheet" href="main.css">
-        <script defer src="main.js"></script>
+     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <link rel="stylesheet" href="/css/template/add.css">
-        <script defer src="/js/template/add.js"></script>
+     <%-- 썸머노트 라이브러리 연결 --%>
+     <link href="/css/template/summernote/summernote-lite.css" rel="stylesheet">
+     <script defer src="/js/template/summernote/summernote-lite.js"></script>
+     <script defer src="/js/template/summernote/summernote-ko-KR.js"></script>
+
 
 </head>
 <body>
@@ -49,9 +51,7 @@
                  </form>
              </div>
          </main>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
 </form>
 </body>
 </html>

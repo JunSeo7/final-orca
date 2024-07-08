@@ -17,7 +17,7 @@
         <%@ include file="/WEB-INF/views/layout/header.jsp" %>
         <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-<main>
+<main id="content">
 <h2>결재 양식 목록</h2>
         <div class="search_box">
             <select class="search_select">

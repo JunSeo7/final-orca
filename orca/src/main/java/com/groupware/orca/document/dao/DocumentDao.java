@@ -2,6 +2,7 @@ package com.groupware.orca.document.dao;
 
 import com.groupware.orca.document.mapper.DocumentMapper;
 import com.groupware.orca.document.vo.*;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,8 @@ public class DocumentDao {
             System.out.println("approverLineVoList= " + approvers);
         } return approvers;
     }
+
+
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {

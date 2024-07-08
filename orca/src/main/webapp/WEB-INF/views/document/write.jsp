@@ -11,12 +11,20 @@
     <script defer src="/js/document/write.js"></script>
     <link rel="stylesheet" href="/css/document/write.css">
 
+     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+     <%-- 썸머노트 라이브러리 연결 --%>
+     <link href="/css/template/summernote/summernote-lite.css" rel="stylesheet">
+     <script defer src="/js/template/summernote/summernote-lite.js"></script>
+     <script defer src="/js/template/summernote/summernote-ko-KR.js"></script>
+
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
 
-<main>
+<main id="content">
     <h1>결재 작성</h1>
     <form id="documentForm" method="post" action="/orca/document/write">
         <table class="document-table">
@@ -81,13 +89,13 @@
             </tr>
             <tr>
                 <td colspan='2'>
-                      <textarea name="content" id="content"></textarea>
+                    <textarea id="summernote" name="content"></textarea>
                 </td>
             </tr>
             <tr>
                 <th>첨부파일</th>
                 <td>
-                    <input type="file" name="attachment">
+                    <input type="file" name="files" >
                 </td>
             </tr>
             <tr>

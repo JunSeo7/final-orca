@@ -12,7 +12,7 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-<main>
+<main id="content">
     <h2>결재양식 상세</h2>
              <div class="approval-lines-btn">
                  <img class="edit_img" src="/img/edit.png" alt="수정 아이콘">
