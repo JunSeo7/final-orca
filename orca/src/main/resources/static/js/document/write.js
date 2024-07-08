@@ -98,7 +98,7 @@ function fetchTemplateContent(templateNo) {
         processContainer.innerHTML = '';
 
                 approvers.forEach((approver, index) => {
-                    const approverDiv = document.createElement('div');
+                    const approverDiv = document.createElement('span');
                     approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
                     processContainer.appendChild(approverDiv);
 
@@ -245,7 +245,7 @@ function addReferrers(referrers) {
         referrerList.appendChild(referrerDiv);
 
         // 추가된 참조인의 empNo를 가져오기
-        const empNo = referrer.id.replace('user_', ''); // "user_" 부분 제거
+        const empNo = referrer.id.replace('user_', '');
 
         // 숨겨진 input에 empNo 저장
         const hiddenInput = document.createElement('input');
