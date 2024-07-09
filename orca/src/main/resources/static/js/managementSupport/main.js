@@ -71,18 +71,15 @@ toggleElements.forEach(function (element) {
             selectedElement.textContent = selectedElement.textContent.replace('◾', '◽');
         }
         // 새로 선택된 요소의 색상을 파란색으로 변경
-        if (element === selectedElement) {
-            element.textContent = element.textContent.replace('◾', '◽');
-            selectedElement = null;
-        } else {
+        if (element !== selectedElement) {
             element.textContent = element.textContent.replace('◽', '◾');
             selectedElement = element;
         }
     });
 });
 
-
-function setupEventHandlers() {
+//캘린더 작성
+function createCalendarCompany() {
     const submit = document.getElementById('submit');
     const eventTitle = document.getElementById('title');
     const eventDescription = document.getElementById('content');
@@ -147,30 +144,159 @@ function setupEventHandlers() {
 
 const mainDiv = document.querySelector('.main');
 const calnedarWrite = document.querySelector('.calendar-wirte');
-let alnedarWriteCnt = 0;
 calnedarWrite.addEventListener('click', function () {
-    if (alnedarWriteCnt % 2 == 0) {
-        $.ajax({
-            type: 'get',
-            url: '/orca/managementSupport/createCalendar',
-            dataType: 'html',
-            success: function (response) {
-                while (mainDiv.firstChild) {
-                    mainDiv.removeChild(mainDiv.firstChild);
-                }
-                mainDiv.innerHTML = response;
-                setupEventHandlers();
-            },
-            error: function (error) {
-                console.error('유저 데이터 로드 실패', error);
-            }
-        });
-    } else {
-        while (mainDiv.firstChild) {
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/createCalendar',
+        dataType: 'html',
+        success: function (response) {
             while (mainDiv.firstChild) {
                 mainDiv.removeChild(mainDiv.firstChild);
             }
+            mainDiv.innerHTML = response;
+            createCalendarCompany();
+        },
+        error: function (error) {
+            console.error('유저 데이터 로드 실패', error);
         }
-    }
-    alnedarWriteCnt++;
+    });
 });
+
+//캘린더 조회
+const calendarList = document.querySelector('.calendar-list');
+calendarList.addEventListener('click', function () {
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/listCalendar',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            let page = 1;
+            listCalendarPage(page);
+        },
+        error: function (error) {
+            console.error('유저 데이터 로드 실패', error);
+        }
+    });
+});
+function listCalendarPage(page) {
+    const pagination = {};
+    let totalPage = document.querySelector('.totalPage');
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/listCalendarPage',
+        data: {
+            page: page
+        },
+        dataType: 'json',
+        success: function (response) {
+            Object.assign(pagination, response);
+
+            while (totalPage.firstChild) {
+                totalPage.removeChild(totalPage.firstChild);
+            }
+
+            if (pagination.existPrevPage) {
+                let existPrevPage = document.createElement('a');
+                existPrevPage.textContent = '이전';
+                totalPage.appendChild(existPrevPage);
+                existPrevPage.addEventListener('click', function () {
+                    listCalendarPage(pagination.startPage - 1);
+                });
+            } 
+
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                let aPage = document.createElement('a');
+                aPage.textContent = i;
+                if (i == page) {
+                    aPage.classList.add('current-page');
+                }
+                totalPage.appendChild(aPage);
+                aPage.addEventListener('click', function () {
+                    listCalendarPage(i);
+                });
+            }
+
+            if (pagination.existNextPage) {
+                let existNextPage = document.createElement('a');
+                existNextPage.textContent = '이후';
+                totalPage.appendChild(existNextPage);
+                existNextPage.addEventListener('click', function () {
+                    listCalendarPage(pagination.endPage + 1);
+                });
+            } 
+
+            listCalendarData(pagination);
+        },
+        error: function (error) {
+            console.error('유저 데이터 로드 실패', error);
+        }
+    });
+}
+
+
+function listCalendarData(pagination) {
+
+    console.log(pagination);
+
+    let startNum = pagination.startNum;
+    let endNum = pagination.endNum;
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/listCalendarData',
+        data: {
+            startNum: startNum,
+            endNum: endNum
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            let tbody = $('.custom-table tbody');
+            tbody.empty(); // 기존의 내용을 모두 지웁니다.
+
+            // 각 데이터를 테이블에 추가합니다.
+            $.each(response, function (index, item) {
+                let calendarNo = item.calendarNo;
+                let row = $('<tr>');
+
+                row.append($('<td>').text(item.title));
+                row.append($('<td>').text(item.content).addClass('content-text')); // 내용 부분을 텍스트 오버라이드합니다.
+                row.append($('<td>').text(item.writer));
+                row.append($('<td>').text(item.startDate));
+                row.append($('<td>').text(item.endDate));
+                row.append($('<td>').text(item.enrollDate));
+                tbody.append(row);
+                row.on('click', function () {
+                    detailCalendar(calendarNo);
+                });
+            });
+        },
+        error: function (error) {
+            console.error('유저 데이터 로드 실패', error);
+        }
+    });
+}
+
+function detailCalendar(calendarNo) {
+    console.log(calendarNo);
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/detailCalendar',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            listCalendarPage();
+        },
+        error: function (error) {
+            console.error('유저 데이터 로드 실패', error);
+        }
+    });
+}

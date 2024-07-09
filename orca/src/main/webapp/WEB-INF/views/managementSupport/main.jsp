@@ -42,7 +42,7 @@
                         </div>
                         <div class="calnedar title-toggle">◾ 사내 캘린더 관리</div>
                         <div class="calendar-link link">
-                            <div class="toggle">◽ 조회</div>
+                            <div class="calendar-list toggle">◽ 조회</div>
                             <div class="calendar-wirte toggle">◽ 작성</div>
                         </div>
                     </div>
