@@ -53,7 +53,7 @@ main.full {
 
 
 /* 결재양식 없음 메시지 */
-.no-template-lines {
+.no-template{
   border: 1px solid #ddd;
   padding: 20px;
   text-align: center;
@@ -63,13 +63,13 @@ main.full {
 }
 
 /* 결재양식 있으면 */
-.template-lines-box{
+.template-box{
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
 }
 
-.template-lines {
+.template {
   border: 1px solid #ddd;
   width: 45%;
   min-width: 300px;
@@ -80,7 +80,7 @@ main.full {
   margin-top: 10px;
 }
 
-.template-lines-name{
+.template-name{
   font-weight: bold;
 }
 
@@ -88,15 +88,11 @@ main.full {
   color:  #535353;;
 }
 
-.approver{
-  color: #0072e3;
-}
-
-.template-lines-btn{
+.template-btn{
   cursor: pointer;
 }
 
-.template-lines-btn img{
+.template-btn img{
   width: 18px;
 }
 

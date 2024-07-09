@@ -24,14 +24,14 @@ function searchTemplate() {
 }
 
 function displayResults(data) {
-    let searchResults = $('#searchResults');
+    let searchResults = $('.template-box');
     searchResults.empty(); // 기존 결과 초기화
 
     if (Array.isArray(data) && data.length > 0) {
         data.forEach(function(template) {
             let templateDiv = `
-                <div class="template-lines-box template-div" data-template-no="${template.templateNo}">
-                    <div class="template-lines">
+                <div data-template-no="${template.templateNo}">
+                    <div class="template">
                         <span class="template-title">카테고리 : ${template.categoryName}</span><br>
                         <span class="template-title">양식명 : ${template.title}</span><br>
                         <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
@@ -48,8 +48,8 @@ function displayResults(data) {
         });
     } else {
         let templateDiv =`
-                 <div class="template-lines-box template-div">
-                    <p>키워드에 일치하는 양식이 없습니다.</p>
+                 <div class="no-template">
+                    키워드에 일치하는 양식이 없습니다.
                  <div>`;
                 searchResults.append(templateDiv);
     }
@@ -81,7 +81,7 @@ function displayResults(data) {
                  url: '/orca/template/delete?templateNo=' + templateNo,
                  method: 'POST',
                  success: function(data) {
-                     console.log('Template deleted:', data);
+                     console.log('Template delete:', data);
                      location.reload();
                  },
                  error: function(e) {
