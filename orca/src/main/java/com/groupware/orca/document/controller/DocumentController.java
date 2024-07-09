@@ -154,51 +154,13 @@ public class DocumentController {
     // 올린결재
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
-    public String getDocumentList(Model model, HttpSession httpSession){
+    public String getDocumentList(Model model, HttpSession httpSession, int status){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getDocumentList(loginUserNo);
+        List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
-    // (임시저장) 내가 작성한 결재 문서 목록 조회
-    @GetMapping("temp")
-    public String getTempDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getTempDocumentList(loginUserNo);
-        model.addAttribute("documentList", documentList);
-        return "document/list";
-    }
-    // (종결) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @GetMapping("close")
-    public String getCloseDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getCloseDocumentList(loginUserNo);
-        model.addAttribute("documentList", documentList);
-        return "document/list";
-    }
-    // (반려) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @GetMapping("retrun")
-    public String getRetrunDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getRetrunDocumentList(loginUserNo);
-        model.addAttribute("documentList", documentList);
-        return "document/list";
-    }
-    // (결재취소) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @GetMapping("cencel")
-    public String getCancelDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getCancelDocumentList(loginUserNo);
-        model.addAttribute("documentList", documentList);
-        return "document/list";
-    }
-    // (삭제함) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    public String getDeleteDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getDeleteDocumentList(loginUserNo);
-        model.addAttribute("documentList", documentList);
-        return "document/list";
-    }
+
     // 받은 결재
     @GetMapping("/received")
     public String getSendDocumentList(Model model, HttpSession httpSession) {

@@ -37,20 +37,22 @@
         <c:otherwise>
             <div class="template-box">
                  <c:forEach var="template" items="${templateList}">
-                          <div class="template" data-template-no="${template.templateNo}">
-                             <span class="template-title">카테고리 : ${template.categoryName}</span>
-                             <br>
-                             <span class="template-title">양식명 : ${template.title}</span>
-                             <br>
-                             <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
-                             <hr>
-                             <a class="template-btn" onclick="openModal()">
-                                 <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
-                             </a>
-                             <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
-                                 <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
-                             </a>
-                     </div>
+
+                      <div class="template" data-template-no="${template.templateNo}">
+                         <span class="template-category">카테고리 : ${template.categoryName}</span>
+                         <br>
+                         <span class="template-title">양식명 : ${template.title} [${template.templateNo}]</span>
+                         <br>
+                         <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
+                         <hr>
+                         <a class="template-btn" onclick="openModal()">
+                             <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
+                         </a>
+                         <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
+                             <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
+                         </a>
+                      </div>
+
                  </c:forEach>
             </div>
         </c:otherwise>

@@ -25,21 +25,28 @@ function searchTemplate() {
 
 function displayResults(data) {
     let searchResults = $('.template-box');
+    let noTemplate = $('.no-template');
+
     searchResults.empty(); // 기존 결과 초기화
+    noTemplate.empty();
+
+    console.log(searchResults);
+    console.log(noTemplate);
+
 
     if (Array.isArray(data) && data.length > 0) {
         data.forEach(function(template) {
             let templateDiv = `
                 <div data-template-no="${template.templateNo}">
-                    <div class="template">
-                        <span class="template-title">카테고리 : ${template.categoryName}</span><br>
-                        <span class="template-title">양식명 : ${template.title}</span><br>
+                    <div class="template" data-template-no="${template.templateNo}">
+                        <span class="template-category">카테고리 : ${template.categoryName}</span><br>
+                        <span class="template-title">양식명 : ${template.title} [${template.templateNo}]</span><br>
                         <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
                         <hr>
-                        <a class="template-lines-btn" onclick="openModal()">
+                        <a class="template-btn" onclick="openModal()">
                             <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
                         </a>
-                        <a class="template-lines-btn delete-btn" data-template-no="${template.templateNo}">
+                        <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
                             <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
                         </a>
                     </div>
@@ -58,10 +65,11 @@ function displayResults(data) {
 
 //상세보기
 
- const detailDivs = document.querySelectorAll(".template-div");
+ const detailDivs = document.querySelectorAll(".template");
 
  detailDivs.forEach(function(detailDiv) {
      detailDiv.addEventListener("click", function(event) {
+
          const templateNo = detailDiv.getAttribute('data-template-no');
          console.log('Template No:', templateNo);
          location.href = '/orca/template/detail?templateNo=' + templateNo;
