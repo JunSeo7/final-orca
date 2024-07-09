@@ -62,8 +62,13 @@ public class SalaryDao {
         return mapper.getSalaryDelete(empNo);
     }
 
-//    //급여 수정
-//    public int salaryUpdate(ClientVo clientVo,UserVo vo,RatesVo rvo) {
-//        return mapper.salaryUpdate(clientVo,vo,rvo);
-//    }
+    public SalaryVo searchSalary(String empNo) {
+        return mapper.searchSalary(empNo);
+    }
+
+    public int salaryUpdate(ClientVo clientVo, UserVo vo,SalaryVo svo) {
+        return mapper.salaryUpdate(clientVo,vo,svo);
+    }
+
+
 }

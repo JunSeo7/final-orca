@@ -31,13 +31,18 @@ public class SalaryController {
     }
 
 
-//    //급여계산 수정
-//    @PutMapping
-//    public int salaryUpdate(UserVo vo,RatesVo rvo){
-//        int result = service.salaryUpdate(vo,rvo);
-//
-//        return result;
-//    }
+    //급여계산 수정
+    @PostMapping("edit")
+    public int salaryUpdate(ClientVo clientVo,UserVo vo,SalaryVo svo){
+        System.out.println("vo = " + vo);
+        System.out.println("clientVo = " + clientVo);
+        System.out.println("svo = " + svo);
+        System.out.println("service = " + service);
+
+        int result = service.salaryUpdate(vo,clientVo,svo);
+
+        return result;
+    }
 
 
 
@@ -58,7 +63,6 @@ public class SalaryController {
         return vo;
     }
 
-    //급여 사원 번호로- 검색
 
     //급여 삭제
     @DeleteMapping("delete")
@@ -68,10 +72,13 @@ public class SalaryController {
     }
 
     //급여 검색
-//    @GetMapping("search")
-//    public void searchSalary(String empNo){
-//
-//    }
+    @GetMapping("search")
+    public SalaryVo searchSalary(@RequestParam("empNo") String empNo){
+        SalaryVo vo = service.searchSalary(empNo);
+
+        return vo;
+
+    }
 
     //------------------------------------------------------------------------------------
 
@@ -105,22 +112,5 @@ public class SalaryController {
 
         return result;
     }
-
-
-
-
-
-
-    //--------------------------------------------------------------------------------------
-    //퇴직금 입력
-
-    // 퇴직 - 검색
-
-    //퇴직금 지급
-
-    //목록조회
-
-    //상세조회
-
 
 }
