@@ -155,7 +155,6 @@ public class DocumentController {
     }
 
 
-
     // 올린결재
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
@@ -204,7 +203,6 @@ public class DocumentController {
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
-
     // 받은 결재
     @GetMapping("/received")
     public String getSendDocumentList(Model model, HttpSession httpSession) {
@@ -213,7 +211,6 @@ public class DocumentController {
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
-
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @GetMapping("/public")
     public String getPublicDocumentList(Model model, HttpSession httpSession){

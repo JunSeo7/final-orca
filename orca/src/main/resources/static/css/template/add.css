@@ -21,17 +21,12 @@ h1 {
   font-weight: bold;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
 
-label {
-  display: inline-block;
-  width: 150px;
-}
-
-input[type="text"], input[type="date"], textarea, select {
+input[type="text"],textarea, select {
+  border: 1px solid #ddd;
   width: 300px;
+  height: 30px;
+  padding: 5px;
 }
 
 .content{

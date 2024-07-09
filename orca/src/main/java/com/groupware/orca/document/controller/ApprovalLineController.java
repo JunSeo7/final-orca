@@ -24,7 +24,6 @@ public class ApprovalLineController {
     private final ApprovalLineService service;
 
     // 관리자(경영지원부서)
-
     // 기본 결재선 등록 - 화면
     // 세션 - 관리자 아니면 나가세요 하기
     @GetMapping("add")
@@ -83,7 +82,6 @@ public class ApprovalLineController {
         return "redirect:/orca/apprline/list";
     }
 
-
     // 결재자, 합의자
     // 결재선 - 승인처리, 반려처리
     @PostMapping("status")
@@ -93,6 +91,4 @@ public class ApprovalLineController {
         int result = service.updateStatusApprLine(vo);
         return "redirect:/orca/document/list";
     }
-
-
 }

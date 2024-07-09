@@ -105,10 +105,6 @@ public class ApprovalLineService {
                 System.out.println("종결 승인 anyRejected = " + anyRejected);
             }
         }
-
         return result;
     }
-
-
-
 }

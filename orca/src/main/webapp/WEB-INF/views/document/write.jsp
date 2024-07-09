@@ -119,7 +119,7 @@
         </table>
         <br>
         <br>
-        <button type="submit" class="approval-btn">기안</button>
+        <button type="submit" class="submit_btn">기안</button>
     </form>
 </main>
 
@@ -129,11 +129,11 @@
 </body>
 </html>
 
-<div id="organizationModal" class="modal" hidden>
+<div id="organizationModal" class="addReferrerModal" hidden>
     <div class="modal-content">
-        <span class="close" onclick="closeOrganizationModal()">&times;</span>
+        <span class="close" onclick="closeOrganizationModal()">X</span>
         <h2>참조인 추가</h2>
-        <div id="jstree"></div>
+        <div id="jstree" class="jstree-container"></div>
         <button type="button" onclick="confirmSelection()">확인</button>
     </div>
 </div>

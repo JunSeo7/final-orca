@@ -35,18 +35,15 @@ main.full {
   text-align: center;
 }
 
-.approval-btn {
+.submit_btn {
+  padding: 10px 20px;
   background-color: #6eadff;
   color: white;
   border: none;
-  padding: 10px;
   cursor: pointer;
-  font-size: 16px;
-  width: 100px;
-}
-
-.approval-btn:hover {
-  background-color: #368dff;
+  &:hover {
+    background-color:#368dff;
+  }
 }
 
 /* 추가적인 스타일 설정 */
@@ -55,7 +52,8 @@ form {
 }
 
 input[type="text"], select {
-  width: calc(100% - 22px);
+  width: 300px;
+  height: 30px;
   padding: 5px;
   box-sizing: border-box;
 }
@@ -64,21 +62,22 @@ input[type="text"], select {
   text-align: center;
 }
 
-// 참조인 추가 모달창
+/* 참조인 추가 모달창*/
   /* 모달창 기본 스타일 */
-  .modal {
-      display: none; /* 기본적으로 숨김 */
-      position: fixed;
-      z-index: 1000;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; /* 팝업 너비 조정 */
-      height: 600px; /* 팝업 높이 조정 */
-      background-color: #fff;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      border-radius: 10px; /* 모서리를 둥글게 */
+/* 참조인 추가 모달창*/
+  /* 모달창 기본 스타일 */
+  .addReferrerModal {
+      display: none;
+       position: fixed;
+       left: 50%;
+       top: 50%;
+       transform: translate(-50%, -50%);
+       background-color: white;
+       padding: 20px;
+       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+       z-index: 1000;
+       width: 700px; /* 팝업 너비 조정 */
+       height: 600px; /* 팝업 높이 조정 */
   }
 
   /* 모달창 오버레이 */
@@ -131,98 +130,18 @@ input[type="text"], select {
   .modal-content button {
       align-self: flex-end;
       padding: 10px 20px;
-      background-color: #1E90FF;
-      color: #fff;
+      background-color: #6eadff;
+      color: white;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
       font-size: 1em;
+        &:hover {
+          background-color:#368dff;
+        }
   }
 
-  .modal-content button:hover {
-      background-color: #1C86EE; /* 버튼 호버 색상 변경 */
-  }
 
-  /* 추가된 CSS 스타일 */
-  /* 모달창 기본 스타일 */
-  #organizationModal {
-      display: none; /* 기본적으로 숨김 */
-      position: fixed;
-      z-index: 1000;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; /* 팝업 너비 조정 */
-      height: 600px; /* 팝업 높이 조정 */
-      background-color: #fff;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      border-radius: 10px; /* 모서리를 둥글게 */
-  }
-
-  /* 모달창 오버레이 */
-  #organizationModal .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-  }
-
-  /* 모달창 헤더 스타일 */
-  #organizationModal .modal-content {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-  }
-
-  #organizationModal .modal-content .close {
-      cursor: pointer;
-      align-self: flex-end;
-      font-size: 1.5em;
-      color: #333;
-  }
-
-  #organizationModal .modal-content h2 {
-      margin: 0 0 20px 0;
-      font-size: 1.5em;
-      color: #1E90FF; /* 타이틀 색상을 파란색으로 */
-  }
-
-  /* jstree 스타일 */
-  #organizationModal #jstree {
-      flex-grow: 1;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 10px;
-  }
-
-  .jstree-icon {
-      font-size: 1.2em;
-      color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
-  }
-
-  /* 확인 버튼 스타일 */
-  #organizationModal button {
-      align-self: flex-end;
-      padding: 10px 20px;
-      background-color: #1E90FF;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-  }
-
-  #organizationModal button:hover {
-      background-color: #1C86EE; /* 버튼 호버 색상 변경 */
-  }
-
-  /* 추가된 CSS 스타일 */
+  /* 결재선 수정 모달창 */
   .popup {
       display: none;
       position: fixed;
@@ -360,7 +279,3 @@ input[type="text"], select {
       margin-top: 5px;
   }
 
-  input, select {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-  }

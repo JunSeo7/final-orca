@@ -63,7 +63,7 @@
                     </table>
                     <br>
                     <br>
-                    <button type="submit">등록</button>
+                    <button type="submit" class="submit_btn" >등록</button>
 
                </form>
            </div>

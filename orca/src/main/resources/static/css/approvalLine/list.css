@@ -229,8 +229,31 @@ main.full {
 
 input, select{
   border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 5px;
+  border-radius: 2px;
 }
+
+.submit_btn {
+  padding: 10px 20px;
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color:#368dff;
+  }
+}
+
+.close {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #E2E2E2;
+      background-color: transparent;
+      border: none;
+  &:hover {
+        color: #333;
+        }
+  }
 
 
 /*수정팝업*/

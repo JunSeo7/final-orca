@@ -72,7 +72,7 @@
 <div class="popup" id="approvalLinePopup">
     <div class="popup-header">
         <h2>결재선 선택</h2>
-        <button onclick="closeApprovalLinePopup()">X</button>
+        <button onclick="closeApprovalLinePopup()" class="close">X</button>
     </div>
      <form id="approvalLineForm" action="/orca/apprline/add" method="post">
     <div class="popup-body">
@@ -121,7 +121,7 @@
         </div>
     </div>
     <div class="popup-footer">
-        <button onclick="saveApprovalLine()">확인</button>
+        <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
     </div>
         </form>
 </div>
@@ -131,7 +131,7 @@
 <div class="modal" id="approvalModal">
     <div class="modal-header">
         <h2>결재선 수정</h2>
-        <button onclick="closeModal()">X</button>
+        <button onclick="closeModal()" class="close">X</button>
     </div>
     <div class="modal-body">
         <div class="modal-body-left">
