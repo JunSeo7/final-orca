@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -182,11 +184,15 @@ public class BoardController {
     @DeleteMapping("/{boardNo}")
     public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo ,HttpSession session) {
         String empNo = ((UserVo) session.getAttribute("loginUserVo")).getEmpNo();
-        bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
-        commentService.deleteCommentsByBoardNo(boardNo);
-        boardFileService.deleteFile(boardNo);
-        boardService.boardDelete(boardNo);
 
+        // 자식 테이블 데이터 먼저 삭제
+        boardService.deleteLikesByBoardNo(boardNo);  // 좋아요 데이터 삭제
+        commentService.deleteCommentsByBoardNo(boardNo);
+        bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
+        boardFileService.deleteFile(boardNo);
+
+        // 부모 테이블 데이터 삭제
+        boardService.boardDelete(boardNo);
         return "게시물이 삭제되었습니다.";
     }
 
@@ -212,5 +218,55 @@ public class BoardController {
     public ResponseEntity<String> hit(@PathVariable("boardNo") int boardNo) {
         boardService.hit(boardNo);
         return ResponseEntity.ok("조회수 증가 성공");
+    }
+
+    @PostMapping("/like/{boardNo}")
+    public ResponseEntity<String> likePost(@PathVariable("boardNo") int boardNo, HttpSession session) {
+        UserVo loginUser = (UserVo) session.getAttribute("loginUserVo");
+        if (loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        int result = boardService.addLike(boardNo, empNo);
+        if (result > 0) {
+            return ResponseEntity.ok("좋아요를 눌렀습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("좋아요 실패");
+        }
+    }
+
+    @DeleteMapping("/like/{boardNo}")
+    public ResponseEntity<String> unlikePost(@PathVariable("boardNo") int boardNo, HttpSession session) {
+        UserVo loginUser = (UserVo) session.getAttribute("loginUserVo");
+        if (loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        int result = boardService.removeLike(boardNo, empNo);
+        if (result > 0) {
+            return ResponseEntity.ok("좋아요를 취소했습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("좋아요 취소 실패");
+        }
+    }
+
+    @GetMapping("/like/{boardNo}")
+    public ResponseEntity<Boolean> checkLike(@PathVariable("boardNo") int boardNo, HttpSession session) {
+        UserVo loginUser = (UserVo) session.getAttribute("loginUserVo");
+        if (loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        boolean isLiked = boardService.isLiked(boardNo, empNo);
+        return ResponseEntity.ok(isLiked);
+    }
+
+    @GetMapping("/likes/count/{boardNo}")
+    public ResponseEntity<Integer> getLikeCount(@PathVariable("boardNo") int boardNo) {
+        int likeCount = boardService.getLikeCount(boardNo);
+        return ResponseEntity.ok(likeCount);
     }
 }

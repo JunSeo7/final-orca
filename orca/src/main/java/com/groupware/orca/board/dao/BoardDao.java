@@ -53,4 +53,23 @@ public class BoardDao {
     public List<Map<String, Object>> getStatsByDate() {
         return mapper.getStatsByDate();
     }
+
+    public int addLike(int boardNo, int empNo) {
+        return mapper.addLike(boardNo, empNo);
+    }
+
+    public int removeLike(int boardNo, int empNo) {
+        return mapper.removeLike(boardNo, empNo);
+    }
+
+    public boolean isLiked(int boardNo, int empNo) {
+        return mapper.isLiked(boardNo, empNo) > 0;
+    }
+
+    public int getLikeCount(int boardNo) {
+        return mapper.getLikeCount(boardNo);
+    }
+    public int deleteLikesByBoardNo(int boardNo) {
+        return mapper.deleteLikesByBoardNo(boardNo);
 }
+    }

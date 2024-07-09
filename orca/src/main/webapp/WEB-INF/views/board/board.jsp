@@ -105,62 +105,7 @@
             <button id="btn-kakao" class="kakao-share-button">💬</button>
         </div>
     </div>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBBDpdglycOaD-K2xeciSs3e0DvNvgQyGk",
-            authDomain: "finalboard-e002b.firebaseapp.com",
-            projectId: "finalboard-e002b",
-            storageBucket: "finalboard-e002b.appspot.com",
-            messagingSenderId: "827563179973",
-            appId: "1:827563179973:web:649d2f81301439863cd5ac",
-            measurementId: "G-CGL4488CMS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth();
-        const db = getFirestore(app);
-
-        function checkAuthState() {
-            return new Promise((resolve, reject) => {
-                onAuthStateChanged(auth, user => {
-                    if (user) {
-                        resolve(user);
-                    } else {
-                        reject('로그인 필요');
-                    }
-                });
-            });
-       }
-
-        window.toggleLike = function() {
-            checkAuthState().then(user => {
-                const boardNo = document.getElementById('modal-title').dataset.boardNo;
-                const likeRef = doc(db, 'likes', boardNo, 'users', user.uid);
-
-                getDoc(likeRef).then(docSnap => {
-                    if (docSnap.exists()) {
-                        deleteDoc(likeRef).then(() => {
-                            document.getElementById('like-button').classList.remove('liked');
-                            updateLikeCount(boardNo, -1);
-                        });
-                    } else {
-                        setDoc(likeRef, { liked: true }).then(() => {
-                            document.getElementById('like-button').classList.add('liked');
-                            updateLikeCount(boardNo, 1);
-                        });
-                    }
-                });
-            }).catch(error => {
-                alert(error + " 후 이용해 주세요.");
-            });
-        }
-    </script>
     <script type="text/javascript">
         var map;
         var currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
@@ -212,44 +157,43 @@
             });
         });
 
-  function loadGrid(categoryNo) {
-      $("#jqGrid").jqGrid({
-          url: '/orca/board/list/' + categoryNo,
-          mtype: "GET",
-          styleUI: 'jQueryUI',
-          datatype: "json",
-          colModel: [
-              {label: '게시판 번호', name: 'boardNo', width: 30},
-              {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
-              {label: '조회수', name: 'hit', width: 50},
-              {label: '썸네일', name: 'content', width: 50, formatter: extractImage},
-              {
-                  label: '작성 시간',
-                  name: 'enrollDate',
-                  width: 50,
-                  formatter: function (cellValue, options, rowObject) {
-                      const enrollDate = new Date(cellValue);
-                      const formattedDate = enrollDate.toLocaleDateString('ko-KR', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          second: '2-digit',
-                          hour12: true
-                      });
-                      return formattedDate;
-                  }
-              }
-          ],
-          viewrecords: true,
-          width: 1400,
-          height: 600,
-          rowNum: 5,
-          pager: "#jqGridPager"
-      });
-  }
-
+        function loadGrid(categoryNo) {
+            $("#jqGrid").jqGrid({
+                url: '/orca/board/list/' + categoryNo,
+                mtype: "GET",
+                styleUI: 'jQueryUI',
+                datatype: "json",
+                colModel: [
+                    {label: '게시판 번호', name: 'boardNo', width: 30},
+                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                    {label: '조회수', name: 'hit', width: 50},
+                    {label: '썸네일', name: 'content', width: 50, formatter: extractImage},
+                    {
+                        label: '작성 시간',
+                        name: 'enrollDate',
+                        width: 50,
+                        formatter: function (cellValue, options, rowObject) {
+                            const enrollDate = new Date(cellValue);
+                            const formattedDate = enrollDate.toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
+                            });
+                            return formattedDate;
+                        }
+                    }
+                ],
+                viewrecords: true,
+                width: 1400,
+                height: 600,
+                rowNum: 5,
+                pager: "#jqGridPager"
+            });
+        }
 
         function titleFormatter(cellvalue, options, rowObject) {
             return "<a href='javascript:;' onclick='showModal(" + rowObject.boardNo + ")'>" + cellvalue + "</a>";
@@ -313,6 +257,62 @@
                }
            });
        }
+
+       function checkLikeStatus(boardNo) {
+            $.ajax({
+                url: "/orca/board/like/" + boardNo,
+                method: "GET",
+                success: function (isLiked) {
+                    const likeButton = document.getElementById('like-button');
+                    if (isLiked) {
+                        likeButton.classList.add('liked');
+                    } else {
+                        likeButton.classList.remove('liked');
+                    }
+                }
+            });
+
+            $.ajax({
+                url: "/orca/board/likes/count/" + boardNo,
+                method: "GET",
+                success: function (likeCount) {
+                    document.getElementById('like-count').innerText = likeCount
+                }
+            });
+        }
+
+        function toggleLike() {
+            const boardNo = document.getElementById('modal-title').dataset.boardNo;
+            const likeButton = document.getElementById('like-button');
+
+            if (likeButton.classList.contains('liked')) {
+                $.ajax({
+                    url: "/orca/board/like/" + boardNo,
+                    method: "DELETE",
+                    success: function () {
+                        likeButton.classList.remove('liked');
+                        updateLikeCount(boardNo, -1);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "/orca/board/like/" + boardNo,
+                    method: "POST",
+                    success: function () {
+                        likeButton.classList.add('liked');
+                        updateLikeCount(boardNo, 1);
+                    }
+                });
+            }
+        }
+
+        function updateLikeCount(boardNo, change) {
+            const likeCountElement = document.getElementById('like-count');
+            let likeCount = parseInt(likeCountElement.innerText.split(' ')[0]);
+            likeCount += change;
+            likeCountElement.innerText = likeCount ;
+        }
+
         function getCommentHtml(comment) {
             var isReply = comment.replyCommentNo !== null;
             var commentClass = isReply ? 'comment reply' : 'comment';

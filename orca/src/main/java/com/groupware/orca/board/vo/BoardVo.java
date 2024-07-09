@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class BoardVo {
-    private int boardNo;
+    private Integer boardNo;
     private String title;
     private String content;
     private int hit;
