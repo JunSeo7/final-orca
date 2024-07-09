@@ -51,4 +51,19 @@ public interface BoardMapper {
             "GROUP BY TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') " +
             "ORDER BY TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD')")
     List<Map<String, Object>> getStatsByDate();
+
+    @Insert("INSERT INTO LIKES (EMP_NO, BOARD_NO) VALUES (#{empNo}, #{boardNo})")
+    int addLike(@Param("boardNo") int boardNo, @Param("empNo")  int empNo);
+
+            @Delete("DELETE FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
+            int removeLike(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
+
+            @Select("SELECT COUNT(*) FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
+            int isLiked(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
+
+            @Select("SELECT COUNT(*) FROM LIKES WHERE BOARD_NO = #{boardNo}")
+            int getLikeCount(@Param("boardNo") int boardNo);
+
+    @Delete("DELETE FROM LIKES WHERE BOARD_NO = #{boardNo}")
+    int deleteLikesByBoardNo(@Param("boardNo") int boardNo);
 }

@@ -65,5 +65,24 @@ public class BoardService {
     public List<Map<String, Object>> getStatsByDate() {
         return dao.getStatsByDate();
     }
-}
 
+    public int addLike(int boardNo, int empNo) {
+        return dao.addLike(boardNo, empNo);
+    }
+
+    public int removeLike(int boardNo, int empNo) {
+        return dao.removeLike(boardNo, empNo);
+    }
+
+    public boolean isLiked(int boardNo, int empNo) {
+        return dao.isLiked(boardNo, empNo);
+    }
+
+    public int getLikeCount(int boardNo) {
+        return dao.getLikeCount(boardNo);
+    }
+
+    public int deleteLikesByBoardNo(int boardNo) {
+        return dao.deleteLikesByBoardNo(boardNo);
+    }
+}
