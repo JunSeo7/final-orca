@@ -61,7 +61,6 @@ main.full {
 }
 
 .approval-header, .approval-cell {
-    padding: 5px;
     flex: 1;
     text-align: center;
     border: 1px solid #ddd;
