@@ -1,8 +1,8 @@
-package com.groupware.orca.document.dao;
+package com.groupware.orca.docTemplate.dao;
 
-import com.groupware.orca.document.mapper.TemplateMapper;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.docTemplate.mapper.TemplateMapper;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,12 +14,16 @@ public class TemplateDao {
 
     private final TemplateMapper mapper;
 
+    public int addTemplate(TemplateVo vo) {
+        return mapper.addTemplate(vo);
+    }
+
     public List<TemplateVo> getTemplateList() {
         return mapper.getTemplateList();
     }
 
-    public int addTemplate(TemplateVo vo) {
-        return mapper.addTemplate(vo);
+    public List<TemplateVo> getsearchTemplateList(TemplateVo vo) {
+        return mapper.getsearchTemplateList(vo);
     }
 
     public TemplateVo templateDetail(String templateNo) {
@@ -43,4 +47,6 @@ public class TemplateDao {
     public int deleteTemplate(int templateNo) {
         return mapper.deleteTemplate(templateNo);
     }
+
+
 }

@@ -1,8 +1,10 @@
 package com.groupware.orca.document.dao;
 
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.approvalLine.vo.ApproverVo;
 import com.groupware.orca.document.mapper.DocumentMapper;
 import com.groupware.orca.document.vo.*;
-import com.groupware.orca.user.vo.UserVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +16,6 @@ import java.util.List;
 public class DocumentDao {
 
     private final DocumentMapper mapper;
-
-//    // 결재 작성 화면
-//    public List<TemplateVo> getTemplateList() {
-//        return mapper.getTemplateList();
-//    }
 
     // 결재 작성 템플릿 카테고리 가져오기
     public List<TemplateVo> getCategory() {

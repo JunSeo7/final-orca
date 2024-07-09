@@ -1,4 +1,4 @@
-package com.groupware.orca.document.vo;
+package com.groupware.orca.approvalLine.vo;
 
 import lombok.Data;
 

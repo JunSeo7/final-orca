@@ -1,9 +1,10 @@
-package com.groupware.orca.document.controller;
+package com.groupware.orca.docTemplate.controller;
 
-import com.groupware.orca.document.service.TemplateService;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.docTemplate.service.TemplateService;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,30 @@ public class TemplateController {
         model.addAttribute("templateList", templateList);
         return "template/list";
     }
+
+    // 결재양식 검색
+    @GetMapping("/search")
+    @ResponseBody
+    public List<TemplateVo> getsearchTemplateList(
+            @RequestParam(value = "searchType", required = false) String searchType,
+            @RequestParam(value = "searchText", required = false) String searchText) {
+
+            TemplateVo vo = new TemplateVo();
+
+            if ("title".equals(searchType)) {
+                vo.setTitle(searchText);
+            } else if ("categoryName".equals(searchType)) {
+                vo.setCategoryName(searchText);
+            }
+
+        System.out.println("vo 들어온거= " + vo);
+        List<TemplateVo> templateList = service.getsearchTemplateList(vo);
+        System.out.println("vo 결과= " + templateList);
+
+        return templateList;
+    }
+
+
     // 결재양식 상세보기
     @GetMapping("detail")
     public String templateDetail( Model model, String templateNo,HttpSession httpSession) {
@@ -51,7 +76,7 @@ public class TemplateController {
         return "template/detail";
     }
     // 결재양식 수정
-    @PostMapping("edit")
+    @PutMapping("edit")
     public String editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
         service.editTemplate(vo);
         return "redirect:/orca/template/list";
