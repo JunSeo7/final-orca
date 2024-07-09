@@ -1,12 +1,14 @@
 package com.groupware.orca.department.managementSupport.calendar.service;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
+import com.groupware.orca.common.vo.Pagination;
 import com.groupware.orca.department.managementSupport.calendar.dao.ManagementSupportDao;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +33,13 @@ public class ManagementSupportService {
             throw new InvalidInputException("제목, 시작일, 종료일은 모두 필수 입력 사항입니다.");
         }
         return dao.createCalendarCompany(vo);
+    }
+
+    public int getCalendarCnt() {
+        return dao.getCalendarCnt();
+    }
+
+    public List<CalendarVo> listCalendarData(int startNum, int endNum) {
+        return dao.listCalendarData(startNum, endNum);
     }
 }
