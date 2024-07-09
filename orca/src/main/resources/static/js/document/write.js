@@ -263,10 +263,11 @@ function addReferrers(referrers) {
 //textarea 라이브러리
 $(document).ready(function() {
   $('#summernote').summernote({
-      width:1000,
       height: 400,
       minHeight: 300, // 최소
       maxHeight: 500, // 최대
+      minWidth: 200, // 최소
+      maxWidth: 1000, // 최대
       focus: true
   });
 });

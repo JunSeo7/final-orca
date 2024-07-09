@@ -49,3 +49,23 @@ input[type="text"], input[type="date"], textarea, select {
     background-color:#368dff;
   }
 }
+
+/* 양식 등록 테이블 */
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.document-table th, .document-table td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.document-table th {
+  background-color:  #d4e9ff;
+  text-align: center;
+}
