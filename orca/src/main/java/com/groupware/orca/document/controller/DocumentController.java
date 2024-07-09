@@ -3,13 +3,22 @@ package com.groupware.orca.document.controller;
 import com.groupware.orca.document.service.DocumentService;
 import com.groupware.orca.document.vo.*;
 import com.groupware.orca.user.vo.UserVo;
+import jakarta.annotation.Resource;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,7 +80,8 @@ public class DocumentController {
             String[] positionCode,
             String[] approverClassificationNo,
             String[] referencerNo,
-            String[] file) {
+            @RequestParam("fileList") MultipartFile[] fileList,
+            HttpServletRequest req) throws IOException {
 
         // 결재자 등록
         List<ApproverVo> approverVoList = new ArrayList<>();
@@ -88,8 +98,7 @@ public class DocumentController {
 
         // 참조자 등록
         List<ReferencerVo> referencerVoList = new ArrayList<>();
-        if(referencerNo !=null) {
-            System.out.println("referencerVoList = " + referencerVoList);
+        if (referencerNo != null) {
             for (int i = 0; i < referencerNo.length; ++i) {
                 ReferencerVo rvo = new ReferencerVo();
                 rvo.setReferrerNo(Integer.parseInt(referencerNo[i]));
@@ -99,14 +108,44 @@ public class DocumentController {
         }
 
         // 파일 등록
-        List<DocFileVo> files = new ArrayList<>();
-        if(file !=null){
-            for (String fileName : file) {
+        List<DocFileVo> fileVoList = new ArrayList<>();
+        String title = vo.getTitle();
+
+        if (fileList != null) {
+            for (MultipartFile file : fileList) {
+                // 파일을 서버에 저장하기
+                String originFileName = file.getOriginalFilename(); // 원본 파일 이름을 가져옴
+                InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
+                ServletContext context = req.getServletContext();
+                String path = context.getRealPath("/static/upload/document/");
+
+                java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
+                if (!dir.exists()) {
+                    dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
+                }
+
+                String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
+                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+                System.out.println("ext = " + ext);
+                String changeName = title + System.currentTimeMillis() + "_" + random + ext;
+                System.out.println("파일changeName = " + changeName);
+
+                try (FileOutputStream fos = new FileOutputStream(path + changeName)) {
+                    byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
+                    int size;
+                    while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
+                        fos.write(buf, 0, size); // 버퍼에 있는 데이터를 출력 스트림에 씀
+                    }
+                }
+
+                // DB에 파일 정보 저장
                 DocFileVo fileVo = new DocFileVo();
-                fileVo.setOriginName(fileName);
-                files.add(fileVo);
+                fileVo.setOriginName(originFileName);
+                fileVo.setChangeName(changeName);
+
+                fileVoList.add(fileVo);
             }
-            vo.setFileVoList(files);
+            vo.setFileVoList(fileVoList);
         }
 
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
@@ -114,6 +153,7 @@ public class DocumentController {
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }
+
 
 
     // 올린결재
@@ -190,10 +230,7 @@ public class DocumentController {
     @GetMapping("detail")
     public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        System.out.println("상세loginUserNo = " + loginUserNo);
-        System.out.println("상세docNo = " + docNo);
         DocumentVo document = service.getDocumentByNo(docNo);
-        System.out.println("상세document = " + document);
         model.addAttribute("document", document);
         return "document/detail";
     }

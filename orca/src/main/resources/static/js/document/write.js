@@ -116,7 +116,7 @@ function fetchTemplateContent(templateNo) {
                 if (index < approvers.length - 1) {
                     const arrowDiv = document.createElement('span');
                     arrowDiv.classList.add('arrow');
-                    arrowDiv.textContent = '⇨'; // 화살표 추가
+                    arrowDiv.textContent = '  ⇨  '; // 화살표 추가
                     processContainer.appendChild(arrowDiv);
 
                 }

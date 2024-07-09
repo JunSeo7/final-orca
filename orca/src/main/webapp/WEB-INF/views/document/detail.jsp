@@ -90,14 +90,14 @@
             <tr>
                 <td class="document-body-header">첨부파일</td>
                 <td class="document-body-data">
-                    <c:set var="fileList" value="${files}" />
+                    <c:set var="files" value="${document.fileVoList}" />
                     <c:choose>
                         <c:when test="${empty files}">
                             <p>첨부된 파일이 없습니다.</p>
                         </c:when>
                         <c:otherwise>
                             <c:forEach var="file" items="${files}">
-                                <a href="/resources/upload${file.changeName}" download>${file.changeName}</a><br />
+                                <a href="/static/upload/${file.changeName}" download> ${file.changeName}</a><br/>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>

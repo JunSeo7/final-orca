@@ -36,7 +36,7 @@
 
 <main id="content">
     <h1>결재 작성</h1>
-    <form id="documentForm" method="post" action="/orca/document/write">
+    <form id="documentForm" method="post" action="/orca/document/write" enctype="multipart/form-data">
         <table class="document-table">
             <tr>
                 <th>결재 프로세스</th>
@@ -56,9 +56,9 @@
                 <th>결재선</th>
                 <td>
 
-                        <!-- <select id="approver" name="approver" required>
-                        디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌
-                        </select>-->
+                    <!-- <select id="approver" name="approver" required>
+                    디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌
+                    </select>-->
 
                 </td>
                  <th>긴급 여부</th>
@@ -104,7 +104,7 @@
             <tr>
                 <th>첨부파일</th>
                 <td>
-                    <input type="file" name="files" >
+                    <input type="file" name="fileList" multiple>
                 </td>
             </tr>
             <tr>
