@@ -71,6 +71,7 @@
             padding: 25px;
             padding-bottom: 10px;
             border-radius: 10px;
+            margin-bottom: 25px;
         }
         .custom-table {
             width: 100%;

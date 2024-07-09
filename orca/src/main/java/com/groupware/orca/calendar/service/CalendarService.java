@@ -46,7 +46,7 @@ public class CalendarService {
         return dao.deleteCalendar(calendarNo, writerNo);
     }
 
-    public int editCalendar(CalendarVo vo, String writerNo) throws InvalidInputException {
+    public int editCalendar(CalendarVo vo) throws InvalidInputException {
         if (vo.getTitle() != null && vo.getTitle().length() > 13) {
             throw new InvalidInputException("글자수가 최대입니다. (제목은 13자 이내)");
         }
@@ -62,6 +62,6 @@ public class CalendarService {
             }
         }
 
-        return dao.editCalendar(vo, writerNo);
+        return dao.editCalendar(vo);
     }
 }

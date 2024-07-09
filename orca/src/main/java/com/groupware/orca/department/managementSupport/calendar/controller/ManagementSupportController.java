@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ManagementSupportController {
 
-    private final ManagementSupportService serivce;
+    private final ManagementSupportService service;
 
     @GetMapping("createCalendar")
     public String createCalendar(){
@@ -30,8 +30,7 @@ public class ManagementSupportController {
     public int createCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
         String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
-        System.out.println(vo);
-        int result = serivce.createCalendarCompany(vo);
+        int result = service.createCalendarCompany(vo);
 
         return result;
     }
@@ -44,27 +43,46 @@ public class ManagementSupportController {
     @GetMapping("listCalendarPage")
     @ResponseBody
     public Pagination listCalendarPage(@RequestParam("page") int page) {
-        System.out.println(page);
         PageVo pageVo = new PageVo();
         pageVo.setPage(page);
         pageVo.setPageSize(10);
         pageVo.setRecordSize(10);
-        int totalRecordCount = serivce.getCalendarCnt();
+        int totalRecordCount = service.getCalendarCnt();
         Pagination pagination = new Pagination(totalRecordCount, pageVo);
-        System.out.println("pageVo = " + pageVo);
-        System.out.println("pagination = " + pagination);
         return pagination;
     }
 
     @GetMapping("listCalendarData")
     @ResponseBody
     public List<CalendarVo> listCalendarData(@RequestParam("startNum") int startNum, @RequestParam("endNum") int endNum ) {
-        System.out.println("요청 넘어옴");
-        System.out.println("startNum : " + startNum);
-        System.out.println("endNum : " + endNum);
-        List<CalendarVo> calendarVoList = serivce.listCalendarData(startNum, endNum);
+        List<CalendarVo> calendarVoList = service.listCalendarData(startNum, endNum);
         return calendarVoList;
     }
 
+    @GetMapping("detailCalendar")
+    public String detailCalendar(){
+        return "managementSupport/calendar/company/detail";
+    }
 
+    @GetMapping("getCalendarByOne")
+    @ResponseBody
+    public CalendarVo getCalendarByOne(@RequestParam("calendarNo") int calendarNo){
+        CalendarVo calendarVo = service.getCalendarByOne(calendarNo);
+
+        return calendarVo;
+    }
+
+    @PostMapping("editCalendar")
+    @ResponseBody
+    public int editCalendar(@RequestBody CalendarVo vo) throws InvalidInputException {
+        int result = service.editCalendar(vo);
+        return result;
+    }
+
+    @PostMapping("deleteCalendar")
+    @ResponseBody
+    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo){
+        int result = service.deleteCalendar(calendarNo);
+        return result;
+    }
 }

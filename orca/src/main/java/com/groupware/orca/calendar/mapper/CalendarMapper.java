@@ -44,7 +44,7 @@ public interface CalendarMapper {
     )
     List<CalendarVo> showCalendarBarContent(@Param("range") String range, @Param("vo") UserVo userVo);
 
-    @Delete("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo} AND WRITER_NO = #{writerNo}")
+    @Update("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo} AND WRITER_NO = #{writerNo}")
     int deleteCalendar(@Param("calendarNo") int calendarNo, @Param("writerNo") String writerNo);
 
     @Update({
@@ -58,8 +58,8 @@ public interface CalendarMapper {
             "<if test='vo.range != null'>RANGE = #{vo.range},</if>",
             "</set>",
             "WHERE CALENDAR_NO = #{vo.calendarNo}",
-            "AND WRITER_NO = #{writerNo}",
+            "AND WRITER_NO = #{vo.writerNo}",
             "</script>"
     })
-    int editCalendar(@Param("vo") CalendarVo vo, @Param("writerNo") String writerNo);
+    int editCalendar(@Param("vo") CalendarVo vo);
 }

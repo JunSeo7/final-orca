@@ -25,4 +25,16 @@ public class ManagementSupportDao {
     public List<CalendarVo> listCalendarData(int startNum, int endNum) {
         return mapper.listCalendarData(startNum, endNum);
     }
+
+    public CalendarVo getCalendarByOne(int calendarNo) {
+        return mapper.getCalendarByOne(calendarNo);
+    }
+
+    public int editCalendar(CalendarVo vo) {
+        return mapper.editCalendar(vo);
+    }
+
+    public int deleteCalendar(int calendarNo) {
+        return mapper.deleteCalendar(calendarNo);
+    }
 }
