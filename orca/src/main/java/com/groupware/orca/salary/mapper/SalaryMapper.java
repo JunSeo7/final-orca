@@ -66,38 +66,61 @@ public interface SalaryMapper {
     UserVo getUserVo(String empNo);
 
     //급여관리 목록조회
-    @Select("SELECT * FROM PAYROLL")
+    @Select("""
+            SELECT\s
+                P.EMP_NO
+                ,P.NAME
+                ,FLOOR(ROUND(NATIONAL_PENSION+HEALTH_INSURANCE+LONG_CARE+EMPLOYMENT_INSURANCE+INCOME_TAX+LOCAL_INCOME_TAX, 1)) AS TOTAL_DEDUCTION_ITEMS
+                ,FLOOR(ROUND(BONUS+POSITION+HOLIDAY+OVERTIMEWORK+MEALS, 1)) AS TOTAL_ALLOWANCE_ITEMS
+                ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
+                ,S.PAYMENT_DATE
+            FROM PAYROLL S
+            JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+            """)
     List<SalaryVo> getSalaryList();
 
-    //급여 4대보험 목록조회 --- 수정하기!!
-    @Select("SELECT \n" +
-            "    P.EMP_NO\n" +
-            "    ,S.NATIONAL_PENSION\n" +
-            "    ,S.HEALTH_INSURANCE\n" +
-            "    ,S.LONG_CARE\n" +
-            "    ,S.EMPLOYMENT_INSURANCE\n" +
-            "    ,S.INCOME_TAX\n" +
-            "    ,S.LOCAL_INCOME_TAX\n" +
-            "    ,S.POSITION \n" +
-            "    ,S.BONUS \n" +
-            "    ,S.HOLIDAY \n" +
-            "    ,S.OVERTIMEWORK \n" +
-            "    ,S.MEALS \n" +
-            "    ,S.TOTAL_SALARY \n" +
-            "    ,S.PAYMENT_DATE\n" +
-            "FROM PAYROLL S\n" +
-            "JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO")
-    SalaryVo getSalaryVo(String empNo);
-
+    //급여상세조회
     @Select("""
-            SELECT *\s
-            FROM PAYROLL S\s
-            JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
-            WHERE P.EMP_NO = #{empNo}
+            SELECT\s
+                  P.EMP_NO
+                  ,P.NAME
+                  ,FLOOR(ROUND(NATIONAL_PENSION, 1)) AS NATIONAL_PENSION
+                  ,FLOOR(ROUND(HEALTH_INSURANCE, 1)) AS HEALTH_INSURANCE
+                  ,FLOOR(ROUND(LONG_CARE, 1)) AS LONG_CARE
+                  ,FLOOR(ROUND(EMPLOYMENT_INSURANCE, 1)) AS EMPLOYMENT_INSURANCE
+                  ,FLOOR(ROUND(INCOME_TAX, 1)) AS INCOME_TAX
+                  ,FLOOR(ROUND(LOCAL_INCOME_TAX, 1)) AS LOCAL_INCOME_TAX
+                  ,S.POSITION
+                  ,FLOOR(ROUND(BONUS, 1)) AS BONUS
+                  ,FLOOR(ROUND(HOLIDAY, 1)) AS HOLIDAY
+                  ,FLOOR(ROUND(OVERTIMEWORK, 1)) AS OVERTIMEWORK
+                  ,FLOOR(ROUND(MEALS, 1)) AS MEALS
+                  ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
+                  ,S.PAYMENT_DATE
+              FROM PAYROLL S
+              JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+              WHERE P.EMP_NO = 1
             """)
     SalaryVo getSalaryByNo(@Param("empNo") String empNo);
 
     //급여관리 수정
+    @Update("""
+            UPDATE PAYROLL
+                SET NATIONAL_PENSION = #{svo.nationalPension}
+                   ,HEALTH_INSURANCE = #{svo.healthInsurance}
+                   ,LONG_CARE = #{svo.longCare}
+                   ,EMPLOYMENT_INSURANCE = #{svo.employmentInsurance}
+                   ,INCOME_TAX = #{svo.incomeTax}
+                   ,POSITION = #{svo.position}
+                   ,BONUS = #{svo.bonus}
+                   ,HOLIDAY = #{svo.holiday}
+                   ,OVERTIMEWORK = #{svo.overTimeWork}
+                   ,MEALS = #{svo.meals}
+                   ,TOTAL_SALARY = #{svo.totalSalary}
+                   ,PAYMENT_DATE = SYSDATE
+            WHERE EMP_NO = #{vo.empNo}
+            """)
+    int salaryUpdate(@Param("clientVo") ClientVo clientVo,@Param("vo") UserVo vo,@Param("svo") SalaryVo svo);
     //    @Update("UPDATE PAYROLL\n" +
 //            "    SET HOLIDAY = #{clientVo.holidayTime}\n" +
 //            "    , POSITION = #{clientVo.position}\n" +
@@ -113,6 +136,15 @@ public interface SalaryMapper {
             DELETE PAYROLL WHERE EMP_NO = #{empNo}
             """)
     int getSalaryDelete(@Param("empNo") String empNo);
+
+    //급여 사원 검색
+    @Select("""
+            SELECT *\s
+            FROM PAYROLL S\s
+            JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+            WHERE P.EMP_NO = #{empNo}
+            """)
+    SalaryVo searchSalary(String empNo);
 
     //----------------------------------------------------------------------------------------------
 
@@ -140,6 +172,7 @@ public interface SalaryMapper {
                 WHERE RATES_NO = #{ratesNo}
             """)
     Integer ratesEdit(RatesVo rvo);
+
 
 
 }
