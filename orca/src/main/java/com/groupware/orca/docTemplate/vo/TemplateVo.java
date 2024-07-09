@@ -1,5 +1,6 @@
-package com.groupware.orca.document.vo;
+package com.groupware.orca.docTemplate.vo;
 
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
 import lombok.Data;
 
 import java.util.List;

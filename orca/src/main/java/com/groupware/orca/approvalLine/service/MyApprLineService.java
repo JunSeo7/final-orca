@@ -1,9 +1,9 @@
-package com.groupware.orca.document.service;
+package com.groupware.orca.approvalLine.service;
 
-import com.groupware.orca.document.dao.MyApprLineDao;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.ApproverVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.approvalLine.dao.MyApprLineDao;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.approvalLine.vo.ApproverVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

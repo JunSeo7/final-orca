@@ -20,13 +20,15 @@
 <main id="content">
 <h2>결재 양식 목록</h2>
         <div class="search_box">
-            <select class="search_select">
-                <option>카테고리</option>
-                <option>제목</option>
+            <select class="search_select" id="searchType">
+                <option value="categoryName">카테고리</option>
+                <option value="title">제목</option>
             </select>
-            <input class="search_text" type="text" placeholder="검색어 입력">
-            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘">
+            <input class="search_text" id="searchText" type="text" placeholder="검색어 입력">
+            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" onclick="searchTemplate()">
         </div>
+
+        <div id="searchResults">
          <c:forEach var="template" items="${templateList}">
           <div class="template-lines-box template-div" data-template-no="${template.templateNo}">
               <div class="template-lines">
@@ -39,12 +41,13 @@
                  <a class="template-lines-btn" onclick="openModal()">
                      <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
                  </a>
-                 <a class="template-lines-btn delete-btn"data-template-no="${template.templateNo}">
+                 <a class="template-lines-btn delete-btn" data-template-no="${template.templateNo}">
                      <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
                  </a>
              </div>
          </div>
      </c:forEach>
+      </div>
      </main>
 
 

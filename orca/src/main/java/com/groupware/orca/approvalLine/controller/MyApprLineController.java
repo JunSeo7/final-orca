@@ -1,8 +1,8 @@
-package com.groupware.orca.document.controller;
+package com.groupware.orca.approvalLine.controller;
 
-import com.groupware.orca.document.service.MyApprLineService;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.approvalLine.service.MyApprLineService;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

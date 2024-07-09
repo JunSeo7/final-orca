@@ -1,8 +1,8 @@
-package com.groupware.orca.document.mapper;
+package com.groupware.orca.approvalLine.mapper;
 
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.ApproverVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.approvalLine.vo.ApproverVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 

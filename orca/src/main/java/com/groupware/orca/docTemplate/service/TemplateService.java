@@ -1,8 +1,8 @@
-package com.groupware.orca.document.service;
+package com.groupware.orca.docTemplate.service;
 
-import com.groupware.orca.document.dao.TemplateDao;
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.docTemplate.dao.TemplateDao;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +16,18 @@ public class TemplateService {
 
     private final TemplateDao dao;
 
+
+
+    public int addTemplate(TemplateVo vo) {
+        return dao.addTemplate(vo);
+    }
+
     public List<TemplateVo> getTemplateList() {
         return dao.getTemplateList();
     }
 
-    public int addTemplate(TemplateVo vo) {
-        return dao.addTemplate(vo);
+    public List<TemplateVo> getsearchTemplateList(TemplateVo vo) {
+        return dao.getsearchTemplateList(vo);
     }
 
     public TemplateVo getTemplateDetail(String templateNo) {
@@ -36,6 +42,8 @@ public class TemplateService {
         return templateVo;
     }
 
+
+
     public int editTemplate(TemplateVo vo) {
         return dao.editTemplate(vo);
     }
@@ -43,6 +51,7 @@ public class TemplateService {
     public int deleteTemplate(int templateNo) {
         return dao.deleteTemplate(templateNo);
     }
+
 
 
 }

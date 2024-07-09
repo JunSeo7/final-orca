@@ -1,13 +1,21 @@
-package com.groupware.orca.document.mapper;
+package com.groupware.orca.docTemplate.mapper;
 
-import com.groupware.orca.document.vo.ApprovalLineVo;
-import com.groupware.orca.document.vo.TemplateVo;
+import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
+import com.groupware.orca.docTemplate.vo.TemplateVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface TemplateMapper {
+
+
+
+    @Insert("""
+            INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT)
+            VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, #{categoryNo}, #{title}, #{content})
+            """)
+    int addTemplate(TemplateVo vo);
 
     @Select("""
             SELECT
@@ -24,11 +32,30 @@ public interface TemplateMapper {
             """)
     List<TemplateVo> getTemplateList();
 
-    @Insert("""
-            INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT)
-            VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, #{categoryNo}, #{title}, #{content})
+    @Select("""
+            <script>
+            SELECT
+                TC.CATEGORY_NO,
+                TC.NAME categoryName,
+                T.TEMPLATE_NO,
+                T.TITLE,
+                T.CONTENT,
+                T.ENROLL_DATE
+            FROM DOC_TEMPLATE T
+            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
+            WHERE T.DEL_YN = 'N'
+            <if test="title != null and title != ''">
+                AND T.TITLE LIKE '%' || #{title} || '%'
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                AND TC.NAME LIKE '%' || #{categoryName} || '%'
+            </if>
+            ORDER BY T.ENROLL_DATE DESC
+            </script>
             """)
-    int addTemplate(TemplateVo vo);
+    List<TemplateVo> getsearchTemplateList(TemplateVo vo);
+
+
 
     @Select("""
             SELECT
@@ -79,4 +106,6 @@ public interface TemplateMapper {
             WHERE TEMPLATE_NO = #{templateNo}
             """)
     int deleteTemplate(int templateNo);
+
+
 }
