@@ -26,7 +26,7 @@ public class CalendarDao {
         return mapper.deleteCalendar(calendarNo, writerNo);
     }
 
-    public int editCalendar(CalendarVo vo, String writerNo) {
-        return mapper.editCalendar(vo, writerNo);
+    public int editCalendar(CalendarVo vo) {
+        return mapper.editCalendar(vo);
     }
 }

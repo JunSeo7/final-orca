@@ -3,10 +3,7 @@ package com.groupware.orca.department.managementSupport.calendar.mapper;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.Pagination;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -46,4 +43,39 @@ public interface ManagementSupportMapper {
             ")\n" +
             "WHERE RNUM BETWEEN #{startNum} AND #{endNum}")
     List<CalendarVo> listCalendarData(@Param("startNum") int startNum, @Param("endNum") int endNum);
+
+    @Select("SELECT \n" +
+            "                        C.CALENDAR_NO\n" +
+            "                        , C.TITLE\n" +
+            "                        , C.CONTENT\n" +
+            "                        , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE\n" +
+            "                        , C.START_DATE\n" +
+            "                        , C.END_DATE\n" +
+            "                        , C.RANGE\n" +
+            "                        , P.NAME AS WRITER\n" +
+            "                        , C.WRITER_NO\n" +
+            "                        , D.PARTNAME\n" +
+            "                    FROM CALENDAR C\n" +
+            "                    JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
+            "                    JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE\n" +
+            "                    WHERE CALENDAR_NO = #{calendarNo}")
+    CalendarVo getCalendarByOne(@Param("calendarNo") int calendarNo);
+
+    @Update({
+            "<script>",
+            "UPDATE CALENDAR",
+            "<set>",
+            "<if test='vo.title != null'>TITLE = #{vo.title},</if>",
+            "<if test='vo.content != null'>CONTENT = #{vo.content},</if>",
+            "<if test='vo.startDate != null'>START_DATE = #{vo.startDate},</if>",
+            "<if test='vo.endDate != null'>END_DATE = #{vo.endDate},</if>",
+            "</set>",
+            "WHERE CALENDAR_NO = #{vo.calendarNo}",
+            "</script>"
+    })
+    int editCalendar(@Param("vo") CalendarVo vo);
+
+    @Update("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo}")
+    int deleteCalendar(@Param("calendarNo") int calendarNo);
 }
+
