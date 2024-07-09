@@ -221,7 +221,4 @@ public class DocumentService {
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
-
-
-
 }

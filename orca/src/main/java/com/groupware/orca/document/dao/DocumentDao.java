@@ -47,7 +47,6 @@ public class DocumentDao {
         } return approvers;
     }
 
-
     // 결재 작성
     @Transactional
     public int writeDocument(DocumentVo vo) {
