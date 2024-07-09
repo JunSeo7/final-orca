@@ -78,30 +78,8 @@ public class DocumentDao {
 
     //전체목록
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    public List<DocumentVo> getDocumentList(String loginUserNo) {
-        return mapper.getDocumentList(loginUserNo);
-    }
-
-    // (임시저장) 내가 작성한 결재 문서 목록 조회
-    public List<DocumentVo> getTempDocumentList(String loginUserNo) {
-        return mapper.getTempDocumentList(loginUserNo);
-    }
-
-    public List<DocumentVo> getCloseDocumentList(String loginUserNo) {
-        return mapper.getCloseDocumentList(loginUserNo);
-    }
-
-    public List<DocumentVo> getRetrunDocumentList(String loginUserNo) {
-        return mapper.getRetrunDocumentList(loginUserNo);
-    }
-
-    // (결재취소) 내가 작성한 결재 문서 목록 조회
-    public List<DocumentVo> getCancelDocumentList(String loginUserNo) {
-        return mapper.getCancelDocumentList(loginUserNo);
-    }
-
-    public List<DocumentVo> getDeleteDocumentList(String loginUserNo) {
-        return mapper.getDeleteDocumentList(loginUserNo);
+    public List<DocumentVo> getDocumentList(String loginUserNo, int status) {
+        return mapper.getDocumentList(loginUserNo, status);
     }
 
     //받은 결재
@@ -113,7 +91,6 @@ public class DocumentDao {
     public List<DocumentVo> getPublicDocumentList(String loginUserNo) {
         return mapper.getPublicDocumentList(loginUserNo);
     }
-
 
     // 문서 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)

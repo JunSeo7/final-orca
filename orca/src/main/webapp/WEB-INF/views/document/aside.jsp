@@ -39,12 +39,14 @@
             <ul class="nav-list">
                 <li class="nav-item"><i class="bi bi-folder"></i> 결재현황
                     <ul class="sub-nav-list">
-                        <li class="nav-item"><a href="/orca/document/temp"><i class="bi bi-file-earmark"></i> 임시 보관함</a></li>
-                        <li class="nav-item"><a href="/orca/document/list"><i class="bi bi-file-earmark"></i> 기안</a></li>
-                        <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 결재</a></li>
-                        <li class="nav-item"><a href="/orca/document/close"><i class="bi bi-file-earmark"></i> 종결</a></li>
-                        <li class="nav-item"><a href="/orca/document/retrun"><i class="bi bi-file-earmark"></i> 반려</a></li>
-                        <li class="nav-item"><a href="/orca/document/cencel"><i class="bi bi-file-earmark"></i> 삭제함</a></li>
+                    <!-- 1: 임시저장 2: 기안 3: 종결 4: 반려  5: 결재취소 --!>
+                        <ul class="sub-nav-list">
+                          <li class="nav-item"><a href="/orca/document/list?status=1"><i class="bi bi-file-earmark"></i> 임시 보관함</a></li>
+                          <li class="nav-item"><a href="/orca/document/list?status=2"><i class="bi bi-file-earmark"></i> 기안</a></li>
+                          <li class="nav-item"><a href="/orca/document/received"><i class="bi bi-file-earmark"></i> 결재</a></li>
+                          <li class="nav-item"><a href="/orca/document/list?status=3"><i class="bi bi-file-earmark"></i> 종결</a></li>
+                          <li class="nav-item"><a href="/orca/document/list?status=4"><i class="bi bi-file-earmark"></i> 반려</a></li>
+                          <li class="nav-item"><a href="/orca/document/list?status=5"><i class="bi bi-file-earmark"></i> 삭제함</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><i class="bi bi-gear"></i> 사용자 설정

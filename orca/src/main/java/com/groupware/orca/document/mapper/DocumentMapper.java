@@ -95,6 +95,8 @@ public interface DocumentMapper {
             """)
     int writeDocumentFile(DocFileVo vo);
 
+
+    // 1: 임시저장 2: 기안 3: 종결 4: 반려  5: 결재취소
     // (기안 완) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
@@ -107,95 +109,10 @@ public interface DocumentMapper {
             JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
             LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
             LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = 2 AND D.WRITER_NO = #{loginUserNo}
+            WHERE D.DEL_YN = 'N' AND D.STATUS = #{status} AND D.WRITER_NO = #{loginUserNo}
             ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
             """)
-    List<DocumentVo> getDocumentList(String loginUserNo);
-
-    // (임시저장) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
-            FROM DOCUMENT D
-            JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
-            JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
-            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
-            JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = 1 AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
-            """)
-    List<DocumentVo> getTempDocumentList(String loginUserNo);
-
-    // (종결) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
-            FROM DOCUMENT D
-            JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
-            JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
-            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
-            JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = 3 AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
-            """)
-    List<DocumentVo> getCloseDocumentList(String loginUserNo);
-
-    // (반려) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
-            FROM DOCUMENT D
-            JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
-            JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
-            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
-            JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = 4 AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
-            """)
-    List<DocumentVo> getRetrunDocumentList(String loginUserNo);
-
-    // (결재취소) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
-            FROM DOCUMENT D
-            JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
-            JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
-            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
-            JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = 5 AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
-            """)
-    List<DocumentVo> getCancelDocumentList(String loginUserNo);
-
-    // (삭제함) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
-            FROM DOCUMENT D
-            JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
-            JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
-            JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
-            JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
-            LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
-            LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'Y' AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
-            """)
-    List<DocumentVo> getDeleteDocumentList(String loginUserNo);
+    List<DocumentVo> getDocumentList(String loginUserNo, int status);
 
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @Select("""
@@ -336,10 +253,10 @@ public interface DocumentMapper {
             """)
     int updateStatusDocument(DocumentVo vo);
 
-    // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
+    // 결재 기안 철회/삭제(아무도 결재승인 안했을 경우 가능)
     @Update("""
             UPDATE DOCUMENT
-            SET DEL_YN = 'Y'
+            SET DEL_YN = 'Y', STATUS = 5
             WHERE DOC_NO = #{docNo}
               AND WRITER_NO = #{loginUserNo}
               AND DOC_NO NOT IN (
