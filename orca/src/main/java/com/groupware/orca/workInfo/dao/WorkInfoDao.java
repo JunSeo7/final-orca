@@ -32,4 +32,11 @@ public class WorkInfoDao {
     }
 
 
+    public String getStartWorkTime(String empNo, String workDate) {
+        return mapper.getStartWorkTime(empNo, workDate);
+    }
+
+    public String getEndWorkTime(String empNo, String workDate) {
+        return mapper.getEndWorkTime(empNo, workDate);
+    }
 }

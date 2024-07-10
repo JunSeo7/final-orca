@@ -14,11 +14,11 @@
 
 /* 어사이드 바 설정 */
 aside {
-  background-color: #f4f4f4;
+  border-right: 1px solid rgb(212, 212, 212);
   padding: 20px;
   width: 200px;
   position: fixed;
-  top: 45px; /* 헤더 높이 */
+  top: 90px; /* 헤더 높이 */
   bottom: 0;
   overflow-y: auto;
   transition: transform 0.3s ease;
@@ -164,20 +164,6 @@ nav ul li a:hover {
   text-align: center;
 }
 
-#codeSelect {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-}
-
-#codeName {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-}
-
 #reason {
     height: 200px;
     resize: none;
@@ -186,4 +172,8 @@ nav ul li a:hover {
 form .button-container {
   text-align: right;
   margin-top: 20px;
+}
+
+main.full {
+  margin-left: 20px;
 }
