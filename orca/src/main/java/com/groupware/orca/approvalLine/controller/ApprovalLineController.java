@@ -55,6 +55,7 @@ public class ApprovalLineController {
     @PostMapping("add")
     public ResponseEntity<String> addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
         try {
+            System.out.println("approvalLineVo = " + approvalLineVo);
             int result = service.addApprovalLine(approvalLineVo);
             return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/orca/apprline/list").build(); // 성공 시 리다이렉트
         } catch (IllegalStateException e) {
