@@ -7,9 +7,12 @@
     <title>Home</title>
      <!-- 파비콘 -->
         <link rel="icon" href="img/logo.png" type="image/png">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="/css/layout/main.css">
+
         <script defer src="/js/layout/main.js"></script>
+
 </head>
 <body>
 
@@ -40,7 +43,7 @@
                             <div>
                                 <span class="time-icon" id="startWork">⏰출근시간</span>
                                 <button id="startWorkButton" onclick="startWorkClick();">출근 시작</button>
-                                <p class="time" id="startWorkTime">08:14</p>
+                                <p class="time" id="startWorkTime">--:--</p>
                             </div>
                             <div>
                                 <span class="time-icon" id="endWork">⏱퇴근시간</span>

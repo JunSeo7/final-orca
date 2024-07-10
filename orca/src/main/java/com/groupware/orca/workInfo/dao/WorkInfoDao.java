@@ -20,6 +20,7 @@ public class WorkInfoDao {
 
     public void startWork(WorkInfoVo vo) {
         mapper.startWork(vo);
+
     }
 
     public void endWork(WorkInfoVo vo) {
@@ -29,4 +30,6 @@ public class WorkInfoDao {
     public void overTimeWork(WorkInfoVo vo) {
         mapper.overTimeWork(vo);
     }
+
+
 }

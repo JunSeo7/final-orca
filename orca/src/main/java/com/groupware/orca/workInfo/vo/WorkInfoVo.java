@@ -13,4 +13,19 @@ public class WorkInfoVo {
     private double overtimeWork;
     private double holidayWork;
 
+    public String getFormattedStartTime() {
+        return formatTime(startTime);
+    }
+
+    public String getFormattedEndTime() {
+        return formatTime(endTime);
+    }
+
+    private String formatTime(String time) {
+        if (time != null && time.length() >= 16) { // 최소한 16자 이상이어야 하므로 length() >= 16으로 변경
+            return time.substring(11, 16); // 문자열 "HH:mm" 형식으로 자르기 위해 인덱스 범위 수정
+        }
+        return "--:--";
+    }
+
 }

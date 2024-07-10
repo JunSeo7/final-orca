@@ -1,10 +1,7 @@
 package com.groupware.orca.workInfo.mapper;
 
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,8 +17,8 @@ public interface WorkInfoMapper {
     List<WorkInfoVo> workList(String empNo);
 
     //출근
-    @Insert("INSERT INTO WORK_INFO (WORK_NO, EMP_NO, WORK_DATE, START_TIME) " +
-            "VALUES (SEQ_WORK_INFO.NEXTVAL, #{empNo}, SYSDATE, SYSDATE)")
+    @Insert("INSERT INTO WORK_INFO (WORK_NO, EMP_NO, WORK_DATE, START_TIME) VALUES (#{workNo}, #{empNo}, SYSDATE ,SYSDATE)")
+    @SelectKey(statement = "SELECT SEQ_WORK_INFO.NEXTVAL FROM DUAL", keyProperty = "workNo", before = true, resultType = String.class)
     void startWork(WorkInfoVo vo);
 
     //퇴근

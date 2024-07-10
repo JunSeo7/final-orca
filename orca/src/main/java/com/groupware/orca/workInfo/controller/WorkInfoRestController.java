@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class WorkInfoRestController {
 
     private final WorkInfoService service;
+    private static final Logger logger = LoggerFactory.getLogger(WorkInfoRestController.class);
+
 
     // 개인 근무정보 리스트
     @GetMapping("list")
@@ -37,17 +41,18 @@ public class WorkInfoRestController {
     }
 
     // 출근
-    @PostMapping("goWork")
+    @PostMapping("/goWork")
     public ResponseEntity<Map<String, Object>> startWork(WorkInfoVo vo, HttpSession httpSession) {
+        UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
+
+        String empNo = loginUser.getEmpNo();
+        vo.setEmpNo(empNo);
+        String workNo = service.startWork(vo);
+        httpSession.setAttribute("workNo", workNo);
+
         Map<String, Object> response = new HashMap<>();
-
-            String empNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-            vo.setEmpNo(empNo);
-            service.startWork(vo);
-            httpSession.setAttribute("workNo", vo.getWorkNo());
-            response.put("success", true);
-            response.put("startWorkTime", vo.getStartTime());
-
+        response.put("success", true);
+        response.put("startWorkTime", vo.getFormattedStartTime());
         return ResponseEntity.ok(response);
     }
 
@@ -55,19 +60,26 @@ public class WorkInfoRestController {
     @PostMapping("leaveWork")
     public ResponseEntity<Map<String, Object>> endWork(WorkInfoVo vo, HttpSession httpSession) {
         Map<String, Object> response = new HashMap<>();
+        logger.info("endWork called with vo: {}", vo);
 
-            String empNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-            vo.setEmpNo(empNo);
-            String workNo = (String) httpSession.getAttribute("workNo");
-            if (workNo != null) {
-                vo.setWorkNo(workNo);
-                service.endWork(vo);
-                response.put("success", true);
-                response.put("endWorkTime", vo.getEndTime()); // 실제 퇴근 시간을 가져오는 로직 추가
-            } else {
-                response.put("success", false);
-                response.put("message", "출근 기록이 없습니다.");
-            }
+        UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
+
+        String empNo = loginUser.getEmpNo();
+        vo.setEmpNo(empNo);
+
+        String workNo = (String) httpSession.getAttribute("workNo");
+        logger.info("WorkNo from session: {}", workNo);
+
+        if (workNo != null) {
+            vo.setWorkNo(workNo);
+            service.endWork(vo);
+
+            response.put("success", true);
+            response.put("endWorkTime", vo.getFormattedEndTime());
+        } else {
+            response.put("success", false);
+            response.put("message", "출근 기록이 없습니다.");
+        }
 
         return ResponseEntity.ok(response);
     }

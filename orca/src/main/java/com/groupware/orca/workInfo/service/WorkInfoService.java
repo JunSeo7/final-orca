@@ -13,12 +13,16 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class WorkInfoService {
 
     private final WorkInfoDao dao;
+    private static final Logger logger = LoggerFactory.getLogger(WorkInfoService.class);
 
     // 근무 정보 조회
     public List<WorkInfoVo> workList(String empNo) {
@@ -26,16 +30,21 @@ public class WorkInfoService {
     }
 
     // 출근
-    public void startWork(WorkInfoVo vo) {
+    public String startWork(WorkInfoVo vo) {
         vo.setStartTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
-        dao.startWork(vo);
+        dao.startWork(vo); // dao에서 반환하는 WorkInfoVo를 그대로 반환
+        logger.info("StartWork service called, workNo: {}", vo.getWorkNo());
+        return vo.getWorkNo(); // dao에서 반환하는 WorkInfoVo를 그대로 반환
     }
 
     // 퇴근
     public void endWork(WorkInfoVo vo) {
-        vo.setEndTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
+        logger.info("EndWork service called with vo: {}", vo);
+
         dao.endWork(vo);
+        logger.info("EndWork DAO called");
         dao.overTimeWork(vo);
+        logger.info("OverTimeWork DAO called");
     }
 
     // 연장근무
