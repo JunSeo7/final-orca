@@ -11,6 +11,7 @@
             <link rel="stylesheet" href="/css/managementSupport/main.css">
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script defer src="/js/managementSupport/main.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         </head>
 
         <body>
@@ -49,7 +50,7 @@
                 </nav>
             </aside>
             <main>
-                <div class="main">
+                <div class="main" id="content">
                     <h1>경영지원부</h1>
                 </div>
             </main>

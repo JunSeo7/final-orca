@@ -2,6 +2,7 @@ package com.groupware.orca.department.managementSupport.calendar.service;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.department.managementSupport.calendar.dao.ManagementSupportDao;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
@@ -67,5 +68,9 @@ public class ManagementSupportService {
 
     public int deleteCalendar(int calendarNo) {
         return dao.deleteCalendar(calendarNo);
+    }
+
+    public List<CalendarVo> searchListCalendarData(String keyword,int startNum, int endNum) {
+        return dao.searchListCalendarData(keyword, startNum, endNum);
     }
 }

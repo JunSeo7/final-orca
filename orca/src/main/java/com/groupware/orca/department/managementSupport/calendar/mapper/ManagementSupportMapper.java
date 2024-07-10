@@ -3,6 +3,7 @@ package com.groupware.orca.department.managementSupport.calendar.mapper;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -77,5 +78,35 @@ public interface ManagementSupportMapper {
 
     @Update("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo}")
     int deleteCalendar(@Param("calendarNo") int calendarNo);
+
+    @Select("SELECT *\n" +
+            "FROM (\n" +
+            "    SELECT\n" +
+            "        ROWNUM AS RNUM,\n" +
+            "        C.*\n" +
+            "    FROM (\n" +
+            "        SELECT\n" +
+            "            C.CALENDAR_NO,\n" +
+            "            C.TITLE,\n" +
+            "            SUBSTR(C.CONTENT, 1, 30) AS CONTENT,\n" +
+            "            TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE,\n" +
+            "            C.START_DATE,\n" +
+            "            C.END_DATE,\n" +
+            "            P.NAME AS WRITER\n" +
+            "        FROM CALENDAR C\n" +
+            "        JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
+            "        WHERE\n" +
+            "            C.RANGE = 'company'\n" +
+            "            AND C.DEL_DATE IS NULL\n" +
+            "            AND (\n" +
+            "                LOWER(REPLACE(C.TITLE ,' ','')) LIKE '%' || #{keyword} || '%'\n" +
+            "                OR LOWER(REPLACE(C.CONTENT ,' ','')) LIKE '%' || #{keyword} || '%'\n" +
+            "                OR LOWER(REPLACE(P.NAME ,' ','')) LIKE '%' || #{keyword} || '%'\n" +
+            "            )\n" +
+            "        ORDER BY ENROLL_DATE DESC, CALENDAR_NO DESC\n" +
+            "    ) C\n" +
+            ")\n" +
+            "WHERE RNUM BETWEEN #{startNum} AND #{endNum}\n")
+    List<CalendarVo> searchListCalendarData(@Param("keyword") String keyword, @Param("startNum") int startNum, @Param("endNum") int endNum);
 }
 

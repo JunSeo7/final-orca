@@ -3,6 +3,7 @@ package com.groupware.orca.department.managementSupport.calendar.controller;
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.department.managementSupport.calendar.service.ManagementSupportService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
@@ -21,14 +22,14 @@ public class ManagementSupportController {
     private final ManagementSupportService service;
 
     @GetMapping("createCalendar")
-    public String createCalendar(){
+    public String createCalendar() {
         return "managementSupport/calendar/company/create";
     }
 
     @PostMapping("createCalendarCompany")
     @ResponseBody
     public int createCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         int result = service.createCalendarCompany(vo);
 
@@ -54,19 +55,19 @@ public class ManagementSupportController {
 
     @GetMapping("listCalendarData")
     @ResponseBody
-    public List<CalendarVo> listCalendarData(@RequestParam("startNum") int startNum, @RequestParam("endNum") int endNum ) {
+    public List<CalendarVo> listCalendarData(@RequestParam("startNum") int startNum, @RequestParam("endNum") int endNum) {
         List<CalendarVo> calendarVoList = service.listCalendarData(startNum, endNum);
         return calendarVoList;
     }
 
     @GetMapping("detailCalendar")
-    public String detailCalendar(){
+    public String detailCalendar() {
         return "managementSupport/calendar/company/detail";
     }
 
     @GetMapping("getCalendarByOne")
     @ResponseBody
-    public CalendarVo getCalendarByOne(@RequestParam("calendarNo") int calendarNo){
+    public CalendarVo getCalendarByOne(@RequestParam("calendarNo") int calendarNo) {
         CalendarVo calendarVo = service.getCalendarByOne(calendarNo);
 
         return calendarVo;
@@ -81,8 +82,41 @@ public class ManagementSupportController {
 
     @PostMapping("deleteCalendar")
     @ResponseBody
-    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo){
+    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo) {
         int result = service.deleteCalendar(calendarNo);
         return result;
+    }
+
+    @GetMapping("searchListCalendar")
+    public String searchListCalendar() {
+        System.out.println("요청 넘어옴");
+        return "managementSupport/calendar/company/list";
+    }
+
+    @GetMapping("searchListCalendarPage")
+    @ResponseBody
+    public Pagination searchListCalendarPage(@RequestParam("page") int page) {
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setPageSize(10);
+        pageVo.setRecordSize(10);
+        int totalRecordCount = service.getCalendarCnt();
+        Pagination pagination = new Pagination(totalRecordCount, pageVo);
+        return pagination;
+    }
+
+    @GetMapping("searchListCalendarData")
+    @ResponseBody
+    public List<CalendarVo> searchListCalendarData(@RequestParam("startNum") int startNum,
+                                                   @RequestParam("endNum") int endNum,
+                                                   @RequestParam("keyword") String keyword) {
+        System.out.println("searchVo = " + keyword);
+        if (keyword != null) {
+            keyword = keyword.replaceAll("\\s+", "");
+        }
+
+        System.out.println("keword" + keyword);
+        List<CalendarVo> calendarVoList = service.searchListCalendarData(keyword, startNum, endNum);
+        return calendarVoList;
     }
 }
