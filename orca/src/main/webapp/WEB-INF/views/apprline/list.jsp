@@ -67,6 +67,8 @@
         </c:otherwise>
     </c:choose>
 </main>
+
+
 <!-- 결재선 선택 팝업 -->
 <div class="popup-overlay" id="popupOverlay" onclick="closeApprovalLinePopup()"></div>
 <div class="popup" id="approvalLinePopup">
@@ -100,30 +102,30 @@
                 </tr>
 
             </table>
-            <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
-            <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
-            <div class="approval-line" id="approvalLinePreview">
-                <!-- 선택된 결재선 미리보기 -->
+                <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
+                <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
+                    <div class="approval-line" id="approvalLinePreview">
+                        <!-- 선택된 결재선 미리보기 -->
+                    </div>
+                    <h4>결재자 선택</h4>
+                    <div class="approval-role">
+                        <label for="numSlots">합의/결재 칸 수:</label>
+                        <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
+                    </div>
+                </div>
+                <div class="popup-body-right">
+                <div id="jstree"></div>
             </div>
-            <h4>결재자 선택</h4>
-            <div class="approval-role">
-                <label for="numSlots">합의/결재 칸 수:</label>
-                <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
+            <div class="popup-body-bottom">
+                <div class="approval-selection" id="approvalSelection">
+                    <!-- 동적으로 생성될 합의/결재 칸 -->
+                </div>
             </div>
         </div>
-        <div class="popup-body-right">
-            <div id="jstree"></div>
-        </div>
-        <div class="popup-body-bottom">
-            <div class="approval-selection" id="approvalSelection">
-                <!-- 동적으로 생성될 합의/결재 칸 -->
-            </div>
-        </div>
-    </div>
     <div class="popup-footer">
-        <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
-    </div>
-        </form>
+    <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
+</div>
+</form>
 </div>
 
 <!-- 결재선 수정 모달 -->

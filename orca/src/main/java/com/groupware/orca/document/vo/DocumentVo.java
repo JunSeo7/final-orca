@@ -21,10 +21,10 @@ public class DocumentVo {
     private int docNo;                 // 문서 번호
     private int writerNo;              // 기안자 번호
     private String writerName;         // 기안자 이름
-    private int deptCode;               // 부서 코드
-    private String deptName;            // 부서 이름
-    private int positionCode;           // 직위 코드
-    private String positionName;           // 직위 이름
+    private int deptCode;              // 부서 코드
+    private String deptName;           // 부서 이름
+    private int positionCode;          // 직위 코드
+    private String positionName;       // 직위 이름
     private String title;              // 문서 제목
     private String content;            // 문서 내용
     private String enrollDate;         // 작성 날짜
@@ -40,7 +40,7 @@ public class DocumentVo {
 
     // File and Reference Information (파일 및 참조자 정보)
 
-    private String file;                     //파일
+    private String file;                          //파일
     private List<DocFileVo> fileVoList;           // 파일 리스트
-    private List<ReferencerVo> referencerVoList;   // 참조자 리스트
+    private List<ReferencerVo> referencerVoList;  // 참조자 리스트
 }
