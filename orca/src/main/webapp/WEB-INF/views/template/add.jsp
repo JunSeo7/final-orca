@@ -25,49 +25,44 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
 
-      <main id="content">
-           <h1>결재양식 등록</h1>
-               <form action="/orca/template/add" method="POST" enctype="multipart/form-data">
-                  <table class="document-table">
-                  <tr>
+    <main id="content">
+        <h1>결재양식 수정</h1>
+        <form action="/orca/template/edit" method="POST">
+            <table class="document-table">
+                <tr>
                     <th>카테고리</th>
-                       <td>
-                           <select id="category" name="categoryNo" required>
-                              <option value="">--선택--</option>
-                              <option value="1">경비 및 지출 관리</option>
-                              <option value="2">인사 및 근태 관리</option>
-                              <option value="3">프로젝트 및 업무 관리</option>
-                              <option value="4">교육 및 지원</option>
-                              <option value="5">기타</option>
-                           </select>
-                       </td>
-                    </tr>
+                    <td>
+                        <select id="category" name="categoryNo" required>
+                            <c:forEach items="${categories}" var="category">
+                                <option value="${category.categoryNo}" <c:if test="${category.categoryNo == template.categoryNo}">selected</c:if>>
+                                    ${category.NAME}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <th>결재 양식명</th>
-                        <td>
-                            <input type="text" id="name" name="title" required>
-                        </td>
-                    </tr>
+                <tr>
+                    <th>결재 양식명</th>
+                    <td>
+                        <input type="text" id="name" name="title" value="${template.TITLE}" required>
+                    </td>
+                </tr>
 
-
-                    <tr>
-                         <th colspan='2'> 양식 내용 </th>
-                    </tr>
-                    <tr>
-                         <td colspan='2'>
-                            <textarea id="summernote" name="content"></textarea>
-                         </td>
-                    </tr>
-
-                    </table>
-                    <br>
-                    <br>
-                    <button type="submit" class="submit_btn" >등록</button>
-
-               </form>
-           </div>
-      </main>
+                <tr>
+                    <th colspan='2'> 양식 내용 </th>
+                </tr>
+                <tr>
+                    <td colspan='2'>
+                        <textarea id="summernote" name="content">${template.CONTENT}</textarea>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <button type="submit" class="submit_btn">수정</button>
+        </form>
+    </main>
 
 </form>
 </body>

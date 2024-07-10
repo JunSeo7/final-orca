@@ -26,9 +26,11 @@ public class TemplateController {
         return "template/add";
     }
     @GetMapping("edit")
-    public String editTemplate() {
+    public String editTemplate(@RequestParam("templateNo") String templateNo, Model model) {
+        model.addAttribute("templateNo", templateNo);
         return "template/edit";
     }
+
     @GetMapping("search")
     public String searchTemplateList() {
         return "template/search";
@@ -78,7 +80,17 @@ public class TemplateController {
         model.addAttribute("templateDetail", vo);
         return "template/detail";
     }
+
     // 결재양식 수정
+
+    @GetMapping("getTemplatData")
+    public TemplateVo getTemplateData(@RequestParam("templateNo") String templateNo, HttpSession httpSession) {
+        System.out.println("templateNo = " + templateNo);
+        TemplateVo vo = service.getTemplateDetail(templateNo);
+        System.out.println("vo = " + vo);
+        return vo;
+    }
+
     @PutMapping("edit")
     public String editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
         service.editTemplate(vo);
