@@ -352,42 +352,43 @@
             return html;
         }
 
-        function showComments(boardNo) {
-            $.ajax({
-                url: "/orca/board/comment/list?boardNo=" + boardNo,
-                method: "GET",
-                dataType: "json",
-                success: function (response) {
-                    var commentMap = {};
+       function showComments(boardNo) {
+           $.ajax({
+               url: "/orca/board/comment/list?boardNo=" + boardNo,
+               method: "GET",
+               dataType: "json",
+               success: function (response) {
+                   var commentMap = {};
 
-                    // 모든 댓글을 맵에 넣고 대댓글 리스트를 초기화
-                    response.forEach(function (comment) {
-                        commentMap[comment.boardChatNo] = comment;
-                        commentMap[comment.boardChatNo].replies = [];
-                    });
+                   // 모든 댓글을 맵에 넣고 대댓글 리스트를 초기화
+                   response.forEach(function (comment) {
+                       commentMap[comment.boardChatNo] = comment;
+                       commentMap[comment.boardChatNo].replies = [];
+                   });
 
-                    // 대댓글을 부모 댓글의 대댓글 리스트에 추가
-                    response.forEach(function (comment) {
-                        if (comment.replyCommentNo !== null) {
-                            commentMap[comment.replyCommentNo].replies.push(comment);
-                        }
-                    });
+                   // 대댓글을 부모 댓글의 대댓글 리스트에 추가
+                   response.forEach(function (comment) {
+                       if (comment.replyCommentNo !== null) {
+                           commentMap[comment.replyCommentNo].replies.push(comment);
+                       }
+                   });
 
-                    // 최상위 댓글만 추려서 HTML 생성
-                    var commentsHtml = '';
-                    response.forEach(function (comment) {
-                        if (comment.replyCommentNo === null) {
-                            commentsHtml += getCommentHtml(comment);
-                        }
-                    });
+                   // 최상위 댓글만 추려서 HTML 생성
+                   var commentsHtml = '';
+                   response.forEach(function (comment) {
+                       if (comment.replyCommentNo === null && comment.boardNo === boardNo) {
+                           commentsHtml += getCommentHtml(comment);
+                       }
+                   });
 
-                    $('#comments-container').html(commentsHtml);
-                },
-                error: function () {
-                    alert("댓글을 불러오는데 실패했습니다.");
-                }
-            });
-        }
+                   $('#comments-container').html(commentsHtml);
+               },
+               error: function () {
+                   alert("댓글을 불러오는데 실패했습니다.");
+               }
+           });
+       }
+
 
         function addComment() {
             var content = $('#new-comment-content').val();
