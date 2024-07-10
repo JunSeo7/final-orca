@@ -180,6 +180,7 @@ function getCalendarList() {
             mainDiv.innerHTML = response;
             let page = 1;
             listCalendarPage(page);
+            searchListCalendar();
         },
         error: function (error) {
             console.error('데이터 로드 실패', error);
@@ -589,3 +590,134 @@ function editEvent(Data) {
     }
 }
 
+function searchListCalendar() {
+    $(document).ready(function () {
+        // 폼 제출 시 Ajax로 데이터를 전송한다.
+        $('#calendar-search-form').on('submit', function (event) {
+            console.log("입력됨");
+            event.preventDefault();
+            // 아래 변수에 담아주는 건 뭐냐?
+            // 사용자가 form에 입력한 데이터를 수집하여 이를 Ajax 요청으로 서버에 전송하기 위해 작성되었다.
+            const keyword = $('.search-text').val();
+            $.ajax({
+                // 위에 form에서 이미 post로 /messenger/write에 보내주고 있다.
+                // 그렇기에, form의 action 속성 값을 사용한다.
+                url: $(this).attr('action'),
+                method: "get",
+                dataType: 'html',
+                success: (response) => {
+                    console.log(response);
+                    while (mainDiv.firstChild) {
+                        mainDiv.removeChild(mainDiv.firstChild);
+                    }
+                    mainDiv.innerHTML = response;
+                    let page = 1;
+                    searchListCalendarPage(page, keyword);
+                    searchListCalendar();
+                },
+                error: (xhr, status, error) => {
+                    console.log(error);
+                }
+            });
+        });
+    });
+}
+
+function searchListCalendarPage(page, keyword) {
+    const pagination = {};
+    let totalPage = document.querySelector('.totalPage');
+    console.log(keyword);
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/searchListCalendarPage',
+        data: {
+            page: page
+        },
+        dataType: 'json',
+        success: function (response) {
+            Object.assign(pagination, response);
+
+            while (totalPage.firstChild) {
+                totalPage.removeChild(totalPage.firstChild);
+            }
+
+            if (pagination.existPrevPage) {
+                let existPrevPage = document.createElement('a');
+                existPrevPage.textContent = '이전';
+                totalPage.appendChild(existPrevPage);
+                existPrevPage.addEventListener('click', function () {
+                    listCalendarPage(pagination.startPage - 1);
+                });
+            }
+
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                let aPage = document.createElement('a');
+                aPage.textContent = i;
+                if (i == page) {
+                    aPage.classList.add('current-page');
+                }
+                totalPage.appendChild(aPage);
+                aPage.addEventListener('click', function () {
+                    listCalendarPage(i);
+                });
+            }
+
+            if (pagination.existNextPage) {
+                let existNextPage = document.createElement('a');
+                existNextPage.textContent = '이후';
+                totalPage.appendChild(existNextPage);
+                existNextPage.addEventListener('click', function () {
+                    listCalendarPage(pagination.endPage + 1);
+                });
+            }
+
+            searchListCalendarData(pagination, keyword);
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+function searchListCalendarData(pagination, keyword) {
+
+    let startNum = pagination.startNum;
+    let endNum = pagination.endNum;
+    console.log(keyword);
+    $.ajax({
+        type: 'get',
+        url: '/orca/managementSupport/searchListCalendarData',
+        data: {
+            startNum: startNum,
+            endNum: endNum,
+            keyword: keyword
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            let tbody = $('.custom-table tbody');
+            tbody.empty(); // 기존의 내용을 모두 지웁니다.
+
+            // 각 데이터를 테이블에 추가합니다.
+            $.each(response, function (index, item) {
+                let calendarNo = item.calendarNo;
+                let row = $('<tr>');
+
+                row.append($('<td>').text(item.title));
+                row.append($('<td>').text(item.content).addClass('content-text')); // 내용 부분을 텍스트 오버라이드합니다.
+                row.append($('<td>').text(item.writer));
+                row.append($('<td>').text(item.startDate));
+                row.append($('<td>').text(item.endDate));
+                row.append($('<td>').text(item.enrollDate));
+                tbody.append(row);
+                row.on('click', function () {
+                    detailCalendar(calendarNo);
+                });
+
+            });
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}

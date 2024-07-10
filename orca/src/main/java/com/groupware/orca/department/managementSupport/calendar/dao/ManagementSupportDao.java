@@ -2,6 +2,7 @@ package com.groupware.orca.department.managementSupport.calendar.dao;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.department.managementSupport.calendar.mapper.ManagementSupportMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,5 +37,9 @@ public class ManagementSupportDao {
 
     public int deleteCalendar(int calendarNo) {
         return mapper.deleteCalendar(calendarNo);
+    }
+
+    public List<CalendarVo> searchListCalendarData(String keyword, int startNum, int endNum) {
+        return mapper.searchListCalendarData(keyword, startNum, endNum);
     }
 }
