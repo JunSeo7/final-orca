@@ -108,5 +108,16 @@ public interface ManagementSupportMapper {
             ")\n" +
             "WHERE RNUM BETWEEN #{startNum} AND #{endNum}\n")
     List<CalendarVo> searchListCalendarData(@Param("keyword") String keyword, @Param("startNum") int startNum, @Param("endNum") int endNum);
+
+    @Select("SELECT COUNT(C.CALENDAR_NO) " +
+            "FROM CALENDAR C " +
+            "JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO " +
+            "WHERE C.DEL_DATE IS NULL AND C.RANGE = 'company' " +
+            "AND ( " +
+            "    LOWER(REPLACE(C.TITLE ,' ','')) LIKE '%' || #{keyword} || '%' " +
+            "    OR LOWER(REPLACE(C.CONTENT ,' ','')) LIKE '%' || #{keyword} || '%' " +
+            "    OR LOWER(REPLACE(P.NAME ,' ','')) LIKE '%' || #{keyword} || '%' " +
+            ")")
+    int getSearchCalendarCnt(@Param("keyword") String keyword);
 }
 

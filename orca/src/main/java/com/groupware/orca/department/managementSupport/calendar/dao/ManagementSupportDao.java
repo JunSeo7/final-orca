@@ -42,4 +42,8 @@ public class ManagementSupportDao {
     public List<CalendarVo> searchListCalendarData(String keyword, int startNum, int endNum) {
         return mapper.searchListCalendarData(keyword, startNum, endNum);
     }
+
+    public int getSearchCalendarCnt(String keyword) {
+        return mapper.getSearchCalendarCnt(keyword);
+    }
 }

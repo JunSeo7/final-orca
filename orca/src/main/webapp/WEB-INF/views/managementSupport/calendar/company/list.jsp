@@ -188,4 +188,22 @@
             pointer-events: none;
             /* 아이콘이 클릭되지 않도록 설정 */
         }
+
+        .keyword {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .notFoundText {
+            display: flex;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .check-list {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.5;
+            margin: 12px 0;
+        }
     </style>

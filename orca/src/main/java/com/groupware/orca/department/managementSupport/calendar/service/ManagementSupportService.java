@@ -73,4 +73,8 @@ public class ManagementSupportService {
     public List<CalendarVo> searchListCalendarData(String keyword,int startNum, int endNum) {
         return dao.searchListCalendarData(keyword, startNum, endNum);
     }
+
+    public int getSearchCalendarCnt(String keyword) {
+        return dao.getSearchCalendarCnt(keyword);
+    }
 }

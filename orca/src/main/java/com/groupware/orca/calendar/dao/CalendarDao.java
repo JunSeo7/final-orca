@@ -29,4 +29,12 @@ public class CalendarDao {
     public int editCalendar(CalendarVo vo) {
         return mapper.editCalendar(vo);
     }
+
+    public List<CalendarVo> searchListCalendarData(String keyword, int startNum, int endNum) {
+        return mapper.searchListCalendarData(keyword, startNum, endNum);
+    }
+
+    public int getSearchCalendarCnt(String keyword) {
+        return mapper.getSearchCalendarCnt(keyword);
+    }
 }
