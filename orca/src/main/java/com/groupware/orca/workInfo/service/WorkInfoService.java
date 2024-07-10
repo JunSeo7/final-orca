@@ -69,4 +69,12 @@ public class WorkInfoService {
         }
         dao.overTimeWork(vo);
     }
+
+    public String getStartWorkTime(String empNo, String workDate) {
+        return dao.getStartWorkTime(empNo, workDate);
+    }
+
+    public String getEndWorkTime(String empNo, String workDate) {
+        return dao.getEndWorkTime(empNo, workDate);
+    }
 }

@@ -84,6 +84,30 @@ public class WorkInfoRestController {
         return ResponseEntity.ok(response);
     }
 
+    // 출근 시간 조회
+    @GetMapping("/getStartWorkTime")
+    public ResponseEntity<Map<String, Object>> getStartWorkTime(HttpSession httpSession, @RequestParam String workDate) {
+        UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
+        String empNo = loginUser.getEmpNo();
+        String startWorkTime = service.getStartWorkTime(empNo, workDate);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("startWorkTime", startWorkTime);
+        return ResponseEntity.ok(response);
+    }
+
+    // 퇴근 시간 조회
+    @GetMapping("/getEndWorkTime")
+    public ResponseEntity<Map<String, Object>> getEndWorkTime(HttpSession httpSession, @RequestParam String workDate) {
+        UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
+        String empNo = loginUser.getEmpNo();
+        String endWorkTime = service.getEndWorkTime(empNo, workDate);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("endWorkTime", endWorkTime);
+        return ResponseEntity.ok(response);
+    }
+
     // 연장 근무 시간 기록
     @PostMapping("overtime")
     public void overTimeWork(WorkInfoVo vo) {

@@ -2,15 +2,6 @@ const empNo = '<%= ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() %>'
 const workNo = '<%= session.getAttribute("workNo") %>';
 const workDate = new Date().toISOString().split('T')[0]; // 현재 날짜 부분만 추출
 
-
-function getCurrentTime() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0'); // 시간을 두 자리수로 맞추기 위해 padStart 사용
-    const minutes = now.getMinutes().toString().padStart(2, '0'); // 분을 두 자리수로 맞추기 위해 padStart 사용
-    return `${hours}:${minutes}`;
-}
-
-
 function startWorkClick() {
 
     $.ajax({
@@ -22,8 +13,8 @@ function startWorkClick() {
         },
         success: function(response) {
             if(response.success) {
-                document.getElementById('startWorkTime').innerText = response.startWorkTime;
                 alert('출근 시간이 기록되었습니다.');
+                location.reload();
             } else {
                 alert('출근 시간 기록에 실패했습니다.');
             }
@@ -33,11 +24,10 @@ function startWorkClick() {
             alert('출근 시간 기록에 에러.');
         }
     });
+
 }
 
 function endWorkClick() {
-
-    const endTime = getCurrentTime();
 
     $.ajax({
         url: "/orca/re/work/leaveWork",
@@ -45,13 +35,11 @@ function endWorkClick() {
         data: {
             empNo: empNo,
             workNo: workNo,
-            workDate: workDate,
-            endTime: endTime,
         },
         success: function(response) {
             if(response.success) {
-                document.getElementById('endWorkTime').innerText = response.endWorkTime;
                 alert('퇴근 시간이 기록되었습니다.');
+                location.reload();
             } else {
                 alert('퇴근 시간 기록에 실패했습니다. ' + response.message);
             }
@@ -61,4 +49,59 @@ function endWorkClick() {
             alert('퇴근 시간 기록에 에러.');
         }
     });
+
 }
+
+function loadWorkTimes() {
+    $.ajax({
+        url: "/orca/re/work/getStartWorkTime",
+        method: 'get',
+        data: {
+            workDate: workDate,
+        },
+        success: function(response) {
+            if (response.success) {
+                if (response.startWorkTime) {
+                    var sWorkTimeElement = document.getElementById('sWorkTime');
+                    if (sWorkTimeElement) {
+                        var justTime = response.startWorkTime.substring(11, 19);
+                        sWorkTimeElement.innerText = justTime;
+                    }
+                }
+            } else {
+                console.error('시간 불러오기 실패', response.message);
+            }
+        },
+        error: function(error) {
+            console.error('출근 시간 불러오기 에러', error);
+        }
+    });
+
+    $.ajax({
+        url: "/orca/re/work/getEndWorkTime",
+        method: 'get',
+        data: {
+            workDate: workDate,
+        },
+        success: function(response) {
+            if (response.success) {
+                if (response.endWorkTime) {
+                    var eWorkTimeElement = document.getElementById('eWorkTime');
+                    if (eWorkTimeElement) {
+                        var justTime = response.endWorkTime.substring(11, 19);
+                        eWorkTimeElement.innerText = justTime;
+                    }
+                }
+            } else {
+                console.error('시간 불러오기 실패', response.message);
+            }
+        },
+        error: function(error) {
+            console.error('퇴근 시간 불러오기 에러', error);
+        }
+    });
+}
+
+$(document).ready(function() {
+    loadWorkTimes();
+});

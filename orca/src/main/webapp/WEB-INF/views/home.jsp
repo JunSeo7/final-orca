@@ -42,13 +42,13 @@
                         <div class="time-display">
                             <div>
                                 <span class="time-icon" id="startWork">⏰출근시간</span>
-                                <button id="startWorkButton" onclick="startWorkClick();">출근 시작</button>
-                                <p class="time" id="startWorkTime">--:--</p>
+                                <button id="startWorkButton" onclick="startWorkClick();">⏰출근 시간</button>
+                                <p class="time" id="sWorkTime">--:--</p>
                             </div>
                             <div>
                                 <span class="time-icon" id="endWork">⏱퇴근시간</span>
-                                <button id="endWorkButton" onclick="endWorkClick();">퇴근 완료</button>
-                                <p class="time" id="endWorkTime">--:--</p>
+                                <button id="endWorkButton" onclick="endWorkClick();">⏱퇴근 완료</button>
+                                <p class="time" id="eWorkTime">--:--</p>
                           </div>
                       </div>
                   </div>

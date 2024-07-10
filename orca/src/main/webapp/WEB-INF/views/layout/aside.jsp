@@ -16,8 +16,6 @@
                 <p class="profile-info">SW팀 | <span>양파쿵야</span></p>
             </div>
             <hr>
-            <button class="on">출근</button>
-                <hr>
 
               <div id="profileDetail" class="profile-detail hidden">
                   <p>상태 설정</p>
