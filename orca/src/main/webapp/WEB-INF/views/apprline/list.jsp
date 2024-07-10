@@ -98,7 +98,7 @@
                  </tr>
                 <tr>
                     <td class="t-title">결재선 이름</td>
-                    <td><input type="text"></td>
+                    <td><input type="text" name="title"></td>
                 </tr>
 
             </table>

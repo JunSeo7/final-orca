@@ -78,7 +78,7 @@ public class DocumentDao {
 
     //전체목록
     // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
-    public List<DocumentVo> getDocumentList(String loginUserNo, int status) {
+    public List<DocumentVo> getDocumentList(String loginUserNo, Integer status) {
         return mapper.getDocumentList(loginUserNo, status);
     }
 

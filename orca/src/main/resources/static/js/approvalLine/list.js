@@ -1,15 +1,20 @@
-//DOMContentLoaded 이벤트 리스너
 document.addEventListener("DOMContentLoaded", function() {
-    // jstree 노드에 draggable 속성 추가
     $('#jstree').on('loaded.jstree', function() {
         $(this).jstree('open_all');
         $('#jstree li a').attr('draggable', true);
+
+        // 더블 클릭 이벤트 막기
+        $(document).on('dblclick', '#jstree li a', function (dblclickEvent) {
+            dblclickEvent.preventDefault(); // 더블 클릭 시 기본 동작 방지
+            dblclickEvent.stopPropagation(); // 이벤트 전파 중지
+            return false; // 추가적인 전파 방지
+        });
     });
 
     // 드래그 시작 이벤트
     $(document).on('dragstart', '#jstree li a', function(event) {
         var nodeId = $(this).parent().attr('id');
-        event.originalEvent.dataTransfer.setData('text/plain', nodeId);
+        event.originalEvent.dataTransfer.setData('text/plain', nodeId); // 노드 ID를 데이터로 설정
     });
 
     // 초기 슬롯 생성
@@ -41,23 +46,22 @@ document.addEventListener("DOMContentLoaded", function() {
     // jstree 노드 선택 시 이벤트 핸들러
     $('#jstree').on("select_node.jstree", function (e, data) {
         var selectedNode = data.node;
-        addApprovalSelection(selectedNode);
+        if (selectedNode.original.type === 'user') { // 사용자 노드만 허용
+            addApprovalSelection(selectedNode);
+        }
     });
 });
 
-//결재선 등록 팝업 드래그 앤 드롭 함수들
-// 드래그 앤 드롭 이벤트를 허용하는 함수
+// 결재선 등록 팝업 드래그 앤 드롭 함수들
 function allowDrop(event) {
     event.preventDefault();
     event.target.classList.add('dragover');
 }
 
-// 드래그가 끝났을 때 스타일을 제거하는 함수
 function removeDragover(event) {
     event.target.classList.remove('dragover');
 }
 
-// 드롭 이벤트가 발생했을 때 처리하는 함수
 function drop(event) {
     event.preventDefault();
     removeDragover(event);
@@ -87,18 +91,53 @@ function drop(event) {
             deleteButton.className = 'delete-btn';
             deleteButton.onclick = function() {
                 newNode.remove();
+                // 삭제 시 숨겨진 input에서도 제거
+                removeHiddenInput(node.id);
             };
 
             newNode.appendChild(deleteButton);
             slot.appendChild(newNode);
+
+            // 추가된 참조인 정보를 addReferrers 함수로 처리
+            addReferrers([{ id: node.id, text: node.text }]);
         }
     }
 }
 
-//결재자 및 합의자 슬롯 생성 함수
-// 결재자 및 합의자 슬롯을 생성하는 함수
+// 선택한 유저의 정보를 받아 숨겨진 input에 저장하는 함수
+function addReferrers(referrers) {
+    const referrerList = document.querySelector('#referrerList');
+    referrerList.innerHTML = '';  // 초기화
+    referrers.forEach(referrer => {
+        const referrerDiv = document.createElement('div');
+        referrerDiv.innerText = referrer.text;
+        referrerList.appendChild(referrerDiv);
+
+        // 추가된 참조인의 approverNo를 가져오기
+        const approverNo = referrer.id;
+
+        // 숨겨진 input에 approverNo 저장
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'approverNo';
+        hiddenInput.value = approverNo;
+        document.getElementById('approvalLineForm').appendChild(hiddenInput);
+    });
+}
+
+// 숨겨진 input에서 참조인 제거
+function removeHiddenInput(empId) {
+    const hiddenInputs = document.querySelectorAll('input[name="approverNo"]');
+    hiddenInputs.forEach(input => {
+        if (input.value === empId) {
+            input.remove();
+        }
+    });
+}
+
+// 결재자 및 합의자 슬롯 생성 함수
 function createSlots() {
-    var numSlots = 3; // 임시로 슬롯 개수 설정
+    var numSlots = document.getElementById('numSlots').value; // 슬롯 개수
     var approvalSelection = document.getElementById('approvalSelection');
     approvalSelection.innerHTML = '';
 
@@ -114,9 +153,13 @@ function createSlots() {
         var select = document.createElement('select');
         select.className = 'role-select';
         select.innerHTML = '<option value="합의">합의</option><option value="결재">결재</option>';
-        select.onchange = function() {
-            label.textContent = select.value;
-        };
+
+        select.onchange = (function(label, select) {
+            return function() {
+                label.textContent = select.value;
+            };
+        })(label, select);
+
         label.textContent = select.value;
         slot.appendChild(label);
         slot.appendChild(select);
@@ -125,17 +168,13 @@ function createSlots() {
     }
 }
 
-
-//jstree 노드 선택 시 결재자/합의자 추가 함수
-// 선택된 jstree 노드를 결재자 또는 합의자 슬롯에 추가하는 함수
+// jstree 노드 선택 시 결재자/합의자 추가 함수
 function addApprovalSelection(node) {
     var approvalSelection = $('#approvalSelection');
     var newApproval = $('<div>').addClass('approval-item').text(node.text);
     approvalSelection.append(newApproval);
 }
 
-
-//결재선 등록 관련 함수들
 // 결재선 등록 결재양식 제목 가져오기
 function fetchTemplatesByCategory(categoryNo) {
     $.ajax({
@@ -211,7 +250,7 @@ function fetchOrganization() {
     });
 }
 
-// 조직도 데이터를 트리 구조로 변환하는 함수
+// 트리 데이터 빌드
 function buildTreeData(data) {
     const tree = [];
     const departments = {};
@@ -220,8 +259,7 @@ function buildTreeData(data) {
         if (!departments[user.partName]) {
             departments[user.partName] = {
                 text: `${user.partName}`,
-                icon: "fas fa-user-tie",
-                state : { "opened" : true },
+                icon: "fas fa-folder",
                 children: []
             };
             tree.push(departments[user.partName]);
@@ -240,9 +278,10 @@ function buildTreeData(data) {
         }
 
         const userNode = {
-            id: `user_${user.empNo}`,
-            text: `${user.name} [${user.nameOfPosition}]`,
-            icon: "fas fa-user"
+            id: user.empNo,  // 사용자 노드의 ID를 empNo로 설정
+            text: `${user.name} (${user.nameOfPosition})`,
+            icon: "fas fa-user",
+            type: 'user' // 사용자 노드 타입 지정
         };
         team.children.push(userNode);
     });
@@ -250,10 +289,7 @@ function buildTreeData(data) {
     return tree;
 }
 
-
-//팝업 관련 함수들
-
-// 결재선 등록 팝업을 표시하는 함수
+// 팝업 관련 함수들
 function showApprovalLinePopup() {
     document.querySelector('#popupOverlay').style.display = 'block';
     document.querySelector('#approvalLinePopup').style.display = 'block';
@@ -261,13 +297,11 @@ function showApprovalLinePopup() {
     fetchOrganization();
 }
 
-// 결재선 등록 팝업을 닫는 함수
 function closeApprovalLinePopup() {
     document.querySelector('#popupOverlay').style.display = 'none';
     document.querySelector('#approvalLinePopup').style.display = 'none';
 }
 
-// 결재선을 저장하는 함수
 function saveApprovalLine(event) {
     event.preventDefault();
     let slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
@@ -296,19 +330,16 @@ function saveApprovalLine(event) {
     });
 }
 
-// 수정 팝업을 표시하는 함수
 function openModal() {
     document.getElementById('modalOverlay').style.display = 'block';
     document.getElementById('approvalModal').style.display = 'block';
 }
 
-// 수정 팝업을 닫는 함수
 function closeModal() {
     document.getElementById('modalOverlay').style.display = 'none';
     document.getElementById('approvalModal').style.display = 'none';
 }
 
-// 수정 팝업에서 결재선을 저장하는 함수
 function saveModalApprovalLine() {
     alert('결재선이 저장되었습니다.');
     closeModal();
