@@ -179,7 +179,13 @@ public class DocumentController {
     }
 
     // 검색(기안자/제목/내용/카테고리)
-
+    @GetMapping("search")
+    public String getsDocumentList(Model model, HttpSession httpSession, int status){
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
+        model.addAttribute("documentList", documentList);
+        return "document/search";
+    }
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")

@@ -29,6 +29,10 @@ public class TemplateController {
     public String editTemplate() {
         return "template/edit";
     }
+    @GetMapping("search")
+    public String searchTemplateList() {
+        return "template/search";
+    }
 
     // 세션으로 관리자인지 확인하고 기능 - 구현
     // 결재양식 등록 기능
@@ -46,7 +50,7 @@ public class TemplateController {
     }
 
     // 결재양식 검색
-    @GetMapping("/search")
+    @GetMapping("/search/data")
     @ResponseBody
     public List<TemplateVo> getsearchTemplateList(
             @RequestParam(value = "searchType", required = false) String searchType,
@@ -66,7 +70,6 @@ public class TemplateController {
 
         return templateList;
     }
-
 
     // 결재양식 상세보기
     @GetMapping("detail")
