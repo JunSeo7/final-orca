@@ -91,7 +91,7 @@ public class DocumentService {
 
     // 1: 임시저장 2: 기안 3: 종결 4: 반려  5: 결재취소
     //전체목록
-    public List<DocumentVo> getDocumentList(String loginUserNo, int status) {
+    public List<DocumentVo> getDocumentList(String loginUserNo, Integer status) {
         // 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
         List<DocumentVo> documentList = dao.getDocumentList(loginUserNo, status);
         for (DocumentVo document : documentList) {

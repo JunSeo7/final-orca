@@ -99,6 +99,7 @@ public interface DocumentMapper {
     // 1: 임시저장 2: 기안 3: 종결 4: 반려  5: 결재취소
     // (기안 완) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("""
+            <script>
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
                    T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
@@ -109,10 +110,15 @@ public interface DocumentMapper {
             JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
             LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
             LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
-            WHERE D.DEL_YN = 'N' AND D.STATUS = #{status} AND D.WRITER_NO = #{loginUserNo}
+            WHERE D.DEL_YN = 'N'
+            <if test="status != null">
+                AND D.STATUS = #{status}
+            </if>
+            AND D.WRITER_NO = #{loginUserNo}
             ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+            </script>
             """)
-    List<DocumentVo> getDocumentList(String loginUserNo, int status);
+    List<DocumentVo> getDocumentList(String loginUserNo, Integer status);
 
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @Select("""

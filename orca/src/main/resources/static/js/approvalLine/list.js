@@ -1,9 +1,15 @@
-//DOMContentLoaded 이벤트 리스너
 document.addEventListener("DOMContentLoaded", function() {
     // jstree 노드에 draggable 속성 추가
     $('#jstree').on('loaded.jstree', function() {
         $(this).jstree('open_all');
         $('#jstree li a').attr('draggable', true);
+
+        // 더블 클릭 이벤트 막기
+        $(document).on('dblclick', '#jstree li a', function (dblclickEvent) {
+            dblclickEvent.preventDefault(); // 더블 클릭 시 기본 동작 방지
+            dblclickEvent.stopPropagation(); // 이벤트 전파 중지
+            return false; // 추가적인 전파 방지
+        });
     });
 
     // 드래그 시작 이벤트
@@ -46,18 +52,15 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //결재선 등록 팝업 드래그 앤 드롭 함수들
-// 드래그 앤 드롭 이벤트를 허용하는 함수
 function allowDrop(event) {
     event.preventDefault();
     event.target.classList.add('dragover');
 }
 
-// 드래그가 끝났을 때 스타일을 제거하는 함수
 function removeDragover(event) {
     event.target.classList.remove('dragover');
 }
 
-// 드롭 이벤트가 발생했을 때 처리하는 함수
 function drop(event) {
     event.preventDefault();
     removeDragover(event);
@@ -96,9 +99,8 @@ function drop(event) {
 }
 
 //결재자 및 합의자 슬롯 생성 함수
-// 결재자 및 합의자 슬롯을 생성하는 함수
 function createSlots() {
-    var numSlots = 3; // 임시로 슬롯 개수 설정
+    var numSlots = 3; // 슬롯 개수
     var approvalSelection = document.getElementById('approvalSelection');
     approvalSelection.innerHTML = '';
 
@@ -114,10 +116,15 @@ function createSlots() {
         var select = document.createElement('select');
         select.className = 'role-select';
         select.innerHTML = '<option value="합의">합의</option><option value="결재">결재</option>';
-        select.onchange = function() {
-            label.textContent = select.value;
-        };
-        label.textContent = select.value;
+
+        // 즉시 호출 함수 표현식을 사용하여 각 select 요소의 범위를 고정
+        select.onchange = (function(label, select) {
+            return function() {
+                label.textContent = select.value;
+            };
+        })(label, select);
+
+        label.textContent = select.value; // 초기 라벨 설정
         slot.appendChild(label);
         slot.appendChild(select);
 
@@ -125,18 +132,14 @@ function createSlots() {
     }
 }
 
-
 //jstree 노드 선택 시 결재자/합의자 추가 함수
-// 선택된 jstree 노드를 결재자 또는 합의자 슬롯에 추가하는 함수
 function addApprovalSelection(node) {
     var approvalSelection = $('#approvalSelection');
     var newApproval = $('<div>').addClass('approval-item').text(node.text);
     approvalSelection.append(newApproval);
 }
 
-
-//결재선 등록 관련 함수들
-// 결재선 등록 결재양식 제목 가져오기
+//결재선 등록 결재양식 제목 가져오기
 function fetchTemplatesByCategory(categoryNo) {
     $.ajax({
         url: '/orca/apprline/template/list',
@@ -250,10 +253,13 @@ function buildTreeData(data) {
     return tree;
 }
 
+// 사용자 정보를 표시하는 함수
+function displayUserInfo(node) {
+    const userInfoDiv = document.getElementById('userInfoDisplay');
+    userInfoDiv.innerHTML = `<div>${node.text}</div>`; // 디브 안에 텍스트 추가
+}
 
 //팝업 관련 함수들
-
-// 결재선 등록 팝업을 표시하는 함수
 function showApprovalLinePopup() {
     document.querySelector('#popupOverlay').style.display = 'block';
     document.querySelector('#approvalLinePopup').style.display = 'block';
@@ -261,13 +267,11 @@ function showApprovalLinePopup() {
     fetchOrganization();
 }
 
-// 결재선 등록 팝업을 닫는 함수
 function closeApprovalLinePopup() {
     document.querySelector('#popupOverlay').style.display = 'none';
     document.querySelector('#approvalLinePopup').style.display = 'none';
 }
 
-// 결재선을 저장하는 함수
 function saveApprovalLine(event) {
     event.preventDefault();
     let slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
@@ -296,19 +300,16 @@ function saveApprovalLine(event) {
     });
 }
 
-// 수정 팝업을 표시하는 함수
 function openModal() {
     document.getElementById('modalOverlay').style.display = 'block';
     document.getElementById('approvalModal').style.display = 'block';
 }
 
-// 수정 팝업을 닫는 함수
 function closeModal() {
     document.getElementById('modalOverlay').style.display = 'none';
     document.getElementById('approvalModal').style.display = 'none';
 }
 
-// 수정 팝업에서 결재선을 저장하는 함수
 function saveModalApprovalLine() {
     alert('결재선이 저장되었습니다.');
     closeModal();
