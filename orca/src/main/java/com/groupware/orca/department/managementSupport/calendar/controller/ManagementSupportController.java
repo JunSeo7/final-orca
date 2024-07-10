@@ -95,12 +95,15 @@ public class ManagementSupportController {
 
     @GetMapping("searchListCalendarPage")
     @ResponseBody
-    public Pagination searchListCalendarPage(@RequestParam("page") int page) {
+    public Pagination searchListCalendarPage(@RequestParam("page") int page, @RequestParam("keyword") String keyword) {
         PageVo pageVo = new PageVo();
         pageVo.setPage(page);
         pageVo.setPageSize(10);
         pageVo.setRecordSize(10);
-        int totalRecordCount = service.getCalendarCnt();
+        if (keyword != null) {
+            keyword = keyword.replaceAll("\\s+", "");
+        }
+        int totalRecordCount = service.getSearchCalendarCnt(keyword);
         Pagination pagination = new Pagination(totalRecordCount, pageVo);
         return pagination;
     }
@@ -110,12 +113,10 @@ public class ManagementSupportController {
     public List<CalendarVo> searchListCalendarData(@RequestParam("startNum") int startNum,
                                                    @RequestParam("endNum") int endNum,
                                                    @RequestParam("keyword") String keyword) {
-        System.out.println("searchVo = " + keyword);
         if (keyword != null) {
             keyword = keyword.replaceAll("\\s+", "");
         }
-
-        System.out.println("keword" + keyword);
+        
         List<CalendarVo> calendarVoList = service.searchListCalendarData(keyword, startNum, endNum);
         return calendarVoList;
     }

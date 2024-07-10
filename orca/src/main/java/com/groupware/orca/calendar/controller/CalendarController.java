@@ -2,6 +2,8 @@ package com.groupware.orca.calendar.controller;
 
 import com.groupware.orca.calendar.service.CalendarService;
 import com.groupware.orca.calendar.vo.CalendarVo;
+import com.groupware.orca.common.vo.PageVo;
+import com.groupware.orca.common.vo.Pagination;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +21,14 @@ public class CalendarController {
     private final CalendarService service;
 
     @GetMapping("showCalendar")
-    public String showCalendar(HttpSession httpSession){
+    public String showCalendar(HttpSession httpSession) {
         return "calendar/showCalendar";
     }
 
     @GetMapping("showCalendarBarContent")
     @ResponseBody
-    public List<CalendarVo> showCalendarBarContent(@RequestParam("range") String range, HttpSession httpSession){
-        UserVo userVo = (UserVo)httpSession.getAttribute("loginUserVo");
+    public List<CalendarVo> showCalendarBarContent(@RequestParam("range") String range, HttpSession httpSession) {
+        UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         List<CalendarVo> calendarBarlist = service.showCalendarBarContent(range, userVo);
         return calendarBarlist;
     }
@@ -34,7 +36,7 @@ public class CalendarController {
     @PostMapping("createCalendar")
     @ResponseBody
     public int createCalendar(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         int result = service.createCalendar(vo);
 
@@ -43,8 +45,8 @@ public class CalendarController {
 
     @PostMapping("deleteCalendar")
     @ResponseBody
-    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, HttpSession httpSession){
-        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+    public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, HttpSession httpSession) {
+        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         int result = service.deleteCalendar(calendarNo, writerNo);
         return result;
     }
@@ -52,12 +54,49 @@ public class CalendarController {
     @PostMapping("editCalendar")
     @ResponseBody
     public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         System.out.println("writerNo : " + writerNo);
         vo.setWriterNo(writerNo);
         int result = service.editCalendar(vo);
         return result;
     }
 
+    @GetMapping("searchListCalendar")
+    public String searchListCalendar() {
+        return "calendar/searchListCalendar";
+    }
+
+    @GetMapping("searchListCalendarPage")
+    @ResponseBody
+    public Pagination searchListCalendarPage(@RequestParam("page") int page, @RequestParam("keyword") String keyword) {
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setPageSize(10);
+        pageVo.setRecordSize(10);
+        if (keyword != null) {
+            keyword = keyword.replaceAll("\\s+", "");
+        }
+        int totalRecordCount = service.getSearchCalendarCnt(keyword);
+        Pagination pagination = new Pagination(totalRecordCount, pageVo);
+        return pagination;
+    }
+
+    @GetMapping("searchListCalendarData")
+    @ResponseBody
+    public List<CalendarVo> searchListCalendarData(@RequestParam("startNum") int startNum,
+                                                   @RequestParam("endNum") int endNum,
+                                                   @RequestParam("keyword") String keyword) {
+        if (keyword != null) {
+            keyword = keyword.replaceAll("\\s+", "");
+        }
+
+        List<CalendarVo> calendarVoList = service.searchListCalendarData(keyword, startNum, endNum);
+        return calendarVoList;
+    }
+
+    @GetMapping("searchDetailCalendar")
+    public String detailCalendar() {
+        return "calendar/searchDetail";
+    }
 
 }

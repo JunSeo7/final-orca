@@ -11,6 +11,7 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <link rel="stylesheet" href="/css/calendar/showCalendar.css">
             <script defer src="/js/calendar/showCalendar.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         </head>
 
         <body>
@@ -79,6 +80,10 @@
             </aside>
             <main id="content">
                 <div id="calendar"></div>
+                <form action="searchListCalendar" method="get" id="calendar-search-form">
+                    <input type="text" name="keyword" class="search-text">
+                    <i class="fas fa-search search-icon"></i>
+                </form>
             </main>
 
             <div class="new-calendar-form" id="newEventForm">
@@ -151,8 +156,6 @@
                     </div>
                 </div>
             </div>
-
-            </main>
 
         </body>
 

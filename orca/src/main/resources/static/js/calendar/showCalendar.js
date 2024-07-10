@@ -386,7 +386,7 @@ function editEvent(Data) {
             departmentOption.textContent = '부서';
             selectElement.appendChild(departmentOption);
 
-            if (range === 'tedepartmentam') {
+            if (range === 'department') {
                 selectElement.value = 'department';
             }
 
@@ -428,6 +428,7 @@ function editEvent(Data) {
                         editSubmitBtn.classList.remove('opacity');
                         editSubmitBtn.disabled = true;
                         alert("시작일은 종료일보다 빨라야합니다.");
+                        editEndDateInput.value = editStartDateInput.value;
                     } else {
                         editSubmitBtn.classList.add('opacity');
                         editSubmitBtn.disabled = false;
@@ -1117,7 +1118,7 @@ calendarBars.forEach(function (bar) {
     });
 });
 //--------------------------------------------------------------
-
+// 검색기능
 
 
 

@@ -631,47 +631,75 @@ function searchListCalendarPage(page, keyword) {
         type: 'get',
         url: '/orca/managementSupport/searchListCalendarPage',
         data: {
-            page: page
+            page: page,
+            keyword: keyword
         },
         dataType: 'json',
         success: function (response) {
             Object.assign(pagination, response);
+            if (pagination.totalRecordCount > 0) {
 
-            while (totalPage.firstChild) {
-                totalPage.removeChild(totalPage.firstChild);
-            }
 
-            if (pagination.existPrevPage) {
-                let existPrevPage = document.createElement('a');
-                existPrevPage.textContent = '이전';
-                totalPage.appendChild(existPrevPage);
-                existPrevPage.addEventListener('click', function () {
-                    listCalendarPage(pagination.startPage - 1);
-                });
-            }
-
-            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-                let aPage = document.createElement('a');
-                aPage.textContent = i;
-                if (i == page) {
-                    aPage.classList.add('current-page');
+                while (totalPage.firstChild) {
+                    totalPage.removeChild(totalPage.firstChild);
                 }
-                totalPage.appendChild(aPage);
-                aPage.addEventListener('click', function () {
-                    listCalendarPage(i);
-                });
-            }
 
-            if (pagination.existNextPage) {
-                let existNextPage = document.createElement('a');
-                existNextPage.textContent = '이후';
-                totalPage.appendChild(existNextPage);
-                existNextPage.addEventListener('click', function () {
-                    listCalendarPage(pagination.endPage + 1);
-                });
-            }
+                if (pagination.existPrevPage) {
+                    let existPrevPage = document.createElement('a');
+                    existPrevPage.textContent = '이전';
+                    totalPage.appendChild(existPrevPage);
+                    existPrevPage.addEventListener('click', function () {
+                        searchListCalendarPage(pagination.startPage - 1, keyword);
+                    });
+                }
 
-            searchListCalendarData(pagination, keyword);
+                for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                    let aPage = document.createElement('a');
+                    aPage.textContent = i;
+                    if (i == page) {
+                        aPage.classList.add('current-page');
+                    }
+                    totalPage.appendChild(aPage);
+                    aPage.addEventListener('click', function () {
+                        searchListCalendarPage(i, keyword);
+                    });
+                }
+
+                if (pagination.existNextPage) {
+                    let existNextPage = document.createElement('a');
+                    existNextPage.textContent = '이후';
+                    totalPage.appendChild(existNextPage);
+                    existNextPage.addEventListener('click', function () {
+                        searchListCalendarPage(pagination.endPage + 1, keyword);
+                    });
+                }
+
+                searchListCalendarData(pagination, keyword);
+            } else {
+                let pageFooter = $('.pageFooter');
+                let keywordValue = $('<div>');
+                let notFound = $('<div>');
+                let notFoundText = $('<div>');
+
+                notFoundText.addClass('notFoundText');  
+
+                keywordValue.text("'" + keyword + "'");
+                keywordValue.addClass('keyword');  
+                notFound.text("에 대한 검색결과 입니다. 0건");
+
+                notFoundText.append(keywordValue);
+                notFoundText.append(notFound);
+
+                let instructions = $('<p>');
+                instructions.append('- 단어의 철자가 정확한지 확인해 보세요.<br>');
+                instructions.append('- 한글을 영어로 혹은 영어를 입력했는지 확인해 보세요.<br>');
+                instructions.append('- 검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.<br>');
+                instructions.append('- 두 단어 이상의 검색어인 경우, 띄어쓰기를 확인해 보세요.');
+                instructions.addClass('check-list');  
+                
+                pageFooter.append(notFoundText);
+                pageFooter.append(instructions);
+            }
         },
         error: function (error) {
             console.error('데이터 로드 실패', error);
