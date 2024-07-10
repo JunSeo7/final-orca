@@ -95,11 +95,14 @@ public class BoardController {
 
     @PostMapping("/insert")
     public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
-        String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setInsertUserNo(Integer.parseInt(insertUserNo));
+        UserVo loginUserVo = (UserVo) httpSession.getAttribute("loginUserVo");
+        if (loginUserVo != null) {
+            String insertUserNo = loginUserVo.getEmpNo();
+            vo.setInsertUserNo(Integer.parseInt(insertUserNo));
+        }
 
         if (vo.getCategoryNo() == 0) {
-            model.addAttribute("message", "Invalid category number.");
+            model.addAttribute("message", "유효하지 않은 카테고리 번호입니다.");
             return "board/insert";
         }
 
@@ -111,6 +114,7 @@ public class BoardController {
 
         boardService.boardInsert(vo);
 
+        @SuppressWarnings("unchecked")
         List<BoardFileVo> fileList = (List<BoardFileVo>) httpSession.getAttribute("uploadedFiles");
         if (fileList != null) {
             for (BoardFileVo fileVo : fileList) {
@@ -157,6 +161,7 @@ public class BoardController {
             fileVo.setFileSaveName(changeName);
             fileVo.setFileDelYn("N");
 
+            @SuppressWarnings("unchecked")
             List<BoardFileVo> uploadedFiles = (List<BoardFileVo>) httpSession.getAttribute("uploadedFiles");
             if (uploadedFiles == null) {
                 uploadedFiles = new ArrayList<>();
@@ -165,9 +170,9 @@ public class BoardController {
             httpSession.setAttribute("uploadedFiles", uploadedFiles);
 
             response.put("link", "/static/upload/" + changeName);
-            response.put("message", "File uploaded successfully.");
+            response.put("message", "파일 업로드 성공.");
         } else {
-            response.put("message", "No file uploaded.");
+            response.put("message", "업로드된 파일이 없습니다.");
         }
 
         return response;
@@ -175,24 +180,29 @@ public class BoardController {
 
     @PostMapping("/update")
     public String updateBoard(@ModelAttribute BoardVo boardVo, HttpSession httpSession) {
-        String insertUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        boardVo.setInsertUserNo(Integer.parseInt(insertUserNo));
+        UserVo loginUserVo = (UserVo) httpSession.getAttribute("loginUserVo");
+        if (loginUserVo != null) {
+            String insertUserNo = loginUserVo.getEmpNo();
+            boardVo.setInsertUserNo(Integer.parseInt(insertUserNo));
+        }
         boardService.boardUpdate(boardVo);
         return "redirect:/orca/board";
     }
 
     @DeleteMapping("/{boardNo}")
-    public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo ,HttpSession session) {
-        String empNo = ((UserVo) session.getAttribute("loginUserVo")).getEmpNo();
+    public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo, HttpSession session) {
+        UserVo loginUserVo = (UserVo) session.getAttribute("loginUserVo");
+        if (loginUserVo != null) {
+            String empNo = loginUserVo.getEmpNo();
+            // 자식 테이블 데이터 먼저 삭제
+            boardService.deleteLikesByBoardNo(boardNo);  // 좋아요 데이터 삭제
+            commentService.deleteCommentsByBoardNo(boardNo);
+            bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
+            boardFileService.deleteFile(boardNo);
 
-        // 자식 테이블 데이터 먼저 삭제
-        boardService.deleteLikesByBoardNo(boardNo);  // 좋아요 데이터 삭제
-        commentService.deleteCommentsByBoardNo(boardNo);
-        bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
-        boardFileService.deleteFile(boardNo);
-
-        // 부모 테이블 데이터 삭제
-        boardService.boardDelete(boardNo);
+            // 부모 테이블 데이터 삭제
+            boardService.boardDelete(boardNo);
+        }
         return "게시물이 삭제되었습니다.";
     }
 
