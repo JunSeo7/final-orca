@@ -168,7 +168,7 @@ public interface SalaryMapper {
                     ,HEALTH_INSURANCE_PERCENTAGE = #{healthInsurancePercentage}
                     ,LONG_CARE_PERCENTAGE = #{longCarePercentage}
                     ,EMPLOYMENT_INSURANCE_PERCENTAGE = #{employmentInsurancePercentage}
-                    ,LOCAL_INCOME_TAX_PERSENTAGE = #{localIncomeTaxPercentage}
+                    ,LOCAL_INCOME_TAX_PERSENTAGE = #{localIncomeTaxPersentage}
                 WHERE RATES_NO = #{ratesNo}
             """)
     Integer ratesEdit(RatesVo rvo);

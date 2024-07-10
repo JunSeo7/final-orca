@@ -22,8 +22,6 @@ public class SalaryController {
     @PostMapping("write")
     public double salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo)
     {
-
-        System.out.println("vo = " + vo);
         int result = service.salaryWrite(clientVo, vo,svo);
 
         return result;

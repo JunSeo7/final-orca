@@ -11,6 +11,6 @@ public class RatesVo {
     private double healthInsurancePercentage; //HEALTH_INSURANCE_PERCENTAGE;       //건강보험
     private double longCarePercentage;               //장기요양보험
     private double employmentInsurancePercentage; //EMPLOYMENT_INSURANCE_PERCENTAGE;   //고용보험 (실업급여)
-    private double localIncomeTaxPercentage; //지방 소득세
+    private double localIncomeTaxPersentage; //지방 소득세 /LOCAL_INCOME_TAX_PERSENTAGE
 }
 
