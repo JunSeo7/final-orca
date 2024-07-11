@@ -29,39 +29,75 @@ public class SalaryService {
 
         //비과세 뺌 (인적공제 가격 화면에 보여주기-> 회계팀이 직접 입력)
         vo = dao.getUserVo(vo.getEmpNo());
-        double totalIncome = (vo.getSalary() * 12) - (svo.getMeals() * 12); //총 급여
+        double totalIncome = vo.getSalary()-svo.getMeals(); //총 급여
         System.out.println("totalIncome = " + totalIncome);
 
-        double basicDeduction = 1500000; // 인당 기본 공제액 150만원 (원천징수라서 기본 공제액이 150만원)
-        double additionalDeduction = 0;
+        // 공제대상 가족 수
+        int familyCount = clientVo.getPerson();
 
-        if (totalIncome <= 30000000) {
-            additionalDeduction = 0;
-        } else if (totalIncome <= 45000000) {
-            additionalDeduction = (totalIncome - 30000000) * 0.09;
-        } else if (totalIncome <= 70000000) {
-            additionalDeduction = 1200000 + (totalIncome - 45000000) * 0.045;
-        } else if (totalIncome <= 120000000) {
-            additionalDeduction = 2350000 + (totalIncome - 70000000) * 0.03;
+        // 간이세액표를 참고하여 공제 금액 계산
+        double deduction = 0;
+        if (totalIncome <= 3000000) {
+            deduction = 310000 + (totalIncome * getRate(familyCount, 1));
+        } else if (totalIncome <= 4500000) {
+            deduction = 310000 + (3000000 * getRate(familyCount, 1)) + ((totalIncome - 3000000) * getRate(familyCount, 2));
+        } else if (totalIncome <= 7000000) {
+            deduction = 310000 + (3000000 * getRate(familyCount, 1)) + (1500000 * getRate(familyCount, 2)) + ((totalIncome - 4500000) * getRate(familyCount, 3));
+        } else if (totalIncome <= 10000000) {
+            deduction = 310000 + (3000000 * getRate(familyCount, 1)) + (1500000 * getRate(familyCount, 2)) + (2500000 * getRate(familyCount, 3)) + ((totalIncome - 7000000) * getRate(familyCount, 4));
         } else {
-            additionalDeduction = 3650000 + (totalIncome - 120000000) * 0.015;
+            deduction = 310000 + (3000000 * getRate(familyCount, 1)) + (1500000 * getRate(familyCount, 2)) + (2500000 * getRate(familyCount, 3)) + (3000000 * getRate(familyCount, 4)) + ((totalIncome - 10000000) * getRate(familyCount, 5));
         }
 
-        // 가족 공제 추가
-        double familyDeduction = clientVo.getPerson();
-        if (clientVo.getPerson() == 1) {
-            familyDeduction = 12500;
-        } else if (clientVo.getPerson() == 2) {
-            familyDeduction = 29160;
-        } else if (clientVo.getPerson() >= 3) {
-            familyDeduction = 29160 + (clientVo.getPerson() - 2) * 25000;
-        }
+        System.out.println("deduction = " + deduction);
+        return deduction;
 
-        //공제 금액
-        double totalDeduction = totalIncome-(basicDeduction + additionalDeduction + familyDeduction);
-        System.out.println("totalDeduction = " + totalDeduction);
-        return totalDeduction;
+//        // 가족 공제 추가
+//        double familyDeduction = clientVo.getPerson();
+//        if (clientVo.getPerson() == 1) {
+//            familyDeduction = 12500;
+//        } else if (clientVo.getPerson() == 2) {
+//            familyDeduction = 29160;
+//        } else if (clientVo.getPerson() >= 3) {
+//            familyDeduction = 29160 + (clientVo.getPerson() - 2) * 25000;
+//        }
+//
+//        //공제 금액
+//        //double totalDeduction = totalIncome-(basicDeduction + additionalDeduction + familyDeduction);
+//        double totalDeduction = totalIncome - familyDeduction;
+//        System.out.println("totalDeduction = " + totalDeduction);
+//        return totalDeduction;
     }
+
+    private double getRate(int familyCount, int category) {
+        if (familyCount == 1) {
+            switch (category) {
+                case 1: return 0.04;
+                case 2: return 0.05;
+                case 3: return 0.015;
+                case 4: return 0.005;
+                case 5: return 0.0;
+            }
+        } else if (familyCount == 2) {
+            switch (category) {
+                case 1: return 0.04;
+                case 2: return 0.05;
+                case 3: return 0.02;
+                case 4: return 0.01;
+                case 5: return 0.0;
+            }
+        } else {
+            switch (category) {
+                case 1: return 0.07;
+                case 2: return 0.05;
+                case 3: return 0.05;
+                case 4: return 0.03;
+                case 5: return 0.0;
+            }
+        }
+        return 0.0; // 기본값
+    }
+
 
     private double calculateInComeTax(double totalDeduction) {
         //소득세 배열
@@ -77,7 +113,7 @@ public class SalaryService {
             }
         }
         System.out.println("tax = " + tax);
-        return tax/12;
+        return tax;
 
 
 
