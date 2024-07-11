@@ -127,7 +127,7 @@ public class DocumentService {
     }
 
     // 결재 상세보기 - 기안자 no 추가 (params)
-    public DocumentVo getDocumentByNo(int docNo) {
+    public DocumentVo getDocumentByNo(int docNo, String loginUserNo) {
         // 결재 문서 조회(카테고리, 양식, 기안자관련)
         DocumentVo documentVo = dao.getDocumentByNo(docNo);
         // 문서 - 결재선 목록 넣기
@@ -139,6 +139,20 @@ public class DocumentService {
         // 문서 - 파일 목록 넣기
         List<DocFileVo> DocFiles = dao.getDocFileByNo(docNo);
         documentVo.setFileVoList(DocFiles);
+
+        // 내 차례인지 확인
+        Integer isMyTurn = dao.isMyTurn(docNo, loginUserNo);
+
+        System.out.println("isMyTurn = " + isMyTurn);
+
+        if (isMyTurn != null && isMyTurn== 1) {
+            documentVo.setMyTurn(true);
+        } else {
+            documentVo.setMyTurn(false);
+        }
+
+        System.out.println("documentVo = " + documentVo);
+
         return documentVo;
     }
 

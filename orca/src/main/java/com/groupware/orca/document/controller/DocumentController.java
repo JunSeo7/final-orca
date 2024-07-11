@@ -193,7 +193,7 @@ public class DocumentController {
     @GetMapping("detail")
     public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        DocumentVo document = service.getDocumentByNo(docNo);
+        DocumentVo document = service.getDocumentByNo(docNo, loginUserNo);
         model.addAttribute("document", document);
         return "document/detail";
     }
@@ -206,12 +206,13 @@ public class DocumentController {
         return "document/edit";
     }
 
-    // 결재양식 수정 데이터 가져오기
+    // 결재문서 수정 데이터 가져오기
     @GetMapping("getDocumentData")
     @ResponseBody
     public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         System.out.println("docNo = " + docNo);
-        DocumentVo vo = service.getDocumentByNo(docNo);
+        DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
         System.out.println("vo = " + vo);
         return vo;
     }

@@ -3,6 +3,7 @@ package com.groupware.orca.document.vo;
 import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
 import com.groupware.orca.approvalLine.vo.ApproverVo;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class DocumentVo {
     private String statusName;         // 상태 이름
     private String urgent;             // 긴급 여부 (Y/N)
     private String delYn;              // 삭제 여부 (Y/N)
+    private boolean myTurn;                // 내 차례
 
     private int apprLineNo;            //결재선 번호
     private List<ApprovalLineVo> approvalLineVoList; //결재선 리스트
@@ -43,4 +45,6 @@ public class DocumentVo {
     private String file;                          //파일
     private List<DocFileVo> fileVoList;           // 파일 리스트
     private List<ReferencerVo> referencerVoList;  // 참조자 리스트
+
+
 }
