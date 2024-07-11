@@ -35,10 +35,10 @@ public interface WorkInfoMapper {
     void overTimeWork(WorkInfoVo vo);
 
     // 출근 시간 조회
-    @Select("SELECT START_TIME FROM WORK_INFO WHERE EMP_NO = 1 AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
+    @Select("SELECT START_TIME FROM WORK_INFO WHERE EMP_NO = #{empNo} AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
     String getStartWorkTime(String empNo, String workDate);
 
     // 퇴근 시간 조회
-    @Select("SELECT END_TIME FROM WORK_INFO WHERE EMP_NO = 1 AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
+    @Select("SELECT END_TIME FROM WORK_INFO WHERE EMP_NO = #{empNo} AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
     String getEndWorkTime(String empNo, String workDate);
 }

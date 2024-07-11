@@ -34,7 +34,7 @@
                   </div>
 
                   <div class="work-status-inner">
-                    <div><p>2024.06.20(목)</p><p>누적근무시간(06.17~06.23) 44h 42m/52h</p></div>
+                    <div><p id="date"></p><p>누적근무시간(06.17~06.23) 44h 42m/52h</p></div>
                     <div id="clock" class="clock"></div>
                   </div>
 
@@ -42,12 +42,12 @@
                         <div class="time-display">
                             <div>
                                 <span class="time-icon" id="startWork">⏰출근시간</span>
-                                <button id="startWorkButton" onclick="startWorkClick();">⏰출근 시간</button>
+                                <button id="startWorkButton" onclick="startWorkClick();">⏰출근</button>
                                 <p class="time" id="sWorkTime">--:--</p>
                             </div>
                             <div>
                                 <span class="time-icon" id="endWork">⏱퇴근시간</span>
-                                <button id="endWorkButton" onclick="endWorkClick();">⏱퇴근 완료</button>
+                                <button id="endWorkButton" onclick="endWorkClick();">⏱퇴근</button>
                                 <p class="time" id="eWorkTime">--:--</p>
                           </div>
                       </div>
