@@ -45,7 +45,7 @@
                          <br>
                          <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
                          <hr>
-                         <a class="template-btn" onclick="openModal()">
+                         <a class="template-btn edit-btn" data-template-no="${template.templateNo}">
                              <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
                          </a>
                          <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
