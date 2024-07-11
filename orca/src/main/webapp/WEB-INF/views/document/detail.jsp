@@ -124,7 +124,7 @@
                </tr>
            </c:forEach>
 
-
+            <c:if test="${document.myTurn}">
                 <form id="approvalForm" method="post" action="/orca/apprline/status">
                      <input hidden name="docNo" value="${document.docNo}">
                     <table>
@@ -143,7 +143,7 @@
                         </div>
                     <button type="submit" class="approval-btn">결과처리</button>
                </form>
-
+            </c:if>
 
 </main>
 </body>
