@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>나의 결재선 목록</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/myApprovalLine/list.css">
     <script defer src="/js/myApprovalLine/list.js"></script>
 

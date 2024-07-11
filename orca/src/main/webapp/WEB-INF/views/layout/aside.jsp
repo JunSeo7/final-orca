@@ -12,7 +12,7 @@
 <body>
         <aside id="sidebar">
             <div class="profile" onclick="toggleProfile()">
-                <img src="img/profile.png" alt="Profile Picture" class="profile-pic">
+                <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic">
                 <p class="profile-info">SW팀 | <span>양파쿵야</span></p>
             </div>
             <hr>

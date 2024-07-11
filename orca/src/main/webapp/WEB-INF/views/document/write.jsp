@@ -6,7 +6,7 @@
 <head>
     <title>결재 작성</title>
     <!-- 파비콘 -->
-    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
 
     <script defer src="/js/document/write.js"></script>
     <link rel="stylesheet" href="/css/document/write.css">

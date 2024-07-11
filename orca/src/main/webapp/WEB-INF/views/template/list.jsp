@@ -5,7 +5,7 @@
     <title>결재 양식 목록</title>
 
         <!--파비콘-->
-        <link rel="icon" href="/img/logo.png" type="image/png">
+        <link rel="icon" href="/img/header/logo.png" type="image/png">
 
         <link rel="stylesheet" href="/css/template/list.css">
         <script defer src="/js/template/list.js"></script>

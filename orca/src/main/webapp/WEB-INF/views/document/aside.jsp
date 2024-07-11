@@ -6,7 +6,7 @@
 <head>
     <title>ORCA</title>
     <!-- 파비콘 -->
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
 
     <!--Bootstrap Icons 라이브러리 연결-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
@@ -18,7 +18,7 @@
 <body>
 <aside id="sidebar" class="sidebar">
     <div class="profile" onclick="toggleProfile()">
-        <img src="profile.png" alt="Profile Picture" class="profile-pic">
+        <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic">
         <p class="profile-info">SW팀 | <span>양파쿵야</span></p>
     </div>
     <hr>

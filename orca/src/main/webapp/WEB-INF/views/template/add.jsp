@@ -2,10 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재양식 등록</title>
+    <title>결재 양식 등록</title>
 
      <!--파비콘-->
-     <link rel="icon" href="img/logo.png" type="image/png">
+     <link rel="icon" href="/img/heade/logo.png" type="image/png">
 
      <script defer src="/js/template/add.js"></script>
      <link rel="stylesheet" href="/css/template/add.css">

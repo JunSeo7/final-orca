@@ -14,7 +14,7 @@
 <body>
     <header>
         <div class="header-left">
-            <img src="img/logo.png" alt="Logo" class="logo">
+            <img src="/img/header/logo.png" alt="Logo" class="logo">
             <h2 class="header-title">ORCA</h2>
         </div>
         <div class="header-right">
@@ -28,7 +28,7 @@
         <ul>
             <li><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
             <li><a href="/orca/board">게시판</a></li>
-            <li><a href="/orca/document/list?status=2">전자결재</a></li>
+            <li><a href="/orca/document/list">전자결재</a></li>
             <li><a href="">급여관리</a></li>
             <li><a href="/orca/work/workInfo">근태관리</a></li>
             <li><a href="">메뉴</a></li>
