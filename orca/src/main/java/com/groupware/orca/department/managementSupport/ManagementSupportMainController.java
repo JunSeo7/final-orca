@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("orca/managementSupport")
 @RequiredArgsConstructor
-public class MainController {
+public class ManagementSupportMainController {
 
     @GetMapping("main")
-    public String showHumanResourcesDepartmentMain() {
+    public String showManagementSupportDepartmentMain() {
         return "managementSupport/main";
     }
 }
