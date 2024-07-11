@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     fetchCategories(templateNo);
 
-    // Summernote 초기화
+    // Summernote
     $('#summernote').summernote({
         placeholder: '결재 양식 내용을 입력해주세요.',
         height: 500,
@@ -14,6 +14,7 @@ $(document).ready(function() {
         maxHeight: null, // 최대 높이
         focus: true
     });
+
     // 폼 제출 이벤트 처리
         $('#editForm').on('submit', function(event) {
             event.preventDefault(); // 폼의 기본 제출 동작을 막음
