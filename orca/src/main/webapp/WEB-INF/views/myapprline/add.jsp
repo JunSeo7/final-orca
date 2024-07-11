@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>결재선 등록</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/approvalLine/list.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
 </head>

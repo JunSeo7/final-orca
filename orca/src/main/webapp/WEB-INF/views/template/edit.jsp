@@ -2,10 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재양식 수정</title>
+    <title>결재 양식 수정</title>
 
      <!--파비콘-->
-     <link rel="icon" href="img/logo.png" type="image/png">
+     <link rel="icon" href="/img/header/logo.png" type="image/png">
 
      <script defer src="/js/template/edit.js"></script>
      <link rel="stylesheet" href="/css/template/add.css">
@@ -28,7 +28,7 @@
       <main id="content">
           <h1>결재양식 수정</h1>
           <form id="editForm" action="/orca/template/edit" method="POST" >
-            <input type="text" name="templateNo" id="templateNo" value="${templateNo}">
+            <input hidden type="text" name="templateNo" id="templateNo" value="${templateNo}">
               <table class="document-table">
                   <tr>
                       <th>카테고리</th>

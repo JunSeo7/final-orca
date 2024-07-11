@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>결재선 목록</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <title>기본 결재선 목록</title>
+    <link rel="icon" href="/img/header//logo.png" type="image/png">
         <link rel="stylesheet" href="/css/approvalLine/list.css">
         <script defer src="/js/approvalLine/list.js"></script>
 
@@ -58,9 +58,9 @@
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
                 <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘"></a>
-               <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLines.apprLineNo}">
+                <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLines.apprLineNo}">
                   <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
-               </a>
+                </a>
             </div>
             </c:forEach>
             </div>

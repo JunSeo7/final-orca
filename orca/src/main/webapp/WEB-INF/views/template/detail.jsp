@@ -2,8 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>결재양식 상세</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
+
+    <title>결재 양식 상세</title>
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
 
     <link rel="stylesheet" href="/css/template/detail.css">
     <script defer src="/js/template/detail.js"></script>
@@ -15,8 +16,12 @@
 <main id="content">
     <h2>결재양식 상세</h2>
              <div class="approval-lines-btn">
-                 <img class="edit_img" src="/img/edit.png" alt="수정 아이콘">
-                 <img class="delete_img" src="/img/delete.png" alt="삭제 아이콘">
+                  <a class="template-btn" data-template-no="${template.templateNo}">
+                      <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
+                  </a>
+                  <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
+                      <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
+                  </a>
              </div>
         <div class="template-detail-box">
             <div class="template-detail">

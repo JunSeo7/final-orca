@@ -5,9 +5,8 @@
 <html>
 <head>
     <title>결재 목록</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
         <!--파비콘-->
-        <link rel="icon" href="/img/logo.png" type="image/png">
+        <link rel="icon" href="/img/header/logo.png" type="image/png">
 
         <link rel="stylesheet" href="/css/document/list.css">
         <script defer src="/js/document/list.js"></script>

@@ -4,9 +4,8 @@
 <!DOCTYPE html>
 <html>
     <title>결재 상세 보기</title>
-    <link rel="icon" href="/img/logo.png" type="image/png">
     <!--파비콘-->
-    <link rel="icon" href="/img/logo.png" type="image/png">
+    <link rel="icon" href="/img/header/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/document/detail.css">
     <script defer src="/js/document/detail.js"></script>
 </head>

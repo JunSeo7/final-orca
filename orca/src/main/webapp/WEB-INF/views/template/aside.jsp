@@ -5,7 +5,7 @@
 
     <title>ORCA</title>
     <!-- 파비콘 -->
-     <link rel="icon" href="/img/logo.png" type="image/png">
+     <link rel="icon" href="/img/header/logo.png" type="image/png">
 
     <!--JSTREE 라이브러리 연결 / 사이드바-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css">
