@@ -1,7 +1,7 @@
 const empNo = '<%= ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() %>';
-const workNo = '<%= session.getAttribute("workNo") %>';
 const workDate = new Date().toISOString().split('T')[0]; // 현재 날짜 부분만 추출
 
+// 출근 버튼
 function startWorkClick() {
 
     $.ajax({
@@ -27,6 +27,7 @@ function startWorkClick() {
 
 }
 
+// 퇴근 버튼
 function endWorkClick() {
 
     $.ajax({
@@ -34,7 +35,7 @@ function endWorkClick() {
         method: 'post',
         data: {
             empNo: empNo,
-            workNo: workNo,
+            workDate: workDate,
         },
         success: function(response) {
             if(response.success) {
@@ -52,11 +53,13 @@ function endWorkClick() {
 
 }
 
+// 출, 퇴근 시간 화면 출력
 function loadWorkTimes() {
     $.ajax({
         url: "/orca/re/work/getStartWorkTime",
         method: 'get',
         data: {
+            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {
@@ -81,6 +84,7 @@ function loadWorkTimes() {
         url: "/orca/re/work/getEndWorkTime",
         method: 'get',
         data: {
+            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {
@@ -105,3 +109,16 @@ function loadWorkTimes() {
 $(document).ready(function() {
     loadWorkTimes();
 });
+
+        // 오늘 날자 불러오기
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var week = ['일', '월', '화', '수', '목', '금', '토'];
+        var dayOfWeek = week[today.getDay()];
+
+        var formattedDate = year + '.' + month + '.' + day + '(' + dayOfWeek + ')';
+
+        document.getElementById('date').innerText = formattedDate;
