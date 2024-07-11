@@ -65,12 +65,14 @@ public class SalaryDao {
         return mapper.delete(ratesNo);
     }
 
-    public int getSalaryDelete(String empNo) {
-        return mapper.getSalaryDelete(empNo);
+    //급여 삭제
+    public int getSalaryDelete(String empNo, String payrollNo) {
+        return mapper.getSalaryDelete(empNo,payrollNo);
     }
 
-    public SalaryVo searchSalary(String empNo) {
-        return mapper.searchSalary(empNo);
+    //급여 검색
+    public List<SalaryVo> searchSalary(String payrollNo) {
+        return mapper.searchSalary(payrollNo);
     }
 
 

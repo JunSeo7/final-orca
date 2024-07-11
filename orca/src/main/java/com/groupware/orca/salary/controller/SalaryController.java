@@ -54,27 +54,25 @@ public class SalaryController {
 
     //상세조회
     @GetMapping("detail")
-    public SalaryVo getSalaryByNo(@RequestParam("empNo") String empNo){
-        System.out.println("empNo = " + empNo);
-        System.out.println("SalaryController.getSalaryByNo");
-        SalaryVo vo = service.getSalaryByNo(empNo);
+    public SalaryVo getSalaryByNo(@RequestParam("payrollNo") String payrollNo){
+        SalaryVo vo = service.getSalaryByNo(payrollNo);
         return vo;
     }
 
 
     //급여 삭제
     @DeleteMapping("delete")
-    public int getSalaryDelete(@RequestParam("empNo") String empNo){
-        int result = service.getSalaryDelete(empNo);
+    public int getSalaryDelete(@RequestParam("empNo") String empNo, @RequestParam("payrollNo")String payrollNo){
+        int result = service.getSalaryDelete(empNo,payrollNo);
         return result;
     }
 
     //급여 검색
     @GetMapping("search")
-    public SalaryVo searchSalary(@RequestParam("empNo") String empNo){
-        SalaryVo vo = service.searchSalary(empNo);
+    public List<SalaryVo> searchSalary(@RequestParam("empNo") String empNo){
+        List<SalaryVo> voList = service.searchSalary(empNo);
 
-        return vo;
+        return voList;
 
     }
 

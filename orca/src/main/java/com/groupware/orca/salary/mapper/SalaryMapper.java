@@ -82,7 +82,8 @@ public interface SalaryMapper {
     //급여상세조회
     @Select("""
             SELECT\s
-                  P.EMP_NO
+                   S.PAYROLL_NO
+                  ,P.EMP_NO
                   ,P.NAME
                   ,FLOOR(ROUND(NATIONAL_PENSION, 1)) AS NATIONAL_PENSION
                   ,FLOOR(ROUND(HEALTH_INSURANCE, 1)) AS HEALTH_INSURANCE
@@ -99,9 +100,9 @@ public interface SalaryMapper {
                   ,S.PAYMENT_DATE
               FROM PAYROLL S
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
-              WHERE P.EMP_NO = 1
+              WHERE  PAYROLL_NO = #{payrollNo}
             """)
-    SalaryVo getSalaryByNo(@Param("empNo") String empNo);
+    SalaryVo getSalaryByNo(@Param("payrollNo") String payrollNo);
 
     //급여관리 수정
     @Update("""
@@ -134,8 +135,9 @@ public interface SalaryMapper {
     //급여관리 삭제
     @Delete("""
             DELETE PAYROLL WHERE EMP_NO = #{empNo}
+            AND PAYROLL_NO = #{payrollNo}
             """)
-    int getSalaryDelete(@Param("empNo") String empNo);
+    int getSalaryDelete(@Param("empNo") String empNo,@Param("payrollNo") String payrollNo);
 
     //급여 사원 검색
     @Select("""
@@ -144,7 +146,7 @@ public interface SalaryMapper {
             JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
             WHERE P.EMP_NO = #{empNo}
             """)
-    SalaryVo searchSalary(String empNo);
+    List<SalaryVo> searchSalary(@Param("empNo") String empNo);
 
     //----------------------------------------------------------------------------------------------
 
@@ -174,5 +176,5 @@ public interface SalaryMapper {
     Integer ratesEdit(RatesVo rvo);
 
 
-
+    //LOCAL_INCOME_TAX_PERSENTAGE
 }

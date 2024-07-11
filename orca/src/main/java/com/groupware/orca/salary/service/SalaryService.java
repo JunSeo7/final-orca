@@ -76,7 +76,11 @@ public class SalaryService {
                 totalDeduction = TAX_BASES[i];
             }
         }
-        return tax;
+        System.out.println("tax = " + tax);
+        return tax/12;
+
+
+
 
     }
 
@@ -85,7 +89,7 @@ public class SalaryService {
     //휴일근로수당 (입력칸 있음 - 휴일에 몇시간 일한건지 입력 칸 만들기)
     //연장근로수당 (입력칸 있음 - 몇 시간 더 연장근무 한건지 )
 
-
+    //급여 입력
     public int salaryWrite(ClientVo clientVo, UserVo vo, SalaryVo svo) {
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
 //        double tax = calculateInComeTax(totalDeduction);
@@ -106,7 +110,8 @@ public class SalaryService {
         double healthInsurance = realSalary * rvo.getHealthInsurancePercentage();
         double longCare = realSalary * rvo.getHealthInsurancePercentage() * rvo.getLongCarePercentage();
         double employmentInsurance = realSalary * rvo.getEmploymentInsurancePercentage();
-        double incomeTax = calculateInComeTax(totalDeduction)/12;  // 소득세 계산 메소드 호출
+        double incomeTax = calculateInComeTax(totalDeduction);  // 소득세 계산 메소드 호출
+        System.out.println("incomeTax = " + incomeTax);
         double localIncomeTax = incomeTax * rvo.getLocalIncomeTaxPersentage();
 
         // 수당 항목 계산
@@ -181,7 +186,7 @@ public class SalaryService {
         double healthInsurance = realSalary * rvo.getHealthInsurancePercentage();
         double longCare = realSalary * rvo.getHealthInsurancePercentage() * rvo.getLongCarePercentage();
         double employmentInsurance = realSalary * rvo.getEmploymentInsurancePercentage();
-        double incomeTax = calculateInComeTax(totalDeduction)/12;  // 소득세 계산 메소드 호출
+        double incomeTax = calculateInComeTax(totalDeduction);  // 소득세 계산 메소드 호출
         double localIncomeTax = incomeTax * rvo.getLocalIncomeTaxPersentage();
 
         // 수당 항목 계산
@@ -230,12 +235,14 @@ public class SalaryService {
         return dao.getSalaryByNo(empNo);
     }
 
-    public int getSalaryDelete(String empNo) {
-        return dao.getSalaryDelete(empNo);
+    //급여 삭제
+    public int getSalaryDelete(String empNo, String payrollNo) {
+        return dao.getSalaryDelete(empNo,payrollNo);
     }
 
-    public SalaryVo searchSalary(String empNo) {
-        return dao.searchSalary(empNo);
+    //급여 검색
+    public List<SalaryVo> searchSalary(String payrollNo) {
+        return dao.searchSalary(payrollNo);
     }
 }
 
