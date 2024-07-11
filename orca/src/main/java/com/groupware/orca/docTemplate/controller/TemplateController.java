@@ -2,6 +2,7 @@ package com.groupware.orca.docTemplate.controller;
 
 import com.groupware.orca.docTemplate.service.TemplateService;
 import com.groupware.orca.docTemplate.vo.TemplateVo;
+import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,9 @@ public class TemplateController {
     // 결재양식 등록 기능
     @PostMapping("add")
     public String addTemplate(TemplateVo vo, HttpSession httpSession) {
+        System.out.println("vo = " + vo);
         int result = service.addTemplate(vo);
+        System.out.println("result = " + result);
         return "redirect:/orca/template/list";
     }
     // 결재양식 목록
@@ -72,31 +75,34 @@ public class TemplateController {
 
     // 결재양식 상세보기
     @GetMapping("detail")
-    public String templateDetail( Model model, String templateNo,HttpSession httpSession) {
+    public String templateDetail( Model model, int templateNo,HttpSession httpSession) {
         TemplateVo vo = service.getTemplateDetail(templateNo);
         model.addAttribute("templateDetail", vo);
         return "template/detail";
     }
 
-    // 결재양식 수정
+    // 결재양식 수정 화면
     @GetMapping("edit")
     public String editTemplate(@RequestParam("templateNo") String templateNo, Model model, HttpSession httpSession) {
         System.out.println("templateNo = " + templateNo);
         model.addAttribute("templateNo", templateNo);
         return "template/edit";
     }
-
+    // 결재양식 수정 데이터 가져오기
     @GetMapping("getTemplateData")
     @ResponseBody
-    public TemplateVo getTemplateData(@RequestParam("templateNo") String templateNo, HttpSession httpSession) {
+    public TemplateVo getTemplateData(@RequestParam("templateNo") int templateNo, HttpSession httpSession) {
         System.out.println("templateNo = " + templateNo);
         TemplateVo vo = service.getTemplateDetail(templateNo);
         System.out.println("vo = " + vo);
         return vo;
     }
-
-    @PutMapping("/edit")
+    // 결재양식 수정 기능
+    @PutMapping("edit")
     public ResponseEntity<Void> editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
+
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+
         int result = service.editTemplate(vo);
         System.out.println("result = " + result);
         if (result > 0) {

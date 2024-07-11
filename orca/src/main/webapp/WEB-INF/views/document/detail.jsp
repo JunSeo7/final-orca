@@ -96,8 +96,10 @@
                             <p>첨부된 파일이 없습니다.</p>
                         </c:when>
                         <c:otherwise>
+                        <img////>
                             <c:forEach var="file" items="${files}">
-                                <a href="/static/upload/${file.changeName}" download> ${file.changeName}</a><br/>
+                                <img src="/static/upload/document/${file.changeName}" alt="${file.changeName}" class="attachment-img"><br/>
+                                <a href="/static/upload/document/${file.changeName}" download> ${file.changeName}</a><br/>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
@@ -122,7 +124,7 @@
                </tr>
            </c:forEach>
 
-
+            <c:if test="${document.myTurn}">
                 <form id="approvalForm" method="post" action="/orca/apprline/status">
                      <input hidden name="docNo" value="${document.docNo}">
                     <table>
@@ -141,7 +143,7 @@
                         </div>
                     <button type="submit" class="approval-btn">결과처리</button>
                </form>
-
+            </c:if>
 
 </main>
 </body>

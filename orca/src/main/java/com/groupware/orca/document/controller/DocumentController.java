@@ -10,6 +10,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -191,21 +193,46 @@ public class DocumentController {
     @GetMapping("detail")
     public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        DocumentVo document = service.getDocumentByNo(docNo);
+        DocumentVo document = service.getDocumentByNo(docNo, loginUserNo);
         model.addAttribute("document", document);
         return "document/detail";
     }
 
-    // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
-    @PostMapping("edit")
-    public String editDocument(DocumentVo vo, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(Integer.parseInt(loginUserNo));
-        int result = service.editDocument(vo);
-        return "redirect:/orca/document/list";
+    //수정 화면
+    @GetMapping("edit")
+    public String editTemplate(@RequestParam("docNo") int docNo, Model model, HttpSession httpSession) {
+        System.out.println("docNo = " + docNo);
+        model.addAttribute("docNo", docNo);
+        return "document/edit";
     }
 
-    // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 )
+    // 결재문서 수정 데이터 가져오기
+    @GetMapping("getDocumentData")
+    @ResponseBody
+    public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        System.out.println("docNo = " + docNo);
+        DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
+        System.out.println("vo = " + vo);
+        return vo;
+    }
+
+    // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
+    @PostMapping("edit")
+    public ResponseEntity<Void> editDocument(DocumentVo vo, HttpSession httpSession){
+
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(Integer.parseInt(loginUserNo));
+
+        int result = service.editDocument(vo);
+        if (result > 0) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 / 기안 - 취소)
     @PostMapping("updateStatus")
     public String updateStatusDocument(DocumentVo vo, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();

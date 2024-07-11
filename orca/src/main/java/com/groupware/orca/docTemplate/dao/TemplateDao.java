@@ -26,7 +26,7 @@ public class TemplateDao {
         return mapper.getsearchTemplateList(vo);
     }
 
-    public TemplateVo templateDetail(String templateNo) {
+    public TemplateVo templateDetail(int templateNo) {
         // Template 정보 가져오기
         TemplateVo templateVo = mapper.templateDetail(templateNo);
         return templateVo;

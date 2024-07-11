@@ -30,7 +30,7 @@ public class TemplateService {
         return dao.getsearchTemplateList(vo);
     }
 
-    public TemplateVo getTemplateDetail(String templateNo) {
+    public TemplateVo getTemplateDetail(int templateNo) {
         // Template 정보 가져오기
         TemplateVo templateVo = dao.templateDetail(templateNo);
 

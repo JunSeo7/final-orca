@@ -1,17 +1,16 @@
-//textarea 라이브러리
 $(document).ready(function() {
-   fetchCategories();
+    // 카테고리 가져오기 함수 호출
+    fetchCategories();
 
-  $('#summernote').summernote({
-      placeholder: '결재 양식 내용을 입력해주세요.',
-      height: 500,
-      minHeight: null, // 최소
-      maxHeight: null, // 최대
-      focus: true
-  });
+    // textarea 라이브러리
+    $('#summernote').summernote({
+        placeholder: '결재 양식 내용을 입력해주세요.',
+        height: 500,
+        minHeight: null, // 최소
+        maxHeight: null, // 최대
+        focus: true
+    });
 });
-
-
 
 // 카테고리 가져오기
 function fetchCategories() {
@@ -26,9 +25,6 @@ function fetchCategories() {
                 const option = document.createElement('option');
                 option.value = category.categoryNo;
                 option.text = category.categoryName;
-                if (category.categoryNo == ${template.categoryNo}) {
-                    option.selected = true;
-                }
                 categorySelect.appendChild(option);
             });
         },
@@ -38,3 +34,4 @@ function fetchCategories() {
         }
     });
 }
+

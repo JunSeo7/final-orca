@@ -229,6 +229,43 @@ public interface DocumentMapper {
             """)
     List<DocFileVo> getDocFileByNo(int docNo);
 
+    // 내 차례인지 확인하기 - 1이면 승인, 반려버튼 구현  -- 뒷순서의 결재자 - 대기(1) 상태 -- 마지막 결재자인 경우는 체크 안함
+    @Select("""
+            SELECT CASE
+               WHEN (A.SEQ = 1 OR EXISTS (
+                   SELECT 1
+                   FROM APPR_LINE B
+                   WHERE A.DOC_NO = B.DOC_NO
+                     AND A.SEQ - 1 = B.SEQ
+                     AND B.APPROVAL_STAGE = 2
+                       ))
+                       AND (
+                           EXISTS (
+                               SELECT 1
+                               FROM APPR_LINE C
+                               WHERE A.DOC_NO = C.DOC_NO
+                                 AND A.SEQ + 1 = C.SEQ
+                                 AND C.APPROVAL_STAGE = 1
+                           )
+                           OR
+                           NOT EXISTS (
+                               SELECT 1
+                               FROM APPR_LINE C
+                               WHERE A.DOC_NO = C.DOC_NO
+                                 AND A.SEQ + 1 = C.SEQ
+                           )
+                       )
+                       THEN 1
+                       ELSE 0
+                   END AS isMyTurn
+            FROM APPR_LINE A
+            WHERE A.DOC_NO = #{docNo}
+              AND A.APPROVER_NO = #{loginUserNo}
+              AND A.APPROVAL_STAGE = 1
+            """)
+    Integer  isMyTurn(int docNo, String loginUserNo);
+
+
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
     @Update("""
             <script>

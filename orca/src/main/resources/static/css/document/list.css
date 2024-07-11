@@ -61,7 +61,7 @@ h2 {
   color: #333;
 }
 
-.approval_status {
+.document {
   display: flex;
   flex-direction: column;
 }

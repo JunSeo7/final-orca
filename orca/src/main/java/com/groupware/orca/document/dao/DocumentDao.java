@@ -110,6 +110,9 @@ public class DocumentDao {
         return mapper.getDocFileByNo(docNo);
     }
 
+    public Integer  isMyTurn(int docNo, String loginUserNo) {
+        return mapper.isMyTurn(docNo, loginUserNo);
+    }
 
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
     public int editDocument(DocumentVo vo) {

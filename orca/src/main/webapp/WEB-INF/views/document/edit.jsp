@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>결재 작성</title>
+    <title>결재 수정</title>
     <!-- 파비콘 -->
     <link rel="icon" href="img/logo.png" type="image/png">
 

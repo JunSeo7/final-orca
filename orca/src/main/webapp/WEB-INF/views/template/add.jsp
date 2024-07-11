@@ -24,20 +24,15 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-
     <main id="content">
-        <h1>결재양식 수정</h1>
-        <form action="/orca/template/edit" method="POST">
-            <table class="document-table">
+        <h1>결재양식 등록</h1>
+        <form id="editForm" action="/orca/template/add" method="POST">
+          <table class="document-table">
                 <tr>
                     <th>카테고리</th>
                     <td>
                         <select id="category" name="categoryNo" required>
-                            <c:forEach items="${categories}" var="category">
-                                <option value="${category.categoryNo}" <c:if test="${category.categoryNo == template.categoryNo}">selected</c:if>>
-                                    ${category.NAME}
-                                </option>
-                            </c:forEach>
+                            <!-- 카테고리는 fetchCategories() 함수에서 동적으로 추가됩니다. -->
                         </select>
                     </td>
                 </tr>
@@ -64,6 +59,5 @@
         </form>
     </main>
 
-</form>
 </body>
 </html>

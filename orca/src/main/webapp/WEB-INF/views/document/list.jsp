@@ -29,7 +29,7 @@
         </div>
 
         <c:forEach var="document" items="${documentList}">
-            <div class="approval_status">
+            <div class="document" data-doc-no="${document.docNo}">
               <p>${document.creditDate}</p>
                 <div class="status_box">
                     <div class="status_details">

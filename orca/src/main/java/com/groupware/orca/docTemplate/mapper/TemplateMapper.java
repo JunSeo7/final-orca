@@ -69,7 +69,7 @@ public interface TemplateMapper {
             JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
             WHERE T.DEL_YN = 'N' AND T.TEMPLATE_NO = #{templateNo}
             """)
-    TemplateVo templateDetail(String templateNo);
+    TemplateVo templateDetail(int templateNo);
 
     @Select("""
             SELECT
