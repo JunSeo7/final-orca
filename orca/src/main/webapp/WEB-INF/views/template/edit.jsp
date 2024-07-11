@@ -26,45 +26,39 @@
 
 
       <main id="content">
-           <h1>결재양식 수정</h1>
-               <form action="/orca/template/edit" method="POST">
-                  <table class="document-table">
+          <h1>결재양식 수정</h1>
+          <form id="editForm" action="/orca/template/edit" method="POST" >
+            <input type="text" name="templateNo" id="templateNo" value="${templateNo}">
+              <table class="document-table">
                   <tr>
-                    <th>카테고리</th>
-                       <td>
-                           <select id="category" name="categoryNo" required>
-                                  <option value="2">인사 및 근태 관리</option>
-                              <option value="3">프로젝트 및 업무 관리</option>
-                              <option value="4">교육 및 지원</option>
-                              <option value="5">기타</option>
-                           </select>
-                       </td>
-                    </tr>
+                      <th>카테고리</th>
+                      <td>
+                          <select id="category" name="categoryNo">
+                              <!-- 카테고리는 fetchCategories() 함수에서 동적으로 추가됩니다. -->
+                          </select>
+                      </td>
+                  </tr>
 
-                    <tr>
-                        <th>결재 양식명</th>
-                        <td>
-                            <input type="text" id="name" name="title" required>
-                        </td>
-                    </tr>
+                  <tr>
+                      <th>결재 양식명</th>
+                      <td>
+                          <input type="text" id="name" name="title">
+                      </td>
+                  </tr>
 
-
-                    <tr>
-                         <th colspan='2'> 양식 내용 </th>
-                    </tr>
-                    <tr>
-                         <td colspan='2'>
-                            <textarea id="summernote" name="content"></textarea>
-                         </td>
-                    </tr>
-
-                    </table>
-                    <br>
-                    <br>
-                    <button type="submit" class="submit_btn" >등록</button>
-
-               </form>
-           </div>
+                  <tr>
+                      <th colspan='2'> 양식 내용 </th>
+                  </tr>
+                  <tr>
+                      <td colspan='2'>
+                          <textarea id="summernote" name="content"></textarea>
+                      </td>
+                  </tr>
+              </table>
+              <br>
+              <br>
+              <button type="submit" class="submit_btn">수정</button>
+          </form>
       </main>
 
 </form>

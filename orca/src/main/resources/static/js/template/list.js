@@ -94,7 +94,6 @@ function displayResults(data) {
 
 
 //상세보기
-
  const detailDivs = document.querySelectorAll(".template");
 
  detailDivs.forEach(function(detailDiv) {
@@ -128,3 +127,17 @@ function displayResults(data) {
          });
      });
  });
+
+
+// 수정
+const editBtns = document.querySelectorAll(".edit-btn");
+
+editBtns.forEach(function(editBtn) {
+    editBtn.addEventListener("click", function(event) {
+        event.stopPropagation();  // 부모 요소 이벤트 전파 막기
+        const templateNo = editBtn.getAttribute('data-template-no');
+        console.log('Template No:', templateNo);
+
+        location.href = '/orca/template/edit?templateNo=' + templateNo;
+    });
+});

@@ -4,6 +4,7 @@ import com.groupware.orca.docTemplate.service.TemplateService;
 import com.groupware.orca.docTemplate.vo.TemplateVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,7 @@ public class TemplateController {
     public String addTemplate() {
         return "template/add";
     }
-    @GetMapping("edit")
-    public String editTemplate(@RequestParam("templateNo") String templateNo, Model model) {
-        model.addAttribute("templateNo", templateNo);
-        return "template/edit";
-    }
+
 
     @GetMapping("search")
     public String searchTemplateList() {
@@ -82,8 +79,15 @@ public class TemplateController {
     }
 
     // 결재양식 수정
+    @GetMapping("edit")
+    public String editTemplate(@RequestParam("templateNo") String templateNo, Model model, HttpSession httpSession) {
+        System.out.println("templateNo = " + templateNo);
+        model.addAttribute("templateNo", templateNo);
+        return "template/edit";
+    }
 
-    @GetMapping("getTemplatData")
+    @GetMapping("getTemplateData")
+    @ResponseBody
     public TemplateVo getTemplateData(@RequestParam("templateNo") String templateNo, HttpSession httpSession) {
         System.out.println("templateNo = " + templateNo);
         TemplateVo vo = service.getTemplateDetail(templateNo);
@@ -91,11 +95,17 @@ public class TemplateController {
         return vo;
     }
 
-    @PutMapping("edit")
-    public String editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
-        service.editTemplate(vo);
-        return "redirect:/orca/template/list";
+    @PutMapping("/edit")
+    public ResponseEntity<Void> editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
+        int result = service.editTemplate(vo);
+        System.out.println("result = " + result);
+        if (result > 0) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
     // 결재양식 삭제
     @PostMapping("delete")
