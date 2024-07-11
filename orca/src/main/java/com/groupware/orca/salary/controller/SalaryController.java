@@ -80,7 +80,7 @@ public class SalaryController {
 
 
     //4대보험 입력
-    @GetMapping("ratesInsert")
+    @PostMapping("ratesInsert")
     public int ratesInsert(RatesVo vo){
         int result = service.ratesWrite(vo);
 
@@ -102,8 +102,8 @@ public class SalaryController {
     }
 
     //4대보험 요율 삭제
-    @Delete("ratesDelete")
-    public int ratesDelete(String ratesNo){
+    @PostMapping("ratesDelete")
+    public int ratesDelete(@RequestParam("ratesNo") String ratesNo){
         int result = service.delete(ratesNo);
 
         return result;
