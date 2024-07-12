@@ -280,3 +280,17 @@ nav ul li a:hover {
 .bookmark-button.bookmarked {
     color: blue; /* 북마크된 경우 파란색 */
 }
+/* For all browsers */
+body {
+  overflow: hidden;
+}
+
+/* For specific element */
+.element {
+  overflow: hidden;
+}
+
+/* For webkit browsers like Chrome, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
