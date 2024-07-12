@@ -176,6 +176,43 @@ public interface DocumentMapper {
             """)
     List<DocumentVo> getSendDocumentList(String loginUserNo);
 
+    //검색
+    @Select("""
+        <script>
+        SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.CREDIT_DATE, D.STATUS, D.URGENT,
+               T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
+               PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
+        FROM DOCUMENT D
+        JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
+        JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
+        JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
+        JOIN PERSONNEL_INFORMATION PI ON D.WRITER_NO = PI.EMP_NO
+        LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
+        LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
+        WHERE D.DEL_YN = 'N'
+         <if test="status != null and status != ''">
+             AND D.STATUS = #{status}
+         </if>
+        <choose>
+          <when test="searchType == 'writerName'">
+              AND PI.NAME LIKE '%' || #{searchText} || '%'
+          </when>
+          <when test="searchType == 'title'">
+              AND D.TITLE LIKE '%' || #{searchText} || '%'
+          </when>
+          <when test="searchType == 'content'">
+              AND D.CONTENT LIKE '%' || #{searchText} || '%'
+          </when>
+        </choose>
+        AND D.WRITER_NO = #{loginUserNo}
+        ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+        </script>
+        """)
+    List<DocumentVo> searchDocumentList(@Param("loginUserNo") String loginUserNo,
+                                        @Param("searchType") String searchType,
+                                        @Param("searchText") String searchText,
+                                        @Param("status") Integer status);
+
     // 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련)
     @Select("""
@@ -263,7 +300,7 @@ public interface DocumentMapper {
               AND A.APPROVER_NO = #{loginUserNo}
               AND A.APPROVAL_STAGE = 1
             """)
-    Integer  isMyTurn(int docNo, String loginUserNo);
+    Integer isMyTurn(int docNo, String loginUserNo);
 
 
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
@@ -310,6 +347,4 @@ public interface DocumentMapper {
               )
             """)
     int deleteDocumentByNo(int docNo, String loginUserNo);
-
-
 }

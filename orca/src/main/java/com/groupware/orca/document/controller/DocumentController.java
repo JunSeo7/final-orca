@@ -159,12 +159,13 @@ public class DocumentController {
     public String getDocumentList(Model model, HttpSession httpSession, Integer status){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
+        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
 
     // 받은 결재
-    @GetMapping("/received")
+    @GetMapping("received")
     public String getSendDocumentList(Model model, HttpSession httpSession) {
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
@@ -172,7 +173,7 @@ public class DocumentController {
         return "document/list";
     }
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
-    @GetMapping("/public")
+    @GetMapping("public")
     public String getPublicDocumentList(Model model, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getPublicDocumentList(loginUserNo);
@@ -182,11 +183,20 @@ public class DocumentController {
 
     // 검색(기안자/제목/내용/카테고리)
     @GetMapping("search")
-    public String getsDocumentList(Model model, HttpSession httpSession, int status){
+    @ResponseBody
+    public List<DocumentVo> searchDocuments(
+            @RequestParam("searchType") String searchType,
+            @RequestParam("searchText") String searchText,
+            @RequestParam(name = "status", required = false) Integer status,
+            HttpSession httpSession) {
+        System.out.println("searchType = " + searchType);
+        System.out.println("searchText = " + searchText);
+        System.out.println("status = " + status);
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
-        model.addAttribute("documentList", documentList);
-        return "document/search";
+        System.out.println("loginUserNo = " + loginUserNo);
+        List<DocumentVo> DocumentList = service.searchDocumentList(loginUserNo, searchType, searchText, status);
+        System.out.println("DocumentList = " + DocumentList);
+        return DocumentList;
     }
 
     // 결재 상세보기 - 기안자 no 추가 (params)

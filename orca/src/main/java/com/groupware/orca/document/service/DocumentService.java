@@ -126,6 +126,18 @@ public class DocumentService {
         return documentList;
     }
 
+    // 검색
+    public List<DocumentVo> searchDocumentList(String loginUserNo, String searchType, String searchText, Integer status) {
+        List<DocumentVo> documentList = dao.searchDocumentList(loginUserNo, searchType, searchText, status);
+        for (DocumentVo document : documentList) {
+            int docNo = document.getDocNo();
+            // 문서목록 - 결재선 목록 넣기
+            List<ApproverVo> approverList = dao.getApprovalLineByNo(docNo);
+            document.setApproverVoList(approverList);
+        }
+        return documentList;
+    }
+
     // 결재 상세보기 - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo, String loginUserNo) {
         // 결재 문서 조회(카테고리, 양식, 기안자관련)
@@ -169,4 +181,6 @@ public class DocumentService {
     public int deleteDocumentByNo(int docNo,  String loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
+
+
 }

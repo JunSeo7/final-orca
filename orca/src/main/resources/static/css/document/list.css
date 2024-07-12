@@ -57,10 +57,6 @@ main.full {
   padding: 20px;
 }
 
-h2 {
-  color: #333;
-}
-
 .document {
   display: flex;
   flex-direction: column;
