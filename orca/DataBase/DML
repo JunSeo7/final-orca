@@ -172,24 +172,468 @@ INSERT INTO DOC_TEMPLATE_CATEGORY (CATEGORY_NO, NAME) VALUES (SEQ_DOC_TEMPLATE_C
 --------------------------------------------------------
 -- 문서 템플릿 더미 데이터 (DOC_TEMPLATE)
 --------------------------------------------------------
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서', '지출 결의서 내용', SYSDATE, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '구매 품의서', '구매 품의서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '비용 청구서', '비용 청구서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(국내)', '출장비 정산서(국내) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(해외)', '출장비 정산서(해외) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '휴가 신청서', '휴가 신청서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(일반)', '병가 신청서(일반) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(장기)', '병가 신청서(장기) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '시간 외 수당 청구서', '시간 외 수당 청구서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '재택근무 신청서', '재택근무 신청서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '퇴사 신청서(사직서)', '퇴사 신청서(사직서) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '프로젝트 제안서', '프로젝트 제안서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '회의록', '회의록 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서(사내)', '교육 신청서(사내) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '기술 지원 요청서', '기술 지원 요청서 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서(단기국내위탁)', '교육 신청서(단기국내위탁) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서(장기국내위탁)', '교육 신청서(장기국내위탁) 내용', SYSTIMESTAMP, 'N');
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE, DEL_YN) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서(해외파견)', '교육 신청서(해외파견) 내용', SYSTIMESTAMP, 'N');
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '구매 품의서'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">구매 품의서</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 수량:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 금액:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 이유:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>요청 납기 일정:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 자료: (견적서, 카탈로그)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5 style="font-family: Arial, sans-serif;">
+    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
+    * 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>
+    * 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.
+</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이하)'
+, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (100만원 이하)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5 style="font-family: Arial, sans-serif;">
+    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
+    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
+    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
+</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이상)'
+, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (100만원 이상)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5 style="font-family: Arial, sans-serif;">
+    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
+    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
+    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
+</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (1000만원 이상)'
+, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (1000만원 이상)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5 style="font-family: Arial, sans-serif;">
+    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
+    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
+    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
+</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, 'IT 자산 구매 요청'
+, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">IT 자산 구매 요청</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>사용자 :</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>사용 목적: 예)신규 입사자 장비 지원을 위해 필요</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매요청 품목 : 다음중 택 1(사무용 PC, 연구용 PC, 조립PC(사양기재), 노트북, 모니터, 전산 소모품)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 수량:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>구매 금액:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>OS 설치여부:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>기타 사항:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<h5 style="font-family: Arial, sans-serif;">* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>
+* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>
+* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
+* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>
+* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(국내)'
+, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">출장비 정산서 [국내]</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 목적:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 기간:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 장소:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>총 출장비: 1,500,000원</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>세부 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    예) 교통비: 500,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<h5 style=""><br>
+* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>
+* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>
+* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(해외)'
+, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">출장비 정산서 (해외)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 목적:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 기간:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>출장 장소:</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>총 출장비: 1,500,000원</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>세부 항목:</b></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    예) 교통비: 500,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<h5 style=""><br>
+* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>
+* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>
+* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '휴가 신청서', '휴가 신청서 내용', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(일반)', '병가 신청서(일반) 내용', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(장기)', '병가 신청서(장기) 내용', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '시간 외 수당 청구서', '시간 외 수당 청구서 내용', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '재택근무 신청서'
+, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">재택근무 신청서</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 재택근무를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style=""><font face="Arial, sans-serif"><b>재택근무 기간:</b></font></p>
+<p style=""><font face="Arial, sans-serif"><b><br></b></font></p>
+<p style=""><font face="Arial, sans-serif"><b>재택근무 사유: </b>예) 개인 사정으로 인한 재택근무 필요</font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5 style="">
+<font face="Arial, sans-serif">* 재택근무 도구와 필요한 IT 지원 사항을 명시합니다.<br></font>
+<font face="Arial, sans-serif">* 재택근무 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
+<font face="Arial, sans-serif">* 재택근무 기간 동안의 업무 계획과 보고 방식을 명확히 하여야 합니다.</font>
+</h5>
+<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '퇴사 신청서(사직서)'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">퇴사 신청서 (사직서)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 퇴사를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style=""><font face="Arial, sans-serif"><b>퇴사 예정일:</b></font></p>
+<p style=""><font face="Arial, sans-serif"><b><br></b></font></p>
+<p style=""><font face="Arial, sans-serif"><b>퇴사 사유: </b>개인 사유 (진로 변경)</font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<h5 style="">
+<font face="Arial, sans-serif">* 잔여 연차 및 급여 정산 사항을 확인합니다.<br></font>
+<font face="Arial, sans-serif">* 회사 자산 반납 절차를 명시합니다.<br></font>
+<font face="Arial, sans-serif">* 퇴사 예정일은 회사의 인수인계 기간을 고려하여 충분한 시간을 두고 작성합니다.<br></font>
+<font face="Arial, sans-serif">* 퇴사 사유는 간략하게 작성하되, 필요한 경우 인사팀과 별도로 상담합니다.</font>
+</h5>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '프로젝트 제안서'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">프로젝트 제안서</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 프로젝트를 제안하오니 검토 후 재가하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p><font face="Arial, sans-serif"><b>프로젝트 명:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>프로젝트 목적:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>프로젝트 기간:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>프로젝트 예산:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>프로젝트 세부 내용:</b></font></p>
+<p><b style="font-family: Arial, sans-serif;"><span style="white-space: pre;">    </span>예 )</b></p>
+<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>요구사항 분석: 2023년 7월 1일~7월 31일</b></span></font></p>
+<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>설계 및 개발: 2023년 8월 1일~11월 30일</b></span></font></p>
+<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>테스트 및 배포: 2023년 12월 1일~12월 31일</b></span></font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<h5>
+<font face="Arial, sans-serif" style="">* 프로젝트 팀 구성과 각 팀원의 역할을 명시합니다.<br></font>
+<font face="Arial, sans-serif" style="">* 성과 측정 지표를 설정하고, 프로젝트 성공 여부를 평가할 기준을 명확히 합니다.<br></font>
+<font face="Arial, sans-serif" style="">* 프로젝트 제안서는 충분한 사전 조사와 계획을 바탕으로 작성해야 합니다.<br>
+* 필요한 경우 추가 자료(예: 시장 조사, 예상 수익 분석)를 첨부합니다.</h5>
+<h5><br></h5>
+<h5><font face="Arial, sans-serif"></font></h5>
+
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '회의록'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">회의록</h1>
+<h5 style="font-family: Arial, sans-serif;">* 회의록 작성 관련 문의는 기획팀으로 연락 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p><font face="Arial, sans-serif"><b>회의 일자:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>회의 장소:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>참석자:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>회의 내용:</b></font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<h5><font face="Arial, sans-serif">* 의결 사항과 그에 따른 <font color="#ff0000">후속 조치</font>를 <u>명확히 기재</u>합니다.<br></font>
+<font face="Arial, sans-serif">* 회의록 검토를 위한 일정과 피드백 절차를 명시합니다.<br></font>
+<font face="Arial, sans-serif">* 중요한 논의 사항과 <u>결론은 누락 없이</u> 기록해야 합니다.<br></font>
+<font face="Arial, sans-serif">* 회의록은 회의 직후 작성하여 참석자들과 공유(참조자)합니다.</font></h5>
+<h5><font face="Arial, sans-serif"><br></font></h5>
+<h5><font face="Arial, sans-serif"></font></h5>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (사내, 단기 국내 위탁)'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">교육 신청서 (사내, 단기 국내 위탁)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p><font face="Arial, sans-serif"><b>교육 명:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 기간:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 장소:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 목적:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>첨부 파일: </b>(교육 자료)</font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<h5><font face="Arial, sans-serif">* 교육 내용이 <u>직무와 관련</u>이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br></font>
+<font face="Arial, sans-serif">* <u>교육 후 보고서를 작성</u>하여 상사에게 제출할 계획을 수립합니다.<br></font>
+<font face="Arial, sans-serif">* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
+<font face="Arial, sans-serif">* 필요 시 교육 관련 자료를 첨부합니다.</font></h5>
+<h5><font face="Arial, sans-serif"></font></h5>
+', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (장기 국내 위탁, 해외 파견)'
+, '<p><br></p>
+<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">교육 신청서 (장기 국내 위탁, 해외 파견)</h1>
+<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p><font face="Arial, sans-serif"><b>교육 명:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 기간:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 장소:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>교육 목적:</b></font></p>
+<p><font face="Arial, sans-serif"><b><br></b></font></p>
+<p><font face="Arial, sans-serif"><b>첨부 파일: </b>(교육 자료)</font></p>
+<p style="font-family: Arial, sans-serif;"><b><br></b></p>
+<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
+<p style="font-family: Arial, sans-serif;"><br></p>
+<h5><font face="Arial, sans-serif">* 교육 내용이 <u>직무와 관련</u>이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br></font>
+<font face="Arial, sans-serif">* <u>교육 후<font color="#ff0000"> 보고서를 작성</font></u>하여 상사에게 제출할 계획을 수립합니다.<br></font>
+<font face="Arial, sans-serif">* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
+<font face="Arial, sans-serif">* 필요 시 교육 관련 자료를 첨부합니다.</font></h5>
+<h5><font face="Arial, sans-serif"></font></h5>', SYSTIMESTAMP);
+
+--------------------------------------------------------
+-- 기본 결재선 템플릿 더미 데이터 (APPR_LINE_TEMPLATE)
+--------------------------------------------------------
+
+-- 결재선 템플릿 추가
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 1, '구매 품의서 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 2, '지출 결의서 (100만원 이하) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 3, '지출 결의서 (100만원 이상) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 4, '지출 결의서 (1000만원 이상) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 5, 'IT 자산 구매 요청', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 6, '출장비 정산서(국내) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 7, '출장비 정산서(해외) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 8, '휴가 신청서 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 9, '병가 신청서(일반) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 10, '병가 신청서(장기) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 11, '시간 외 수당 청구서 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 12, '재택근무 신청서 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 13, '퇴사 신청서(사직서) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 14, '프로젝트 제안서 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 15, '회의록 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 16, '교육 신청서(사내, 단기국내위탁) 결재선', SYSDATE);
+INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 17, '교육 신청서(장기 국내 위탁, 해외 파견) 결재선', SYSDATE);
+
+
+--------------------------------------------------------
+-- 기본 결재자 정보 더미 데이터 (APPROVER_INFO)
+--------------------------------------------------------
+-- 지출 결의서 결재선 (APPR_LINE_NO 1)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 1, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 1, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 1, 3, 2);
+
+-- 구매 품의서 결재선 (APPR_LINE_NO 2)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 2, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 2, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 2, 3, 2);
+
+-- 비용 청구서 결재선 (APPR_LINE_NO 3)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 3, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 3, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 3, 3, 2);
+
+-- 출장비 정산서(국내) 결재선 (APPR_LINE_NO 4)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 4, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 4, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 4, 3, 2);
+
+-- 출장비 정산서(해외) 결재선 (APPR_LINE_NO 5)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 5, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 5, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 5, 3, 2);
+
+-- 휴가 신청서 결재선 (APPR_LINE_NO 6)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 6, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 6, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 6, 3, 2);
+
+-- 병가 신청서(일반) 결재선 (APPR_LINE_NO 7)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 7, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 7, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 7, 3, 2);
+
+-- 병가 신청서(장기) 결재선 (APPR_LINE_NO 8)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 8, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 8, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 8, 3, 2);
+
+-- 시간 외 수당 청구서 결재선 (APPR_LINE_NO 9)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 9, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 9, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 9, 3, 2);
+
+-- 재택근무 신청서 결재선 (APPR_LINE_NO 10)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 10, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 10, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 10, 3, 2);
+
+-- 퇴사 신청서(사직서) 결재선 (APPR_LINE_NO 11)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 11, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 11, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 11, 3, 2);
+
+-- 프로젝트 제안서 결재선 (APPR_LINE_NO 12)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 12, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 12, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 12, 3, 2);
+
+-- 회의록 결재선 (APPR_LINE_NO 13)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 13, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 13, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 13, 3, 2);
+
+-- 교육 신청서(사내) 결재선 (APPR_LINE_NO 14)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 14, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 14, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 14, 3, 2);
+
+-- 기술 지원 요청서 결재선 (APPR_LINE_NO 15)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 15, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 15, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 15, 3, 2);
+
+-- 교육 신청서(단기국내위탁) 결재선 (APPR_LINE_NO 16)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 16, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 16, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 16, 3, 2);
+
+-- 교육 신청서(장기국내위탁) 결재선 (APPR_LINE_NO 17)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 17, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 17, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 17, 3, 2);
+
+-- 교육 신청서(해외파견) 결재선 (APPR_LINE_NO 18)
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 18, 1, 1);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 18, 2, 2);
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 18, 3, 2);
+
+COMMIT;
 
 --------------------------------------------------------
 -- 문서 더미 데이터 (DOCUMENT)
@@ -359,123 +803,6 @@ VALUES (SEQ_APPR_LINE.NEXTVAL, 15, 3, 21, 1, 3, 1, 1); -- 세 번째 결재자 �
 
 COMMIT;
 
---------------------------------------------------------
--- 기본 결재선 템플릿 더미 데이터 (APPR_LINE_TEMPLATE)
---------------------------------------------------------
--- 결재선 템플릿 추가
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 1, '지출 결의서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 2, '구매 품의서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 3, '비용 청구서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 4, '출장비 정산서(국내) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 5, '출장비 정산서(해외) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 6, '휴가 신청서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 7, '병가 신청서(일반) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 8, '병가 신청서(장기) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 9, '시간 외 수당 청구서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 10, '재택근무 신청서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 11, '퇴사 신청서(사직서) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 12, '프로젝트 제안서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 13, '회의록 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 14, '교육 신청서(사내) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 15, '기술 지원 요청서 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 16, '교육 신청서(단기국내위탁) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 17, '교육 신청서(장기국내위탁) 결재선', SYSDATE);
-INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREATED_DATE) VALUES (SEQ_APPR_LINE_TEMPLATE.NEXTVAL, 18, '교육 신청서(해외파견) 결재선', SYSDATE);
-
---------------------------------------------------------
--- 기본 결재자 정보 더미 데이터 (APPROVER_INFO)
---------------------------------------------------------
--- 지출 결의서 결재선 (APPR_LINE_NO 1)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 1, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 1, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 1, 3, 2);
-
--- 구매 품의서 결재선 (APPR_LINE_NO 2)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 2, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 2, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 2, 3, 2);
-
--- 비용 청구서 결재선 (APPR_LINE_NO 3)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 3, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 3, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 3, 3, 2);
-
--- 출장비 정산서(국내) 결재선 (APPR_LINE_NO 4)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 4, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 4, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 4, 3, 2);
-
--- 출장비 정산서(해외) 결재선 (APPR_LINE_NO 5)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 5, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 5, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 5, 3, 2);
-
--- 휴가 신청서 결재선 (APPR_LINE_NO 6)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 6, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 6, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 6, 3, 2);
-
--- 병가 신청서(일반) 결재선 (APPR_LINE_NO 7)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 7, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 7, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 7, 3, 2);
-
--- 병가 신청서(장기) 결재선 (APPR_LINE_NO 8)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 8, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 8, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 8, 3, 2);
-
--- 시간 외 수당 청구서 결재선 (APPR_LINE_NO 9)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 9, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 9, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 9, 3, 2);
-
--- 재택근무 신청서 결재선 (APPR_LINE_NO 10)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 10, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 10, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 10, 3, 2);
-
--- 퇴사 신청서(사직서) 결재선 (APPR_LINE_NO 11)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 11, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 11, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 11, 3, 2);
-
--- 프로젝트 제안서 결재선 (APPR_LINE_NO 12)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 12, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 12, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 12, 3, 2);
-
--- 회의록 결재선 (APPR_LINE_NO 13)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 13, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 13, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 13, 3, 2);
-
--- 교육 신청서(사내) 결재선 (APPR_LINE_NO 14)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 14, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 14, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 14, 3, 2);
-
--- 기술 지원 요청서 결재선 (APPR_LINE_NO 15)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 15, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 15, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 15, 3, 2);
-
--- 교육 신청서(단기국내위탁) 결재선 (APPR_LINE_NO 16)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 16, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 16, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 16, 3, 2);
-
--- 교육 신청서(장기국내위탁) 결재선 (APPR_LINE_NO 17)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 17, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 17, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 17, 3, 2);
-
--- 교육 신청서(해외파견) 결재선 (APPR_LINE_NO 18)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 18, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 18, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 18, 3, 2);
-
-COMMIT;
 --------------------------------------------------------
 -- 문서 파일 더미 데이터 (DOC_FILES)
 --------------------------------------------------------
