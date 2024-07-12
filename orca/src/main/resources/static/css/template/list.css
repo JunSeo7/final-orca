@@ -78,6 +78,7 @@ main.full {
   color: #000000;
   font-size: 16px;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .template-name{

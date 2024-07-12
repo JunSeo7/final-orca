@@ -1,6 +1,10 @@
+document.addEventListener("DOMContentLoaded", function() {
+    setSearchEventListeners();
+    setEventListeners(); // 초기 로드 시 이벤트 리스너 설정
+});
+
 // 검색
 function searchTemplate() {
-
     let searchType = $('#searchType').val();
     let searchText = $('#searchText').val();
 
@@ -10,9 +14,9 @@ function searchTemplate() {
     $.ajax({
         url: '/orca/template/search',
         method: 'GET',
-        dataType:'html',
+        dataType: 'html',
         success: function(response) {
-        console.log('response:', response);
+            console.log('response:', response);
             searchResults.empty(); // 기존 결과 초기화
             noTemplate.empty();
 
@@ -28,9 +32,7 @@ function searchTemplate() {
     });
 }
 
-
 function searchTemplateData(searchType, searchText) {
-
     console.log(searchType);
     console.log(searchText);
 
@@ -42,7 +44,7 @@ function searchTemplateData(searchType, searchText) {
             searchText: searchText
         },
         success: function(data) {
-        console.log('data:', data);
+            console.log('data:', data);
             displayResults(data);
         },
         error: function(error) {
@@ -51,14 +53,12 @@ function searchTemplateData(searchType, searchText) {
     });
 }
 
-
 function displayResults(data) {
-
     let searchResults = $('.template-box');
     let noTemplate = $('.no-template');
     let searchText = $('#searchText');
 
-    searchText.innerText ="";
+    searchText.innerText = "";
 
     searchResults.empty(); // 기존 결과 초기화
     noTemplate.empty();
@@ -74,7 +74,7 @@ function displayResults(data) {
                     <br>
                     <span class="template-enroll">생성날짜 : ${template.enrollDate}</span>
                     <hr>
-                    <a class="template-btn" onclick="openModal()">
+                    <a class="template-btn edit-btn" data-template-no="${template.templateNo}">
                         <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
                     </a>
                     <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
@@ -83,61 +83,85 @@ function displayResults(data) {
                 </div>`;
             searchResults.append(resultItem);
         });
+
+        // 이벤트 리스너 설정
+        setEventListeners();
     } else {
-        let templateDiv =`
-                 <div class="no-template">
-                    키워드에 일치하는 양식이 없습니다.
-                 <div>`;
-                searchResults.append(templateDiv);
+        let templateDiv = `
+            <div class="no-template">
+                키워드에 일치하는 양식이 없습니다.
+            </div>`;
+        searchResults.append(templateDiv);
     }
 }
 
+// 이벤트 리스너 설정
+function setEventListeners() {
+    setDetailTemplateListeners();
+    setDeleteButtonListeners();
+    setEditButtonListeners();
+}
 
-//상세보기
- const detailDivs = document.querySelectorAll(".template");
+// 상세보기 이벤트 리스너 설정
+function setDetailTemplateListeners() {
+    const detailDivs = document.querySelectorAll(".template");
 
- detailDivs.forEach(function(detailDiv) {
-     detailDiv.addEventListener("click", function(event) {
-
-         const templateNo = detailDiv.getAttribute('data-template-no');
-         console.log('Template No:', templateNo);
-         location.href = '/orca/template/detail?templateNo=' + templateNo;
-     });
- });
-
-//삭제
- const deleteBtns = document.querySelectorAll(".delete-btn");
-
-  deleteBtns.forEach(function(deleteBtn) {
-         deleteBtn.addEventListener("click", function(event) {
-             event.stopPropagation();  // 부모 요소 이벤트 전파막기!
-             const templateNo = deleteBtn.getAttribute('data-template-no');
-             console.log('Template No:', templateNo);
-
-             $.ajax({
-                 url: '/orca/template/delete?templateNo=' + templateNo,
-                 method: 'POST',
-                 success: function(data) {
-                     console.log('Template delete:', data);
-                     location.reload();
-                 },
-                 error: function(e) {
-                     console.error('Error:', e);
-             }
-         });
-     });
- });
-
-
-// 수정
-const editBtns = document.querySelectorAll(".edit-btn");
-
-editBtns.forEach(function(editBtn) {
-    editBtn.addEventListener("click", function(event) {
-        event.stopPropagation();  // 부모 요소 이벤트 전파 막기
-        const templateNo = editBtn.getAttribute('data-template-no');
-        console.log('Template No:', templateNo);
-
-        location.href = '/orca/template/edit?templateNo=' + templateNo;
+    detailDivs.forEach(function(detailDiv) {
+        detailDiv.addEventListener("click", function(event) {
+            const templateNo = detailDiv.getAttribute('data-template-no');
+            console.log('Template No:', templateNo);
+            location.href = '/orca/template/detail?templateNo=' + templateNo;
+        });
     });
-});
+}
+
+// 삭제 버튼 이벤트 리스너 설정
+function setDeleteButtonListeners() {
+    const deleteBtns = document.querySelectorAll(".delete-btn");
+
+    deleteBtns.forEach(function(deleteBtn) {
+        deleteBtn.addEventListener("click", function(event) {
+            event.stopPropagation();  // 부모 요소 이벤트 전파 막기
+            const templateNo = deleteBtn.getAttribute('data-template-no');
+            console.log('Template No:', templateNo);
+
+            $.ajax({
+                url: '/orca/template/delete?templateNo=' + templateNo,
+                method: 'POST',
+                success: function(data) {
+                    console.log('Template delete:', data);
+                    location.reload();
+                },
+                error: function(e) {
+                    console.error('Error:', e);
+                }
+            });
+        });
+    });
+}
+
+// 수정 버튼 이벤트 리스너 설정
+function setEditButtonListeners() {
+    const editBtns = document.querySelectorAll(".edit-btn");
+
+    editBtns.forEach(function(editBtn) {
+        editBtn.addEventListener("click", function(event) {
+            event.stopPropagation();  // 부모 요소 이벤트 전파 막기
+            const templateNo = editBtn.getAttribute('data-template-no');
+            console.log('Template No:', templateNo);
+
+            location.href = '/orca/template/edit?templateNo=' + templateNo;
+        });
+    });
+}
+
+// 검색 버튼 이벤트 리스너 설정
+function setSearchEventListeners() {
+    const searchBtn = document.querySelector("#searchButton");
+
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function() {
+            searchTemplate();
+        });
+    }
+}
