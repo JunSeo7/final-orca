@@ -38,7 +38,7 @@ header {
 
 /* 헤더 오른쪽 아이콘 설정 */
 .header-right .icon {
-  width: 24px;
+  width: 28px;
   height: auto;
   margin-left: 10px;
   cursor: pointer;

@@ -92,6 +92,11 @@ public class DocumentDao {
         return mapper.getPublicDocumentList(loginUserNo);
     }
 
+    //검색
+    public List<DocumentVo> searchDocumentList(String loginUserNo, String searchType, String searchText, Integer status) {
+        return mapper.searchDocumentList(loginUserNo, searchType, searchText, status);
+    }
+
     // 문서 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo) {
