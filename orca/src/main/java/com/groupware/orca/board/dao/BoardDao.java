@@ -1,6 +1,7 @@
 package com.groupware.orca.board.dao;
 
 import com.groupware.orca.board.mapper.BoardMapper;
+import com.groupware.orca.board.vo.BoardPenaltyVo;
 import com.groupware.orca.board.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -69,7 +70,28 @@ public class BoardDao {
     public int getLikeCount(int boardNo) {
         return mapper.getLikeCount(boardNo);
     }
+
     public int deleteLikesByBoardNo(int boardNo) {
         return mapper.deleteLikesByBoardNo(boardNo);
-}
     }
+
+    public int insertPenalty(BoardPenaltyVo penalty) {
+       return mapper.insertPenalty(penalty);
+    }
+
+    public int countPenaltiesByBoardNo(int boardNo) {
+        return mapper.countPenaltiesByBoardNo(boardNo);
+    }
+
+    public int hideBoard(int boardNo) {
+       return mapper.hideBoard(boardNo);
+    }
+
+    public List<Map<String, Object>> getPenaltyCategories() {
+        return mapper.getPenaltyCategories();
+    }
+
+    public int deletePenaltyByBoardNo(int boardNo) {
+        return mapper.deletePenaltyByBoardNo(boardNo);
+    }
+}

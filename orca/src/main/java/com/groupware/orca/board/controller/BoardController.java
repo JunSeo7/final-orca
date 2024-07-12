@@ -199,7 +199,7 @@ public class BoardController {
             commentService.deleteCommentsByBoardNo(boardNo);
             bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
             boardFileService.deleteFile(boardNo);
-
+            boardService.deletePenaltyByBoardNo(boardNo);
             // 부모 테이블 데이터 삭제
             boardService.boardDelete(boardNo);
         }
@@ -278,5 +278,34 @@ public class BoardController {
     public ResponseEntity<Integer> getLikeCount(@PathVariable("boardNo") int boardNo) {
         int likeCount = boardService.getLikeCount(boardNo);
         return ResponseEntity.ok(likeCount);
+    }
+
+    @PostMapping("/penalty")
+    public ResponseEntity<String> reportBoard(@RequestParam("penaltyCategoryNo") int categoryNo,
+                                              @RequestParam("penaltyContent") String content,
+                                              @RequestParam("boardNo") int boardNo,
+                                              HttpSession session) {
+        UserVo loginUserVo = (UserVo) session.getAttribute("loginUserVo");
+        if (loginUserVo == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        int empNo = Integer.parseInt(loginUserVo.getEmpNo());
+        boardService.reportBoard(boardNo, categoryNo, content, empNo);
+
+        boolean isHidden = boardService.checkAndHideBoard(boardNo);
+        if (isHidden) {
+            return ResponseEntity.ok("신고가 누적되어 게시물이 숨겨졌습니다.");
+        } else {
+            return ResponseEntity.ok("신고가 접수되었습니다.");
+        }
+    }
+
+
+
+    @GetMapping("/penalty/categories")
+    public ResponseEntity<List<Map<String, Object>>> getPenaltyCategories() {
+        List<Map<String, Object>> categories = boardService.getPenaltyCategories();
+        return ResponseEntity.ok(categories);
     }
 }

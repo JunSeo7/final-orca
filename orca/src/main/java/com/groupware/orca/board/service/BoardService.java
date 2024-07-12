@@ -1,6 +1,7 @@
 package com.groupware.orca.board.service;
 
 import com.groupware.orca.board.dao.BoardDao;
+import com.groupware.orca.board.vo.BoardPenaltyVo;
 import com.groupware.orca.board.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -84,5 +85,33 @@ public class BoardService {
 
     public int deleteLikesByBoardNo(int boardNo) {
         return dao.deleteLikesByBoardNo(boardNo);
+    }
+
+    public int reportBoard(int boardNo, int categoryNo, String content, int empNo) {
+        System.out.println("Service - Reporting boardNo: " + boardNo);
+        BoardPenaltyVo penalty = new BoardPenaltyVo();
+        penalty.setBoardNo(boardNo);
+        penalty.setPenaltyCategoryNo(categoryNo);
+        penalty.setPenaltyContent(content);
+        penalty.setEmpNo(empNo);
+     return    dao.insertPenalty(penalty);
+    }
+
+    public boolean checkAndHideBoard(int boardNo) {
+        int penaltyCount = dao.countPenaltiesByBoardNo(boardNo);
+        if (penaltyCount >= 3) { // 신고가 3회 이상이면 숨김 처리
+            dao.hideBoard(boardNo);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Map<String, Object>> getPenaltyCategories() {
+        return dao.getPenaltyCategories();
+    }
+
+    public int deletePenaltyByBoardNo(int boardNo) {
+        return dao.deletePenaltyByBoardNo(boardNo);
+
     }
 }
