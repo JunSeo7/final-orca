@@ -77,3 +77,104 @@ toggleElements.forEach(function (element) {
         }
     });
 });
+
+const mainDiv = document.querySelector('.main');
+const employeeRegistration = document.querySelector('.employee-registration');
+employeeRegistration.addEventListener('click', function () {
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/showEmployeeRegistration',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            // createCalendarCompany();
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+});
+
+// 사원 등록
+$(document).ready(function () {
+    // 폼 제출 시 Ajax로 데이터를 전송한다.
+    $('#employee-registration').on('submit', function (event) {
+        console.log("입력됨");
+        event.preventDefault();
+        // 아래 변수에 담아주는 건 뭐냐?
+        // 사용자가 form에 입력한 데이터를 수집하여 이를 Ajax 요청으로 서버에 전송하기 위해 작성되었다.
+        const name = $('#name').val();
+        const positionCode = $('#position').val();
+        const deptCode = $('#dept').val();
+        const teamCode = $('#team').val();
+        const gender = $('#gender').val();
+        const socialSecurityNo = $('#social-security-no').val();
+        const password = $('#password').val();
+        const phone = $('#phone').val();
+        const extensionCall = $('#ext').val();
+        const email = $('#email').val();
+        const address = $('#address').val();
+        const height = $('#height').val();
+        const weight = $('#weight').val();
+        const bloodType = $('#bloodType').val();
+        const religion = $('#religion').val();
+        const salary = $('#salary').val();
+        const bankNumber = $('#bankNumber').val();
+
+        console.log('name:', name);
+        console.log('positionCode:', positionCode);
+        console.log('deptCode:', deptCode);
+        console.log('teamCode:', teamCode);
+        console.log('gender:', gender);
+        console.log('socialSecurityNo:', socialSecurityNo);
+        console.log('password:', password);
+        console.log('phone:', phone);
+        console.log('extensionCall:', extensionCall);
+        console.log('email:', email);
+        console.log('address:', address);
+        console.log('height:', height);
+        console.log('weight:', weight);
+        console.log('bloodType:', bloodType);
+        console.log('religion:', religion);
+        console.log('salary:', salary);
+        console.log('bankNumber:', bankNumber);
+
+
+        $.ajax({
+            // 위에 form에서 이미 post로 /messenger/write에 보내주고 있다.
+            // 그렇기에, form의 action 속성 값을 사용한다.
+            url: $(this).attr('action'),
+            method: "post",
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
+                name: name,
+                positionCode: positionCode,
+                deptCode: deptCode,
+                teamCode: teamCode,
+                gender: gender,
+                socialSecurityNo: socialSecurityNo,
+                password: password,
+                phone: phone,
+                extensionCall: extensionCall,
+                email: email,
+                address: address,
+                height: height,
+                weight: weight,
+                bloodType: bloodType,
+                religion: religion,
+                salary: salary,
+                bankNumber: bankNumber
+            }),
+            success: function (data) {
+                console.log('Server response:', data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error sending data:', error);
+            }
+        });
+    });
+});

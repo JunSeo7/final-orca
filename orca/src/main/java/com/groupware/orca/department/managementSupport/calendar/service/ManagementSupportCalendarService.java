@@ -1,9 +1,7 @@
 package com.groupware.orca.department.managementSupport.calendar.service;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
-import com.groupware.orca.common.vo.Pagination;
-import com.groupware.orca.common.vo.SearchVo;
-import com.groupware.orca.department.managementSupport.calendar.dao.ManagementSupportDao;
+import com.groupware.orca.department.managementSupport.calendar.dao.ManagementSupportCalendarDao;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.stereotype.Service;
@@ -13,8 +11,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ManagementSupportService {
-    private final ManagementSupportDao dao;
+public class ManagementSupportCalendarService {
+    private final ManagementSupportCalendarDao dao;
 
     public int createCalendarCompany(CalendarVo vo) throws InvalidInputException {
         if (vo.getTitle().length() > 13) {
