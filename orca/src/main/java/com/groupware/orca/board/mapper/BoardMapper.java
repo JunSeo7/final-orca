@@ -1,5 +1,6 @@
 package com.groupware.orca.board.mapper;
 
+import com.groupware.orca.board.vo.BoardPenaltyVo;
 import com.groupware.orca.board.vo.BoardVo;
 import org.apache.ibatis.annotations.*;
 
@@ -9,7 +10,8 @@ import java.util.Map;
 @Mapper
 public interface BoardMapper {
 
-    @Select("SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM (SELECT * FROM BOARD WHERE CATEGORY_NO=#{categoryNo} ORDER BY ENROLL_DATE DESC) A WHERE ROWNUM <= #{offset} + #{rows}) WHERE RNUM > #{offset}")
+
+    @Select("SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM (SELECT * FROM BOARD WHERE CATEGORY_NO=#{categoryNo} AND DEL_YN='N' ORDER BY ENROLL_DATE DESC) A WHERE ROWNUM <= #{offset} + #{rows}) WHERE RNUM > #{offset}")
     List<BoardVo> getBoardList(@Param("categoryNo") int categoryNo, @Param("offset") int offset, @Param("rows") int rows);
 
     @Select("SELECT COUNT(*) FROM BOARD WHERE CATEGORY_NO=#{categoryNo}")
@@ -55,15 +57,31 @@ public interface BoardMapper {
     @Insert("INSERT INTO LIKES (EMP_NO, BOARD_NO) VALUES (#{empNo}, #{boardNo})")
     int addLike(@Param("boardNo") int boardNo, @Param("empNo")  int empNo);
 
-            @Delete("DELETE FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
-            int removeLike(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
+    @Delete("DELETE FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
+    int removeLike(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
 
-            @Select("SELECT COUNT(*) FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
-            int isLiked(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
+    @Select("SELECT COUNT(*) FROM LIKES WHERE EMP_NO = #{empNo} AND BOARD_NO = #{boardNo}")
+    int isLiked(@Param("boardNo") int boardNo, @Param("empNo") int empNo);
 
-            @Select("SELECT COUNT(*) FROM LIKES WHERE BOARD_NO = #{boardNo}")
-            int getLikeCount(@Param("boardNo") int boardNo);
+    @Select("SELECT COUNT(*) FROM LIKES WHERE BOARD_NO = #{boardNo}")
+    int getLikeCount(@Param("boardNo") int boardNo);
 
     @Delete("DELETE FROM LIKES WHERE BOARD_NO = #{boardNo}")
     int deleteLikesByBoardNo(@Param("boardNo") int boardNo);
+
+    @Insert("INSERT INTO BOARD_PENALTY (PENALTY_NO, PENALTY_CATEGORY_NO, PENALTY_CONTENT, IS_PENALTY, BOARD_NO, EMP_NO) " +
+            "VALUES (SEQ_BOARD_PENALTY.NEXTVAL, #{penaltyCategoryNo}, #{penaltyContent}, 'N', #{boardNo}, #{empNo})")
+    int insertPenalty(BoardPenaltyVo penalty);
+
+    @Select("SELECT COUNT(DISTINCT EMP_NO) FROM BOARD_PENALTY WHERE BOARD_NO = #{boardNo}")
+    int countPenaltiesByBoardNo(@Param("boardNo") int boardNo);
+
+    @Update("UPDATE BOARD SET DEL_YN = 'Y' WHERE BOARD_NO = #{boardNo}")
+    int hideBoard(int boardNo);
+
+    @Select("SELECT PENALTY_CATEGORY_NO as penaltyCategoryNo, CATEGORY_NAME as categoryName FROM BOARD_PENALTY_CATEGORY")
+    List<Map<String, Object>> getPenaltyCategories();
+
+    @Delete("DELETE FROM BOARD_PENALTY WHERE BOARD_NO = #{boardNo} ")
+    int deletePenaltyByBoardNo(int boardNo);
 }
