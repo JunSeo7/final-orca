@@ -247,7 +247,6 @@ CREATE TABLE DRIVER (
     , DEL_YN           CHAR(1)              DEFAULT 'N' NOT NULL
 );
 --------------------------------------------------- 나지원
---------------------------------------------------- 나지원
 -- APPR_STAGE_LIST 테이블 (결재 상태 리스트)
 CREATE TABLE APPR_STAGE_LIST (
    APPR_STAGE_NO       NUMBER NOT NULL
@@ -265,7 +264,7 @@ CREATE TABLE DOCUMENT (
    ,TEMPLATE_NO        NUMBER NOT NULL
    ,STATUS             NUMBER NOT NULL
    ,TITLE              VARCHAR2(200) NOT NULL
-   ,CONTENT            VARCHAR2(4000) NOT NULL
+   ,CONTENT            CLOB NOT NULL
    ,ENROLL_DATE        TIMESTAMP NOT NULL
    ,CREDIT_DATE        TIMESTAMP
    ,URGENT CHAR(1)     DEFAULT 'N'
@@ -276,8 +275,8 @@ COMMENT ON COLUMN DOCUMENT.STATUS IS '1: 임시저장 2: 기안 3: 종결 4: 반
 CREATE TABLE DOC_TEMPLATE (
    TEMPLATE_NO         NUMBER
    ,CATEGORY_NO        NUMBER NOT NULL
-   ,TITLE              VARCHAR2(50) NOT NULL
-   ,CONTENT            VARCHAR2(4000)
+   ,TITLE              VARCHAR2(200) NOT NULL
+   ,CONTENT            CLOB
    ,ENROLL_DATE        TIMESTAMP DEFAULT SYSDATE
    ,DEL_YN             CHAR(1) DEFAULT 'N'
 );
