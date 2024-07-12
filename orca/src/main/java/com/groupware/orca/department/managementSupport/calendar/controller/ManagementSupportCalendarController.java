@@ -3,8 +3,7 @@ package com.groupware.orca.department.managementSupport.calendar.controller;
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.common.vo.Pagination;
-import com.groupware.orca.common.vo.SearchVo;
-import com.groupware.orca.department.managementSupport.calendar.service.ManagementSupportService;
+import com.groupware.orca.department.managementSupport.calendar.service.ManagementSupportCalendarService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,9 @@ import java.util.List;
 @Controller
 @RequestMapping("orca/managementSupport")
 @RequiredArgsConstructor
-public class ManagementSupportController {
+public class ManagementSupportCalendarController {
 
-    private final ManagementSupportService service;
+    private final ManagementSupportCalendarService service;
 
     @GetMapping("createCalendar")
     public String createCalendar() {

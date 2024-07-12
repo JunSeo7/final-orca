@@ -1,9 +1,7 @@
 package com.groupware.orca.department.managementSupport.calendar.dao;
 
 import com.groupware.orca.calendar.vo.CalendarVo;
-import com.groupware.orca.common.vo.Pagination;
-import com.groupware.orca.common.vo.SearchVo;
-import com.groupware.orca.department.managementSupport.calendar.mapper.ManagementSupportMapper;
+import com.groupware.orca.department.managementSupport.calendar.mapper.ManagementSupportCalendarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +9,9 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ManagementSupportDao {
+public class ManagementSupportCalendarDao {
 
-    private final ManagementSupportMapper mapper;
+    private final ManagementSupportCalendarMapper mapper;
 
     public int createCalendarCompany(CalendarVo vo) {
         return mapper.createCalendarCompany(vo);

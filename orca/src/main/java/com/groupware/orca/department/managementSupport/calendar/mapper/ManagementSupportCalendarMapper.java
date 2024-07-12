@@ -2,14 +2,12 @@ package com.groupware.orca.department.managementSupport.calendar.mapper;
 
 
 import com.groupware.orca.calendar.vo.CalendarVo;
-import com.groupware.orca.common.vo.Pagination;
-import com.groupware.orca.common.vo.SearchVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface ManagementSupportMapper {
+public interface ManagementSupportCalendarMapper {
     @Insert("INSERT INTO CALENDAR(CALENDAR_NO, WRITER_NO, TITLE, CONTENT, START_DATE, END_DATE, RANGE) \n" +
             "VALUES(SEQ_CALENDAR_NO.NEXTVAL, #{writerNo}, #{title}, #{content}, #{startDate}, #{endDate}, 'company')")
     int createCalendarCompany(CalendarVo vo);

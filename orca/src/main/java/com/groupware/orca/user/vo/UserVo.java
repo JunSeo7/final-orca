@@ -11,7 +11,7 @@ public class UserVo {
     private String deptCode;
     private String teamCode;
     private String gender;
-    private String socialSecurity_no;
+    private String socialSecurityNo;
     private String password;
     private String phone;
     private String extensionCall;
@@ -27,7 +27,6 @@ public class UserVo {
     private String leavingDate;
     private String imgOriginName;
     private String imgChangeName;
-    private String otpKey;
     private String sickDate;
     private String vacationDate;
     private String partName;

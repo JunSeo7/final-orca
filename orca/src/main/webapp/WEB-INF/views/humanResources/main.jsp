@@ -40,7 +40,7 @@
                         <div class="calnedar title-toggle">◾ 인사 관리</div>
                         <div class="calendar-link link">
                             <div class="calendar-list toggle">◽ 전체 사원 조회</div>
-                            <div class="calendar-wirte toggle">◽ 사원 등록</div>
+                            <div class="employee-registration toggle">◽ 사원 등록</div>
                         </div>
                         <div class="approval title-toggle">◾ 근퇴 관리</div>
                         <div class="approval-list">
