@@ -19,8 +19,8 @@
 
 <main id="content">
 <h2>결재 양식 목록</h2>
-<hr>
-<br>
+    <hr>
+    <br>
         <div class="search_box">
             <select class="search_select" id="searchType">
                 <option value="categoryName">카테고리</option>
@@ -30,8 +30,8 @@
             <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" onclick="searchTemplate()">
         </div>
 
-<c:choose>
-    <c:when test="${empty templateList}">
+    <c:choose>
+        <c:when test="${empty templateList}">
         <div class="no-template">등록된 결재 양식이 없습니다.</div>
         </c:when>
         <c:otherwise>

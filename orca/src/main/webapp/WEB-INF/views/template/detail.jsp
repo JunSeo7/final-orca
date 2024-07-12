@@ -27,41 +27,41 @@
             <div class="template-detail">
 
                 <div class="template-detail-box">
-             <table class="document-body">
-               <!-- User -->
-               <tbody>
-                 <tr>
-                   <td colspan="6">양식번호: <span>${templateDetail.templateNo}</span></td>
-                 </tr>
-                 <tr>
-                   <td class="user-info-header">카테고리</td>
-                   <td class="user-info-data">${templateDetail.categoryName}</td>
-                   <td class="user-info-header">생성날짜</td>
-
-                   <td class="user-info-data">
-                     ${templateDetail.enrollDate}
-                     <fmt:formatDate pattern='yyyy-MM-dd' value='${list.edocVO.edocDt}' />
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-
                      <table class="document-body">
-                       <!-- Draft -->
+                       <!-- User -->
                        <tbody>
                          <tr>
-                           <td class="document-body-header">양식명</td>
-                           <td class="document-body-data"> ${templateDetail.title}</td>
+                           <td colspan="6">양식번호: <span>${templateDetail.templateNo}</span></td>
                          </tr>
                          <tr>
-                           <td class="document-body-header" colspan="2">양식내용</td>
-                         </tr>
-                         <tr>
-                           <td class="document-body-data" colspan="2">
-                             ${templateDetail.content}
+                           <td class="user-info-header">카테고리</td>
+                           <td class="user-info-data">${templateDetail.categoryName}</td>
+                           <td class="user-info-header">생성날짜</td>
+
+                           <td class="user-info-data">
+                             ${templateDetail.enrollDate}
+                             <fmt:formatDate pattern='yyyy-MM-dd' value='${list.edocVO.edocDt}' />
                            </td>
                          </tr>
                        </tbody>
+                     </table>
+
+                     <table class="document-body">
+                        <!-- Draft -->
+                           <tbody>
+                                 <tr>
+                                      <td class="document-body-header">양식명</td>
+                                      <td class="document-body-data"> ${templateDetail.title}</td>
+                                 </tr>
+                                 <tr>
+                                       <td class="document-body-header" colspan="2">양식내용</td>
+                                 </tr>
+                                 <tr>
+                                       <td class="document-body-data" colspan="2">
+                                         ${templateDetail.content}
+                                       </td>
+                                 </tr>
+                           </tbody>
                      </table>
 
                     <div class="approval-table">
