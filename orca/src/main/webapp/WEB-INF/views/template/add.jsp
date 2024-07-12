@@ -55,7 +55,7 @@
             </table>
             <br>
             <br>
-            <button type="submit" class="submit_btn">수정</button>
+            <button type="submit" class="submit_btn">등록</button>
         </form>
     </main>
 
