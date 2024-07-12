@@ -130,7 +130,6 @@ public class SalaryService {
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
 //        double tax = calculateInComeTax(totalDeduction);
 
-        vo = dao.getUserVo(vo.getEmpNo());
         RatesVo rvo = dao.getRatesVo();
 
         System.out.println("vo.getSalary() - svo.getMeals() = " + (vo.getSalary() - svo.getMeals()));
@@ -211,7 +210,6 @@ public class SalaryService {
     public int salaryUpdate(UserVo vo,ClientVo clientVo, SalaryVo svo) {
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
         RatesVo rvo = dao.getRatesVo();
-        vo = dao.getUserVo(vo.getEmpNo());
 
         double realSalary =  vo.getSalary()- svo.getMeals();
 
