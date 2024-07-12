@@ -41,11 +41,11 @@ function logout() {
 /*--jsTree 테마--*/
 $(document).ready(function() {
 $('#navTree').jstree({
-  'core': {
-    'themes': {
-      'variant': 'large'
-    }
-  },
-  'plugins': ['themes', 'html_data']
-});
+      'core': {
+        'themes': {
+          'variant': 'large'
+        }
+      },
+      'plugins': ['themes', 'html_data']
+    });
 });
