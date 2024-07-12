@@ -14,13 +14,13 @@
 <body>
     <header>
         <div class="header-left">
-            <img src="/img/header/logo.png" alt="Logo" class="logo">
+            <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
             <h2 class="header-title">ORCA</h2>
         </div>
         <div class="header-right">
-            <span class="icon">알림</span>
-            <span class="icon">조직도</span>
-            <span class="icon">설정</span>
+            <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
+            <span class="icon"><img src="/img/header/organization-chart.png" alt="organization-chart" class="icon"></span>
+            <span class="icon"><img src="/img/header/settings.png" alt="settings" class="icon"></span>
         </div>
     </header>
 
