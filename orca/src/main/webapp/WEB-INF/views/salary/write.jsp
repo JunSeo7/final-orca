@@ -12,6 +12,7 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script defer src="/js/managementSupport/main.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            <link rel="stylesheet" href="/css/salary/write.css">
         </head>
 
         <body>
@@ -51,11 +52,29 @@
             </aside>
             <main>
                 <div class="main" id="content">
-                    <h1>회계부</h1>
+                    <h1>급여 입력</h1>
 
-                    <!-- 메인페이지 뭐 할지 생각해보기 -->
+                    <table class="salaryWrite">
+                        <thead>
+                            <tr>
+                                <th>사번</th>
+                                <th>직급수당</th>
+                                <th>상여금</th>
+                                <th>식대</th>
+                                <th>휴일근무수당</th>
+                                <th>연장근무수당</th>
+                                <th>지방소득세</th>
+                                <th>자녀 수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 여기 그 머냐 데이터 가져오기~~ -->
+                        </tbody>
+                    </table>
+                    
 
 
+                    
 
                 </div>
             </main>
