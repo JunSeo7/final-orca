@@ -59,103 +59,115 @@ function displayDocuments(data) {
     documentListDiv.innerHTML = ''; // 내용을 비웁니다.
 
     if (data && data.length > 0) {
-        data.forEach(function(doc) {
-            const docDiv = document.createElement("div");
-            docDiv.className = "document";
-            docDiv.dataset.docNo = doc.docNo;
+    data.forEach(function(doc) {
+        const docDiv = document.createElement("div");
+        docDiv.className = "document";
+        docDiv.dataset.docNo = doc.docNo;
 
-            const creditDateP = document.createElement("p");
-            creditDateP.textContent = doc.creditDate;
-            docDiv.appendChild(creditDateP);
+        const creditDateP = document.createElement("p");
+        creditDateP.textContent = doc.creditDate;
+        docDiv.appendChild(creditDateP);
 
-            const statusBoxDiv = document.createElement("div");
-            statusBoxDiv.className = "status_box";
+        const statusBoxDiv = document.createElement("div");
+        statusBoxDiv.className = `status_box status_box_${doc.status}`;
+        statusBoxDiv.dataset.docNo = doc.docNo;
 
-            const statusDetailsDiv = document.createElement("div");
-            statusDetailsDiv.className = "status_details";
+        const statusDetailsDiv = document.createElement("div");
+        statusDetailsDiv.className = "status_details";
 
-            const profileImg = document.createElement("img");
-            profileImg.src = "/img/header/profile.png";
-            profileImg.alt = "Profile Picture";
-            profileImg.className = "profile-pic-small";
-            statusDetailsDiv.appendChild(profileImg);
+        const documentInfoDiv = document.createElement("div");
+        documentInfoDiv.className = "document_info";
 
-            const approvalTitleSpan = document.createElement("span");
-            approvalTitleSpan.className = "approval_title";
-            approvalTitleSpan.textContent = doc.docNo;
-            statusDetailsDiv.appendChild(approvalTitleSpan);
+        const documentInfoInnerDiv = document.createElement("div");
+        documentInfoInnerDiv.className = "document_info_inner";
 
-            const approvalTitleSpan2 = document.createElement("span");
-            approvalTitleSpan2.className = "approval_title";
-            approvalTitleSpan2.textContent = doc.title;
-            statusDetailsDiv.appendChild(approvalTitleSpan2);
+        const profileImg = document.createElement("img");
+        profileImg.src = "/img/header/profile.png";
+        profileImg.alt = "Profile Picture";
+        profileImg.className = "profile-pic-small";
+        documentInfoInnerDiv.appendChild(profileImg);
 
-            const approvalTitleSpan3 = document.createElement("span");
-            approvalTitleSpan3.className = "approval_title";
-            approvalTitleSpan3.textContent = `[${doc.categoryName}] ${doc.templateTitle}`;
-            statusDetailsDiv.appendChild(approvalTitleSpan3);
+        const docInfoTextDiv = document.createElement("div");
 
-            const approvalTitleSpan4 = document.createElement("span");
-            approvalTitleSpan4.className = "approval_title";
-            approvalTitleSpan4.textContent = `긴급여부: ${doc.urgent}`;
-            statusDetailsDiv.appendChild(approvalTitleSpan4);
+        const docTitleDiv = document.createElement("div");
+        docTitleDiv.className = "docTitle";
+        docTitleDiv.textContent = `${doc.title} [${doc.docNo}]`;
+        docInfoTextDiv.appendChild(docTitleDiv);
 
-            const statusStepsDiv = document.createElement("div");
-            statusStepsDiv.className = "status_steps";
+        const docTemplateDiv = document.createElement("div");
+        docTemplateDiv.className = "docTemplate";
+        docTemplateDiv.textContent = `[${doc.categoryName}] ${doc.templateTitle}`;
+        docInfoTextDiv.appendChild(docTemplateDiv);
 
-            const statusStepDiv = document.createElement("div");
-            statusStepDiv.className = "status_step";
+        documentInfoInnerDiv.appendChild(docInfoTextDiv);
+        documentInfoDiv.appendChild(documentInfoInnerDiv);
 
-            const statusNameP = document.createElement("p");
-            statusNameP.textContent = doc.statusName;
-            statusStepDiv.appendChild(statusNameP);
+        if (doc.urgent === 'Y') {
+            const urgentDiv = document.createElement("div");
+            urgentDiv.className = "urgent_yn";
+            urgentDiv.textContent = '🔴';
+            documentInfoDiv.appendChild(urgentDiv);
+        }
 
-            const deptNameP = document.createElement("p");
-            deptNameP.textContent = doc.deptName;
-            statusStepDiv.appendChild(deptNameP);
+        statusDetailsDiv.appendChild(documentInfoDiv);
 
-            const writerNameP = document.createElement("p");
-            writerNameP.textContent = `${doc.writerName}[${doc.positionName}]`;
-            statusStepDiv.appendChild(writerNameP);
+        const statusStepsDiv = document.createElement("div");
+        statusStepsDiv.className = "status_steps";
 
-            const creditDateP2 = document.createElement("p");
-            creditDateP2.textContent = doc.creditDate;
-            statusStepDiv.appendChild(creditDateP2);
+        const writerStepDiv = document.createElement("div");
+        writerStepDiv.className = `status_step writer_${doc.status}`;
 
-            statusStepsDiv.appendChild(statusStepDiv);
+        const statusNameDiv = document.createElement("div");
+        statusNameDiv.className = "statusName";
+        statusNameDiv.textContent = `${doc.statusName}[${doc.status}]`;
+        writerStepDiv.appendChild(statusNameDiv);
 
-            doc.approverVoList.forEach(function(approver) {
-                const approverStepDiv = document.createElement("div");
-                approverStepDiv.className = "status_step";
+        const writerNameDiv = document.createElement("div");
+        writerNameDiv.className = "writerName";
+        writerNameDiv.textContent = `${doc.writerName}[${doc.positionName}]`;
+        writerStepDiv.appendChild(writerNameDiv);
 
-                const seqP = document.createElement("p");
-                seqP.textContent = approver.seq;
-                approverStepDiv.appendChild(seqP);
+        const deptNameDiv = document.createElement("div");
+        deptNameDiv.textContent = doc.deptName;
+        writerStepDiv.appendChild(deptNameDiv);
 
-                const apprStageNameP = document.createElement("p");
-                apprStageNameP.textContent = approver.apprStageName;
-                approverStepDiv.appendChild(apprStageNameP);
+        const creditDateDiv = document.createElement("div");
+        creditDateDiv.textContent = doc.creditDate;
+        writerStepDiv.appendChild(creditDateDiv);
 
-                const approverDeptNameP = document.createElement("p");
-                approverDeptNameP.textContent = approver.deptName;
-                approverStepDiv.appendChild(approverDeptNameP);
+        statusStepsDiv.appendChild(writerStepDiv);
 
-                const approverNameP = document.createElement("p");
-                approverNameP.textContent = `${approver.approverName}[${approver.positionName}]`;
-                approverStepDiv.appendChild(approverNameP);
+        doc.approverVoList.forEach(function(approver) {
+            const approverStepDiv = document.createElement("div");
+            approverStepDiv.className = `status_step appr_${approver.approvalStage}`;
 
-                const approvalDateP = document.createElement("p");
-                approvalDateP.textContent = approver.approvalDate;
-                approverStepDiv.appendChild(approvalDateP);
+            const stageNameDiv = document.createElement("div");
+            stageNameDiv.className = "stageName";
+            stageNameDiv.textContent = `[${approver.seq}][${approver.apprStageName}]${approver.approvalStage}`;
+            approverStepDiv.appendChild(stageNameDiv);
 
-                statusStepsDiv.appendChild(approverStepDiv);
-            });
+            const approverNameDiv = document.createElement("div");
+            approverNameDiv.className = "approverName";
+            approverNameDiv.textContent = `${approver.approverName}[${approver.positionName}]`;
+            approverStepDiv.appendChild(approverNameDiv);
 
-            statusDetailsDiv.appendChild(statusStepsDiv);
-            statusBoxDiv.appendChild(statusDetailsDiv);
-            docDiv.appendChild(statusBoxDiv);
-            documentListDiv.appendChild(docDiv);
+            const approverDeptNameDiv = document.createElement("div");
+            approverDeptNameDiv.textContent = `[${approver.approverClassificationNo}]${approver.deptName}`;
+            approverStepDiv.appendChild(approverDeptNameDiv);
+
+            const approverDateDiv = document.createElement("div");
+            approverDateDiv.textContent = approver.approvalDate;
+            approverStepDiv.appendChild(approverDateDiv);
+
+            statusStepsDiv.appendChild(approverStepDiv);
         });
+
+        statusDetailsDiv.appendChild(statusStepsDiv);
+        statusBoxDiv.appendChild(statusDetailsDiv);
+        docDiv.appendChild(statusBoxDiv);
+        documentListDiv.appendChild(docDiv);
+    });
+
     } else {
         const noDocumentDiv = document.createElement("div");
         noDocumentDiv.className = "no-document";
