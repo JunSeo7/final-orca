@@ -62,6 +62,7 @@ main.full {
   flex-direction: column;
 }
 
+/* 문서없으면 */
 .no-document{
   border: 1px solid #ddd;
   padding: 20px;
@@ -71,16 +72,37 @@ main.full {
   margin-top: 10px;
 }
 
+/* 문서있으면 */
 .status_box {
   display: flex;
   align-items: center;
-  border: 1px solid #ddd;
   padding: 20px;
   border-radius: 8px;
   background-color: #f6f6f6;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  min-width: 700px;
+
+  &:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px);
+  }
 }
 
+.document_info{
+  display: flex;
+  justify-content: space-between;
+}
+
+.document_info_inner{
+  display: flex;
+}
+
+.urgent_yn {
+    width: 20px;
+    height: 20px;
+}
 .profile-pic-small {
   width: 40px;
   height: 40px;
@@ -107,12 +129,45 @@ main.full {
   padding: 10px;
   border-radius: 8px;
   width: 130px;
-  height: 145px;
   text-align: center;
   background-color: #d4e9ff;
 }
-.status_step p {
+
+.status_step div {
   margin: 0;
-  padding-top:10px;
-  padding-bottom:10px;
+  padding-top:6px;
+  padding-bottom:6px;
 }
+
+.stageName, .statusName, .docTitle{
+   font-weight: bold; /* 글씨 두껍게 */
+   font-size: 20px;   /* 글자 크기 조절 */
+}
+
+.approverName, .writerName{
+    font-weight: bold; /* 글씨 두껍게 */
+    font-size: 16px;   /* 글자 크기 조절 */
+}
+
+
+
+/* 조건  기안올린 문서 */
+.status_box_2 {
+    border: 3px solid #819DDB;
+}
+.status_box_2 .appr_2, .status_box_2 .writer_2{
+        border: 2px solid #819DDB;
+}
+
+.status_box_2 .appr_2 .stageName, .status_box_2 .writer_2 .statusName{
+        color: #093294;
+}
+.status_box_2 .appr_3 {
+        border: 2px solid red;
+}
+
+
+
+
+
+

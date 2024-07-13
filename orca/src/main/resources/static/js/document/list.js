@@ -169,7 +169,7 @@ function displayDocuments(data) {
 
 // 상세보기
 function detailDocument() {
-    const docElements = document.querySelectorAll(".document");
+    const docElements = document.querySelectorAll(".status_box");
 
     docElements.forEach(element => {
         element.addEventListener("click", function() {

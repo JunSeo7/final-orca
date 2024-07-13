@@ -30,7 +30,7 @@ public class DocumentVo {
     private String content;            // 문서 내용
     private String enrollDate;         // 작성 날짜
     private String creditDate;         // 기안 날짜
-    private int status;                // 1: 임시저장 2: 기안(대기) 3: 결재 취소
+    private int status;                // 1: 임시저장 2: 기안 3: 종결 4: 반려  5: 결재취소
     private String statusName;         // 상태 이름
     private String urgent;             // 긴급 여부 (Y/N)
     private String delYn;              // 삭제 여부 (Y/N)
