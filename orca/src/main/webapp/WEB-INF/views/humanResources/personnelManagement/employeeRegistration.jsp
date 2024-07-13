@@ -55,41 +55,33 @@
     <style>
         .header {
             font-size: 20px;
+            margin-bottom: 14px;
         }
 
         .container {
-            background-color: rgb(130, 168, 241);
+            background-color: rgb(172, 174, 177);
+            border: 1px solid black;
             padding: 20px;
-            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 800px;
-            height: 550px;
-            margin-bottom: 20px;
+            height: 460px;
         }
 
         .container-grid {
             justify-items: center;
             display: grid;
-            grid-template-rows: 0.13fr 1.5fr 0.1fr;
+            grid-template-rows: 0.13fr 2fr 0.1fr;
             width: 100%;
-            height: 590px;
+            height: 460px;
             font-weight: 900;
         }
 
         .main-top {
             display: grid;
             grid-template-columns: 1.25fr 2fr;
-            grid-template-rows: repeat(8, 0.7fr);
+            grid-template-rows: repeat(8, 1fr);
             justify-items: end;
             align-items: center;
-        }
-
-        .main-bottom {
-            display: grid;
-            justify-items: end;
-            align-items: center;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr 3fr;
         }
 
         .footer {
@@ -100,34 +92,31 @@
         .main-top input,
         .main-top select {
             border: 1px solid #1b1b1b;
-            border-radius: 3px;
-            height: 21px;
-            margin-bottom: 0px;
+            margin: 7px;
+            height: 19px;
+            margin-bottom: 15px;
             background-color: rgb(214, 213, 213);
-            padding: 0px;
         }
 
         #password,
         #ext {
-            margin-bottom: 14px;
+            margin-bottom: 20px;
         }
 
         #image {
-            width: 200px;
+            line-height: -10;
         }
 
         .employeeSubmit {
-            padding: 5px 12px;
-            border: 2px solid black;
-            border-radius: 5px;
+            padding: 4px 10px;
+            border: 1.5px solid black;
             background-color: rgb(214, 213, 213);
             color: black;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             font-weight: 900;
         }
-
-        .employeeSubmit:hover {
+        .employeeSubmit:hover{
             background-color: rgb(166, 165, 165);
         }
     </style>
