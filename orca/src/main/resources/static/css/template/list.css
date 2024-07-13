@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 30px;
   word-break: keep-all;
 }
 
@@ -69,6 +70,7 @@ main.full {
   justify-content: space-between;
 }
 
+
 .template {
   border: 1px solid #ddd;
   width: 45%;
@@ -79,6 +81,13 @@ main.full {
   font-size: 16px;
   margin-top: 10px;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.template:hover {
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+   transform: translateY(-3px);
 }
 
 .template-name{
@@ -94,7 +103,7 @@ main.full {
 }
 
 .template-btn img{
-  width: 18px;
+  width: 20px;
 }
 
 /*수정팝업*/

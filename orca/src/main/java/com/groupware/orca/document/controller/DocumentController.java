@@ -176,6 +176,16 @@ public class DocumentController {
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
+
+    // 받은 결재 - main
+    @GetMapping("api/received-documents")
+    @ResponseBody
+    public List<DocumentVo> getReceivedDocumentList(HttpSession httpSession) {
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
+        return documentList;
+    }
+
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @GetMapping("public")
     public String getPublicDocumentList(Model model, HttpSession httpSession){

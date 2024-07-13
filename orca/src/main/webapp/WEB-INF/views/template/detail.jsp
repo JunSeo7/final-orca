@@ -15,14 +15,7 @@
 
 <main id="content">
     <h2>결재양식 상세</h2>
-             <div class="approval-lines-btn">
-                  <a class="template-btn" data-template-no="${template.templateNo}">
-                      <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
-                  </a>
-                  <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
-                      <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
-                  </a>
-             </div>
+
         <div class="template-detail-box">
             <div class="template-detail">
 
@@ -31,7 +24,15 @@
                        <!-- User -->
                        <tbody>
                          <tr>
-                           <td colspan="6">양식번호: <span>${templateDetail.templateNo}</span></td>
+                           <td colspan="3">양식번호: <span>${templateDetail.templateNo}</span></td>
+                           <th>
+                              <a class="template-btn edit-btn" data-template-no="${template.templateNo}">
+                                   <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
+                               </a>
+                               <a class="template-btn delete-btn" data-template-no="${template.templateNo}">
+                                   <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
+                               </a>
+                           </th>
                          </tr>
                          <tr>
                            <td class="user-info-header">카테고리</td>

@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 30px;
   word-break: keep-all;
 }
 

@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 50px;
   word-break: keep-all;
 }
 
@@ -139,7 +140,7 @@ input[type="text"], select {
 
 .jstree-icon {
     font-size: 1.2em;
-    color: #1E90FF; /* 아이콘 색상을 파란색으로 변경 */
+    color: #7a9fc4;
 }
 
 /* 확인 버튼 스타일 */
