@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 50px;
   word-break: keep-all;
 }
 
@@ -36,7 +37,7 @@ main.full {
     background: white;
     padding: 0;
     border: 0;
-    height: 130px;
+    height: 100px;
     text-align: center;
     color: black;
     font-size: 50px;
@@ -50,25 +51,36 @@ main.full {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.approval-row {
-    display: flex;
-    width: 50%;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-}
-
-.approval-header, .approval-cell {
-    flex: 1;
+    justify-content: flex-end;
+    padding: 10px;
     text-align: center;
-    border: 1px solid #ddd;
-    width: 22%; /* 조정 가능한 너비 */
+}
+
+.approval-cell {
+    border: 1px solid black;
+    padding: 10px;
+    width: 100px;
+}
+
+.apprClassification{
+    font-weight: bold; /* 글씨 두껍게 */
+    font-size: 20px;   /* 글자 크기 조절 */
+    border-bottom: 1px solid black;
 }
 
 .approval-header {
     background-color: #f4f4f4;
+}
+
+.status, .stage{
+    font-weight: bold; /* 글씨 두껍게 */
+}
+.stage_2{
+    color:#274ca3;
+}
+
+.stage img{
+ width:80%
 }
 
 /* 사용자 정보 */
@@ -136,8 +148,14 @@ main.full {
     flex: 1;
 }
 
-/* 승인, 반려 버튼 */
+/* 코멘트 텍스트 에리어 */
+.comment{
+    width: 900px;
+    height: 150px;
+    resize: none;
+}
 
+/* 승인, 반려 버튼 */
 .radio-input {
   display: none;
 }
@@ -201,3 +219,7 @@ main.full {
     background-color: #368dff;
 }
 
+.edit-btn, .delete-btn{
+    width: 25px;
+    cursor:pointer;
+}

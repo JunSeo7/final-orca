@@ -31,30 +31,39 @@
 
             <div id="documentList">
                 <c:forEach var="document" items="${documentList}">
-                    <div class="document" data-doc-no="${document.docNo}">
+                    <div class="document">
                       <p>${document.creditDate}</p>
-                        <div class="status_box">
+                        <div class="status_box status_box_${document.status}" data-doc-no="${document.docNo}">
                             <div class="status_details">
-                                <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic-small">
-                                <span class="approval_title">${document.docNo}</span>
-                                <span class="approval_title">${document.title}</span>
-                                <span class="approval_title">[${document.categoryName}] ${document.templateTitle}</span>
-                                <span class="approval_title">긴급여부: ${document.urgent}</span>
+
+                                <div class="document_info">
+                                <div class="document_info_inner">
+                                    <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic-small">
+
+                                    <div>
+                                        <div class="docTitle">${document.title} [${document.docNo}]</div>
+                                        <div class="docTemplate">[${document.categoryName}] ${document.templateTitle}</div>
+                                    </div>
+                                    </div>
+                                    <c:if test="${document.urgent == 'Y'}">
+                                        <div class="urgent_yn">🔴</div>
+                                    </c:if>
+                                </div>
+
                                 <div class="status_steps">
-                                    <div class="status_step">
-                                        <p>${document.statusName}</p>
-                                        <p>${document.deptName}</p>
-                                        <p>${document.writerName}[${document.positionName}]</p>
-                                        <p>${document.creditDate}</p>
+                                    <div class="status_step writer_${document.status}">
+                                        <div class="statusName">${document.statusName}[${document.status}]</div>
+                                        <div class="writerName">${document.writerName}[${document.positionName}]</div>
+                                        <div>${document.deptName}</div>
+                                        <div>${document.creditDate}</div>
                                     </div>
                                     <!-- 결재 진행 상태 추가 -->
                                     <c:forEach var="approver" items="${document.approverVoList}">
-                                        <div class="status_step">
-                                            <p>${approver.seq}</p>
-                                            <p>${approver.apprStageName}</p>
-                                            <p>${approver.deptName}</p>
-                                            <p>${approver.approverName}[${approver.positionName}]</p>
-                                            <p>${approver.approvalDate}</p>
+                                        <div class="status_step appr_${approver.approvalStage}">
+                                            <div class="stageName">[${approver.seq}][${approver.apprStageName}]${approver.approvalStage}</div>
+                                            <div class="approverName">${approver.approverName}[${approver.positionName}]</div>
+                                            <div>[${approver.approverClassificationNo}]${approver.deptName}</div>
+                                            <div>${approver.approvalDate}</div>
                                         </div>
                                     </c:forEach>
                                 </div>

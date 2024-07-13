@@ -140,6 +140,7 @@ public class DocumentService {
 
     // 결재 상세보기 - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo, String loginUserNo) {
+
         // 결재 문서 조회(카테고리, 양식, 기안자관련)
         DocumentVo documentVo = dao.getDocumentByNo(docNo);
         // 문서 - 결재선 목록 넣기
@@ -163,7 +164,6 @@ public class DocumentService {
             documentVo.setMyTurn(false);
         }
 
-        System.out.println("documentVo = " + documentVo);
 
         return documentVo;
     }

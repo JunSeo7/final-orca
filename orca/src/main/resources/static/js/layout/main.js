@@ -108,6 +108,7 @@ function loadWorkTimes() {
 
 $(document).ready(function() {
     loadWorkTimes();
+    fetchDocuments();
 });
 
         // 오늘 날자 불러오기
@@ -122,3 +123,46 @@ $(document).ready(function() {
         var formattedDate = year + '.' + month + '.' + day + '(' + dayOfWeek + ')';
 
         document.getElementById('date').innerText = formattedDate;
+
+
+//결재 문서 불러오기
+function fetchDocuments() {
+        $.ajax({
+            url: "/orca/document/api/received-documents",
+            method: 'GET',
+            success: function(response) {
+                displayDocuments(response);
+            },
+            error: function(error) {
+                console.error('Error:', error);
+                alert('문서를 가져오는 중 오류가 발생했습니다.');
+            }
+        });
+    }
+
+function displayDocuments(documents) {
+        const documentList = $('#document-list');
+        documentList.empty(); // 기존 내용을 비웁니다.
+
+        // status가 2인 문서만 필터링
+        const filteredDocuments = documents.filter(doc => doc.status === 2);
+
+        if (filteredDocuments.length === 0) {
+            documentList.append('<div class="no-documents">결재할 문서가 없습니다.</div>');
+            return;
+        }
+
+        // 최신 5개 문서만 표시
+        const latestDocuments = filteredDocuments.slice(0, 5);
+
+        latestDocuments.forEach(doc => {
+            const docDiv = $('<div>').addClass('document');
+            docDiv.html(`
+                <span>${doc.title}</span>
+                <br>
+                <span>기안자: ${doc.writerName}</span>
+                <span>기안일: ${doc.creditDate}</span>
+            `);
+             documentList.append(docDiv);
+         });
+     }

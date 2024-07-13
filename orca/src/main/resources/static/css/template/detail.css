@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 50px;
   word-break: keep-all;
 }
 
@@ -16,8 +17,9 @@ main.full {
   margin-left: 20px;
 }
 
-.approval-lines-btn img{
-  width: 18px;
+.template-btn img{
+    width: 20px;
+    cursor: pointer;
 }
 
 

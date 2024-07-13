@@ -54,6 +54,9 @@ public class ApprovalLineController {
     //기본 결재선 등록
     @PostMapping("add")
     public ResponseEntity<String> addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
+
+        System.out.println("approvalLineVo = " + approvalLineVo);
+
         try {
             System.out.println("approvalLineVo = " + approvalLineVo);
             int result = service.addApprovalLine(approvalLineVo);

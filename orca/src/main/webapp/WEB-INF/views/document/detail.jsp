@@ -17,33 +17,55 @@
         <!-- 문서 내용 표시 -->
         <div class="document-header">
             <!-- Header -->
-            <div class="form-title">${document.templateTitle}</div>
+        <div class="form-title">${document.templateTitle}</div>
+
             <div class="approval-section">
-                <div class="approval-row">
                     <div class="approval-cell">
-                        <p>${document.statusName}</p>
-                        <p>${document.deptName}</p>
-                        <p>${document.writerName} ${document.positionName}</p>
-                        <p>${document.creditDate}</p>
+                        <div class="apprClassification">기안자</div>
+                        <div class="status">${document.statusName}</div>
+                        <div>${document.writerName} ${document.positionName}</div>
+                        <div>${document.deptName}</div>
                     </div>
                     <c:forEach var="approver" items="${document.approverVoList}">
                         <div class="approval-cell">
-                            <p>${approver.seq}</p>
-                            <p>${approver.approverClassificationNo}</p>
-                            <p>${approver.apprStageName}</p>
-                            <p>${approver.deptName}</p>
-                            <p>${approver.approverName} ${approver.positionName}</p>
-                            <p>${approver.approvalDate}</p>
+                            <c:choose>
+                                <c:when test="${approver.approverClassificationNo == 1}">
+                                    <div class="apprClassification">결재자</div>
+                                </c:when>
+                                <c:when test="${approver.approverClassificationNo == 2}">
+                                   <div class="apprClassification">합의자</div>
+                                </c:when>
+                                <c:otherwise>
+                                    ${approver.approverClassificationNo}
+                                </c:otherwise>
+                            </c:choose>
+                            <div class="stage stage_${approver.approvalStage}">${approver.apprStageName}</div>
+                            <div>${approver.approverName} ${approver.positionName}</div>
+                            <div>${approver.deptName}</div>
                         </div>
                     </c:forEach>
-                </div>
+
             </div>
         </div>
+
         <table class="document-body">
             <!-- User -->
             <tbody>
             <tr>
-                <td colspan="6">문서번호: <span>${document.docNo}</span></td>
+                <td colspan="5">문서번호: <span>${document.docNo}</span></td>
+                <!-- 수정 및 삭제 버튼 -->
+                <th>
+                    <c:if test="${document.status == 1}">
+                        <div>
+                            <a href="/orca/document/edit?docNo=${document.docNo}"  doc-no="${document.docNo}">
+                                <img class="edit-btn" src="/img/document/edit.png" alt="수정 아이콘">
+                            </a>
+                            <a onclick="deleteDocument(${document.docNo})" doc-no="${document.docNo}">
+                                <img class="delete-btn" src="/img/document/delete.png" alt="삭제 아이콘">
+                            </a>
+                        <div>
+                    </c:if>
+                </th>
             </tr>
             <tr>
                 <td class="user-info-header">기안자</td>
@@ -60,7 +82,7 @@
                 <c:set var="referencers" value="${document.referencerVoList}" />
                     <c:choose>
                         <c:when test="${empty referencers}">
-                            <p>참조인이 없습니다.</p>
+                            <span>참조인이 없습니다.</span>
                         </c:when>
                         <c:otherwise>
                             <c:forEach var="referencer" items="${referencers}">
@@ -95,7 +117,6 @@
                             <p>첨부된 파일이 없습니다.</p>
                         </c:when>
                         <c:otherwise>
-                        <img////>
                             <c:forEach var="file" items="${files}">
                                 <img src="/static/upload/document/${file.changeName}" alt="${file.changeName}" class="attachment-img"><br/>
                                 <a href="/static/upload/document/${file.changeName}" download> ${file.changeName}</a><br/>
@@ -113,33 +134,37 @@
                    <td class="document-body-data">
                        <c:choose>
                            <c:when test="${empty approver.comment}">
-                               <p>코멘트가 없습니다.</p>
+                               <span>코멘트가 없습니다.</span>
                            </c:when>
                            <c:otherwise>
-                               <p>${approver.comment}</p>
+                               <span>${approver.comment}</span>
                            </c:otherwise>
                        </c:choose>
                    </td>
                </tr>
            </c:forEach>
 
+
             <c:if test="${document.myTurn}">
                 <form id="approvalForm" method="post" action="/orca/apprline/status">
                      <input hidden name="docNo" value="${document.docNo}">
-                    <table>
+
+                    <table class="document-body">
                         <tr>
                             <td class="document-body-data">
-                                <textarea id="comment" name="comment" placeholder="코멘트를 작성하세요"></textarea>
+                                <textarea class="comment" id="comment" name="comment" placeholder="코멘트를 작성하세요"></textarea>
+                            </td>
+
+                            <td>
+                                <input type="radio" name="approvalStage" id="approve" class="radio-input" value="2" checked="checked" /><!-- 2: 승인 -->
+                                <label for="approve" class="radio-label">승인</label>
+                                <input type="radio" name="approvalStage" id="reject" class="radio-input" value="3" /><!-- 3: 반려 -->
+                                <label for="reject" class="radio-label">반려</label>
                             </td>
                         </tr>
                     </table>
-
-                        <div>
-                            <input type="radio" name="approvalStage" id="approve" class="radio-input" value="2" checked="checked" /><!-- 2: 승인 -->
-                            <label for="approve" class="radio-label">승인</label>
-                            <input type="radio" name="approvalStage" id="reject" class="radio-input" value="3" /><!-- 3: 반려 -->
-                            <label for="reject" class="radio-label">반려</label>
-                        </div>
+                    <br>
+                    <br>
                     <button type="submit" class="approval-btn">결과처리</button>
                </form>
             </c:if>

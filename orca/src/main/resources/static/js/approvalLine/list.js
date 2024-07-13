@@ -1,7 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
     $('#jstree').on('loaded.jstree', function() {
         $(this).jstree('open_all');
-        $('#jstree li a').attr('draggable', true);
+
+        // 부서와 팀 노드는 드래그를 막고 사람만 드래그 가능하게 설정
+        $('#jstree li').each(function() {
+            const $anchor = $(this).find('a').first();
+            const node = $('#jstree').jstree('get_node', this.id);
+
+            if (node && node.original && node.original.type === 'user') {
+                $anchor.attr('draggable', true);
+
+                // 클릭 이벤트 막기
+                $anchor.on('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                });
+            } else {
+                $anchor.attr('draggable', false);
+            }
+        });
 
         // 더블 클릭 이벤트 막기
         $(document).on('dblclick', '#jstree li a', function (dblclickEvent) {
@@ -10,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return false; // 추가적인 전파 방지
         });
     });
+
 
     // 드래그 시작 이벤트
     $(document).on('dragstart', '#jstree li a', function(event) {
@@ -24,7 +43,9 @@ document.addEventListener("DOMContentLoaded", function() {
     $(document).on('click', '.delete-btn', function(event) {
         event.stopPropagation();  // 부모 요소 이벤트 전파 막기
         const apprLineNo = $(this).data('apprline-no');
+        const approverNo = $(this).data('approverNo');
         console.log('apprLine No:', apprLineNo);
+        console.log('approverNo:', approverNo);
 
         $.ajax({
             url: '/orca/apprline/delete',
@@ -308,6 +329,7 @@ function saveApprovalLine(event) {
     let approvers = [];
     slots.forEach(function(slot) {
         approvers.push(slot.dataset.id);
+        console.log(approvers);
     });
 
     $.ajax({

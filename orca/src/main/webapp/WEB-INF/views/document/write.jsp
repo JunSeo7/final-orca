@@ -45,45 +45,37 @@
                     <!-- 카테고리 옵션 -->
                     </select>
                 </td>
+                <th rowspan="2">긴급 여부</th>
+                <td rowspan="2">
+                    <label><input type="radio" name="urgent" value="Y"> 예</label>
+                    <label><input type="radio" name="urgent" value="N" checked> 아니오</label>
+                </td>
+            </tr>
+            <tr>
                 <th>결재 양식</th>
                 <td>
                     <select id="templateNo" name="templateNo">
                         <!-- 결재 양식 옵션 -->
                     </select>
                 </td>
-            </tr>
-            <tr>
-                <th>결재선</th>
-                <td>
-
-                    <!-- <select id="approver" name="approver" required>
-                    디폴트로 양식에 있는 기본결재선이 나오고, 수정버튼을 누르면 나만의 결재선 제목목록을 보여줌
-                    </select>-->
-
-                </td>
-                 <th>긴급 여부</th>
-                    <td>
-                        <label><input type="radio" name="urgent" value="Y"> 예</label>
-                        <label><input type="radio" name="urgent" value="N" checked> 아니오</label>
-                    </td>
                 </tr>
                  <tr>
-                    <th>결재선 프로세스</th>
+                    <th>결재선</th>
                     <td colspan='3'>
                         <div class="approval-process" name="approvalLineVoList">
                             <!-- 결재선 프로세스 -->
                         </div>
-                        <input type="button" value="수정">
-                    </td>
-                </tr>
-                <tr>
-               <th>공람(참조인)</th>
-                   <td colspan="3">
-                       <div id="referrerList">
-                           <!-- 참조인 목록 -->
-                       </div>
-                       <button type="button" onclick="openOrganizationModal()">추가</button>
-                   </td>
+                        <button id="approvalEditBtn" type="button" onclick="openApprovalLinePopup()">수정</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>공람(참조인)</th>
+                        <td colspan="3">
+                            <div id="referrerList">
+                                <!-- 참조인 목록 -->
+                            </div>
+                            <button id="referrerAddBtn" type="button" onclick="openOrganizationModal()">추가</button>
+                        </td>
                 </tr>
             </table>
             <table class="document-table">
@@ -124,12 +116,8 @@
 </main>
 
 
-
-
-</body>
-</html>
-
-<div id="organizationModal" class="addReferrerModal" hidden>
+<div class="modal-overlay" id="modalOverlay" onclick="closeOrganizationModal()"></div>
+<div id="organizationModal" class="addReferrerModal">
     <div class="modal-content">
         <span class="close" onclick="closeOrganizationModal()">X</span>
         <h2>참조인 추가</h2>
@@ -138,3 +126,16 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="popupOverlay" onclick="closeApprovalLinePopup()"></div>
+<div class="myApprovalLineModal" id="myApprovalLineModal">
+    <div class="popup-header">
+        <h2>나만의 결재선</h2>
+        <button class="close" onclick="closeApprovalLinePopup()">X</button>
+    </div>
+    <div class="popup-body" id="approvalLineContent"></div>
+    <div class="popup-footer">
+        <button type="button" onclick="saveApprovalLine()">확인</button>
+    </div>
+</div>
+</body>
+</html>
