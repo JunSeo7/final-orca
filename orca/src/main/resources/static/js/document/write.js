@@ -328,7 +328,7 @@ function fetchMyApprovalLines() {
 
                         if (index < line.approverVoList.length - 1) {
                             const arrowSpan = document.createElement('span');
-                            arrowSpan.textContent = ' ▶ ';
+                            arrowSpan.textContent = '  ⇨  ';
                             lineDiv.appendChild(arrowSpan);
                         }
                     });

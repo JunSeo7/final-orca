@@ -83,11 +83,11 @@ function updateTemplate() {
         contentType: 'application/json',
         data: JSON.stringify(templateData),
         success: function(response) {
-            alert('양식이 수정되었습니다');
+            alert('양식이 수정 되었습니다');
             window.location.href = '/orca/template/list';
         },
         error: function(error) {
-            alert('양식 수정에 실패하셨습니다.');
+            alert('양식 수정 중 오류가 발생했습니다.');
             console.error('Error:', error);
         }
     });

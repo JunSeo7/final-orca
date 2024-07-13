@@ -43,11 +43,11 @@
                 <!-- 결재자 목록 -->
                 <c:forEach var="approver" items="${approvalLines.approverVoList}">
                     <c:choose>
-                        <c:when test="${approver.approverClassificationNo == 2}">
-                            <span class="approver">합의:</span>
+                        <c:when test="${approver.approverClassificationNo == 1}">
+                            <span class="approver">${approver.approverClassificationNo}결재:</span>
                         </c:when>
                         <c:otherwise>
-                            <span class="approver">결재:</span>
+                            <span class="approver">${approver.approverClassificationNo}합의:</span>
                         </c:otherwise>
                     </c:choose>
                     <span class="approver">${approver.approverName} ${approver.positionName}</span>
@@ -57,12 +57,10 @@
                 </c:forEach>
                 <hr>
                 <!-- 수정 및 삭제 버튼 -->
-                    <a class="approval-lines-btn" onclick="openModal()">
-                        <img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘">
-                    </a>
+                    <a class="approval-lines-btn" onclick="openModal()"><img class="edit_img" src="/img/document/edit.png" alt="수정 아이콘"></a>
                     <a class="approval-lines-btn delete-btn" data-apprline-no="${approvalLines.apprLineNo}">
-                        <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
-                     </a>
+                      <img class="delete_img" src="/img/document/delete.png" alt="삭제 아이콘">
+                    </a>
                 </div>
             </c:forEach>
             </div>
@@ -74,11 +72,11 @@
 <div class="popup-overlay" id="popupOverlay" onclick="closeApprovalLinePopup()"></div>
 <div class="popup" id="approvalLinePopup">
     <div class="popup-header">
-        <h2>결재선 선택</h2>
+        <h2>개인 결재선 등록</h2>
         <button onclick="closeApprovalLinePopup()" class="close">X</button>
     </div>
      <form id="approvalLineForm" action="/orca/myapprline/add" method="post">
-    <div class="popup-body">
+<div class="popup-body">
         <div class="popup-body-left">
             <table>
                 <tr>
@@ -99,34 +97,34 @@
                  </tr>
                 <tr>
                     <td class="t-title">결재선 이름</td>
-                    <td><input type="text"></td>
+                     <td><input type="text" id="apprLineName" name="title"></td>
                 </tr>
 
             </table>
-            <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
-            <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
-            <div class="approval-line" id="approvalLinePreview">
-                <!-- 선택된 결재선 미리보기 -->
+                <p>* 결재프로세스를 선택하고 결재선 이름을 입력하세요.</p>
+                <p>* 선택한 결재프로세스에 맞게 결재선을 지정합니다</p>
+                    <div class="approval-line" id="approvalLinePreview">
+                        <!-- 선택된 결재선 미리보기 -->
+                    </div>
+                    <h4>결재자 선택</h4>
+                    <div class="approval-role">
+                        <label for="numSlots">합의/결재 칸 수:</label>
+                        <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
+                    </div>
+                </div>
+                <div class="popup-body-right">
+                <div id="jstree"></div>
             </div>
-            <h4>결재자 선택</h4>
-            <div class="approval-role">
-                <label for="numSlots">합의/결재 칸 수:</label>
-                <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
+            <div class="popup-body-bottom">
+                <div class="approval-selection" id="approvalSelection">
+                    <!-- 동적으로 생성될 합의/결재 칸 -->
+                </div>
             </div>
         </div>
-        <div class="popup-body-right">
-            <div id="jstree"></div>
-        </div>
-        <div class="popup-body-bottom">
-            <div class="approval-selection" id="approvalSelection">
-                <!-- 동적으로 생성될 합의/결재 칸 -->
-            </div>
-        </div>
-    </div>
     <div class="popup-footer">
-        <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
-    </div>
-        </form>
+    <button type="submit" class="submit_btn"  onclick="saveApprovalLine(event)">확인</button>
+</div>
+</form>
 </div>
 
 <!-- 결재선 수정 모달 -->

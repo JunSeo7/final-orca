@@ -53,19 +53,18 @@ public class ApprovalLineController {
 
     //기본 결재선 등록
     @PostMapping("add")
-    public ResponseEntity<String> addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo) {
-
-        System.out.println("approvalLineVo = " + approvalLineVo);
-
+    @ResponseBody
+    public ResponseEntity<String> addApprovalLine(@RequestBody ApprovalLineVo approvalLineVo) { // @RequestBody로 변경
         try {
-            System.out.println("approvalLineVo = " + approvalLineVo);
             int result = service.addApprovalLine(approvalLineVo);
-            return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/orca/apprline/list").build(); // 성공 시 리다이렉트
+            return ResponseEntity.ok("결재선이 저장되었습니다."); // 성공 시 메시지 반환
         } catch (IllegalStateException e) {
             // 기본 결재선 중복 등 특정 조건에 대한 예외 처리
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+
+
 
     // 결재선 전체목록 (양식/결재라인)
     // 세션 - 관리자 아니면 나가세요 하기

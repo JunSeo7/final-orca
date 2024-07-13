@@ -43,11 +43,11 @@
                 <!-- 결재자 목록 -->
                 <c:forEach var="approver" items="${approvalLines.approverVoList}">
                     <c:choose>
-                        <c:when test="${approver.approverClassificationNo == 2}">
-                            <span class="approver">합의:</span>
+                        <c:when test="${approver.approverClassificationNo == 1}">
+                            <span class="approver">${approver.approverClassificationNo}결재:</span>
                         </c:when>
                         <c:otherwise>
-                            <span class="approver">결재:</span>
+                            <span class="approver">${approver.approverClassificationNo}합의:</span>
                         </c:otherwise>
                     </c:choose>
                     <span class="approver">${approver.approverName} ${approver.positionName}</span>
@@ -98,7 +98,7 @@
                  </tr>
                 <tr>
                     <td class="t-title">결재선 이름</td>
-                    <td><input type="text" name="title"></td>
+                     <td><input type="text" id="apprLineName" name="title"></td>
                 </tr>
 
             </table>
@@ -123,7 +123,7 @@
             </div>
         </div>
     <div class="popup-footer">
-    <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
+    <button type="submit" class="submit_btn"  onclick="saveApprovalLine(event)">확인</button>
 </div>
 </form>
 </div>

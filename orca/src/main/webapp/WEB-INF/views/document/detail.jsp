@@ -125,24 +125,31 @@
                     </c:choose>
                 </td>
             </tr>
-           <tr>
-               <td class="document-body-header" colspan="2">코멘트</td>
-           </tr>
-           <c:forEach var="approver" items="${document.approverVoList}">
-               <tr>
-                   <td class="document-body-header">${approver.approverName}[${approver.positionName}]</td>
-                   <td class="document-body-data">
-                       <c:choose>
-                           <c:when test="${empty approver.comment}">
-                               <span>코멘트가 없습니다.</span>
-                           </c:when>
-                           <c:otherwise>
-                               <span>${approver.comment}</span>
-                           </c:otherwise>
-                       </c:choose>
-                   </td>
-               </tr>
-           </c:forEach>
+            <c:if test="${not empty document.approverVoList}">
+                <c:set var="commentExists" value="false" />
+                <c:forEach var="approver" items="${document.approverVoList}">
+                    <c:if test="${not empty approver.comment}">
+                        <c:if test="${commentExists == false}">
+                            <tr>
+                                <td class="document-body-header" colspan="2">코멘트</td>
+                            </tr>
+                            <c:set var="commentExists" value="true" />
+                        </c:if>
+                        <tr>
+                            <td class="document-body-header">${approver.approverName}[${approver.positionName}]</td>
+                            <td class="document-body-data">
+                                <span>${approver.comment}</span>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${commentExists == false}">
+                    <tr>
+                        <td class="document-body-data" colspan="2"><span>코멘트가 없습니다.</span></td>
+                    </tr>
+                </c:if>
+            </c:if>
+
 
 
             <c:if test="${document.myTurn}">
