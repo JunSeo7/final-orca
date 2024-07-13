@@ -69,7 +69,7 @@ public interface MyApprLineMapper {
     // 마이결재선 전체목록 (결재자 여러명)
     @Select("""
             SELECT AI.APPROVER_INFO_NO, AI.APPR_LINE_NO, AI.SEQ, AI.APPROVER_CLASSIFICATION_NO, PI.NAME approverName,
-                   D.DEPT_CODE, D.PARTNAME AS DEPT_NAME, P.NAME_OF_POSITION positionName
+                   D.DEPT_CODE, D.PARTNAME AS DEPT_NAME, P.NAME_OF_POSITION positionName, PI.EMP_NO approverNo, PI.POSITION_CODE positionCode
             FROM APPROVER_INFO AI
             JOIN PERSONNEL_INFORMATION PI ON AI.APPROVER_NO = PI.EMP_NO
             JOIN DEPARTMENT D ON D.DEPT_CODE = PI.DEPT_CODE

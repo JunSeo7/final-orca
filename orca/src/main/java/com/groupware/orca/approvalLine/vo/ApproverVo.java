@@ -9,7 +9,7 @@ public class ApproverVo {
     private int approverInfoNo;         // 결재자 정보 번호
     private int seq;                    // 순서 번호
     private int approverClassificationNo; // 결재자 분류 번호 (1: 결재자, 2: 합의자)
-    private int approvalStage;          // 결재 단계
+    private int approvalStage;          // 결재 단계 1:대기 2:승인 3:반려
     private String apprStageName;       // 결재 단계 이름
 
     private int approverNo;             // 결재자 번호

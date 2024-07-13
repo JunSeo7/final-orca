@@ -18,13 +18,13 @@
         <div class="document-header">
             <!-- Header -->
         <div class="form-title">${document.templateTitle}</div>
+
             <div class="approval-section">
                     <div class="approval-cell">
                         <div class="apprClassification">기안자</div>
                         <div class="status">${document.statusName}</div>
                         <div>${document.writerName} ${document.positionName}</div>
                         <div>${document.deptName}</div>
-                        <div>${document.creditDate}</div>
                     </div>
                     <c:forEach var="approver" items="${document.approverVoList}">
                         <div class="approval-cell">
@@ -39,11 +39,9 @@
                                     ${approver.approverClassificationNo}
                                 </c:otherwise>
                             </c:choose>
-                            <div>순서 : ${approver.seq}</div>
-                            <div class="stage">${approver.apprStageName}</div>
+                            <div class="stage stage_${approver.approvalStage}">${approver.apprStageName}</div>
                             <div>${approver.approverName} ${approver.positionName}</div>
                             <div>${approver.deptName}</div>
-                            <div>${approver.approvalDate}</div>
                         </div>
                     </c:forEach>
 
@@ -54,7 +52,20 @@
             <!-- User -->
             <tbody>
             <tr>
-                <td colspan="6">문서번호: <span>${document.docNo}</span></td>
+                <td colspan="5">문서번호: <span>${document.docNo}</span></td>
+                <!-- 수정 및 삭제 버튼 -->
+                <th>
+                    <c:if test="${document.status == 1}">
+                        <div>
+                            <a href="/orca/document/edit?docNo=${document.docNo}"  doc-no="${document.docNo}">
+                                <img class="edit-btn" src="/img/document/edit.png" alt="수정 아이콘">
+                            </a>
+                            <a onclick="deleteDocument(${document.docNo})" doc-no="${document.docNo}">
+                                <img class="delete-btn" src="/img/document/delete.png" alt="삭제 아이콘">
+                            </a>
+                        <div>
+                    </c:if>
+                </th>
             </tr>
             <tr>
                 <td class="user-info-header">기안자</td>
@@ -106,7 +117,6 @@
                             <p>첨부된 파일이 없습니다.</p>
                         </c:when>
                         <c:otherwise>
-                        <img////>
                             <c:forEach var="file" items="${files}">
                                 <img src="/static/upload/document/${file.changeName}" alt="${file.changeName}" class="attachment-img"><br/>
                                 <a href="/static/upload/document/${file.changeName}" download> ${file.changeName}</a><br/>
@@ -133,6 +143,7 @@
                    </td>
                </tr>
            </c:forEach>
+
 
             <c:if test="${document.myTurn}">
                 <form id="approvalForm" method="post" action="/orca/apprline/status">

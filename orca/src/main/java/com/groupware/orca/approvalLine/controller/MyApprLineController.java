@@ -67,6 +67,16 @@ public class MyApprLineController {
         return "myapprline/list";
     }
 
+    // 결재선 전체목록 (양식/결재라인)
+    @GetMapping("list/writeDocument")
+    @ResponseBody
+    public List<ApprovalLineVo> getApprLineList(HttpSession httpSession) {
+        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
+        System.out.println("approvalLines = " + approvalLines);
+        return approvalLines;
+    }
+
     // 결재선 삭제
     @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo, HttpSession httpSession) {

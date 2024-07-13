@@ -75,6 +75,13 @@ main.full {
 .status, .stage{
     font-weight: bold; /* 글씨 두껍게 */
 }
+.stage_2{
+    color:#274ca3;
+}
+
+.stage img{
+ width:80%
+}
 
 /* 사용자 정보 */
 .user-info-row {
@@ -143,8 +150,7 @@ main.full {
 
 /* 코멘트 텍스트 에리어 */
 .comment{
-    width: 630px;
-    min-width: 250px;
+    width: 900px;
     height: 150px;
     resize: none;
 }
@@ -213,3 +219,7 @@ main.full {
     background-color: #368dff;
 }
 
+.edit-btn, .delete-btn{
+    width: 25px;
+    cursor:pointer;
+}

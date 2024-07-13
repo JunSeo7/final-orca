@@ -80,7 +80,7 @@ public class DocumentController {
             String[] referencerNo,
             @RequestParam("fileList") MultipartFile[] fileList,
             HttpServletRequest req) throws IOException {
-
+        
         // 결재자 등록
         List<ApproverVo> approverVoList = new ArrayList<>();
         for (int i = 0; i < seq.length; ++i) {
@@ -93,6 +93,7 @@ public class DocumentController {
             approverVoList.add(avo);
         }
         vo.setApproverVoList(approverVoList);
+        System.out.println("approverVoList = " + approverVoList);
 
         // 참조자 등록
         List<ReferencerVo> referencerVoList = new ArrayList<>();
@@ -111,8 +112,13 @@ public class DocumentController {
 
         if (fileList != null) {
             for (MultipartFile file : fileList) {
+
                 // 파일을 서버에 저장하기
                 String originFileName = file.getOriginalFilename(); // 원본 파일 이름을 가져옴
+                if (originFileName == null || originFileName.isEmpty()) {
+                    continue; // 파일 이름이 없으면 다음 파일로 넘어감
+                }
+
                 InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
                 ServletContext context = req.getServletContext();
                 String path = context.getRealPath("/static/upload/document/");
@@ -124,9 +130,8 @@ public class DocumentController {
 
                 String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
                 String ext = originFileName.substring(originFileName.lastIndexOf("."));
-                System.out.println("ext = " + ext);
                 String changeName = title + System.currentTimeMillis() + "_" + random + ext;
-                System.out.println("파일changeName = " + changeName);
+
 
                 try (FileOutputStream fos = new FileOutputStream(path + changeName)) {
                     byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
@@ -159,7 +164,6 @@ public class DocumentController {
     public String getDocumentList(Model model, HttpSession httpSession, Integer status){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
@@ -189,13 +193,11 @@ public class DocumentController {
             @RequestParam("searchText") String searchText,
             @RequestParam(name = "status", required = false) Integer status,
             HttpSession httpSession) {
-        System.out.println("searchType = " + searchType);
-        System.out.println("searchText = " + searchText);
-        System.out.println("status = " + status);
+
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        System.out.println("loginUserNo = " + loginUserNo);
+
         List<DocumentVo> DocumentList = service.searchDocumentList(loginUserNo, searchType, searchText, status);
-        System.out.println("DocumentList = " + DocumentList);
+
         return DocumentList;
     }
 
@@ -211,7 +213,6 @@ public class DocumentController {
     //수정 화면
     @GetMapping("edit")
     public String editTemplate(@RequestParam("docNo") int docNo, Model model, HttpSession httpSession) {
-        System.out.println("docNo = " + docNo);
         model.addAttribute("docNo", docNo);
         return "document/edit";
     }
@@ -221,9 +222,7 @@ public class DocumentController {
     @ResponseBody
     public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        System.out.println("docNo = " + docNo);
         DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
-        System.out.println("vo = " + vo);
         return vo;
     }
 
@@ -252,10 +251,14 @@ public class DocumentController {
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    @PutMapping("delete")
-    public String deleteDocumentByNo(int docNo, HttpSession httpSession){
+    @DeleteMapping("delete")
+    public ResponseEntity<String> deleteDocumentByNo(@RequestParam int docNo, HttpSession httpSession){
         String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         int result = service.deleteDocumentByNo(docNo, loginUserNo);
-        return "redirect:/orca/document/list";
+        if (result > 0) {
+            return ResponseEntity.ok("문서가 삭제되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문서 삭제 중 오류가 발생했습니다.");
+        }
     }
 }
