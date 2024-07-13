@@ -118,3 +118,20 @@ main {
   padding: 15px;
   border-radius: 5px;
 }
+
+/* -------------결재문서------------ */
+
+.no-documents{
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+  margin-top: 10px;
+}
+.document{
+    border: 1px solid #ddd;
+    padding: 5px;
+    font-size: 13px;
+    margin-top: 5px;
+}

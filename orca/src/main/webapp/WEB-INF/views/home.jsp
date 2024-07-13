@@ -68,15 +68,19 @@
           </div>
       </div>
       <div class="dashboard-row">
-        <div class="dashboard-col-sm">
-            <div class="main-div">
-                <div class="section-header">
-                  <span>전자결재</span>
-                  <button class="refresh-button">⟳</button>
-              </div>
-              전자결재
-          </div>
-      </div>
+
+            <div class="dashboard-col-sm">
+                <div class="main-div">
+                    <div class="section-header">
+                      <span>전자결재</span>
+                       <button class="refresh-button" onclick="fetchDocuments()">⟳</button>
+                    </div>
+                        <div id="document-list">
+                            <!-- AJAX로 가져온 결재 문서 -->
+                        </div>
+                </div>
+            </div>
+
       <div class="dashboard-col-sm">
         <div class="main-div">
             <div class="section-header">
