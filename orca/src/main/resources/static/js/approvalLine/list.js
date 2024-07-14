@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 드래그 시작 이벤트
     $(document).on('dragstart', '#jstree li a', function(event) {
-        var nodeId = $(this).parent().attr('id');
+        let nodeId = $(this).parent().attr('id');
         event.originalEvent.dataTransfer.setData('text/plain', nodeId); // 노드 ID를 데이터로 설정
     });
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // jstree 노드 선택 시 이벤트 핸들러
     $('#jstree').on("select_node.jstree", function (e, data) {
-        var selectedNode = data.node;
+        let selectedNode = data.node;
         if (selectedNode.original.type === 'user') { // 사용자 노드만 허용
             addApprovalSelection(selectedNode);
         }
@@ -85,18 +85,18 @@ function removeDragover(event) {
 function drop(event) {
     event.preventDefault();
     removeDragover(event);
-    var nodeId = event.dataTransfer.getData('text/plain');
-    var node = $('#jstree').jstree('get_node', nodeId);
+    let nodeId = event.dataTransfer.getData('text/plain');
+    let node = $('#jstree').jstree('get_node', nodeId);
 
     if (node) {
-        var slot = event.target.closest('.slot');
+        let slot = event.target.closest('.slot');
         if (slot && !slot.querySelector(`[data-id="${node.id}"]`)) {
-            var existingNode = slot.querySelector('.employee');
+            let existingNode = slot.querySelector('.employee');
             if (existingNode) {
                 existingNode.remove();
             }
 
-            var newNode = document.createElement('div');
+            let newNode = document.createElement('div');
             newNode.className = 'employee';
             newNode.textContent = `${node.id}: ${node.text}`;
             newNode.dataset.id = node.id;
@@ -106,7 +106,7 @@ function drop(event) {
             };
 
             // 삭제 버튼 추가
-            var deleteButton = document.createElement('button');
+            let deleteButton = document.createElement('button');
             deleteButton.textContent = '삭제';
             deleteButton.className = 'delete-btn';
             deleteButton.onclick = function() {
@@ -193,20 +193,20 @@ function removeHiddenInput(empId) {
 
 // 결재자 및 합의자 슬롯 생성 함수
 function createSlots() {
-    var numSlots = document.querySelector('#numSlots').value; // 슬롯 개수
-    var approvalSelection = document.querySelector('#approvalSelection');
+    let numSlots = document.querySelector('#numSlots').value; // 슬롯 개수
+    let approvalSelection = document.querySelector('#approvalSelection');
     approvalSelection.innerHTML = '';
 
-    for (var i = 0; i < numSlots; i++) {
-        var slot = document.createElement('div');
+    for (let i = 0; i < numSlots; i++) {
+        let slot = document.createElement('div');
         slot.className = 'slot';
         slot.ondrop = drop;
         slot.ondragover = allowDrop;
         slot.ondragleave = removeDragover;
 
-        var label = document.createElement('div');
+        let label = document.createElement('div');
         label.className = 'slot-label';
-        var select = document.createElement('select');
+        let select = document.createElement('select');
         select.className = 'role-select';
         select.innerHTML = '<option value="1">결재</option><option value="2">합의</option>';
 
@@ -229,8 +229,8 @@ function createSlots() {
 
 // jstree 노드 선택 시 결재자/합의자 추가 함수
 function addApprovalSelection(node) {
-    var approvalSelection = $('#approvalSelection');
-    var newApproval = $('<div>').addClass('approval-item').text(node.text);
+    let approvalSelection = $('#approvalSelection');
+    let newApproval = $('<div>').addClass('approval-item').text(node.text);
     approvalSelection.append(newApproval);
 }
 

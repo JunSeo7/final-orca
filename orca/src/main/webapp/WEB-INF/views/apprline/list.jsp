@@ -44,13 +44,13 @@
                 <c:forEach var="approver" items="${approvalLines.approverVoList}">
                     <c:choose>
                         <c:when test="${approver.approverClassificationNo == 1}">
-                            <span class="approver">${approver.approverClassificationNo}결재:</span>
+                            <span class="approver">결재:</span>
                         </c:when>
                         <c:otherwise>
-                            <span class="approver">${approver.approverClassificationNo}합의:</span>
+                            <span class="approver">합의:</span>
                         </c:otherwise>
                     </c:choose>
-                    <span class="approver">${approver.positionName}</span>
+                    <span class="approver">${approver.approverName} ${approver.positionName}</span>
                     <c:if test="${!status.last}">
                         <span> ⇨ </span>
                     </c:if>
