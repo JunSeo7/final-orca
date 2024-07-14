@@ -42,14 +42,16 @@ public class ApprovalLineService {
         if (count > 0) {
             throw new IllegalStateException("해당 양식에는 이미 기본 결재선이 존재합니다.");
         }
-
+        System.out.println("Inserting approval line: " + approvalLineVo);
         result += dao.insertApprovalLine(approvalLineVo);
+
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
         if (approverList != null) {
             for (ApproverVo approver : approverList) {
                 approver.setApprLineNo(approvalLineVo.getApprLineNo()); // 방금 만든 결재선 번호 사용
                 result += dao.insertApprover(approver);
             }
+            System.out.println("Total result count: " + result);
         } return result;
     }
 

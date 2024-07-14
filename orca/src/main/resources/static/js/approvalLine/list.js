@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     $('#jstree').on('loaded.jstree', function() {
-        $(this).jstree('open_all');
 
         // 부서와 팀 노드는 드래그를 막고 사람만 드래그 가능하게 설정
         $('#jstree li').each(function() {
@@ -29,10 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-
     // 드래그 시작 이벤트
     $(document).on('dragstart', '#jstree li a', function(event) {
-        var nodeId = $(this).parent().attr('id');
+        let nodeId = $(this).parent().attr('id');
         event.originalEvent.dataTransfer.setData('text/plain', nodeId); // 노드 ID를 데이터로 설정
     });
 
@@ -44,19 +42,20 @@ document.addEventListener("DOMContentLoaded", function() {
         event.stopPropagation();  // 부모 요소 이벤트 전파 막기
         const apprLineNo = $(this).data('apprline-no');
         const approverNo = $(this).data('approverNo');
-        console.log('apprLine No:', apprLineNo);
-        console.log('approverNo:', approverNo);
 
         $.ajax({
             url: '/orca/apprline/delete',
             method: 'POST',
             data: { apprLineNo: apprLineNo },
             success: function(data) {
-                console.log('apprLine deleted:', data);
+                alert("결재선이 삭제 되었습니다.");
+                console.log(data);
                 location.reload();
             },
             error: function(error) {
-                console.error('Error:', error);
+                alert("결재선 삭제 중 오류가 발생했습니다.");
+                console.log(error);
+
             }
         });
     });
@@ -66,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // jstree 노드 선택 시 이벤트 핸들러
     $('#jstree').on("select_node.jstree", function (e, data) {
-        var selectedNode = data.node;
+        let selectedNode = data.node;
         if (selectedNode.original.type === 'user') { // 사용자 노드만 허용
             addApprovalSelection(selectedNode);
         }
@@ -86,18 +85,18 @@ function removeDragover(event) {
 function drop(event) {
     event.preventDefault();
     removeDragover(event);
-    var nodeId = event.dataTransfer.getData('text/plain');
-    var node = $('#jstree').jstree('get_node', nodeId);
+    let nodeId = event.dataTransfer.getData('text/plain');
+    let node = $('#jstree').jstree('get_node', nodeId);
 
     if (node) {
-        var slot = event.target.closest('.slot');
+        let slot = event.target.closest('.slot');
         if (slot && !slot.querySelector(`[data-id="${node.id}"]`)) {
-            var existingNode = slot.querySelector('.employee');
+            let existingNode = slot.querySelector('.employee');
             if (existingNode) {
                 existingNode.remove();
             }
 
-            var newNode = document.createElement('div');
+            let newNode = document.createElement('div');
             newNode.className = 'employee';
             newNode.textContent = `${node.id}: ${node.text}`;
             newNode.dataset.id = node.id;
@@ -107,7 +106,7 @@ function drop(event) {
             };
 
             // 삭제 버튼 추가
-            var deleteButton = document.createElement('button');
+            let deleteButton = document.createElement('button');
             deleteButton.textContent = '삭제';
             deleteButton.className = 'delete-btn';
             deleteButton.onclick = function() {
@@ -119,34 +118,70 @@ function drop(event) {
             newNode.appendChild(deleteButton);
             slot.appendChild(newNode);
 
-            // 추가된 참조인 정보를 addReferrers 함수로 처리
-            addReferrers([{ id: node.id, text: node.text }]);
+            // 추가된 결재자 정보를 addApprovers 함수로 처리
+            addApprovers([{ id: node.id, text: node.text }]);
         }
     }
 }
 
-// 선택한 유저의 정보를 받아 숨겨진 input에 저장하는 함수
-function addReferrers(referrers) {
-    const referrerList = document.querySelector('#referrerList');
-    referrerList.innerHTML = '';  // 초기화
-    referrers.forEach(referrer => {
-        const referrerDiv = document.createElement('div');
-        referrerDiv.innerText = referrer.text;
-        referrerList.appendChild(referrerDiv);
+function saveApprovalLine(event) {
+    event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-        // 추가된 참조인의 approverNo를 가져오기
-        const approverNo = referrer.id;
+    let slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
+        let approverVoList = [];
+        slots.forEach(function(slot, index) {
+            approverVoList.push({
+                approverNo: parseInt(slot.dataset.id),
+                seq: index + 1, // 순서 번호
+                 approverClassificationNo: parseInt(slot.closest('.slot').dataset.role) // 합의/결재 선택 값
+            });
+
+        });
+
+    const data = {
+        templateNo: document.querySelector('#templateNo').value,
+        apprLineName: document.querySelector('#apprLineName').value,
+        approverVoList: approverVoList
+    };
+
+
+    $.ajax({
+        url: '/orca/apprline/add',
+        method: 'POST',
+        contentType: 'application/json', // JSON 데이터를 전송하는 Content-Type
+        dataType: 'text', // 응답을 텍스트로 받기
+        data: JSON.stringify(data),
+        success: function(response) {
+            alert("결재선이 정상적으로 등록되었습니다.");
+           console.log(response);
+            closeApprovalLinePopup();
+            location.reload();
+        },
+        error: function(xhr) {
+        console.log(xhr);
+        alert(xhr.responseText);
+        }
+    });
+}
+
+// 선택한 유저의 정보를 받아 숨겨진 input에 저장하는 함수
+function addApprovers(approvers) {
+    const form = document.querySelector('#approvalLineForm');
+    approvers.forEach(approver => {
+        // 추가된 결재자의 ID 가져오기
+        const approverNo = approver.id;
 
         // 숨겨진 input에 approverNo 저장
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'approverNo';
         hiddenInput.value = approverNo;
-        document.getElementById('approvalLineForm').appendChild(hiddenInput);
+        form.appendChild(hiddenInput);
+
     });
 }
 
-// 숨겨진 input에서 참조인 제거
+// 숨겨진 input에서 결재자 제거
 function removeHiddenInput(empId) {
     const hiddenInputs = document.querySelectorAll('input[name="approverNo"]');
     hiddenInputs.forEach(input => {
@@ -158,30 +193,33 @@ function removeHiddenInput(empId) {
 
 // 결재자 및 합의자 슬롯 생성 함수
 function createSlots() {
-    var numSlots = document.getElementById('numSlots').value; // 슬롯 개수
-    var approvalSelection = document.getElementById('approvalSelection');
+    let numSlots = document.querySelector('#numSlots').value; // 슬롯 개수
+    let approvalSelection = document.querySelector('#approvalSelection');
     approvalSelection.innerHTML = '';
 
-    for (var i = 0; i < numSlots; i++) {
-        var slot = document.createElement('div');
+    for (let i = 0; i < numSlots; i++) {
+        let slot = document.createElement('div');
         slot.className = 'slot';
         slot.ondrop = drop;
         slot.ondragover = allowDrop;
         slot.ondragleave = removeDragover;
 
-        var label = document.createElement('div');
+        let label = document.createElement('div');
         label.className = 'slot-label';
-        var select = document.createElement('select');
+        let select = document.createElement('select');
         select.className = 'role-select';
-        select.innerHTML = '<option value="합의">합의</option><option value="결재">결재</option>';
+        select.innerHTML = '<option value="1">결재</option><option value="2">합의</option>';
 
-        select.onchange = (function(label, select) {
+         select.onchange = (function(label, select, slot) {
             return function() {
-                label.textContent = select.value;
+                slot.dataset.role = select.value;
+                label.textContent = select.options[select.selectedIndex].text;
             };
-        })(label, select);
+        })(label, select, slot);
 
-        label.textContent = select.value;
+        label.textContent = select.options[select.selectedIndex].text;
+        slot.dataset.role = select.value;
+
         slot.appendChild(label);
         slot.appendChild(select);
 
@@ -191,8 +229,8 @@ function createSlots() {
 
 // jstree 노드 선택 시 결재자/합의자 추가 함수
 function addApprovalSelection(node) {
-    var approvalSelection = $('#approvalSelection');
-    var newApproval = $('<div>').addClass('approval-item').text(node.text);
+    let approvalSelection = $('#approvalSelection');
+    let newApproval = $('<div>').addClass('approval-item').text(node.text);
     approvalSelection.append(newApproval);
 }
 
@@ -213,7 +251,9 @@ function fetchTemplatesByCategory(categoryNo) {
             });
         },
         error: function(error) {
-            console.error('Error fetching templates:', error);
+            alert("결재양식 제목을 가져오는 중 오류가 발생했습니다.");
+            console.log(error);
+
         }
     });
 }
@@ -239,7 +279,7 @@ function fetchCategories() {
             }
         },
         error: function(error) {
-            console.error('error:', error);
+            alert("양식 카테고리를 가져오는 중 오류가 발생했습니다.");
             console.log(error);
         }
     });
@@ -251,9 +291,7 @@ function fetchOrganization() {
         url: '/orca/apprline/organization/list',
         method: 'GET',
         success: function(data) {
-            console.log("data:", data);
             const treeData = buildTreeData(data);
-            console.log("treeData:", treeData);
             $('#jstree').jstree({
                 'core' : {
                     'data' : treeData,
@@ -266,7 +304,9 @@ function fetchOrganization() {
             });
         },
         error: function(error) {
-            console.error('error:', error);
+            alert("조직도를 가져오는 중 오류가 발생했습니다.");
+            console.log(error);
+
         }
     });
 }
@@ -321,48 +361,4 @@ function showApprovalLinePopup() {
 function closeApprovalLinePopup() {
     document.querySelector('#popupOverlay').style.display = 'none';
     document.querySelector('#approvalLinePopup').style.display = 'none';
-}
-
-function saveApprovalLine(event) {
-    event.preventDefault();
-    let slots = document.querySelectorAll('.approval-selection .slot div[data-id]');
-    let approvers = [];
-    slots.forEach(function(slot) {
-        approvers.push(slot.dataset.id);
-        console.log(approvers);
-    });
-
-    $.ajax({
-        url: '/orca/apprline/add',
-        method: 'POST',
-        data: {
-            categoryNo: document.querySelector('#categoryNo').value,
-            templateNo: document.querySelector('#templateNo').value,
-            apprLineName: document.querySelector('#apprLineName').value,
-            approvers: approvers
-        },
-        success: function(response) {
-            alert('결재선이 저장되었습니다.');
-            closeApprovalLinePopup();
-            location.reload();
-        },
-        error: function() {
-            alert('결재선 저장 중 오류가 발생했습니다.');
-        }
-    });
-}
-
-function openModal() {
-    document.getElementById('modalOverlay').style.display = 'block';
-    document.getElementById('approvalModal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('modalOverlay').style.display = 'none';
-    document.getElementById('approvalModal').style.display = 'none';
-}
-
-function saveModalApprovalLine() {
-    alert('결재선이 저장되었습니다.');
-    closeModal();
 }

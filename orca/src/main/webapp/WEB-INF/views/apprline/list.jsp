@@ -43,16 +43,16 @@
                 <!-- 결재자 목록 -->
                 <c:forEach var="approver" items="${approvalLines.approverVoList}">
                     <c:choose>
-                        <c:when test="${approver.approverClassificationNo == 2}">
-                            <span class="approver">합의:</span>
+                        <c:when test="${approver.approverClassificationNo == 1}">
+                            <span class="approver">결재:</span>
                         </c:when>
                         <c:otherwise>
-                            <span class="approver">결재:</span>
+                            <span class="approver">합의:</span>
                         </c:otherwise>
                     </c:choose>
                     <span class="approver">${approver.approverName} ${approver.positionName}</span>
                     <c:if test="${!status.last}">
-                        <span>▶</span>
+                        <span> ⇨ </span>
                     </c:if>
                 </c:forEach>
                 <hr>
@@ -81,7 +81,7 @@
         <div class="popup-body-left">
             <table>
                 <tr>
-                    <td class="t-title">결재선 프로세스</td>
+                    <td class="t-title">카테고리</td>
                     <td>
                         <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
                         <!-- 카테고리 옵션들이 여기 추가될 예정 -->
@@ -98,7 +98,7 @@
                  </tr>
                 <tr>
                     <td class="t-title">결재선 이름</td>
-                    <td><input type="text" name="title"></td>
+                     <td><input type="text" id="apprLineName" name="title"></td>
                 </tr>
 
             </table>
@@ -109,7 +109,7 @@
                     </div>
                     <h4>결재자 선택</h4>
                     <div class="approval-role">
-                        <label for="numSlots">합의/결재 칸 수:</label>
+                        <label for="numSlots">합의/결재 칸</label>
                         <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
                     </div>
                 </div>
@@ -123,7 +123,7 @@
             </div>
         </div>
     <div class="popup-footer">
-    <button onclick="saveApprovalLine()" class="submit_btn">확인</button>
+    <button type="submit" class="submit_btn"  onclick="saveApprovalLine(event)">확인</button>
 </div>
 </form>
 </div>
@@ -139,7 +139,7 @@
         <div class="modal-body-left">
             <table>
                 <tr>
-                    <td class="title">결재선 프로세스</td>
+                    <td class="title">카테고리</td>
                     <td>
                         <select id="modalProcessSelect">
                             <option value="휴가어쩌고">휴가어쩌고</option>
@@ -161,7 +161,7 @@
             </div>
             <h4>결재자 선택</h4>
             <div class="approval-role">
-                <label for="modalApprovalSlots">합의/결재 칸 수:</label>
+                <label for="modalApprovalSlots">합의/결재 칸</label>
                 <input type="number" id="modalApprovalSlots" value="3" min="1" max="5" onchange="createModalSlots()">
             </div>
         </div>
