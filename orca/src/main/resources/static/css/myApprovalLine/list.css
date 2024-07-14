@@ -231,6 +231,7 @@ input, select{
   border: 1px solid #ddd;
   padding: 5px;
   border-radius: 2px;
+  width: 180px;
 }
 
 .submit_btn {

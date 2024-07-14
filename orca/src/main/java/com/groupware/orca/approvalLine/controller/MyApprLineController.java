@@ -51,7 +51,8 @@ public class MyApprLineController {
 
     //마이 결재선 등록
     @PostMapping("add")
-    public String addApprovalLine(@ModelAttribute ApprovalLineVo approvalLineVo, HttpSession httpSession) {
+    @ResponseBody
+    public String addApprovalLine(@RequestBody ApprovalLineVo approvalLineVo, HttpSession httpSession) {
         approvalLineVo.setWriterNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
         int result = service.addApprovalLine(approvalLineVo);
        return "redirect:/orca/myapprline/list";

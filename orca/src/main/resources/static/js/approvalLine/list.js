@@ -210,11 +210,12 @@ function createSlots() {
         select.className = 'role-select';
         select.innerHTML = '<option value="1">결재</option><option value="2">합의</option>';
 
-        select.onchange = (function(label, select) {
+         select.onchange = (function(label, select, slot) {
             return function() {
-                label.textContent = select.value;
+                slot.dataset.role = select.value;
+                label.textContent = select.options[select.selectedIndex].text;
             };
-        })(label, select);
+        })(label, select, slot);
 
         label.textContent = select.options[select.selectedIndex].text;
         slot.dataset.role = select.value;

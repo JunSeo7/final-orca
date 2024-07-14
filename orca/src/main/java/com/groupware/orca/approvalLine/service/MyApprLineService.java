@@ -34,8 +34,10 @@ public class MyApprLineService {
     @Transactional
     public int addApprovalLine(ApprovalLineVo approvalLineVo) {
 
+        System.out.println("approvalLineVo = " + approvalLineVo);
         int result = dao.insertApprovalLine(approvalLineVo);
 
+        System.out.println("result = " + result);
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
         if (approverList != null) {
             for (ApproverVo approver : approverList) {

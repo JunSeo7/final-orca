@@ -50,9 +50,9 @@
                             <span class="approver">${approver.approverClassificationNo}합의:</span>
                         </c:otherwise>
                     </c:choose>
-                    <span class="approver">${approver.approverName} ${approver.positionName}</span>
+                    <span class="approver">${approver.positionName}</span>
                     <c:if test="${!status.last}">
-                        <span>▶</span>
+                        <span> ⇨ </span>
                     </c:if>
                 </c:forEach>
                 <hr>
@@ -81,7 +81,7 @@
         <div class="popup-body-left">
             <table>
                 <tr>
-                    <td class="t-title">결재선 프로세스</td>
+                    <td class="t-title">카테고리</td>
                     <td>
                         <select id="categoryNo" name="categoryNo" onChange="fetchTemplatesByCategory(this.value)">
                         <!-- 카테고리 옵션들이 여기 추가될 예정 -->
@@ -109,7 +109,7 @@
                     </div>
                     <h4>결재자 선택</h4>
                     <div class="approval-role">
-                        <label for="numSlots">합의/결재 칸 수:</label>
+                        <label for="numSlots">합의/결재 칸</label>
                         <input type="number" id="numSlots" value="3" min="1" max="5" onchange="createSlots()">
                     </div>
                 </div>
@@ -139,7 +139,7 @@
         <div class="modal-body-left">
             <table>
                 <tr>
-                    <td class="title">결재선 프로세스</td>
+                    <td class="title">카테고리</td>
                     <td>
                         <select id="modalProcessSelect">
                             <option value="휴가어쩌고">휴가어쩌고</option>
@@ -161,7 +161,7 @@
             </div>
             <h4>결재자 선택</h4>
             <div class="approval-role">
-                <label for="modalApprovalSlots">합의/결재 칸 수:</label>
+                <label for="modalApprovalSlots">합의/결재 칸</label>
                 <input type="number" id="modalApprovalSlots" value="3" min="1" max="5" onchange="createModalSlots()">
             </div>
         </div>
