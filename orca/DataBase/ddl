@@ -190,11 +190,10 @@ CREATE TABLE PERSONNEL_INFORMATION (
    , BLOOD_TYPE           CHAR(3)              NOT NULL
    , RELIGION               VARCHAR2(20)
    , SALARY               NUMBER              NOT NULL
-   , BANK_NUMBER           CHAR(14)          NOT NULL
+   , BANK_NUMBER           VARCHAR2(30)       NOT NULL
    , LEAVING_DATE           TIMESTAMP
    , IMG_ORIGIN_NAME       VARCHAR2(255)
    , IMG_CHANGE_NAME       VARCHAR2(255)
-   , OTP_KEY               VARCHAR2(20)
    , SICK_DATE               NUMBER              DEFAULT 15 NOT NULL
    , VACATION_DATE           NUMBER              DEFAULT 15 NOT NULL
 );
