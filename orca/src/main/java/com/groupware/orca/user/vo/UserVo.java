@@ -1,6 +1,7 @@
 package com.groupware.orca.user.vo;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserVo {
@@ -32,4 +33,5 @@ public class UserVo {
     private String partName;
     private String nameOfPosition;
     private String teamName;
+    private MultipartFile image;
 }

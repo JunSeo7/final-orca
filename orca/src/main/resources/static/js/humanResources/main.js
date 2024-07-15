@@ -162,98 +162,94 @@ function inputEmployeeRegistration() {
         $('#employee-registration').on('submit', function (event) {
             console.log("입력됨");
             event.preventDefault();
-            // 아래 변수에 담아주는 건 뭐냐?
-            // 사용자가 form에 입력한 데이터를 수집하여 이를 Ajax 요청으로 서버에 전송하기 위해 작성되었다.
-            const name = $('#name').val();
-            const positionCode = $('#position').val();
-            const deptCode = $('#dept').val();
-            const teamCode = $('#team').val();
-            const gender = $('#gender').val();
-            const socialSecurityNo = $('#social-security-no').val();
-            const password = $('#password').val();
-            const phone = $('#phone').val();
-            const extensionCall = $('#ext').val();
-            let email = $('#email').val();
-            const address = $('#address').val();
-            const height = $('#height').val();
-            const weight = $('#weight').val();
-            const bloodType = $('#bloodType').val();
-            const religion = $('#religion').val();
-            const salary = $('#salary').val();
+
+            // FormData 객체 생성
+            const formData = new FormData();
+
+            // 사용자가 입력한 데이터를 FormData에 추가한다.
+            formData.append('name', $('#name').val());
+            formData.append('positionCode', $('#position').val());
+            formData.append('deptCode', $('#dept').val());
+            formData.append('teamCode', $('#team').val());
+            formData.append('gender', $('#gender').val());
+            formData.append('socialSecurityNo', $('#social-security-no').val().replace(/-/g, ''));
+            formData.append('password', $('#password').val());
+            formData.append('phone', $('#phone').val());
+            formData.append('extensionCall', $('#ext').val());
+            formData.append('email', $('#email').val()); // 이메일에서 '-' 제거
+            formData.append('address', $('#address').val());
+            formData.append('height', $('#height').val());
+            formData.append('weight', $('#weight').val());
+            formData.append('bloodType', $('#bloodType').val());
+            formData.append('religion', $('#religion').val());
+            formData.append('salary', $('#salary').val());
+
             const bankName = $('#bankName').val();
             let bankNumber = $('#bankNumber').val();
             bankNumber = bankName + ' ' + bankNumber;
-            email = email.value.replace(/-/g, '');
+
+            formData.append('bankNumber', bankNumber);
             
-            if (!gender) {
+            // 이미지 파일 추가
+            const imageFile = $('#image')[0].files[0];
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+            // 필수 입력 사항 검증
+            if (!$('#gender').val()) {
                 alert('성별을 선택해주세요.');
                 return;
             }
-            if (!bloodType) {
+            if (!$('#bloodType').val()) {
                 alert('혈액형을 선택해주세요.');
                 return;
             }
-            if (!bankName) {
+            if (!$('#bankName').val()) {
                 alert('은행을 선택해주세요.');
                 return;
             }
 
+            // Ajax 요청 전송
             $.ajax({
-                // 위에 form에서 이미 post로 /messenger/write에 보내주고 있다.
-                // 그렇기에, form의 action 속성 값을 사용한다.
-                url: $(this).attr('action'),
+                url: $(this).attr('action'), // 폼의 action 속성 값 사용
                 method: "post",
-                data: {
-                    name: name,
-                    positionCode: positionCode,
-                    deptCode: deptCode,
-                    teamCode: teamCode,
-                    gender: gender,
-                    socialSecurityNo: socialSecurityNo,
-                    password: password,
-                    phone: phone,
-                    extensionCall: extensionCall,
-                    email: email,
-                    address: address,
-                    height: height,
-                    weight: weight,
-                    bloodType: bloodType,
-                    religion: religion,
-                    salary: salary,
-                    bankNumber: bankNumber
-                },
+                data: formData,
+                processData: false,  // 필수: FormData를 문자열로 변환하지 않음
+                contentType: false,  // 필수: 기본 content-type 설정 방지
                 success: function (data) {
-                    console.log('Server response:', data);
+                    console.log('서버 응답:', data);
                     if (data === 1) {
                         alert("사원 등록 성공");
-                        $('#name').val() = '';
-                        $('#position').val() = '';
-                        $('#dept').val() = '';
-                        $('#team').val() = '';
-                        $('#gender').val() = '';
-                        $('#social-security-no').val() = '';
-                        $('#password').val() = '';
-                        $('#phone').val() = '';
-                        $('#ext').val() = '';
-                        $('#email').val() = '';
-                        $('#address').val() = '';
-                        $('#height').val() = '';
-                        $('#weight').val() = '';
-                        $('#bloodType').val() = '';
-                        $('#religion').val() = '';
-                        $('#salary').val() = '';
-                        $('#bankName').val() = '';
-                        $('#bankNumber').val() = '';
+                        // 폼 필드 초기화
+                        $('#name').val('');
+                        $('#position').val('');
+                        $('#dept').val('');
+                        $('#team').val('');
+                        $('#gender').val('');
+                        $('#social-security-no').val('');
+                        $('#password').val('');
+                        $('#phone').val('');
+                        $('#ext').val('');
+                        $('#email').val('');
+                        $('#address').val('');
+                        $('#height').val('');
+                        $('#weight').val('');
+                        $('#bloodType').val('');
+                        $('#religion').val('');
+                        $('#salary').val('');
+                        $('#bankName').val('');
+                        $('#bankNumber').val('');
+                        $('#image').val(''); // 파일 필드 초기화
                     } else {
                         alert("사원 등록 실패");
                     }
-
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error sending data:', error);
+                    console.error('데이터 전송 중 오류 발생:', error);
                 }
             });
         });
     });
 }
+
 
