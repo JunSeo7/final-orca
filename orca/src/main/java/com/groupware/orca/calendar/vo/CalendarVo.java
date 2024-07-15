@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CalendarVo {
     private int calendarNo;
-    private String writerNo;
+    private int writerNo;
     private String title;
     private String content;
     private String startDate;

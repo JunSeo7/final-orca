@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("getUserVo")
     @ResponseBody
     public UserVo getUserVo(HttpSession httpSession){
-        String userNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int userNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
 
         UserVo userVo = service.getUserVo(userNo);
         return userVo;

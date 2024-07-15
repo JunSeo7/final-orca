@@ -20,7 +20,7 @@ public class UserService {
         return isMatch ? userVo : null;
     }
 
-    public UserVo getUserVo(String userNo) {
+    public UserVo getUserVo(int userNo) {
         return dao.getUserVo(userNo);
     }
 }

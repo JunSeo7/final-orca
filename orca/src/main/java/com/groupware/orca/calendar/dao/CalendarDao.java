@@ -22,7 +22,7 @@ public class CalendarDao {
         return voList;
     }
 
-    public int deleteCalendar(int calendarNo, String writerNo) {
+    public int deleteCalendar(int calendarNo, int writerNo) {
         return mapper.deleteCalendar(calendarNo, writerNo);
     }
 

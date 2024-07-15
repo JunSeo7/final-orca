@@ -16,7 +16,7 @@ public class UserDao {
         return userVo;
     }
 
-    public UserVo getUserVo(String userNo) {
+    public UserVo getUserVo(int  userNo) {
         return mapper.getUserVo(userNo);
     }
 }

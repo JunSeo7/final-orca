@@ -42,7 +42,7 @@ public class CalendarService {
         return dao.showCalendarBarContent(range, userVo);
     }
 
-    public int deleteCalendar(int calendarNo, String writerNo) {
+    public int deleteCalendar(int calendarNo, int writerNo) {
         return dao.deleteCalendar(calendarNo, writerNo);
     }
 
