@@ -9,7 +9,7 @@ public class ClientVo {
     private double overTime;
     private int person;
     private double position;
-    private String empNo;
+    private int empNo;
     private double bonus;
     private double meals;
 

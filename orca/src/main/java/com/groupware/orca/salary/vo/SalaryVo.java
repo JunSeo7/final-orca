@@ -6,7 +6,7 @@ import lombok.Data;
 public class SalaryVo {
 
     private String payrollNo;           //식별자 번호
-    private String empNo;               //사원번호
+    private int empNo;               //사원번호
     private double nationalPension;     //국민연금
     private double healthInsurance;      //건강보험
     private double longCare;            //장기요양보험
