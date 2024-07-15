@@ -54,28 +54,24 @@
                 <div class="main" id="content">
                     <h1>급여 입력</h1>
 
-                    <table class="salaryWrite">
-                        <thead>
-                            <tr>
-                                <th>사번</th>
-                                <th>직급수당</th>
-                                <th>상여금</th>
-                                <th>식대</th>
-                                <th>휴일근무수당</th>
-                                <th>연장근무수당</th>
-                                <th>지방소득세</th>
-                                <th>자녀 수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- 여기 그 머냐 데이터 가져오기~~ -->
-                        </tbody>
-                    </table>
-                    
-
-
-                    
-
+                    <form action="/salary/write" method="get">
+                        <pre>사원번호</pre><input type="text" name="empNo" >
+                        <br>
+                        <pre>직급수당</pre><input type="text" name="position" >
+                        <br>
+                        <pre>상여금</pre><input type="text" name="bonus" >
+                        <br>
+                        <pre>식대</pre><input type="text" name="meals" >
+                        <br>
+                        <pre>휴일근무수당</pre><input type="text" name="holidayTime" >
+                        <br>
+                        <pre>연장근무수당</pre><input type="text" name="overTime" >
+                        <br>
+                        <pre>자녀 수</pre><input type="text" name="person" >
+                        <br>
+                        <input type="submit" name="작성하기">
+                    </form>
+                 
                 </div>
             </main>
         </body>
