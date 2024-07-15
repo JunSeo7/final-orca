@@ -6,7 +6,7 @@ import lombok.Data;
 public class WorkInfoVo {
 
     private String workNo;
-    private String empNo;
+    private int empNo;
     private String workDate;
     private String startTime;
     private String endTime;

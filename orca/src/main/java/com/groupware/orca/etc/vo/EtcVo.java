@@ -7,7 +7,7 @@ public class EtcVo {
 
     private String etcNo;
     private String etcCode;
-    private String empNo;
+    private int empNo;
     private int docNo;
     private String regDate;
     private String startDate;

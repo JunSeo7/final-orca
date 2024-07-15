@@ -28,9 +28,9 @@ public class WorkInfoRestController {
     public List<WorkInfoVo> workList(HttpSession httpSession) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
         if (loginUser != null) {
-            String empNo = loginUser.getEmpNo();
+            int empNo = loginUser.getEmpNo();
 
-            List<WorkInfoVo> wVo = service.workList(empNo);
+            List<WorkInfoVo> wVo = service.workList(String.valueOf(empNo));
 
             System.out.println("wVo = " + wVo);
 
@@ -45,7 +45,7 @@ public class WorkInfoRestController {
     public ResponseEntity<Map<String, Object>> startWork(WorkInfoVo vo, HttpSession httpSession) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
 
-        String empNo = loginUser.getEmpNo();
+        int empNo = loginUser.getEmpNo();
         vo.setEmpNo(empNo);
         String workNo = service.startWork(vo);
         httpSession.setAttribute("workNo", workNo);
@@ -64,7 +64,7 @@ public class WorkInfoRestController {
 
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
 
-        String empNo = loginUser.getEmpNo();
+        int empNo = loginUser.getEmpNo();
         vo.setEmpNo(empNo);
 
         String workNo = (String) httpSession.getAttribute("workNo");
@@ -88,8 +88,8 @@ public class WorkInfoRestController {
     @GetMapping("/getStartWorkTime")
     public ResponseEntity<Map<String, Object>> getStartWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
-        String empNo = loginUser.getEmpNo();
-        String startWorkTime = service.getStartWorkTime(empNo, workDate);
+        int empNo = loginUser.getEmpNo();
+        String startWorkTime = service.getStartWorkTime(String.valueOf(empNo), workDate);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("startWorkTime", startWorkTime);
@@ -100,8 +100,8 @@ public class WorkInfoRestController {
     @GetMapping("/getEndWorkTime")
     public ResponseEntity<Map<String, Object>> getEndWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
-        String empNo = loginUser.getEmpNo();
-        String endWorkTime = service.getEndWorkTime(empNo, workDate);
+        int empNo = loginUser.getEmpNo();
+        String endWorkTime = service.getEndWorkTime(String.valueOf(empNo), workDate);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("endWorkTime", endWorkTime);
