@@ -7,6 +7,7 @@ import com.groupware.orca.department.humanResources.personnelManagement.mapper.P
 import com.groupware.orca.department.humanResources.personnelManagement.service.PersonnelManagementService;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -33,5 +34,13 @@ public class PersonnelManagementDao {
 
     public int employeeRegistration(UserVo newEmployeeVo) {
         return mapper.employeeRegistration(newEmployeeVo);
+    }
+
+    public int getEmployeeCnt() {
+        return mapper.getEmployeeCnt();
+    }
+
+    public List<UserVo> listEmployeeData(int startNum, int endNum) {
+        return mapper.listEmployeeData(startNum, endNum);
     }
 }

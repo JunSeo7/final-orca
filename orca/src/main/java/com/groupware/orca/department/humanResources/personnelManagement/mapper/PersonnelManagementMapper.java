@@ -6,6 +6,7 @@ import com.groupware.orca.common.vo.TeamVo;
 import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -27,11 +28,40 @@ public interface PersonnelManagementMapper {
             "<if test='imgOriginName != null'>, IMG_ORIGIN_NAME</if>" +
             "<if test='imgChangeName != null'>, IMG_CHANGE_NAME</if>" +
             ")" +
-            "VALUES (TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber}" +
+            "VALUES (TO_CHAR(SYSDATE, 'YYYYMM') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber}" +
             "<if test='imgOriginName != null'>, #{imgOriginName}</if>" +
             "<if test='imgChangeName != null'>, #{imgChangeName}</if>" +
             ")" +
             "</script>"
     })
     int employeeRegistration(UserVo newEmployeeVo);
+
+    @Select("SELECT COUNT(EMP_NO) FROM PERSONNEL_INFORMATION \n" +
+            "WHERE LEAVING_DATE IS NULL AND POSITION_CODE > 5")
+    int getEmployeeCnt();
+
+    @Select("SELECT\n" +
+            "*\n" +
+            "FROM\n" +
+            "(\n" +
+            "    SELECT\n" +
+            "        A.*\n" +
+            "        , ROWNUM AS RNUM\n" +
+            "    FROM\n" +
+            "    (\n" +
+            "        SELECT \n" +
+            "            E.EMP_NO\n" +
+            "            , E.NAME\n" +
+            "            , D.PARTNAME\n" +
+            "            , P.NAME_OF_POSITION\n" +
+            "            , E.IMG_CHANGE_NAME" +
+            "        FROM PERSONNEL_INFORMATION E\n" +
+            "        JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE\n" +
+            "        JOIN POSITION P ON P.POSITION_CODE = E.POSITION_CODE\n" +
+            "        WHERE E.LEAVING_DATE IS NULL AND E.POSITION_CODE > 5\n" +
+            "        ORDER BY E.POSITION_CODE ASC\n" +
+            "    ) A\n" +
+            ")\n" +
+            "WHERE RNUM BETWEEN #{startNum} AND #{endNum}")
+    List<UserVo> listEmployeeData(@Param("startNum") int startNum, @Param("endNum") int endNum);
 }

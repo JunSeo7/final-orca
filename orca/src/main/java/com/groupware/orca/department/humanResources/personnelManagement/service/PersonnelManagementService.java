@@ -23,4 +23,12 @@ public class PersonnelManagementService {
         newEmployeeVo.setPassword(encPassword);
         return dao.employeeRegistration(newEmployeeVo);
     }
+
+    public int getEmployeeCnt() {
+        return dao.getEmployeeCnt();
+    }
+
+    public List<UserVo> listEmployeeData(int startNum, int endNum) {
+        return dao.listEmployeeData(startNum, endNum);
+    }
 }
