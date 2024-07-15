@@ -27,7 +27,7 @@ public class SalaryDao {
     }
 
     //급여계산 사원 정보 가져오기
-    public UserVo getUserVo(String empNo) {
+    public UserVo getUserVo(int empNo) {
         return mapper.getUserVo(empNo);
     }
 
