@@ -1,19 +1,17 @@
 package com.groupware.orca.vacation.controller;
 
-import com.groupware.orca.vacation.service.VacationRefService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("orca/vacationRef")
 public class VacationRefController {
 
-    private final VacationRefService service;
-
-
+    @GetMapping("VCode")
+    public String showVacationCode(){
+        return "vacation/vacationCode/vacationCode";
+    }
 
 }
