@@ -126,11 +126,13 @@ public class SalaryService {
     //연장근로수당 (입력칸 있음 - 몇 시간 더 연장근무 한건지 )
 
     //급여 입력
-    public int salaryWrite(ClientVo clientVo, UserVo vo, SalaryVo svo) {
+    public int salaryWrite(ClientVo clientVo,UserVo vo, SalaryVo svo) {
+        vo = dao.getUserVo(vo.getEmpNo());
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
 //        double tax = calculateInComeTax(totalDeduction);
 
         RatesVo rvo = dao.getRatesVo();
+
 
         System.out.println("vo.getSalary() - svo.getMeals() = " + (vo.getSalary() - svo.getMeals()));
 
@@ -208,10 +210,11 @@ public class SalaryService {
 
     //급여 수정
     public int salaryUpdate(UserVo vo,ClientVo clientVo, SalaryVo svo) {
+        vo = dao.getUserVo(vo.getEmpNo());
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
         RatesVo rvo = dao.getRatesVo();
 
-        double realSalary =  vo.getSalary()- svo.getMeals();
+        double realSalary =  vo.getSalary() - svo.getMeals();
 
         System.out.println("rvo : "+rvo);
 
