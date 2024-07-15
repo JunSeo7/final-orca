@@ -209,7 +209,7 @@ function inputEmployeeRegistration() {
             bankNumber = bankName + ' ' + bankNumber;
 
             formData.append('bankNumber', bankNumber);
-            
+
             // 이미지 파일 추가
             const imageFile = $('#image')[0].files[0];
             if (imageFile) {
@@ -272,4 +272,109 @@ function inputEmployeeRegistration() {
     });
 }
 
+const employeeList = document.querySelector('.employee-list');
+employeeList.addEventListener('click', function () {
+    let page = 1;
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/showEmployeeList',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            listEmployeePage(page);
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+});
 
+function listEmployeePage(page) {
+    const pagination = {};
+    let totalPage = document.querySelector('.totalPage');
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/listEmployeePage',
+        dataType: 'json',
+        data: {
+            page: page
+        },
+        success: function (response) {
+            Object.assign(pagination, response);
+
+            while (totalPage.firstChild) {
+                totalPage.removeChild(totalPage.firstChild);
+            }
+
+            if (pagination.existPrevPage) {
+                let existPrevPage = document.createElement('a');
+                existPrevPage.textContent = '이전';
+                totalPage.appendChild(existPrevPage);
+                existPrevPage.addEventListener('click', function () {
+                    listEmployeePage(pagination.startPage - 1);
+                });
+            }
+
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                let aPage = document.createElement('a');
+                aPage.textContent = i;
+                if (i == page) {
+                    aPage.classList.add('current-page');
+                }
+                totalPage.appendChild(aPage);
+                aPage.addEventListener('click', function () {
+                    listEmployeePage(i);
+                });
+            }
+
+            if (pagination.existNextPage) {
+                let existNextPage = document.createElement('a');
+                existNextPage.textContent = '이후';
+                totalPage.appendChild(existNextPage);
+                existNextPage.addEventListener('click', function () {
+                    listEmployeePage(pagination.endPage + 1);
+                });
+            }
+            listEmployeeData(pagination);
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+function listEmployeeData(pagination) {
+
+    let startNum = pagination.startNum;
+    let endNum = pagination.endNum;
+
+    $('.employee-container').empty();
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/listEmployeeData',
+        data: {
+            startNum: startNum,
+            endNum: endNum
+        },
+        dataType: 'json',
+        success: function (data) {
+            data.forEach(function(employee) {
+                let imageUrl = '/upload/user/' + employee.imgChangeName;
+                let employeeDiv = `
+                    <div class="employee-info">
+                        <img src="${imageUrl}" alt="img" class="employee-profile">
+                        <div class="employee-name">${employee.name}</div>(<div class="employee-position">${employee.nameOfPosition.trim()}</div>/<div class="employee-department">${employee.partName}</div>)
+                    </div>`;
+                $('.employee-container').append(employeeDiv);
+            });
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
