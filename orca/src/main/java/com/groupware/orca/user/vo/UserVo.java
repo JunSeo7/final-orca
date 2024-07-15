@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class UserVo {
 
-    private String empNo;
+    private int empNo;
     private String name;
     private String positionCode;
     private String deptCode;
