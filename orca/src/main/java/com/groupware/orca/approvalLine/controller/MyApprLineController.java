@@ -53,7 +53,7 @@ public class MyApprLineController {
     @PostMapping("add")
     @ResponseBody
     public String addApprovalLine(@RequestBody ApprovalLineVo approvalLineVo, HttpSession httpSession) {
-        approvalLineVo.setWriterNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
+        approvalLineVo.setWriterNo(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo());
         int result = service.addApprovalLine(approvalLineVo);
        return "redirect:/orca/myapprline/list";
     }
@@ -61,7 +61,7 @@ public class MyApprLineController {
     // 결재선 전체목록 (양식/결재라인)
     @GetMapping("list")
     public String getApprLines(Model model, HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
         System.out.println("approvalLines = " + approvalLines);
         model.addAttribute("approvalLines", approvalLines);
@@ -72,7 +72,7 @@ public class MyApprLineController {
     @GetMapping("list/writeDocument")
     @ResponseBody
     public List<ApprovalLineVo> getApprLineList(HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<ApprovalLineVo> approvalLines = service.getApprovalLines(loginUserNo);
         System.out.println("approvalLines = " + approvalLines);
         return approvalLines;
@@ -81,7 +81,7 @@ public class MyApprLineController {
     // 결재선 삭제
     @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo, HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         System.out.println("loginUserNo = " + loginUserNo);
         System.out.println("apprLineNo = " + apprLineNo);
         service.deleteApprLine(apprLineNo, loginUserNo);

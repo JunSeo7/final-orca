@@ -88,7 +88,7 @@ public class ApprovalLineController {
     // 결재선 - 승인처리, 반려처리
     @PostMapping("status")
     public String updateStatusApprLine(ApproverVo vo, HttpSession httpSession){
-        vo.setApproverNo(Integer.parseInt(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo()));
+        vo.setApproverNo(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo());
         System.out.println("결재선 - 승인, 반려처리 vo = " + vo);
         int result = service.updateStatusApprLine(vo);
         return "redirect:/orca/document/list";

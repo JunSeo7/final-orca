@@ -97,8 +97,8 @@ public class BoardController {
     public String insert(@ModelAttribute BoardVo vo, Model model, HttpSession httpSession) {
         UserVo loginUserVo = (UserVo) httpSession.getAttribute("loginUserVo");
         if (loginUserVo != null) {
-            String insertUserNo = loginUserVo.getEmpNo();
-            vo.setInsertUserNo(Integer.parseInt(insertUserNo));
+            int insertUserNo = loginUserVo.getEmpNo();
+            vo.setInsertUserNo(insertUserNo);
         }
 
         if (vo.getCategoryNo() == 0) {
@@ -182,8 +182,8 @@ public class BoardController {
     public String updateBoard(@ModelAttribute BoardVo boardVo, HttpSession httpSession) {
         UserVo loginUserVo = (UserVo) httpSession.getAttribute("loginUserVo");
         if (loginUserVo != null) {
-            String insertUserNo = loginUserVo.getEmpNo();
-            boardVo.setInsertUserNo(Integer.parseInt(insertUserNo));
+            int insertUserNo = loginUserVo.getEmpNo();
+            boardVo.setInsertUserNo(insertUserNo);
         }
         boardService.boardUpdate(boardVo);
         return "redirect:/orca/board";
@@ -193,11 +193,11 @@ public class BoardController {
     public @ResponseBody String deleteBoard(@PathVariable("boardNo") int boardNo, HttpSession session) {
         UserVo loginUserVo = (UserVo) session.getAttribute("loginUserVo");
         if (loginUserVo != null) {
-            String empNo = loginUserVo.getEmpNo();
+            int empNo = loginUserVo.getEmpNo();
             // 자식 테이블 데이터 먼저 삭제
             boardService.deleteLikesByBoardNo(boardNo);  // 좋아요 데이터 삭제
             commentService.deleteCommentsByBoardNo(boardNo);
-            bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, Integer.parseInt(empNo));
+            bookmarkService.deleteBookmarkByBoardNoAndEmpNo(boardNo, empNo);
             boardFileService.deleteFile(boardNo);
             boardService.deletePenaltyByBoardNo(boardNo);
             // 부모 테이블 데이터 삭제
@@ -237,7 +237,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        int empNo = loginUser.getEmpNo();
         int result = boardService.addLike(boardNo, empNo);
         if (result > 0) {
             return ResponseEntity.ok("좋아요를 눌렀습니다.");
@@ -253,7 +253,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        int empNo = loginUser.getEmpNo();
         int result = boardService.removeLike(boardNo, empNo);
         if (result > 0) {
             return ResponseEntity.ok("좋아요를 취소했습니다.");
@@ -269,7 +269,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
 
-        int empNo = Integer.parseInt(loginUser.getEmpNo());
+        int empNo = loginUser.getEmpNo();
         boolean isLiked = boardService.isLiked(boardNo, empNo);
         return ResponseEntity.ok(isLiked);
     }
@@ -290,7 +290,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        int empNo = Integer.parseInt(loginUserVo.getEmpNo());
+        int empNo = loginUserVo.getEmpNo();
         boardService.reportBoard(boardNo, categoryNo, content, empNo);
 
         boolean isHidden = boardService.checkAndHideBoard(boardNo);

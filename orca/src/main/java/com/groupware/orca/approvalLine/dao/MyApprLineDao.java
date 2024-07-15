@@ -40,7 +40,7 @@ public class MyApprLineDao {
     }
 
     // 결재선 전체목록 (결재선)
-    public List<ApprovalLineVo> getApprovalLineList(String loginUserNo) {
+    public List<ApprovalLineVo> getApprovalLineList(int loginUserNo) {
         List<ApprovalLineVo> approvalLines = mapper.getApprovalLineList(loginUserNo);
         return approvalLines;
     }
@@ -54,7 +54,7 @@ public class MyApprLineDao {
   }
 
     // 결재선 삭제
-    public void deleteApprLine(int apprLineNo, String loginUserNo) {
+    public void deleteApprLine(int apprLineNo, int loginUserNo) {
         mapper.deleteApprLine(apprLineNo, loginUserNo);
     }
 

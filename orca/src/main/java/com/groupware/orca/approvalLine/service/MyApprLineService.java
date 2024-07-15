@@ -48,7 +48,7 @@ public class MyApprLineService {
     }
 
     // 결재선 전체목록 (결재선/결재자)
-    public List<ApprovalLineVo> getApprovalLines(String loginUserNo) {
+    public List<ApprovalLineVo> getApprovalLines(int loginUserNo) {
         List<ApprovalLineVo> approvalLines = dao.getApprovalLineList(loginUserNo);
         for (ApprovalLineVo line : approvalLines) {
             List<ApproverVo> approvers = dao.getApproverList(line.getApprLineNo());
@@ -57,7 +57,7 @@ public class MyApprLineService {
         return approvalLines;
     }
     // 결재선 삭제
-    public void deleteApprLine(int apprLineNo, String loginUserNo) {
+    public void deleteApprLine(int apprLineNo, int loginUserNo) {
         dao.deleteApprLine(apprLineNo, loginUserNo);
     }
 

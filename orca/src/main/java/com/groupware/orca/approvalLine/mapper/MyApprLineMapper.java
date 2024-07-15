@@ -64,7 +64,7 @@ public interface MyApprLineMapper {
             WHERE AT.WRITER_NO = #{loginUserNo} AND AT.DEL_YN = 'N'
             ORDER BY AT.APPR_LINE_NO DESC
             """)
-    List<ApprovalLineVo> getApprovalLineList(String loginUserNo);
+    List<ApprovalLineVo> getApprovalLineList(int loginUserNo);
 
     // 마이결재선 전체목록 (결재자 여러명)
     @Select("""
@@ -86,5 +86,5 @@ public interface MyApprLineMapper {
             WHERE APPR_LINE_NO = #{apprLineNo}
               AND WRITER_NO = #{loginUserNo}
             """)
-    void deleteApprLine(@Param("apprLineNo") int apprLineNo, @Param("loginUserNo") String loginUserNo);
+    void deleteApprLine(@Param("apprLineNo") int apprLineNo, @Param("loginUserNo") int loginUserNo);
 }
