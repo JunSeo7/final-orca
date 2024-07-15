@@ -98,6 +98,26 @@ employeeRegistration.addEventListener('click', function () {
     });
 });
 
+const showVacationCode = document.querySelector('.showVacationCode');
+showVacationCode.addEventListener('click', function () {
+    $.ajax({
+        type: 'get',
+        url: '/orca/vacationRef/VCode',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            getSelects();
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+});
+
+
 function getSelects() {
     $.ajax({
         type: 'get',
