@@ -141,9 +141,7 @@ VALUES (SEQ_EMP_NO.NEXTVAL, '최연구' ,4, 10, 10, 'F', '900140-1234606', 'pass
 
 COMMIT;
 
-
 -------------------------------------------------------------------------------------------------------
-
 --------------------------------------------------------
 -- 결재 상태 리스트 더미 데이터 (APPR_STAGE_LIST)
 --------------------------------------------------------
@@ -172,349 +170,24 @@ INSERT INTO DOC_TEMPLATE_CATEGORY (CATEGORY_NO, NAME) VALUES (SEQ_DOC_TEMPLATE_C
 --------------------------------------------------------
 -- 문서 템플릿 더미 데이터 (DOC_TEMPLATE)
 --------------------------------------------------------
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '구매 품의서'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">구매 품의서</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 수량:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 금액:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 이유:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>요청 납기 일정:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 자료: (견적서, 카탈로그)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5 style="font-family: Arial, sans-serif;">
-    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
-    * 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>
-    * 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.
-</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이하)'
-, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (100만원 이하)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5 style="font-family: Arial, sans-serif;">
-    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
-    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
-    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
-</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-', SYSDATE);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이상)'
-, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (100만원 이상)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5 style="font-family: Arial, sans-serif;">
-    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
-    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
-    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
-</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-', SYSDATE);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (1000만원 이상)'
-, '<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h1>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">지출 결의서 (1000만원 이상)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 금액:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>지출 세부 내역:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>총 합계:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (영수증)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5 style="font-family: Arial, sans-serif;">
-    * 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
-    * 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>
-    * 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.
-</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-', SYSDATE);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, 'IT 자산 구매 요청'
-, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">IT 자산 구매 요청</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>사용자 :</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>사용 목적: 예)신규 입사자 장비 지원을 위해 필요</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매요청 품목 : 다음중 택 1(사무용 PC, 연구용 PC, 조립PC(사양기재), 노트북, 모니터, 전산 소모품)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 수량:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>구매 금액:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>OS 설치여부:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>기타 사항:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<h5 style="font-family: Arial, sans-serif;">* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>
-* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>
-* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>
-* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>
-* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(국내)'
-, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">출장비 정산서 [국내]</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 목적:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 기간:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 장소:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>총 출장비: 1,500,000원</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>세부 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    예) 교통비: 500,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<h5 style=""><br>
-* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>
-* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>
-* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(해외)'
-, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">출장비 정산서 (해외)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 목적:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 기간:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>출장 장소:</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>총 출장비: 1,500,000원</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>세부 항목:</b></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    예) 교통비: 500,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<h5 style=""><br>
-* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>
-* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>
-* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
-', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '구매 품의서', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목:</b></p><p><b><br></b></p><p><b>구매 수량:</b></p><p><b><br></b></p><p><b>구매 금액:</b></p><p><b><br></b></p><p><b>구매 이유:</b></p><p><b><br></b></p><p><b>요청 납기 일정:</b></p><p><b><br></b></p><p><b>첨부 자료: (견적서, 카탈로그)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이하)', '<h1><br></h1><h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목:</b></p><p><b><br></b></p><p><b>지출 금액:</b></p><p><b><br></b></p><p><b>지출 세부 내역:</b></p><p><b><br></b></p><p><b>총 합계:</b></p><p><b><br></b></p><p><b>첨부 파일: (영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (100만원 이상)', '<h1><br></h1><h1>지출 결의서 (100만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목:</b></p><p><b><br></b></p><p><b>지출 금액:</b></p><p><b><br></b></p><p><b>지출 세부 내역:</b></p><p><b><br></b></p><p><b>총 합계:</b></p><p><b><br></b></p><p><b>첨부 파일: (영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '지출 결의서 (1000만원 이상)', '<h1><br></h1><h1>지출 결의서 (1000만원 이상)</h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목:</b></p><p><b><br></b></p><p><b>지출 금액:</b></p><p><b><br></b></p><p><b>지출 세부 내역:</b></p><p><b><br></b></p><p><b>총 합계:</b></p><p><b><br></b></p><p><b>첨부 파일: (영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, 'IT 자산 구매 요청', '<h2><br></h2><h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 :</b></p><p><b><br></b></p><p><b>사용 목적: 예)신규 입사자 장비 지원을 위해 필요</b></p><p><b><br></b></p><p><b>구매요청 품목 : 다음중 택 1(사무용 PC, 연구용 PC, 조립PC(사양기재), 노트북, 모니터, 전산 소모품)</b></p><p><b><br></b></p><p><b>구매 수량:</b></p><p><b><br></b></p><p><b>구매 금액:</b></p><p><b><br></b></p><p><b>OS 설치여부:</b></p><p><b><br></b></p><p><b>기타 사항:</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(국내)', '<h2><br></h2><h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적:</b></p><p><b><br></b></p><p><b>출장 기간:</b></p><p><b><br></b></p><p><b>출장 장소:</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>예) 교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 1, '출장비 정산서(해외)', '<h2><br></h2><h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적:</b></p><p><b><br></b></p><p><b>출장 기간:</b></p><p><b><br></b></p><p><b>출장 장소:</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>예) 교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
 INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '휴가 신청서', '휴가 신청서 내용', SYSTIMESTAMP);
 INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(일반)', '병가 신청서(일반) 내용', SYSTIMESTAMP);
 INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '병가 신청서(장기)', '병가 신청서(장기) 내용', SYSTIMESTAMP);
 INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '시간 외 수당 청구서', '시간 외 수당 청구서 내용', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '재택근무 신청서'
-, '<h2 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><br></h2>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">재택근무 신청서</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 재택근무를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style=""><font face="Arial, sans-serif"><b>재택근무 기간:</b></font></p>
-<p style=""><font face="Arial, sans-serif"><b><br></b></font></p>
-<p style=""><font face="Arial, sans-serif"><b>재택근무 사유: </b>예) 개인 사정으로 인한 재택근무 필요</font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5 style="">
-<font face="Arial, sans-serif">* 재택근무 도구와 필요한 IT 지원 사항을 명시합니다.<br></font>
-<font face="Arial, sans-serif">* 재택근무 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
-<font face="Arial, sans-serif">* 재택근무 기간 동안의 업무 계획과 보고 방식을 명확히 하여야 합니다.</font>
-</h5>
-<p style="font-family: Arial, sans-serif;"><br style="background-color: rgb(255, 255, 255);"></p>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '퇴사 신청서(사직서)'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">퇴사 신청서 (사직서)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 퇴사를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style=""><font face="Arial, sans-serif"><b>퇴사 예정일:</b></font></p>
-<p style=""><font face="Arial, sans-serif"><b><br></b></font></p>
-<p style=""><font face="Arial, sans-serif"><b>퇴사 사유: </b>개인 사유 (진로 변경)</font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<h5 style="">
-<font face="Arial, sans-serif">* 잔여 연차 및 급여 정산 사항을 확인합니다.<br></font>
-<font face="Arial, sans-serif">* 회사 자산 반납 절차를 명시합니다.<br></font>
-<font face="Arial, sans-serif">* 퇴사 예정일은 회사의 인수인계 기간을 고려하여 충분한 시간을 두고 작성합니다.<br></font>
-<font face="Arial, sans-serif">* 퇴사 사유는 간략하게 작성하되, 필요한 경우 인사팀과 별도로 상담합니다.</font>
-</h5>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '프로젝트 제안서'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">프로젝트 제안서</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 프로젝트를 제안하오니 검토 후 재가하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p><font face="Arial, sans-serif"><b>프로젝트 명:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>프로젝트 목적:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>프로젝트 기간:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>프로젝트 예산:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>프로젝트 세부 내용:</b></font></p>
-<p><b style="font-family: Arial, sans-serif;"><span style="white-space: pre;">    </span>예 )</b></p>
-<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>요구사항 분석: 2023년 7월 1일~7월 31일</b></span></font></p>
-<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>설계 및 개발: 2023년 8월 1일~11월 30일</b></span></font></p>
-<p><font face="Arial, sans-serif"><span style="white-space: normal;"><b><span style="white-space:pre">    </span>테스트 및 배포: 2023년 12월 1일~12월 31일</b></span></font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<h5>
-<font face="Arial, sans-serif" style="">* 프로젝트 팀 구성과 각 팀원의 역할을 명시합니다.<br></font>
-<font face="Arial, sans-serif" style="">* 성과 측정 지표를 설정하고, 프로젝트 성공 여부를 평가할 기준을 명확히 합니다.<br></font>
-<font face="Arial, sans-serif" style="">* 프로젝트 제안서는 충분한 사전 조사와 계획을 바탕으로 작성해야 합니다.<br>
-* 필요한 경우 추가 자료(예: 시장 조사, 예상 수익 분석)를 첨부합니다.</h5>
-<h5><br></h5>
-<h5><font face="Arial, sans-serif"></font></h5>
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '재택근무 신청서', '<h2><br></h2><h1>재택근무 신청서</h1><h5>* 아래와 같이 재택근무를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>재택근무 기간:</b></p><p><b><br></b></p><p><b>재택근무 사유: </b>예) 개인 사정으로 인한 재택근무 필요</p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 재택근무 도구와 필요한 IT 지원 사항을 명시합니다.<br>* 재택근무 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 재택근무 기간 동안의 업무 계획과 보고 방식을 명확히 하여야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 2, '퇴사 신청서(사직서)', '<p><br></p><h1>퇴사 신청서 (사직서)</h1><h5>* 아래와 같이 퇴사를 신청하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>퇴사 예정일:</b></p><p><b><br></b></p><p><b>퇴사 사유: </b>개인 사유 (진로 변경)</p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 잔여 연차 및 급여 정산 사항을 확인합니다.<br>* 회사 자산 반납 절차를 명시합니다.<br>* 퇴사 예정일은 회사의 인수인계 기간을 고려하여 충분한 시간을 두고 작성합니다.<br>* 퇴사 사유는 간략하게 작성하되, 필요한 경우 인사팀과 별도로 상담합니다.</h5>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '프로젝트 제안서', '<p><br></p><h1>프로젝트 제안서</h1><h5>* 아래와 같이 프로젝트를 제안하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>프로젝트 명:</b></p><p><b><br></b></p><p><b>프로젝트 목적:</b></p><p><b><br></b></p><p><b>프로젝트 기간:</b></p><p><b><br></b></p><p><b>프로젝트 예산:</b></p><p><b><br></b></p><p><b>프로젝트 세부 내용:</b></p><p><b>예 )</b></p><p><b>요구사항 분석: 2023년 7월 1일~7월 31일</b></p><p><b>설계 및 개발: 2023년 8월 1일~11월 30일</b></p><p><b>테스트 및 배포: 2023년 12월 1일~12월 31일</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 프로젝트 팀 구성과 각 팀원의 역할을 명시합니다.<br>* 성과 측정 지표를 설정하고, 프로젝트 성공 여부를 평가할 기준을 명확히 합니다.<br>* 프로젝트 제안서는 충분한 사전 조사와 계획을 바탕으로 작성해야 합니다.<br>* 필요한 경우 추가 자료(예: 시장 조사, 예상 수익 분석)를 첨부합니다.</h5>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '회의록', '<p><br></p><h1>회의록</h1><h5>* 회의록 작성 관련 문의는 기획팀으로 연락 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>회의 일자:</b></p><p><b><br></b></p><p><b>회의 장소:</b></p><p><b><br></b></p><p><b>참석자:</b></p><p><b><br></b></p><p><b>회의 내용:</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 의결 사항과 그에 따른 후속 조치를 명확히 기재합니다.<br>* 회의록 검토를 위한 일정과 피드백 절차를 명시합니다.<br>* 중요한 논의 사항과 결론은 누락 없이 기록해야 합니다.<br>* 회의록은 회의 직후 작성하여 참석자들과 공유(참조자)합니다.</h5>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (사내, 단기 국내 위탁)', '<p><br></p><h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명:</b></p><p><b><br></b></p><p><b>교육 기간:</b></p><p><b><br></b></p><p><b>교육 장소:</b></p><p><b><br></b></p><p><b>교육 목적:</b></p><p><b><br></b></p><p><b>첨부 파일: </b>(교육 자료)</p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5>', SYSTIMESTAMP);
+INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (장기 국내 위탁, 해외 파견)', '<p><br></p><h1>교육 신청서 (장기 국내 위탁, 해외 파견)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명:</b></p><p><b><br></b></p><p><b>교육 기간:</b></p><p><b><br></b></p><p><b>교육 장소:</b></p><p><b><br></b></p><p><b>교육 목적:</b></p><p><b><br></b></p><p><b>첨부 파일: </b>(교육 자료)</p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5>', SYSTIMESTAMP);
 
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 3, '회의록'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">회의록</h1>
-<h5 style="font-family: Arial, sans-serif;">* 회의록 작성 관련 문의는 기획팀으로 연락 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p><font face="Arial, sans-serif"><b>회의 일자:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>회의 장소:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>참석자:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>회의 내용:</b></font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<h5><font face="Arial, sans-serif">* 의결 사항과 그에 따른 <font color="#ff0000">후속 조치</font>를 <u>명확히 기재</u>합니다.<br></font>
-<font face="Arial, sans-serif">* 회의록 검토를 위한 일정과 피드백 절차를 명시합니다.<br></font>
-<font face="Arial, sans-serif">* 중요한 논의 사항과 <u>결론은 누락 없이</u> 기록해야 합니다.<br></font>
-<font face="Arial, sans-serif">* 회의록은 회의 직후 작성하여 참석자들과 공유(참조자)합니다.</font></h5>
-<h5><font face="Arial, sans-serif"><br></font></h5>
-<h5><font face="Arial, sans-serif"></font></h5>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (사내, 단기 국내 위탁)'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">교육 신청서 (사내, 단기 국내 위탁)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p><font face="Arial, sans-serif"><b>교육 명:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 기간:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 장소:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 목적:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>첨부 파일: </b>(교육 자료)</font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<h5><font face="Arial, sans-serif">* 교육 내용이 <u>직무와 관련</u>이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br></font>
-<font face="Arial, sans-serif">* <u>교육 후 보고서를 작성</u>하여 상사에게 제출할 계획을 수립합니다.<br></font>
-<font face="Arial, sans-serif">* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
-<font face="Arial, sans-serif">* 필요 시 교육 관련 자료를 첨부합니다.</font></h5>
-<h5><font face="Arial, sans-serif"></font></h5>
-', SYSTIMESTAMP);
-INSERT INTO DOC_TEMPLATE (TEMPLATE_NO, CATEGORY_NO, TITLE, CONTENT, ENROLL_DATE) VALUES (SEQ_DOC_TEMPLATE.NEXTVAL, 4, '교육 신청서 (장기 국내 위탁, 해외 파견)'
-, '<p><br></p>
-<h1 style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;">교육 신청서 (장기 국내 위탁, 해외 파견)</h1>
-<h5 style="font-family: Arial, sans-serif;">* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<p style="font-family: Arial, sans-serif;"><b>-------------------------- 아 래 -----------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p><font face="Arial, sans-serif"><b>교육 명:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 기간:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 장소:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>교육 목적:</b></font></p>
-<p><font face="Arial, sans-serif"><b><br></b></font></p>
-<p><font face="Arial, sans-serif"><b>첨부 파일: </b>(교육 자료)</font></p>
-<p style="font-family: Arial, sans-serif;"><b><br></b></p>
-<p style="font-family: Arial, sans-serif;"><b>-----------------------------------------------------------------------</b></p>
-<p style="font-family: Arial, sans-serif;"><br></p>
-<h5><font face="Arial, sans-serif">* 교육 내용이 <u>직무와 관련</u>이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br></font>
-<font face="Arial, sans-serif">* <u>교육 후<font color="#ff0000"> 보고서를 작성</font></u>하여 상사에게 제출할 계획을 수립합니다.<br></font>
-<font face="Arial, sans-serif">* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br></font>
-<font face="Arial, sans-serif">* 필요 시 교육 관련 자료를 첨부합니다.</font></h5>
-<h5><font face="Arial, sans-serif"></font></h5>', SYSTIMESTAMP);
 
 --------------------------------------------------------
 -- 기본 결재선 템플릿 더미 데이터 (APPR_LINE_TEMPLATE)
@@ -543,95 +216,79 @@ INSERT INTO APPR_LINE_TEMPLATE (APPR_LINE_NO, TEMPLATE_NO, APPR_LINE_NAME, CREAT
 --------------------------------------------------------
 -- 기본 결재자 정보 더미 데이터 (APPROVER_INFO)
 --------------------------------------------------------
--- 지출 결의서 결재선 (APPR_LINE_NO 1)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 1, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 1, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 1, 3, 2);
+-- 구매 품의서 결재선 (APPR_LINE_NO 1) - 팀장 → [회계] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 1, 1, 1); -- 본인팀 팀장 결재
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 1, 2, 1); -- 회계 차장(팀장) 최지연
 
--- 구매 품의서 결재선 (APPR_LINE_NO 2)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 2, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 2, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 2, 3, 2);
+-- 지출 결의서 결재선 (APPR_LINE_NO 2) - 100만원 이하: 팀장
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 2, 1, 1); -- 본인팀 팀장 결재
 
--- 비용 청구서 결재선 (APPR_LINE_NO 3)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 3, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 3, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 3, 3, 2);
+-- 지출 결의서 결재선 (APPR_LINE_NO 3) - 100만원 이상: 팀장 → [회계] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 3, 1, 1); -- 본인팀 팀장 결재
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 3, 2, 1); -- 회계 차장(팀장) 최지연
 
--- 출장비 정산서(국내) 결재선 (APPR_LINE_NO 4)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 4, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 4, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 4, 3, 2);
+-- 지출 결의서 결재선 (APPR_LINE_NO 4) - 1000만원 이상: 합의자 → 팀장 → [회계] 담당자 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120092, 4, 1, 2); -- 합의자 문준서
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 4, 2, 1); -- 본인팀 팀장 결재
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 4, 3, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 4, 4, 1); -- 대표이사 이경빈
 
--- 출장비 정산서(해외) 결재선 (APPR_LINE_NO 5)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 5, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 5, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 5, 3, 2);
+-- IT 자산 구매 요청 결재선 (APPR_LINE_NO 5) - 합의자 → 팀장 → [회계] 담당자 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120092, 5, 1, 2); -- 합의자 문준서
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 5, 2, 1); -- 본인팀 팀장 결재
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 5, 3, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 5, 4, 1); -- 대표이사 이경빈
 
--- 휴가 신청서 결재선 (APPR_LINE_NO 6)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 6, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 6, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 6, 3, 2);
+-- 출장비 정산서(국내) 결재선 (APPR_LINE_NO 6) - 팀장 → [인사] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 6, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 6, 2, 1); -- 인사 부장(팀장) 정성호
 
--- 병가 신청서(일반) 결재선 (APPR_LINE_NO 7)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 7, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 7, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 7, 3, 2);
+-- 출장비 정산서(해외) 결재선 (APPR_LINE_NO 7) - 합의자 → 팀장 → [인사] 담당자 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120090, 7, 1, 2); -- 합의자 이주형
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 7, 2, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 7, 3, 1); -- 인사 부장(팀장) 정성호
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 7, 4, 1); -- 대표이사 이경빈
 
--- 병가 신청서(장기) 결재선 (APPR_LINE_NO 8)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 8, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 8, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 8, 3, 2);
+-- 휴가 신청서 결재선 (APPR_LINE_NO 8) - 팀장
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 8, 1, 1); -- 인사 부장(팀장) 정성호
 
--- 시간 외 수당 청구서 결재선 (APPR_LINE_NO 9)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 9, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 9, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 9, 3, 2);
+-- 병가 신청서(일반) 결재선 (APPR_LINE_NO 9) - 팀장
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 9, 1, 1); -- 인사 부장(팀장) 정성호
 
--- 재택근무 신청서 결재선 (APPR_LINE_NO 10)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 10, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 10, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 10, 3, 2);
+-- 병가 신청서(장기) 결재선 (APPR_LINE_NO 10) - 팀장 → [인사] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 10, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120091, 10, 2, 1); -- 인사 부장(팀장) 정성호
 
--- 퇴사 신청서(사직서) 결재선 (APPR_LINE_NO 11)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 11, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 11, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 11, 3, 2);
+-- 시간 외 수당 청구서 결재선 (APPR_LINE_NO 11) - 팀장 → [인사] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 11, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 11, 2, 1); -- 인사 부장(팀장) 정성호
 
--- 프로젝트 제안서 결재선 (APPR_LINE_NO 12)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 12, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 12, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 12, 3, 2);
+-- 재택근무 신청서 결재선 (APPR_LINE_NO 12) - 팀장 → [인사] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 12, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 12, 2, 1); -- 인사 부장(팀장) 정성호
 
--- 회의록 결재선 (APPR_LINE_NO 13)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 13, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 13, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 11, 13, 3, 2);
+-- 퇴사 신청서(사직서) 결재선 (APPR_LINE_NO 13) - 합의자 → 팀장 → [인사] 담당자 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 13, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 13, 2, 1); -- 인사 부장(팀장) 정성호
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 13, 3, 1); -- 대표이사 이경빈
 
--- 교육 신청서(사내) 결재선 (APPR_LINE_NO 14)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 12, 14, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 13, 14, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 14, 14, 3, 2);
+-- 프로젝트 제안서 결재선 (APPR_LINE_NO 14) - 합의자 → 팀장 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120090, 14, 1, 2); -- 합의자 이주형
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 14, 2, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 14, 3, 1); -- 대표이사 이경빈
 
--- 기술 지원 요청서 결재선 (APPR_LINE_NO 15)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 15, 15, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 16, 15, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 17, 15, 3, 2);
+-- 회의록 결재선 (APPR_LINE_NO 15) - 팀장
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 15, 1, 1); -- 인사 부장(팀장) 정성호
 
--- 교육 신청서(단기국내위탁) 결재선 (APPR_LINE_NO 16)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 18, 16, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 19, 16, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 20, 16, 3, 2);
+-- 교육 신청서(사내, 단기국내위탁) 결재선 (APPR_LINE_NO 16) - 팀장 → [인사] 담당자
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 16, 1, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 16, 2, 1); -- 인사 부장(팀장) 정성호
 
--- 교육 신청서(장기국내위탁) 결재선 (APPR_LINE_NO 17)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 5, 17, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 6, 17, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 7, 17, 3, 2);
-
--- 교육 신청서(해외파견) 결재선 (APPR_LINE_NO 18)
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 8, 18, 1, 1);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 9, 18, 2, 2);
-INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 10, 18, 3, 2);
+-- 교육 신청서(장기국내위탁, 해외파견) 결재선 (APPR_LINE_NO 17) - 합의자 → 팀장 → [인사] 담당자 → 대표이사
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120090, 17, 1, 2); -- 합의자 이주형
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120016, 17, 2, 1); -- 회계 차장(팀장) 최지연
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120012, 17, 3, 1); -- 인사 부장(팀장) 정성호
+INSERT INTO APPROVER_INFO (APPROVER_INFO_NO, APPROVER_NO, APPR_LINE_NO, SEQ, APPROVER_CLASSIFICATION_NO) VALUES (SEQ_APPROVER_INFO.NEXTVAL, 202407120001, 17, 4, 1); -- 대표이사 이경빈
 
 COMMIT;
 
@@ -639,167 +296,213 @@ COMMIT;
 -- 문서 더미 데이터 (DOCUMENT)
 --------------------------------------------------------
 -- 임시저장 상태
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 1, 1, '임시저장 문서 제목 1', '임시저장 문서 내용 1', SYSDATE, 'N', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 2, 1, '임시저장 문서 제목 2', '임시저장 문서 내용 2', SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 3, 1, '임시저장 문서 제목 3', '임시저장 문서 내용 3', SYSDATE, 'N', 'N');
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 202407120091, 1, '구매 품의서 - 사무용 의자 50개', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목: 사무용 의자</b></p><p><b><br></b></p><p><b>구매 수량: 50</b></p><p><b><br></b></p><p><b>구매 금액: 5,000,000원</b></p><p><b><br></b></p><p><b>구매 이유: 기존 의자 교체</b></p><p><b><br></b></p><p><b>요청 납기 일정: 2024-08-01</b></p><p><b><br></b></p><p><b>첨부 자료: 견적서, 카탈로그</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 202407120091, 1, '지출 결의서 - 사무용품 구입', '<h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무용품 구입</b></p><p><b><br></b></p><p><b>지출 금액: 500,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: A4 용지, 볼펜, 파일</b></p><p><b><br></b></p><p><b>총 합계: 500,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 202407120091, 1, '지출 결의서 - 사무용 의자 구입', '<h1>지출 결의서 (100만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무용 의자</b></p><p><b><br></b></p><p><b>지출 금액: 2,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 의자 본체, 조립 부품</b></p><p><b><br></b></p><p><b>총 합계: 2,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 4, 202407120091, 1, '지출 결의서 - 서버 장비 구입', '<h1>지출 결의서 (1000만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 서버 장비</b></p><p><b><br></b></p><p><b>지출 금액: 15,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 서버 본체, 부품</b></p><p><b><br></b></p><p><b>총 합계: 15,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 5, 202407120091, 1, 'IT 자산 구매 요청 - 노트북 10대', '<h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 : 신입 사원</b></p><p><b><br></b></p><p><b>사용 목적: 신규 입사자 장비 지원을 위해 필요</b></p><p><b><br></b></p><p><b>구매요청 품목 : 노트북</b></p><p><b><br></b></p><p><b>구매 수량: 10</b></p><p><b><br></b></p><p><b>구매 금액: 15,000,000원</b></p><p><b><br></b></p><p><b>OS 설치여부: </b></p><p><b><br></b></p><p><b>기타 사항: 없음</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 16, 202407120096, 1, '교육 신청서 (사내, 단기 국내 위탁) - 기본 교육', '<h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명: 기본 직무 교육</b></p><p><b><br></b></p><p><b>교육 기간: 2024-08-01 ~ 2024-08-05</b></p><p><b><br></b></p><p><b>교육 장소: 본사 교육실</b></p><p><b><br></b></p><p><b>교육 목적: 직무 능력 향상</b></p><p><b><br></b></p><p><b>첨부 파일: 교육 자료</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 6, 202407120096, 1, '출장비 정산서(국내) - 서울 출장', '<h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 서울 본사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-08-01 ~ 2024-08-03</b></p><p><b><br></b></p><p><b>출장 장소: 서울 본사</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 7, 202407120096, 1, '출장비 정산서(해외) - 미국 출장', '<h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 미국 본사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-08-01 ~ 2024-08-07</b></p><p><b><br></b></p><p><b>출장 장소: 미국 뉴욕</b></p><p><b><br></b></p><p><b>총 출장비: 5,000,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    항공비: 3,000,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 1,200,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 800,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (항공비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+
 
 -- 기안 상태
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 4, 2, '기안 문서 제목 1', '기안 문서 내용 1', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 5, 2, '기안 문서 제목 2', '기안 문서 내용 2', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 6, 2, '기안 문서 제목 3', '기안 문서 내용 3', SYSDATE, SYSDATE, 'Y', 'N');
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 202407120091, 2, '구매 품의서 - 사무용 책상 30개', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목: 사무용 책상</b></p><p><b><br></b></p><p><b>구매 수량: 30</b></p><p><b><br></b></p><p><b>구매 금액: 6,000,000원</b></p><p><b><br></b></p><p><b>구매 이유: 신규 입사자 배치</b></p><p><b><br></b></p><p><b>요청 납기 일정: 2024-08-02</b></p><p><b><br></b></p><p><b>첨부 자료: 견적서, 카탈로그</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 202407120091, 2, '지출 결의서 - 사무용 소모품 구입', '<h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무용 소모품</b></p><p><b><br></b></p><p><b>지출 금액: 300,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 클립, 스테이플러, 포스트잇</b></p><p><b><br></b></p><p><b>총 합계: 300,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 202407120091, 2, '지출 결의서 - 사무용 책상 구입', '<h1>지출 결의서 (100만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무용 책상</b></p><p><b><br></b></p><p><b>지출 금액: 3,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 책상 본체, 서랍</b></p><p><b><br></b></p><p><b>총 합계: 3,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 4, 202407120091, 2, '지출 결의서 - 연구 장비 구입', '<h1>지출 결의서 (1000만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 연구 장비</b></p><p><b><br></b></p><p><b>지출 금액: 12,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 장비 본체, 부품</b></p><p><b><br></b></p><p><b>총 합계: 12,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 5, 202407120091, 2, 'IT 자산 구매 요청 - 모니터 5대', '<h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 : 기존 직원</b></p><p><b><br></b></p><p><b>사용 목적: 기존 장비 교체</b></p><p><b><br></b></p><p><b>구매요청 품목 : 모니터</b></p><p><b><br></b></p><p><b>구매 수량: 5</b></p><p><b><br></b></p><p><b>구매 금액: 3,000,000원</b></p><p><b><br></b></p><p><b>OS 설치여부: 해당 없음</b></p><p><b><br></b></p><p><b>기타 사항: 없음</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 16, 202407120096, 2, '교육 신청서 (사내, 단기 국내 위탁) - 심화 교육', '<h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명: 심화 직무 교육</b></p><p><b><br></b></p><p><b>교육 기간: 2024-09-01 ~ 2024-09-10</b></p><p><b><br></b></p><p><b>교육 장소: 서울 교육센터</b></p><p><b><br></b></p><p><b>교육 목적: 직무 능력 심화</b></p><p><b><br></b></p><p><b>첨부 파일: 교육 자료</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 6, 202407120096, 2, '출장비 정산서(국내) - 부산 출장', '<h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 부산 지사 방문</b></p><p><b><br></b></p><p><b>출장 기간: 2024-09-01 ~ 2024-09-03</b></p><p><b><br></b></p><p><b>출장 장소: 부산 지사</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 7, 202407120096, 2, '출장비 정산서(해외) - 일본 출장', '<h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 일본 지사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-09-01 ~ 2024-09-05</b></p><p><b><br></b></p><p><b>출장 장소: 일본 도쿄</b></p><p><b><br></b></p><p><b>총 출장비: 4,000,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    항공비: 2,500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 1,000,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 500,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (항공비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
 
 -- 종결 상태
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 7, 3, '종결 문서 제목 1', '종결 문서 내용 1', SYSDATE, SYSDATE, 'N', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 8, 3, '종결 문서 제목 2', '종결 문서 내용 2', SYSDATE, SYSDATE, 'N', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 9, 3, '종결 문서 제목 3', '종결 문서 내용 3', SYSDATE, SYSDATE, 'N', 'N');
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 202407120091, 3, '구매 품의서 - 화이트보드 10개', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목: 화이트보드</b></p><p><b><br></b></p><p><b>구매 수량: 10</b></p><p><b><br></b></p><p><b>구매 금액: 1,000,000원</b></p><p><b><br></b></p><p><b>구매 이유: 회의실 장비 교체</b></p><p><b><br></b></p><p><b>요청 납기 일정: 2024-08-03</b></p><p><b><br></b></p><p><b>첨부 자료: 견적서, 카탈로그</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 202407120091, 3, '지출 결의서 - 커피머신 구입', '<h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 커피머신</b></p><p><b><br></b></p><p><b>지출 금액: 700,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 커피머신 본체, 필터</b></p><p><b><br></b></p><p><b>총 합계: 700,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 202407120091, 3, '지출 결의서 - 회의실 테이블 구입', '<h1>지출 결의서 (100만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 회의실 테이블</b></p><p><b><br></b></p><p><b>지출 금액: 1,500,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 테이블 본체, 조립 부품</b></p><p><b><br></b></p><p><b>총 합계: 1,500,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 4, 202407120091, 3, '지출 결의서 - 사무용 노트북 구입', '<h1>지출 결의서 (1000만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무용 노트북</b></p><p><b><br></b></p><p><b>지출 금액: 11,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 노트북 본체, 부품</b></p><p><b><br></b></p><p><b>총 합계: 11,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 5, 202407120091, 3, 'IT 자산 구매 요청 - 데스크탑 3대', '<h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 : 연구팀</b></p><p><b><br></b></p><p><b>사용 목적: 연구 개발용</b></p><p><b><br></b></p><p><b>구매요청 품목 : 데스크탑</b></p><p><b><br></b></p><p><b>구매 수량: 3</b></p><p><b><br></b></p><p><b>구매 금액: 4,500,000원</b></p><p><b><br></b></p><p><b>OS 설치여부: </b></p><p><b><br></b></p><p><b>기타 사항: 없음</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 16, 202407120091, 3, '교육 신청서 (사내, 단기 국내 위탁) - 관리 교육', '<h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명: 관리 직무 교육</b></p><p><b><br></b></p><p><b>교육 기간: 2024-10-01 ~ 2024-10-05</b></p><p><b><br></b></p><p><b>교육 장소: 인천 교육센터</b></p><p><b><br></b></p><p><b>교육 목적: 관리 능력 향상</b></p><p><b><br></b></p><p><b>첨부 파일: 교육 자료</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 6, 202407120091, 3, '출장비 정산서(국내) - 대구 출장', '<h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 대구 지사 방문</b></p><p><b><br></b></p><p><b>출장 기간: 2024-10-01 ~ 2024-10-03</b></p><p><b><br></b></p><p><b>출장 장소: 대구 지사</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 7, 202407120091, 3, '출장비 정산서(해외) - 중국 출장', '<h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 중국 지사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-10-01 ~ 2024-10-07</b></p><p><b><br></b></p><p><b>출장 장소: 중국 베이징</b></p><p><b><br></b></p><p><b>총 출장비: 4,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    항공비: 2,800,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 1,200,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 500,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (항공비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
 
 -- 반려 상태
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 10, 4, '반려 문서 제목 1', '반려 문서 내용 1', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 11, 4, '반려 문서 제목 2', '반려 문서 내용 2', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 12, 4, '반려 문서 제목 3', '반려 문서 내용 3', SYSDATE, SYSDATE, 'Y', 'N');
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 202407120091, 4, '구매 품의서 - 프린터 5대', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목: 프린터</b></p><p><b><br></b></p><p><b>구매 수량: 5</b></p><p><b><br></b></p><p><b>구매 금액: 2,500,000원</b></p><p><b><br></b></p><p><b>구매 이유: 기존 장비 교체</b></p><p><b><br></b></p><p><b>요청 납기 일정: 2024-08-04</b></p><p><b><br></b></p><p><b>첨부 자료: 견적서, 카탈로그</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 202407120091, 4, '지출 결의서 - 사무실 장식품 구입', '<h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 사무실 장식품</b></p><p><b><br></b></p><p><b>지출 금액: 200,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 화분, 그림</b></p><p><b><br></b></p><p><b>총 합계: 200,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 202407120091, 4, '지출 결의서 - 노트북 구입', '<h1>지출 결의서 (100만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 노트북</b></p><p><b><br></b></p><p><b>지출 금액: 1,200,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 노트북 본체, 전원 어댑터</b></p><p><b><br></b></p><p><b>총 합계: 1,200,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 4, 202407120091, 4, '지출 결의서 - 프로젝트 모니터 구입', '<h1>지출 결의서 (1000만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 프로젝트 모니터</b></p><p><b><br></b></p><p><b>지출 금액: 13,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 모니터 본체, 부품</b></p><p><b><br></b></p><p><b>총 합계: 13,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 5, 202407120091, 4, 'IT 자산 구매 요청 - 프린터 2대', '<h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 : 전 직원</b></p><p><b><br></b></p><p><b>사용 목적: 기존 장비 교체</b></p><p><b><br></b></p><p><b>구매요청 품목 : 프린터</b></p><p><b><br></b></p><p><b>구매 수량: 2</b></p><p><b><br></b></p><p><b>구매 금액: 2,000,000원</b></p><p><b><br></b></p><p><b>OS 설치여부: 해당 없음</b></p><p><b><br></b></p><p><b>기타 사항: 없음</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 16, 202407120096, 4, '교육 신청서 (사내, 단기 국내 위탁) - 기술 교육', '<h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명: 기술 직무 교육</b></p><p><b><br></b></p><p><b>교육 기간: 2024-11-01 ~ 2024-11-07</b></p><p><b><br></b></p><p><b>교육 장소: 대전 교육센터</b></p><p><b><br></b></p><p><b>교육 목적: 기술 능력 향상</b></p><p><b><br></b></p><p><b>첨부 파일: 교육 자료</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 6, 202407120096, 4, '출장비 정산서(국내) - 광주 출장', '<h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 광주 지사 방문</b></p><p><b><br></b></p><p><b>출장 기간: 2024-11-01 ~ 2024-11-03</b></p><p><b><br></b></p><p><b>출장 장소: 광주 지사</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 7, 202407120096, 4, '출장비 정산서(해외) - 독일 출장', '<h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 독일 지사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-11-01 ~ 2024-11-07</b></p><p><b><br></b></p><p><b>출장 장소: 독일 베를린</b></p><p><b><br></b></p><p><b>총 출장비: 6,000,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    항공비: 3,500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 1,500,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 1,000,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (항공비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
 
 -- 결재취소 상태
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 13, 5, '결재취소 문서 제목 1', '결재취소 문서 내용 1', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 14, 5, '결재취소 문서 제목 2', '결재취소 문서 내용 2', SYSDATE, SYSDATE, 'Y', 'N');
-INSERT INTO DOCUMENT (DOC_NO, WRITER_NO, TEMPLATE_NO, STATUS, TITLE, CONTENT, ENROLL_DATE, CREDIT_DATE, URGENT, DEL_YN)
-VALUES (SEQ_DOCUMENT.NEXTVAL, 3, 15, 5, '결재취소 문서 제목 3', '결재취소 문서 내용 3', SYSDATE, SYSDATE, 'Y', 'N');
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 1, 202407120091, 5, '구매 품의서 - 복사기 2대', '<p><br></p><h1>구매 품의서</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 결재 하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>구매 항목: 복사기</b></p><p><b><br></b></p><p><b>구매 수량: 2</b></p><p><b><br></b></p><p><b>구매 금액: 4,000,000원</b></p><p><b><br></b></p><p><b>구매 이유: 기존 장비 교체</b></p><p><b><br></b></p><p><b>요청 납기 일정: 2024-08-05</b></p><p><b><br></b></p><p><b>첨부 자료: 견적서, 카탈로그</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서, 카탈로그 등의 관련 자료를 반드시 첨부합니다.<br>* 구매 품의서는 필요한 물품이 생길 때 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 2, 202407120091, 5, '지출 결의서 - 회의용 간식 구입', '<h1>지출 결의서 (100만원 이하)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 회의용 간식</b></p><p><b><br></b></p><p><b>지출 금액: 100,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 쿠키, 음료수</b></p><p><b><br></b></p><p><b>총 합계: 100,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 4, 202407120091, 5, '지출 결의서 - 프로젝트 장비 구입', '<h1>지출 결의서 (1000만원 이상)</h1><h5>* 아래와 같이 지출 내역을 작성하고, 검토 후 결재를 요청드립니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>지출 항목: 프로젝트 장비</b></p><p><b><br></b></p><p><b>지출 금액: 4,000,000원</b></p><p><b><br></b></p><p><b>지출 세부 내역: 장비 본체, 부품</b></p><p><b><br></b></p><p><b>총 합계: 4,000,000원</b></p><p><b><br></b></p><p><b>첨부 파일: 영수증</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><b><br></b></p><h5>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 첨부 파일은 필수이며, 지출 내역을 뒷받침할 수 있는 자료를 반드시 포함해야 합니다.<br>* 지출 결의서는 지출이 발생한 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 5, 202407120091, 5, 'IT 자산 구매 요청 - 복합기 1대', '<h1>IT 자산 구매 요청</h1><h5>* 아래와 같이 구매를 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>사용자 : 관리팀</b></p><p><b><br></b></p><p><b>사용 목적: 기존 장비 교체</b></p><p><b><br></b></p><p><b>구매요청 품목 : 복합기</b></p><p><b><br></b></p><p><b>구매 수량: 1</b></p><p><b><br></b></p><p><b>구매 금액: 1,500,000원</b></p><p><b><br></b></p><p><b>OS 설치여부: 해당 없음</b></p><p><b><br></b></p><p><b>기타 사항: 없음</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 기기 호환성과 기존 장비와의 연동 여부를 확인해야 합니다.<br>* 설치 및 설정 관련 지원이 필요한 경우, IT 지원팀에 미리 요청해야 합니다.<br>* 모든 항목은 명확하고 상세하게 기재해야 합니다.<br>* 필요 시 견적서 등 관련 자료를 첨부합니다.<br>* IT 자산 구매 요청서는 필요 발생 시 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSDATE);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 16, 202407120096, 5, '교육 신청서 (사내, 단기 국내 위탁) - 리더십 교육', '<h1>교육 신청서 (사내, 단기 국내 위탁)</h1><h5>* 아래와 같이 직무 교육을 신청하오니 검토 후 재가하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>교육 명: 리더십 직무 교육</b></p><p><b><br></b></p><p><b>교육 기간: 2024-12-01 ~ 2024-12-10</b></p><p><b><br></b></p><p><b>교육 장소: 부산 교육센터</b></p><p><b><br></b></p><p><b>교육 목적: 리더십 향상</b></p><p><b><br></b></p><p><b>첨부 파일: 교육 자료</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><p><br></p><h5>* 교육 내용이 직무와 관련이 있는지 확인하고, 사전 준비가 필요한 경우 미리 준비합니다.<br>* 교육 후 보고서를 작성하여 상사에게 제출할 계획을 수립합니다.<br>* 교육 신청서는 가능한 한 조기에 제출하여야 합니다.<br>* 필요 시 교육 관련 자료를 첨부합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 6, 202407120096, 5, '출장비 정산서(국내) - 대전 출장', '<h1>출장비 정산서 [국내]</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 대전 지사 방문</b></p><p><b><br></b></p><p><b>출장 기간: 2024-12-01 ~ 2024-12-03</b></p><p><b><br></b></p><p><b>출장 장소: 대전 지사</b></p><p><b><br></b></p><p><b>총 출장비: 1,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    교통비: 500,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 600,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 400,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (교통비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
+INSERT INTO DOCUMENT (DOC_NO, TEMPLATE_NO, WRITER_NO, STATUS, TITLE, CONTENT, ENROLL_DATE)
+VALUES (SEQ_DOCUMENT.NEXTVAL, 7, 202407120096, 5, '출장비 정산서(해외) - 호주 출장', '<h1>출장비 정산서 (해외)</h1><h5>* 아래와 같이 출장비를 정산하오니 검토 후 결재하여 주시기 바랍니다.</h5><p><br></p><p><b>-------------------------- 아 래 -----------------------------</b></p><p><b><br></b></p><p><b>출장 목적: 호주 지사 회의 참석</b></p><p><b><br></b></p><p><b>출장 기간: 2024-12-01 ~ 2024-12-07</b></p><p><b><br></b></p><p><b>출장 장소: 호주 시드니</b></p><p><b><br></b></p><p><b>총 출장비: 5,500,000원</b></p><p><b><br></b></p><p><b>세부 항목:</b></p><p><span style="white-space: normal;"><b>    항공비: 3,200,000원</b></span></p><p><span style="white-space: normal;"><b>    숙박비: 1,500,000원</b></span></p><p><span style="white-space: normal;"><b>    식비: 800,000원</b></span></p><p><b><br></b></p><p><b>첨부 파일: (항공비 영수증, 숙박비 영수증)</b></p><p><b><br></b></p><p><b>-----------------------------------------------------------------------</b></p><h5><br>* 모든 영수증과 증빙 자료는 원본을 제출하며, 사본은 기록으로 보관해야 합니다.<br>* 출장 일정과 관련된 모든 비용을 명확히 기재해야 합니다.<br>* 출장비 정산서는 출장 후 즉시 작성하여 제출해야 합니다.</h5><p><br></p>', SYSTIMESTAMP);
 
+COMMIT;
 --------------------------------------------------------
 -- 결재선 더미 데이터 (APPR_LINE)
 --------------------------------------------------------
--- 문서 1 (임시저장 상태, 작성자: 1 - 인사관리부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 1, 1, 3, 1, 1, 3, 1); -- 첫 번째 결재자 대기 중 (인사관리부 부장, EMP_NO: 3)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 1, 2, 2, 1, 1, 2, 1); -- 두 번째 결재자 대기 중 (인사관리부 이사, EMP_NO: 2)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 1, 3, 1, 1, 1, 1, 1); -- 세 번째 결재자 대기 중 (인사관리부 사장, EMP_NO: 1)
 
--- 문서 2 (임시저장 상태, 작성자: 2 - 경영지원부)
+-- 구매 품의서 결재선 (DOC_NO 1)
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 2, 1, 13, 1, 2, 3, 1); -- 첫 번째 결재자 대기 중 (경영지원부 부장, EMP_NO: 13)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 1, 1, 202407120012, 1, 3, 3, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 2, 2, 12, 1, 2, 2, 1); -- 두 번째 결재자 대기 중 (경영지원부 이사, EMP_NO: 12)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 2, 3, 11, 1, 2, 1, 1); -- 세 번째 결재자 대기 중 (경영지원부 사장, EMP_NO: 11)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 1, 2, 202407120016, 1, 4, 7, 1);
 
--- 문서 3 (임시저장 상태, 작성자: 3 - 회계부)
+-- 지출 결의서 결재선 (DOC_NO 2) - 100만원 이하
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 3, 1, 23, 1, 3, 3, 1); -- 첫 번째 결재자 대기 중 (회계부 부장, EMP_NO: 23)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 3, 2, 22, 1, 3, 2, 1); -- 두 번째 결재자 대기 중 (회계부 이사, EMP_NO: 22)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 3, 3, 21, 1, 3, 1, 1); -- 세 번째 결재자 대기 중 (회계부 사장, EMP_NO: 21)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 2, 1, 202407120012, 1, 3, 3, 1);
 
--- 문서 4 (기안 상태, 작성자: 1 - 인사관리부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 1, 3, 2, 1, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (인사관리부 부장, EMP_NO: 3)
+-- 지출 결의서 결재선 (DOC_NO 3) - 100만원 이상
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 2, 2, 1, 1, 2, 1); -- 두 번째 결재자 대기 중 (인사관리부 이사, EMP_NO: 2)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 3, 1, 202407120012, 1, 3, 3, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 3, 1, 1, 1, 1, 1); -- 세 번째 결재자 대기 중 (인사관리부 사장, EMP_NO: 1)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 3, 2, 202407120016, 1, 4, 7, 1);
 
--- 문서 5 (기안 상태, 작성자: 2 - 경영지원부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 1, 13, 2, 2, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (경영지원부 부장, EMP_NO: 13)
+-- 지출 결의서 결재선 (DOC_NO 4) - 1000만원 이상
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 2, 12, 1, 2, 2, 1); -- 두 번째 결재자 대기 중 (경영지원부 이사, EMP_NO: 12)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 1, 202407120092, 1, 5, 8, 2);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 3, 11, 1, 2, 1, 1); -- 세 번째 결재자 대기 중 (경영지원부 사장, EMP_NO: 11)
-
--- 문서 6 (기안 상태, 작성자: 3 - 회계부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 6, 1, 23, 2, 3, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (회계부 부장, EMP_NO: 23)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 2, 202407120012, 1, 3, 3, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 6, 2, 22, 1, 3, 2, 1); -- 두 번째 결재자 대기 중 (회계부 이사, EMP_NO: 22)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 3, 202407120016, 1, 4, 7, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 6, 3, 21, 1, 3, 1, 1); -- 세 번째 결재자 대기 중 (회계부 사장, EMP_NO: 21)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 4, 4, 202407120001, 1, 1, 1, 1);
 
--- 문서 7 (종결 상태, 작성자: 1 - 인사관리부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 1, 3, 2, 1, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (인사관리부 부장, EMP_NO: 3)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 2, 2, 2, 1, 2, '두 번째 결재 완료', SYSDATE, 1); -- 두 번째 결재자가 승인 (인사관리부 이사, EMP_NO: 2)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 3, 1, 2, 1, 1, '세 번째 결재 완료', SYSDATE, 1); -- 세 번째 결재자가 승인 (인사관리부 사장, EMP_NO: 1)
-
--- 문서 8 (종결 상태, 작성자: 2 - 경영지원부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 8, 1, 13, 2, 2, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (경영지원부 부장, EMP_NO: 13)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 8, 2, 12, 2, 2, 2, '두 번째 결재 완료', SYSDATE, 1); -- 두 번째 결재자가 승인 (경영지원부 이사, EMP_NO: 12)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 8, 3, 11, 2, 2, 1, '세 번째 결재 완료', SYSDATE, 1); -- 세 번째 결재자가 승인 (경영지원부 사장, EMP_NO: 11)
-
--- 문서 9 (종결 상태, 작성자: 3 - 회계부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 9, 1, 23, 2, 3, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (회계부 부장, EMP_NO: 23)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 9, 2, 22, 2, 3, 2, '두 번째 결재 완료', SYSDATE, 1); -- 두 번째 결재자가 승인 (회계부 이사, EMP_NO: 22)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 9, 3, 21, 2, 3, 1, '세 번째 결재 완료', SYSDATE, 1); -- 세 번째 결재자가 승인 (회계부 사장, EMP_NO: 21)
-
--- 문서 10 (반려 상태, 작성자: 1 - 인사관리부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 10, 1, 3, 2, 1, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (인사관리부 부장, EMP_NO: 3)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 10, 2, 2, 3, 1, 2, '두 번째 결재 반려', SYSDATE, 1); -- 두 번째 결재자가 반려 (인사관리부 이사, EMP_NO: 2)
+-- IT 자산 구매 요청 결재선 (DOC_NO 5)
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 10, 3, 1, 1, 1, 1, 1); -- 세 번째 결재자 대기 중 (인사관리부 사장, EMP_NO: 1)
-
--- 문서 11 (반려 상태, 작성자: 2 - 경영지원부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 11, 1, 13, 2, 2, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (경영지원부 부장, EMP_NO: 13)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 11, 2, 12, 3, 2, 2, '두 번째 결재 반려', SYSDATE, 1); -- 두 번째 결재자가 반려 (경영지원부 이사, EMP_NO: 12)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 1, 202407120092, 1, 5, 8, 2);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 11, 3, 11, 1, 2, 1, 1); -- 세 번째 결재자 대기 중 (경영지원부 사장, EMP_NO: 11)
-
--- 문서 12 (반려 상태, 작성자: 3 - 회계부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 12, 1, 23, 2, 3, 3, '첫 번째 결재 완료', SYSDATE, 1); -- 첫 번째 결재자가 승인 (회계부 부장, EMP_NO: 23)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 12, 2, 22, 3, 3, 2, '두 번째 결재 반려', SYSDATE, 1); -- 두 번째 결재자가 반려 (회계부 이사, EMP_NO: 22)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 2, 202407120012, 1, 3, 3, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 12, 3, 21, 1, 3, 1, 1); -- 세 번째 결재자 대기 중 (회계부 사장, EMP_NO: 21)
-
--- 문서 13 (기안 상태, 작성자: 1 - 인사관리부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 1, 3, 1, 1, 3, '기안 상태', NULL, 1); -- 첫 번째 결재자 대기 중 (인사관리부 부장, EMP_NO: 3)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 2, 2, 1, 1, 2, '기안 상태', NULL, 1); -- 두 번째 결재자 대기 중 (인사관리부 이사, EMP_NO: 2)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 3, 202407120016, 1, 4, 7, 1);
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 3, 1, 1, 1, 1, 1); -- 세 번째 결재자 대기 중 (인사관리부 사장, EMP_NO: 1)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 5, 4, 202407120001, 1, 1, 1, 1);
 
--- 문서 14 (기안 상태, 작성자: 2 - 경영지원부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 1, 13, 1, 2, 3, '기안 상태', NULL, 1); -- 첫 번째 결재자 대기 중 (경영지원부 부장, EMP_NO: 13)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 2, 12, 1, 2, 2, '기안 상태', NULL, 1); -- 두 번째 결재자 대기 중 (경영지원부 이사, EMP_NO: 12)
+-- 출장비 정산서(국내) 결재선 (DOC_NO 6)
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 3, 11, 1, 2, 1, 1); -- 세 번째 결재자 대기 중 (경영지원부 사장, EMP_NO: 11)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 6, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 6, 2, 202407120012, 1, 3, 3, 1);
 
--- 문서 15 (기안 상태, 작성자: 3 - 회계부)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 15, 1, 23, 1, 3, 3, '기안 상태', NULL, 1); -- 첫 번째 결재자 대기 중 (회계부 부장, EMP_NO: 23)
-INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, "COMMENT", APPROVAL_DATE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 15, 2, 22, 1, 3, 2, '기안 상태', NULL, 1); -- 두 번째 결재자 대기 중 (회계부 이사, EMP_NO: 22)
+-- 출장비 정산서(해외) 결재선 (DOC_NO 7)
 INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
-VALUES (SEQ_APPR_LINE.NEXTVAL, 15, 3, 21, 1, 3, 1, 1); -- 세 번째 결재자 대기 중 (회계부 사장, EMP_NO: 21)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 1, 202407120090, 1, 5, 8, 2);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 2, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 3, 202407120012, 1, 3, 3, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 7, 4, 202407120001, 1, 1, 1, 1);
+
+-- 휴가 신청서 결재선 (DOC_NO 8)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 8, 1, 202407120012, 1, 3, 3, 1);
+
+-- 병가 신청서(일반) 결재선 (DOC_NO 9)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 9, 1, 202407120012, 1, 3, 3, 1);
+
+-- 병가 신청서(장기) 결재선 (DOC_NO 10)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 10, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 10, 2, 202407120091, 1, 3, 3, 1);
+
+-- 시간 외 수당 청구서 결재선 (DOC_NO 11)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 11, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 11, 2, 202407120012, 1, 3, 3, 1);
+
+-- 재택근무 신청서 결재선 (DOC_NO 12)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 12, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 12, 2, 202407120012, 1, 3, 3, 1);
+
+-- 퇴사 신청서(사직서) 결재선 (DOC_NO 13)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 2, 202407120012, 1, 3, 3, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 13, 3, 202407120001, 1, 1, 1, 1);
+
+-- 프로젝트 제안서 결재선 (DOC_NO 14)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 1, 202407120090, 1, 5, 8, 2);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 2, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 14, 3, 202407120001, 1, 1, 1, 1);
+
+-- 회의록 결재선 (DOC_NO 15)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 15, 1, 202407120012, 1, 3, 3, 1);
+
+-- 교육 신청서(사내, 단기국내위탁) 결재선 (DOC_NO 16)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 16, 1, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 16, 2, 202407120012, 1, 3, 3, 1);
+
+-- 교육 신청서(장기국내위탁, 해외파견) 결재선 (DOC_NO 17)
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 17, 1, 202407120090, 1, 5, 8, 2);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 17, 2, 202407120016, 1, 4, 7, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 17, 3, 202407120012, 1, 3, 3, 1);
+INSERT INTO APPR_LINE (APPR_LINE_NO, DOC_NO, SEQ, APPROVER_NO, APPROVAL_STAGE, DEPT_CODE, POSITION_CODE, APPROVER_CLASSIFICATION_NO)
+VALUES (SEQ_APPR_LINE.NEXTVAL, 17, 4, 202407120001, 1, 1, 1, 1);
+
 
 COMMIT;
 
@@ -812,110 +515,11 @@ INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES
 --------------------------------------------------------
 -- 문서 참조자 리스트 더미 데이터 (DOC_REFERENCE_LIST)
 --------------------------------------------------------
--- 문서 1 (임시저장 상태, 작성자: 1)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 1, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 1, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 1, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 1, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 1, 9);
-
--- 문서 2 (임시저장 상태, 작성자: 2)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 2, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 2, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 2, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 2, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 2, 8);
-
--- 문서 3 (임시저장 상태, 작성자: 3)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 3, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 3, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 3, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 3, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 3, 9);
-
--- 문서 4 (기안 상태, 작성자: 1)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 4, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 4, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 4, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 4, 9);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 4, 10);
-
--- 문서 5 (기안 상태, 작성자: 2)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 5, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 5, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 5, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 5, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 5, 10);
-
--- 문서 6 (기안 상태, 작성자: 3)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 6, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 6, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 6, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 6, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 6, 10);
-
--- 문서 7 (종결 상태, 작성자: 1)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 7, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 7, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 7, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 7, 9);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 7, 10);
-
--- 문서 8 (종결 상태, 작성자: 2)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 9);
-
--- 문서 9 (종결 상태, 작성자: 3)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 9, 1);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 9, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 9, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 9, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 9, 8);
-
--- 문서 10 (반려 상태, 작성자: 1)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 10, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 10, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 10, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 10, 9);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 10, 10);
-
--- 문서 11 (반려 상태, 작성자: 2)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 11, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 11, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 11, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 11, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 11, 9);
-
--- 문서 12 (반려 상태, 작성자: 3)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 12, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 12, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 12, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 12, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 12, 8);
-
--- 문서 13 (기안 상태, 작성자: 1)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 13, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 13, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 13, 8);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 13, 9);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 13, 10);
-
--- 문서 14 (기안 상태, 작성자: 2)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 14, 4);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 14, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 14, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 14, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 14, 8);
-
--- 문서 15 (기안 상태, 작성자: 3)
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 15, 1);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 15, 5);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 15, 6);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 15, 7);
-INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 15, 8);
+INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 8, 202407120090);
+INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 16, 202407120090);
+INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 24, 202407120092);
+INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 32, 202407120090);
+INSERT INTO DOC_REFERENCE_LIST (REFERENCE_LIST_NO, DOC_NO, REFERRER_NO) VALUES (SEQ_DOC_REFERENCE_LIST.NEXTVAL, 39, 202407120090);
 
 --------------------------------------------------------
 -- 메시지 더미 데이터 (MESSAGE)
