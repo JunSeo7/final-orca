@@ -54,7 +54,7 @@
                 <div class="main" id="content">
                     <h1>급여 입력</h1>
 
-                    <form action="/salary/write" method="get">
+                    <form action="/salary/write" method="post">
                         <pre>사원번호</pre><input type="text" name="empNo" >
                         <br>
                         <pre>직급수당</pre><input type="text" name="position" >
@@ -63,9 +63,9 @@
                         <br>
                         <pre>식대</pre><input type="text" name="meals" >
                         <br>
-                        <pre>휴일근무수당</pre><input type="text" name="holidayTime" >
+                        <pre>휴일근무시간</pre><input type="text" name="holidayTime" >
                         <br>
-                        <pre>연장근무수당</pre><input type="text" name="overTime" >
+                        <pre>연장근무시간</pre><input type="text" name="overTime" >
                         <br>
                         <pre>자녀 수</pre><input type="text" name="person" >
                         <br>
