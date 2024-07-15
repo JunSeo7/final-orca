@@ -101,7 +101,7 @@ public class TemplateController {
     @PutMapping("edit")
     public ResponseEntity<Void> editTemplate(@RequestBody TemplateVo vo, HttpSession httpSession){
 
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
 
         int result = service.editTemplate(vo);
         System.out.println("result = " + result);

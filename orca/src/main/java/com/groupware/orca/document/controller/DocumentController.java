@@ -151,8 +151,8 @@ public class DocumentController {
             vo.setFileVoList(fileVoList);
         }
 
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(Integer.parseInt(loginUserNo));
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(loginUserNo);
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }
@@ -162,7 +162,7 @@ public class DocumentController {
     // 내가 작성한 결재 문서 목록 조회
     @GetMapping("list")
     public String getDocumentList(Model model, HttpSession httpSession, Integer status){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
         model.addAttribute("documentList", documentList);
         return "document/list";
@@ -171,7 +171,7 @@ public class DocumentController {
     // 받은 결재
     @GetMapping("received")
     public String getSendDocumentList(Model model, HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
         model.addAttribute("documentList", documentList);
         return "document/list";
@@ -181,7 +181,7 @@ public class DocumentController {
     @GetMapping("api/received-documents")
     @ResponseBody
     public List<DocumentVo> getReceivedDocumentList(HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getSendDocumentList(loginUserNo);
         return documentList;
     }
@@ -189,7 +189,7 @@ public class DocumentController {
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @GetMapping("public")
     public String getPublicDocumentList(Model model, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getPublicDocumentList(loginUserNo);
         model.addAttribute("documentList", documentList);
         return "document/list";
@@ -204,7 +204,7 @@ public class DocumentController {
             @RequestParam(name = "status", required = false) Integer status,
             HttpSession httpSession) {
 
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
 
         List<DocumentVo> DocumentList = service.searchDocumentList(loginUserNo, searchType, searchText, status);
 
@@ -214,7 +214,7 @@ public class DocumentController {
     // 결재 상세보기 - 기안자 no 추가 (params)
     @GetMapping("detail")
     public String getDocumentByNo(Model model, HttpSession httpSession, int docNo){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         DocumentVo document = service.getDocumentByNo(docNo, loginUserNo);
         model.addAttribute("document", document);
         return "document/detail";
@@ -231,7 +231,7 @@ public class DocumentController {
     @GetMapping("getDocumentData")
     @ResponseBody
     public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
         return vo;
     }
@@ -240,8 +240,8 @@ public class DocumentController {
     @PostMapping("edit")
     public ResponseEntity<Void> editDocument(DocumentVo vo, HttpSession httpSession){
 
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(Integer.parseInt(loginUserNo));
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(loginUserNo);
 
         int result = service.editDocument(vo);
         if (result > 0) {
@@ -254,8 +254,8 @@ public class DocumentController {
     // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 / 기안 - 취소)
     @PostMapping("updateStatus")
     public String updateStatusDocument(DocumentVo vo, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(Integer.parseInt(loginUserNo));
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        vo.setWriterNo(loginUserNo);
         int result = service.updateStatusDocument(vo);
         return "redirect:/orca/document/list";
     }
@@ -263,7 +263,7 @@ public class DocumentController {
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @DeleteMapping("delete")
     public ResponseEntity<String> deleteDocumentByNo(@RequestParam int docNo, HttpSession httpSession){
-        String loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         int result = service.deleteDocumentByNo(docNo, loginUserNo);
         if (result > 0) {
             return ResponseEntity.ok("문서가 삭제되었습니다.");

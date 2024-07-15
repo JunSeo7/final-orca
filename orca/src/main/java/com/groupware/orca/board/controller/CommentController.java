@@ -19,7 +19,7 @@ public class CommentController {
     @PostMapping("/add")
     public @ResponseBody CommentVo addComment(@RequestBody CommentVo commentVo, HttpSession httpSession) {
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
-        commentVo.setInsertUserNo(Integer.parseInt(userVo.getEmpNo()));
+        commentVo.setInsertUserNo(userVo.getEmpNo());
 
         int categoryNo = commentService.getCategoryNoByBoardNo(commentVo.getBoardNo());
         if (categoryNo == 3) {

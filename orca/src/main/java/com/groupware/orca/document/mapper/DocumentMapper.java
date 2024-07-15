@@ -118,7 +118,7 @@ public interface DocumentMapper {
             ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
             </script>
             """)
-    List<DocumentVo> getDocumentList(String loginUserNo, Integer status);
+    List<DocumentVo> getDocumentList(int loginUserNo, Integer status);
 
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @Select("""
@@ -136,7 +136,7 @@ public interface DocumentMapper {
             WHERE D.DEL_YN = 'N' AND DRL.REFERRER_NO = #{loginUserNo} AND D.STATUS = 3
             ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
             """)
-    List<DocumentVo> getPublicDocumentList(String loginUserNo);
+    List<DocumentVo> getPublicDocumentList(int loginUserNo);
 
     // 내가 받은 결재 (앞 결재자의 상태가 2인지 확인 하고, 그러면 보이게하기..)
     @Select("""
@@ -174,7 +174,7 @@ public interface DocumentMapper {
                  END DESC,
                  D.CREDIT_DATE DESC
             """)
-    List<DocumentVo> getSendDocumentList(String loginUserNo);
+    List<DocumentVo> getSendDocumentList(int loginUserNo);
 
     //검색
     @Select("""
@@ -208,7 +208,7 @@ public interface DocumentMapper {
         ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
         </script>
         """)
-    List<DocumentVo> searchDocumentList(@Param("loginUserNo") String loginUserNo,
+    List<DocumentVo> searchDocumentList(@Param("loginUserNo") int loginUserNo,
                                         @Param("searchType") String searchType,
                                         @Param("searchText") String searchText,
                                         @Param("status") Integer status);
@@ -300,7 +300,7 @@ public interface DocumentMapper {
               AND A.APPROVER_NO = #{loginUserNo}
               AND A.APPROVAL_STAGE = 1
             """)
-    Integer isMyTurn(int docNo, String loginUserNo);
+    Integer isMyTurn(int docNo, int loginUserNo);
 
 
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
@@ -346,5 +346,5 @@ public interface DocumentMapper {
                     AND APPROVAL_STAGE != 1
               )
             """)
-    int deleteDocumentByNo(int docNo, String loginUserNo);
+    int deleteDocumentByNo(int docNo, int loginUserNo);
 }
