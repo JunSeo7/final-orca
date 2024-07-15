@@ -6,7 +6,7 @@ import lombok.Data;
 public class SickVo {
 
     private String sickNo;
-    private String empNo;
+    private int empNo;
     private int docNo;
     private String regDate;
     private String startDate;

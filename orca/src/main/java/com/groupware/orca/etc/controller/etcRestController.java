@@ -38,12 +38,12 @@ public class etcRestController {
     @PostMapping
     @Transactional
     public void enrollEtc(EtcVo vo, HttpSession httpSession){
-        String empNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int empNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setEmpNo(empNo);
 
         // 결재 문서 생성
         DocumentVo documentVo = new DocumentVo();
-        documentVo.setWriterNo(Integer.parseInt(empNo));
+        documentVo.setWriterNo(empNo);
         documentVo.setTitle(documentVo.getTitle());
         documentVo.setCategoryNo(documentVo.getCategoryNo());
         documentVo.setTemplateNo(documentVo.getTemplateNo());
