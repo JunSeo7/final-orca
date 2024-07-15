@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,10 @@ import java.util.*;
 @RequestMapping("orca/humanResources")
 @RequiredArgsConstructor
 public class PersonnelManagementController {
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
     private static final Logger log = LoggerFactory.getLogger(PersonnelManagementController.class);
     private final PersonnelManagementService service;
 
@@ -47,10 +52,9 @@ public class PersonnelManagementController {
             String originFileName = file.getOriginalFilename();
             InputStream is = file.getInputStream();
 
-            ServletContext context = req.getServletContext();
-            String path = context.getRealPath("/static/upload/user");
+            uploadDir += "/user";
 
-            File dir = new File(path);
+            File dir = new File(uploadDir);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -58,7 +62,8 @@ public class PersonnelManagementController {
             String random = UUID.randomUUID().toString();
             String ext = originFileName.substring(originFileName.lastIndexOf("."));
             String changeName = System.currentTimeMillis() + "_" + random + ext;
-            FileOutputStream fos = new FileOutputStream(path + "/" + changeName);
+
+            FileOutputStream fos = new FileOutputStream(uploadDir + "/" + changeName);
             byte[] buf = new byte[1024];
             int size;
             while ((size = is.read(buf)) != -1) {
