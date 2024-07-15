@@ -24,7 +24,7 @@ public class SalaryController {
     //급여계산 입력
     @PostMapping("write")
     public double salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo) {
-        int result = service.salaryWrite(clientVo, vo, svo);
+        int result = service.salaryWrite(clientVo, vo,svo);
 
         return result;
         //TODO 화면에서 자녀수에 따른 공제내역 사진 띄우고 적게 하기, param은 다 금액으로 입력받게 하기
