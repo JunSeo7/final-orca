@@ -275,8 +275,8 @@ public class SalaryService {
     }
 
     //급여 검색
-    public List<SalaryVo> searchSalary(String payrollNo) {
-        return dao.searchSalary(payrollNo);
+    public List<SalaryVo> searchSalary(String empNo) {
+        return dao.searchSalary(empNo);
     }
 }
 
