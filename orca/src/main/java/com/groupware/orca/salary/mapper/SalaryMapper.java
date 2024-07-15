@@ -63,7 +63,7 @@ public interface SalaryMapper {
 
     //사원 정보 가져오기 (salary, empNo)
     @Select("SELECT * FROM PERSONNEL_INFORMATION WHERE EMP_NO = #{empNo}")
-    UserVo getUserVo(String empNo);
+    UserVo getUserVo(int empNo);
 
     //화면에 보여줄 때는 이 쿼리문 사용하기!!
     //            SELECT
