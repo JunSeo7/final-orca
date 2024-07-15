@@ -20,5 +20,6 @@ public class SalaryVo {
     private double meals;               //식대
     private double totalSalary;           //최종급여
     private String paymentDate;         //지급날짜
+    private String name;
 
 }
