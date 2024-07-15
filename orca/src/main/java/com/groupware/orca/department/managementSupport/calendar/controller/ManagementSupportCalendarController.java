@@ -28,7 +28,7 @@ public class ManagementSupportCalendarController {
     @PostMapping("createCalendarCompany")
     @ResponseBody
     public int createCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         int result = service.createCalendarCompany(vo);
 

@@ -15,5 +15,5 @@ public interface UserMapper {
             "JOIN DEPARTMENT_TEAM T ON PI.TEAM_CODE = T.TEAM_CODE \n" +
             "JOIN POSITION PO ON PI.POSITION_CODE = PO.POSITION_CODE\n" +
             "WHERE EMP_NO = #{userNo}")
-    UserVo getUserVo(@Param("userNo") String userNo);
+    UserVo getUserVo(@Param("userNo") int userNo);
 }

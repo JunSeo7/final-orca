@@ -36,7 +36,7 @@ public class CalendarController {
     @PostMapping("createCalendar")
     @ResponseBody
     public int createCalendar(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(writerNo);
         int result = service.createCalendar(vo);
 
@@ -46,7 +46,7 @@ public class CalendarController {
     @PostMapping("deleteCalendar")
     @ResponseBody
     public int deleteCalendar(@RequestParam("calendarNo") int calendarNo, HttpSession httpSession) {
-        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         int result = service.deleteCalendar(calendarNo, writerNo);
         return result;
     }
@@ -54,7 +54,7 @@ public class CalendarController {
     @PostMapping("editCalendar")
     @ResponseBody
     public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
-        String writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        int writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         System.out.println("writerNo : " + writerNo);
         vo.setWriterNo(writerNo);
         int result = service.editCalendar(vo);

@@ -45,7 +45,7 @@ public interface CalendarMapper {
     List<CalendarVo> showCalendarBarContent(@Param("range") String range, @Param("vo") UserVo userVo);
 
     @Update("UPDATE CALENDAR SET DEL_DATE = SYSDATE WHERE CALENDAR_NO = #{calendarNo} AND WRITER_NO = #{writerNo}")
-    int deleteCalendar(@Param("calendarNo") int calendarNo, @Param("writerNo") String writerNo);
+    int deleteCalendar(@Param("calendarNo") int calendarNo, @Param("writerNo") int writerNo);
 
     @Update({
             "<script>",
