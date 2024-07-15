@@ -1,29 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <div class="container">
-        <form action="employeeRegistration" id="employee-registration" method="post">
+        <form action="employeeRegistration" id="employee-registration" method="post" enctype="multipart/form-data">
             <div class="container-grid">
                 <div class="header">사원 등록</div>
                 <div class="main-top">
                     <div><span>이름 </span><input type="text" id="name" name="name" maxlength="20" required></div>
                     <div>
                         <span>부서 </span>
-                        <select id="dept" name="deptCode">
+                        <select id="dept" name="deptCode" required>
                             <option value="">선택하세요</option>
                         </select>
 
                         <span>팀 </span>
-                        <select id="team" name="teamCode">
+                        <select id="team" name="teamCode" required>
                             <option value="">선택하세요</option>
                         </select>
                     </div>
                     <div><span>주민등록번호</span><input type="text" id="social-security-no" name="socialSecurityNo" pattern="[0-9]{6}-[0-9]{7}" required></div>
                     <div>
                         <span>직급 </span>
-                        <select id="position" name="positionCode">
+                        <select id="position" name="positionCode" required>
                             <option value="">선택하세요</option>
                         </select>
                     </div>
-                    <div><span>이메일 </span><input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required></div>
+                    <div><span>이메일 </span><input type="email" id="email" name="email" maxlength="50" required></div>
                     <div><span>휴대전화 </span><input type="text" id="phone" name="phone" maxlength="11" pattern="[0-9]*" required></div>
                     <div><span>비밀번호 </span><input type="password" id="password" name="password" pattern="[0-9]*" maxlength="20" required></div>
                     <div><span>내선전화 </span><input type="text" id="ext" name="extensionCall" maxlength="11" pattern="[0-9]*" required></div>
@@ -62,7 +62,7 @@
                         <input type="text" id="bankNumber" name="bankNumber" maxlength="19" pattern="[0-9]*" required>
                     </div>
                     <div class="address"><span>주소 </span><input type="text" id="address" name="address" maxlength="100" required></div>
-                    <div><span>이미지 </span><input type="file" id="image" name="image"></div>
+                    <div><span>이미지 </span><input type="file" id="image" name="image" accept=".jpg, .jpeg, .png"></div>
                 </div>
                 <div class="footer"><input class="employeeSubmit" type="submit" value="사원 등록"></div>
             </div>
@@ -79,8 +79,8 @@
             background-color: rgb(255, 255, 255);
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.112);
-            width: 800px;
-            height: 500px;
+            width: 820px;
+            height: 530px;
             margin-top: 20px;
             border-radius: 10px;
         }
@@ -90,7 +90,7 @@
             display: grid;
             grid-template-rows: 0.13fr 2fr 0.1fr;
             width: 100%;
-            height: 500px;
+            height: 530px;
             font-weight: 900;
         }
 

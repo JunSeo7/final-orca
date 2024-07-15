@@ -22,7 +22,16 @@ public interface PersonnelManagementMapper {
     @Select("SELECT POSITION_CODE, NAME_OF_POSITION FROM POSITION ORDER BY POSITION_CODE")
     List<Position> getPosition();
 
-    @Insert("INSERT INTO PERSONNEL_INFORMATION(EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO, PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, HEIGHT, WEIGHT, BLOOD_TYPE, RELIGION ,SALARY, BANK_NUMBER)\n" +
-            "VALUES (TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber})")
+    @Insert({"<script>" +
+            "INSERT INTO PERSONNEL_INFORMATION(EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO, PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, HEIGHT, WEIGHT, BLOOD_TYPE, RELIGION ,SALARY, BANK_NUMBER" +
+            "<if test='imgOriginName != null'>, IMG_ORIGIN_NAME</if>" +
+            "<if test='imgChangeName != null'>, IMG_CHANGE_NAME</if>" +
+            ")" +
+            "VALUES (TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber}" +
+            "<if test='imgOriginName != null'>, #{imgOriginName}</if>" +
+            "<if test='imgChangeName != null'>, #{imgChangeName}</if>" +
+            ")" +
+            "</script>"
+    })
     int employeeRegistration(UserVo newEmployeeVo);
 }
