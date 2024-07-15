@@ -71,8 +71,8 @@ public class SalaryDao {
     }
 
     //급여 검색
-    public List<SalaryVo> searchSalary(String payrollNo) {
-        return mapper.searchSalary(payrollNo);
+    public List<SalaryVo> searchSalary(String empNo) {
+        return mapper.searchSalary(empNo);
     }
 
 

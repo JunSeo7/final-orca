@@ -46,7 +46,7 @@ public class SalaryController {
 
 
     //급여 목록조회
-    @GetMapping
+    @GetMapping("list")
     public List<SalaryVo> getSalaryList(){
         List<SalaryVo> voList = service.getSalaryList();
         System.out.println("voList = " + voList);
