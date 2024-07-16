@@ -126,6 +126,7 @@ showVacationCode.addEventListener('click', function () {
 
                 for(let i = 0; i < data.length; i++) {
                     str += "<tr>";
+                    str += "<td><input type='checkbox' class='rowCheckbox'></td>";
                     str += "<td>" + data[i].vacationCode + "</td>";
                     str += "<td>" + data[i].vacationName + "</td>";
                     str += "</tr>";
