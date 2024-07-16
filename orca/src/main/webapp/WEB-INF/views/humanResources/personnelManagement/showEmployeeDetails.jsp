@@ -125,10 +125,10 @@
             margin-bottom: 2px;
         }
         .detail-header{
-            display: flex;
+            display: grid;
             align-items: center;
-            justify-content: center;
-            gap: 20px;
+            justify-items: center;
+            grid-template-columns: 20fr 1fr;
         }
         .backList{
             font-weight: 900;

@@ -4,10 +4,7 @@ import com.groupware.orca.common.vo.DepartmentVo;
 import com.groupware.orca.common.vo.Position;
 import com.groupware.orca.common.vo.TeamVo;
 import com.groupware.orca.user.vo.UserVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -81,6 +78,9 @@ public interface PersonnelManagementMapper {
             "    , E.BLOOD_TYPE\n" +
             "    , E.RELIGION\n" +
             "    , E.BANK_NUMBER\n" +
+            "    , E.TEAM_CODE\n" +
+            "    , E.DEPT_CODE\n" +
+            "    , E.POSITION_CODE\n" +
             "    , D.PARTNAME\n" +
             "    , T.TEAM_NAME\n" +
             "    , P.NAME_OF_POSITION\n" +
@@ -90,4 +90,34 @@ public interface PersonnelManagementMapper {
             "JOIN POSITION P ON P.POSITION_CODE = E.POSITION_CODE\n" +
             "WHERE EMP_NO = #{empNo}")
     UserVo getEmployeeDetails(@Param("empNo") int empNo);
+
+    @Update({
+            "<script>",
+            "UPDATE PERSONNEL_INFORMATION",
+            "<set>",
+            "<if test='vo.name != null'>NAME = #{vo.name},</if>",
+            "<if test='vo.gender != null'>GENDER = #{vo.gender},</if>",
+            "<if test='vo.socialSecurityNo != null'>SOCIAL_SECURITY_NO = #{vo.socialSecurityNo},</if>",
+            "<if test='vo.phone != null'>PHONE = #{vo.phone},</if>",
+            "<if test='vo.extensionCall != null'>EXTENSION_CALL = #{vo.extensionCall},</if>",
+            "<if test='vo.email != null'>EMAIL = #{vo.email},</if>",
+            "<if test='vo.address != null'>ADDRESS = #{vo.address},</if>",
+            "<if test='vo.height != null'>HEIGHT = #{vo.height},</if>",
+            "<if test='vo.weight != null'>WEIGHT = #{vo.weight},</if>",
+            "<if test='vo.bloodType != null'>BLOOD_TYPE = #{vo.bloodType},</if>",
+            "<if test='vo.religion != null'>RELIGION = #{vo.religion},</if>",
+            "<if test='vo.bankNumber != null'>BANK_NUMBER = #{vo.bankNumber},</if>",
+            "<if test='vo.deptCode != null'>DEPT_CODE = #{vo.deptCode},</if>",
+            "<if test='vo.positionCode != null'>POSITION_CODE = #{vo.positionCode},</if>",
+            "<if test='vo.teamCode != null'>TEAM_CODE = #{vo.teamCode},</if>",
+            "<if test='vo.imgOriginName != null'>IMG_ORIGIN_NAME = #{vo.imgOriginName},</if>",
+            "<if test='vo.imgChangeName != null'>IMG_CHANGE_NAME = #{vo.imgChangeName},</if>",
+            "</set>",
+            "WHERE EMP_NO = #{vo.empNo}",
+            "</script>"
+    })
+    int updateEmployee(@Param("vo") UserVo employeeVo);
+
+    @Update("UPDATE PERSONNEL_INFORMATION SET LEAVING_DATE = SYSDATE WHERE EMP_NO = #{empNo}")
+    int deleteEmployee(int empNo);
 }

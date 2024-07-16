@@ -51,7 +51,7 @@
                     <div><label for="bankName">은행명</label>
                         <select id="bankName" name="bankName" required>
                             <option value="">선택하세요</option>
-                            <option value="국민은행">농협은행</option>
+                            <option value="농협은행">농협은행</option>
                             <option value="국민은행">국민은행</option>
                             <option value="신한은행">신한은행</option>
                             <option value="우리은행">우리은행</option>

@@ -127,4 +127,51 @@ public class PersonnelManagementController {
     public String showEmployeeEdit() {
         return "humanResources/personnelManagement/showEmployeeEdit";
     }
+
+    @PostMapping("updateEmployee")
+    @ResponseBody
+    public int updateEmployee(UserVo employeeVo) throws IOException {
+        MultipartFile file = employeeVo.getImage();
+        System.out.println(file);
+        if (file != null && !file.isEmpty()) {
+            System.out.println("통과");
+            String originFileName = file.getOriginalFilename();
+            InputStream is = file.getInputStream();
+
+            if (!uploadDir.contains("user")) {
+                uploadDir += "/user";
+            }
+
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String random = UUID.randomUUID().toString();
+            String ext = originFileName.substring(originFileName.lastIndexOf("."));
+            String changeName = System.currentTimeMillis() + "_" + random + ext;
+
+            FileOutputStream fos = new FileOutputStream(uploadDir + "/" + changeName);
+            byte[] buf = new byte[1024];
+            int size;
+            while ((size = is.read(buf)) != -1) {
+                fos.write(buf, 0, size);
+            }
+
+            is.close();
+            fos.close();
+            employeeVo.setImgOriginName(originFileName);
+            employeeVo.setImgChangeName(changeName);
+        }
+        System.out.println("employeeVo = " + employeeVo);
+        int result = service.updateEmployee(employeeVo);
+        return result;
+    }
+
+    @PostMapping("deleteEmployee")
+    @ResponseBody
+    public int deleteEmployee(@RequestParam("empNo") int empNo) {
+        int result = service.deleteEmployee(empNo);
+        return result;
+    }
 }

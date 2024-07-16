@@ -124,10 +124,10 @@
         margin-bottom: 2px;
     }
     .detail-header{
-        display: flex;
+        display: grid;
         align-items: center;
-        justify-content: center;
-        gap: 20px;
+        justify-items: center;
+        grid-template-columns: 20fr 1fr;
     }
     .backList{
         font-weight: 900;
@@ -148,45 +148,45 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">이름:</span>
-                    <input type="text" id="name" class="form-control" name="name">
+                    <input type="text" id="name" class="form-control" name="name" maxlength="20" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">성별:</span>
-                    <select id="gender" class="form-control" name="gender">
+                    <select id="gender" class="form-control" name="gender" required>
                         <option value="M">남성</option>
                         <option value="F">여성</option>
                     </select>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">주민등록번호:</span>
-                    <input type="text" id="socialSecurityNo" class="form-control" name="socialSecurityNo">
+                    <input type="text" id="social-security-no" class="form-control" name="socialSecurityNo" pattern="[0-9]{6}-[0-9]{7}" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">전화번호:</span>
-                    <input type="text" id="phone" class="form-control" name="phone">
+                    <input type="text" id="phone" class="form-control" name="phone" maxlength="11" pattern="[0-9]*" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">내선번호:</span>
-                    <input type="text" id="extensionCall" class="form-control" name="extensionCall">
+                    <input type="text" id="extensionCall" class="form-control" name="extensionCall" maxlength="11" pattern="[0-9]*" required>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="detail-row img-content">
-                    <img id="profileImage" src="" alt="프로필 사진" class="profile-img">
+                    <img id="profileImage" src="" alt="프로필 사진" class="profile-img" accept=".jpg, .jpeg, .png">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="detail-row">
                     <span class="detail-label">이메일:</span>
-                    <input type="email" id="email" class="form-control" name="email">
+                    <input type="email" id="email" class="form-control" name="email"  maxlength="50" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">주소:</span>
-                    <input type="text" id="address" class="form-control" name="address">
+                    <input type="text" id="address" class="form-control" name="address" maxlength="100" required> 
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">입사일:</span>
-                    <input type="text" id="dateOfEmployment" class="form-control" name="dateOfEmployment">
+                    <input type="text" id="dateOfEmployment" class="form-control" name="dateOfEmployment" readonly>
                 </div>
             </div>
             <div class="col-md-6">
@@ -200,15 +200,15 @@
             <div class="col-md-6">
                 <div class="detail-row">
                     <span class="detail-label">키:</span>
-                    <input type="text" id="height" class="form-control" name="height">
+                    <input type="text" id="height" class="form-control" name="height" maxlength="3" pattern="[0-9]*" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">몸무게:</span>
-                    <input type="text" id="weight" class="form-control" name="weight">
+                    <input type="text" id="weight" class="form-control" name="weight" maxlength="3" pattern="[0-9]*" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">혈액형:</span>
-                    <select id="bloodType" class="form-control" name="bloodType">
+                    <select id="bloodType" class="form-control" name="bloodType" required>
                         <option value="A">A형</option>
                         <option value="B">B형</option>
                         <option value="O">O형</option>
@@ -219,11 +219,20 @@
             <div class="col-md-6">
                 <div class="detail-row">
                     <span class="detail-label">종교:</span>
-                    <input type="text" id="religion" class="form-control" name="religion">
+                    <input type="text" id="religion" class="form-control" name="religion" maxlength="30" required>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">은행 계좌번호:</span>
-                    <input type="text" id="bankNumber" class="form-control" name="bankNumber">
+                    <select id="bankName" name="bankName" required>
+                        <option value="">선택하세요</option>
+                        <option value="농협은행">농협은행</option>
+                        <option value="국민은행">국민은행</option>
+                        <option value="신한은행">신한은행</option>
+                        <option value="우리은행">우리은행</option>
+                        <option value="하나은행">하나은행</option>
+                        <option value="IBK기업은행">IBK기업</option>
+                    </select>
+                    <input type="text" id="bankNumber" class="form-control" name="bankNumber" maxlength="19" pattern="[0-9]*" required>
                 </div>
                 <!-- 추가적인 필드들은 필요에 따라 추가 -->
             </div>
@@ -232,17 +241,23 @@
             <div class="col-md-6">
                 <div class="detail-row">
                     <span class="detail-label">부서명:</span>
-                    <input type="text" id="partName" class="form-control" name="partName">
+                    <select id="deptCode" name="deptCode" required>
+                        <option value="">선택하세요</option>
+                    </select>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">직위명:</span>
-                    <input type="text" id="nameOfPosition" class="form-control" name="nameOfPosition">
+                    <select id="positionCode" name="positionCode" required>
+                        <option value="">선택하세요</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="detail-row">
                     <span class="detail-label">팀명:</span>
-                    <input type="text" id="teamName" class="form-control" name="teamName">
+                    <select id="teamCode" name="teamCode" required>
+                        <option value="">선택하세요</option>
+                    </select>
                 </div>
                 <!-- 추가적인 필드들은 필요에 따라 추가 -->
             </div>
