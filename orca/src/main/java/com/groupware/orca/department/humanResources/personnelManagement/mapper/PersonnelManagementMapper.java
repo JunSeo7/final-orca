@@ -64,4 +64,30 @@ public interface PersonnelManagementMapper {
             ")\n" +
             "WHERE RNUM BETWEEN #{startNum} AND #{endNum}")
     List<UserVo> listEmployeeData(@Param("startNum") int startNum, @Param("endNum") int endNum);
+
+    @Select("SELECT \n" +
+            "    E.EMP_NO \n" +
+            "    , E.NAME\n" +
+            "    , E.GENDER\n" +
+            "    , E.SOCIAL_SECURITY_NO\n" +
+            "    , E.PHONE\n" +
+            "    , E.EXTENSION_CALL\n" +
+            "    , E.EMAIL\n" +
+            "    , E.ADDRESS\n" +
+            "    , E.DATE_OF_EMPLOYMENT\n" +
+            "    , E.IMG_CHANGE_NAME\n" +
+            "    , E.HEIGHT\n" +
+            "    , E.WEIGHT\n" +
+            "    , E.BLOOD_TYPE\n" +
+            "    , E.RELIGION\n" +
+            "    , E.BANK_NUMBER\n" +
+            "    , D.PARTNAME\n" +
+            "    , T.TEAM_NAME\n" +
+            "    , P.NAME_OF_POSITION\n" +
+            "FROM PERSONNEL_INFORMATION E\n" +
+            "JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE\n" +
+            "JOIN DEPARTMENT_TEAM T ON T.TEAM_CODE = E.TEAM_CODE\n" +
+            "JOIN POSITION P ON P.POSITION_CODE = E.POSITION_CODE\n" +
+            "WHERE EMP_NO = #{empNo}")
+    UserVo getEmployeeDetails(@Param("empNo") int empNo);
 }

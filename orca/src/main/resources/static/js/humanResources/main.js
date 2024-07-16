@@ -296,6 +296,10 @@ function inputEmployeeRegistration() {
 
 const employeeList = document.querySelector('.employee-list');
 employeeList.addEventListener('click', function () {
+    showEmployeeList();
+});
+
+function showEmployeeList() {
     let page = 1;
     $.ajax({
         type: 'get',
@@ -312,7 +316,7 @@ employeeList.addEventListener('click', function () {
             console.error('데이터 로드 실패', error);
         }
     });
-});
+}
 
 function listEmployeePage(page) {
     const pagination = {};
@@ -373,7 +377,8 @@ function listEmployeeData(pagination) {
 
     let startNum = pagination.startNum;
     let endNum = pagination.endNum;
-
+    let employeeContainer = document.querySelector('.employee-container');
+    employeeContainer.innerHTML = '';
     $('.employee-container').empty();
 
     $.ajax({
@@ -385,18 +390,126 @@ function listEmployeeData(pagination) {
         },
         dataType: 'json',
         success: function (data) {
-            data.forEach(function(employee) {
+            data.forEach(function (employee) {
                 let imageUrl = '/upload/user/' + employee.imgChangeName;
-                let employeeDiv = `
-                    <div class="employee-info">
-                        <img src="${imageUrl}" alt="img" class="employee-profile">
-                        <div class="employee-name">${employee.name}</div>(<div class="employee-position">${employee.nameOfPosition.trim()}</div>/<div class="employee-department">${employee.partName}</div>)
-                    </div>`;
-                $('.employee-container').append(employeeDiv);
+
+                // employee-info 요소 생성
+                let employeeDiv = document.createElement('div');
+                employeeDiv.classList.add('employee-info');
+
+                // 이미지 요소 생성
+                let img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'img';
+                img.classList.add('employee-profile');
+                employeeDiv.appendChild(img);
+
+                // 이름, 직위, 부서 정보 추가
+                let employeeName = document.createElement('div');
+                employeeName.textContent = `${employee.name} (${employee.nameOfPosition.trim()}/${employee.partName})`;
+                employeeDiv.appendChild(employeeName);
+
+                employeeDiv.addEventListener('click', function () {
+                    showEmployeeDetails(employee.empNo);
+                })
+
+                employeeContainer.appendChild(employeeDiv);
+            });
+
+
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+function showEmployeeDetails(empNo) {
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/showEmployeeDetails',
+        dataType: 'html',
+        success: function (response) {
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            let backList = document.querySelector('.backList');
+            backList.addEventListener('click', function () {
+                showEmployeeList();
+            });
+            getEmployeeDetails(empNo);
+            document.querySelector('.btn-primary').addEventListener('click', function(){
+                showEmployeeEdit(empNo);
             });
         },
         error: function (error) {
             console.error('데이터 로드 실패', error);
         }
     });
+};
+
+function getEmployeeDetails(empNo) {
+    $.ajax({
+        type: 'get',
+        url: `/orca/humanResources/getEmployeeDetails`,
+        data: {
+            empNo: empNo
+        },
+        dataType: 'json',
+        success: function (data) {
+            $('#empNo').text(data.empNo);
+            $('#name').text(data.name);
+            $('#gender').text(data.gender);
+            $('#socialSecurityNo').text(data.socialSecurityNo);
+            $('#phone').text(data.phone);
+            $('#extensionCall').text(data.extensionCall);
+            $('#email').text(data.email);
+            $('#address').text(data.address);
+            $('#dateOfEmployment').text(data.dateOfEmployment);
+            $('#height').text(data.height);
+            $('#weight').text(data.weight);
+            $('#bloodType').text(data.bloodType);
+            $('#religion').text(data.religion);
+            $('#bankNumber').text(data.bankNumber);
+            $('#partName').text(data.partName);
+            $('#nameOfPosition').text(data.nameOfPosition);
+            $('#teamName').text(data.teamName);
+            $('#profileImage').attr('src', '/upload/user/' + data.imgChangeName); // 이미지 경로 설정
+
+        },
+        error: function (error) {
+            console.error('사원 상세 조회 실패', error);
+        }
+    });
+}
+
+function showEmployeeEdit(empNo){
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/showEmployeeEdit',
+        dataType: 'html',
+        success: function (response) {
+            console.log(response);
+            while (mainDiv.firstChild) {
+                mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.innerHTML = response;
+            let backList = document.querySelector('.backList');
+            backList.addEventListener('click', function () {
+                showEmployeeDetails(empNo);
+            });
+            getEmployeeDetails(empNo);
+            document.querySelector('.btn-primary').addEventListener('click', function(){
+                EmployeeEdit(empNo);
+            });
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+function EmployeeDetails(empNo){
+    console.log(empNo);
 }

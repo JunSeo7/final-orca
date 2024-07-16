@@ -55,7 +55,9 @@ public class PersonnelManagementController {
             String originFileName = file.getOriginalFilename();
             InputStream is = file.getInputStream();
 
-            uploadDir += "/user";
+            if (!uploadDir.contains("user")) {
+                uploadDir += "/user";
+            }
 
             File dir = new File(uploadDir);
             if (!dir.exists()) {
@@ -103,10 +105,26 @@ public class PersonnelManagementController {
     @GetMapping("listEmployeeData")
     @ResponseBody
     public List<UserVo> listEmployeeData(@RequestParam("startNum") int startNum,
-                                             @RequestParam("endNum") int endNum) {
+                                         @RequestParam("endNum") int endNum) {
         List<UserVo> employeeVoList = service.listEmployeeData(startNum, endNum);
         return employeeVoList;
     }
 
+    @GetMapping("showEmployeeDetails")
+    public String showEmployeeDetails() {
+        return "humanResources/personnelManagement/showEmployeeDetails";
+    }
 
+    @GetMapping("getEmployeeDetails")
+    @ResponseBody
+    public UserVo getEmployeeDetails(@RequestParam("empNo") int empNo) {
+        UserVo employeeInfo = service.getEmployeeDetails(empNo);
+        System.out.println(employeeInfo);
+        return employeeInfo;
+    }
+
+    @GetMapping("showEmployeeEdit")
+    public String showEmployeeEdit() {
+        return "humanResources/personnelManagement/showEmployeeEdit";
+    }
 }
