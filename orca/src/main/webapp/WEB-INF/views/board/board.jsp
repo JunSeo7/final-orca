@@ -442,122 +442,87 @@
             likeCountElement.innerText = likeCount;
         }
 
-        function getCommentHtml(comment) {
-            var isReply = comment.replyCommentNo !== null;
-            var commentClass = isReply ? 'comment reply' : 'comment';
+   function getCommentHtml(comment) {
+       var isReply = comment.replyCommentNo !== null;
+       var commentClass = isReply ? 'comment reply' : 'comment';
 
-            var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
-            var employeeName = comment.employeeName;
-            var teamName = comment.teamName;
+       var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
+       var employeeName = comment.employeeName;
+       var teamName = comment.teamName;
 
-            if (comment.isAnonymous === "Y") {
-                employeeName = '***';
-                teamName = '***';
-            } else if (!employeeName) {
-                employeeName = '알 수 없음';
-            }
+       if (comment.isAnonymous === "Y") {
+           employeeName = '***';
+           teamName = '***';
+       } else if (!employeeName) {
+           employeeName = '알 수 없음';
+       }
 
-            html += '<div class="author">작성자: ' + employeeName + '</div>';
-            html += '<div class="team">팀: ' + teamName + '</div>';
-            html += '<div class="date">' + comment.enrollDate + '</div>';
-            html += '<div class="content">' + comment.content + '</div>';
+       html += '<div class="author">작성자: ' + employeeName + '</div>';
+       html += '<div class="team">팀: ' + teamName + '</div>';
+       html += '<div class="date">' + comment.enrollDate + '</div>';
+       html += '<div class="content">' + comment.content + '</div>';
 
-            html += '<div class="actions">';
-            html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
-            html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
-            html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
-            html += '</div>';
+       const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
+       if (currentUserNo == comment.insertUserNo) {
+           html += '<div class="actions">';
+           html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
+           html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
+           html += '</div>';
+       }
 
-            html += '</div>';
+       html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
+       html += '</div>';
 
-            if (comment.replies && comment.replies.length > 0) {
-                html += '<div class="reply-container">';
-                comment.replies.forEach(function (reply) {
-                    html += getCommentHtml(reply);
-                });
-                html += '</div>';
-            }
+       if (comment.replies && comment.replies.length > 0) {
+           html += '<div class="reply-container">';
+           comment.replies.forEach(function (reply) {
+               html += getCommentHtml(reply);
+           });
+           html += '</div>';
+       }
 
-            return html;
-        }function getCommentHtml(comment) {
-             var isReply = comment.replyCommentNo !== null;
-             var commentClass = isReply ? 'comment reply' : 'comment';
-
-             var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
-             var employeeName = comment.employeeName;
-             var teamName = comment.teamName;
-
-             if (comment.isAnonymous === "Y") {
-                 employeeName = '***';
-                 teamName = '***';
-             } else if (!employeeName) {
-                 employeeName = '알 수 없음';
-             }
-
-             html += '<div class="author">작성자: ' + employeeName + '</div>';
-             html += '<div class="team">팀: ' + teamName + '</div>';
-             html += '<div class="date">' + comment.enrollDate + '</div>';
-             html += '<div class="content">' + comment.content + '</div>';
-
-             const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
-             if (currentUserNo == comment.insertUserNo) {
-                 html += '<div class="actions">';
-                 html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
-                 html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
-                 html += '</div>';
-             }
-
-             html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
-             html += '</div>';
-
-             if (comment.replies && comment.replies.length > 0) {
-                 html += '<div class="reply-container">';
-                 comment.replies.forEach(function (reply) {
-                     html += getCommentHtml(reply);
-                 });
-                 html += '</div>';
-             }
-
-             return html;
-         }
+       return html;
+   }
 
 
-        function showComments(boardNo) {
-            $.ajax({
-                url: "/orca/board/comment/list?boardNo=" + boardNo,
-                method: "GET",
-                dataType: "json",
-                success: function (response) {
-                    var commentMap = {};
+function showComments(boardNo) {
+    $.ajax({
+        url: "/orca/board/comment/list?boardNo=" + boardNo,
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+            var comments = response.filter(comment => comment.boardNo == boardNo); // 필터링
+            var commentMap = {};
 
-                    // 모든 댓글을 맵에 넣고 대댓글 리스트를 초기화
-                    response.forEach(function (comment) {
-                        commentMap[comment.boardChatNo] = comment;
-                        commentMap[comment.boardChatNo].replies = [];
-                    });
+            // 모든 댓글을 맵에 넣고 대댓글 리스트를 초기화
+            comments.forEach(function (comment) {
+                commentMap[comment.boardChatNo] = comment;
+                commentMap[comment.boardChatNo].replies = [];
+            });
 
-                    // 대댓글을 부모 댓글의 대댓글 리스트에 추가
-                    response.forEach(function (comment) {
-                        if (comment.replyCommentNo !== null) {
-                            commentMap[comment.replyCommentNo].replies.push(comment);
-                        }
-                    });
-
-                    // 최상위 댓글만 추려서 HTML 생성
-                    var commentsHtml = '';
-                    response.forEach(function (comment) {
-                        if (comment.replyCommentNo === null && comment.boardNo === boardNo) {
-                            commentsHtml += getCommentHtml(comment);
-                        }
-                    });
-
-                    $('#comments-container').html(commentsHtml);
-                },
-                error: function () {
-                    alert("댓글을 불러오는데 실패했습니다.");
+            // 대댓글을 부모 댓글의 대댓글 리스트에 추가
+            comments.forEach(function (comment) {
+                if (comment.replyCommentNo !== null) {
+                    commentMap[comment.replyCommentNo].replies.push(comment);
                 }
             });
+
+            // 최상위 댓글만 추려서 HTML 생성
+            var commentsHtml = '';
+            comments.forEach(function (comment) {
+                if (comment.replyCommentNo === null) {
+                    commentsHtml += getCommentHtml(comment);
+                }
+            });
+
+            $('#comments-container').html(commentsHtml);
+        },
+        error: function () {
+            alert("댓글을 불러오는데 실패했습니다.");
         }
+    });
+}
+
 
         function addComment() {
             var content = $('#new-comment-content').val();
