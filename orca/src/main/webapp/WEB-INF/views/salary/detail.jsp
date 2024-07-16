@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>salary detail</title>
     <!-- 파비콘 -->
     <link rel="icon" href="img/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/managementSupport/main.css">
@@ -55,31 +55,10 @@
         <div class="main" id="content">
             <h1>급여 목록조회</h1>
 
-            <table class="salaryWrite">
-                <thead>
-                    <tr>
-                        <th>글 번호</th>
-                        <th>사번</th>
-                        <th>이름</th>
-                        <th>국민연금</th>
-                        <th>건강보험</th>
-                        <th>장기요양보험</th>
-                        <th>고용보험</th>
-                        <th>소득세</th>
-                        <th>지방소득세</th>
-                        <th>직급수당</th>
-                        <th>상여금</th>
-                        <th>휴일근로수당</th>
-                        <th>연장근로수당</th>
-                        <th>식대</th>
-                        <th>최종 급여(원)</th>
-                        <th>날짜</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div id="detailArea">
 
-                </tbody>
-            </table>
+            </div>
+            
         </div>
     </main>
 </body>
@@ -89,29 +68,48 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
-  $.ajax({
-    url: "http://127.0.0.1:8080/orca/salary",
-    method: "GET", 
-    success: function(x){
 
-      const voList = x;
-      console.log(voList);
+    function detail(x){
 
-      const tbody = document.querySelector("tbody");
-      let str = "";
-      for(let i=0; i < voList.length; ++i){
-        str += "<tr>";
-        str += "<td>" + voList[i].payrollNo + "</td>";
-        str += "<td>" + voList[i].empNo + "</td>";
-        str += "<td>" + voList[i].name + "원"  + "</td>";
-        str += "<td>" + voList[i].totalSalary + "</td>";
-        str += "<td>" + voList[i].paymentDate + "</td>";
-        str += "</tr>";
-      }
-      tbody.innerHTML = str;
+       
 
-    },
-  
+        $.ajax({
+        url: "http://127.0.0.1:8080/orca/salary",
+        method: "GET",
+        data: {
+            payrollNo: x.payrollNo
+        } , 
+        success: function(){
+            const detailArea = document.querySelector("#detailArea");
 
-  });
+            let str = "";
+            str += "<h2>상세조회</h2>";
+            str += "<h3>번호 : " + x.payrollNo + "</h3>";
+            str += "<h3>사원번호 : " + x.empNo + "</h3>";
+            str += "<h3>지급날짜 : " + x.name + "</h3>";
+            str += "<h3>이름 : " + x.nationalPension + "</h3>";
+            str += "<h3>국민연금 : " + x.healthInsurance + "</h3>";
+            str += "<h3>건강보험 : " + x.longCare + "</h3>";
+            str += "<h3>장기요양보험 : " + x.employmentInsurance + "</h3>";
+            str += "<h3>고용보험 : " + x.incomeTax + "</h3>";
+            str += "<h3>소득세 : " + x.localIncomeTax + "</h3>";
+            str += "<h3>지방소득세 : " + x.position + "</h3>";
+            str += "<h3>직급수당 : " + x.bonus + "</h3>";
+            str += "<h3>보너스 : " + x.holiday + "</h3>";
+            str += "<h3>휴일근무수당 : " + x.overTimeWork + "</h3>";
+            str += "<h3>연장근로수당 : " + x.meals + "</h3>";
+            str += "<h3>식대 : " + x.totalSalary + "</h3>";
+            str += "<h3>최종급여 : " + x.paymentDate + "</h3>";
+            // str += `<button onclick='edit(${x.no});'>수정하기</button>`;
+            // str += `<button onclick='del(${x.no});'>삭제하기</button>`; 
+
+            detailArea.innerHTML = str;
+        },
+
+
+        });
+    }
+    
+
+    
 </script>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("orca/salary")
+@RequestMapping("salary")
 public class SalaryPageController {
 
     private final SalaryService service;
@@ -33,11 +33,12 @@ public class SalaryPageController {
         return "salary/list";
     }
 
-//    //급여 상세조회 (화면)
-//    @GetMapping
-//    public String salaryDetail(){
-//        return "salary/detail";
-//    }
+    //급여 상세조회 (화면)
+    @GetMapping("detail")
+    public String SalaryByNo(){
+
+        return "salary/detail";
+    }
 //
 //    //급여 수정 (화면)
 //    @GetMapping("edit")
