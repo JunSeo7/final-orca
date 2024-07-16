@@ -43,4 +43,8 @@ public class PersonnelManagementDao {
     public List<UserVo> listEmployeeData(int startNum, int endNum) {
         return mapper.listEmployeeData(startNum, endNum);
     }
+
+    public UserVo getEmployeeDetails(int empNo) {
+        return mapper.getEmployeeDetails(empNo);
+    }
 }

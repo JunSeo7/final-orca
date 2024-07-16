@@ -31,4 +31,8 @@ public class PersonnelManagementService {
     public List<UserVo> listEmployeeData(int startNum, int endNum) {
         return dao.listEmployeeData(startNum, endNum);
     }
+
+    public UserVo getEmployeeDetails(int empNo) {
+        return dao.getEmployeeDetails(empNo);
+    }
 }
