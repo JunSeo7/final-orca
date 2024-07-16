@@ -22,7 +22,7 @@ public class SalaryController {
 
 
     //급여계산 입력
-    @PostMapping
+    @PostMapping("write")
     public double salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo) {
         int result = service.salaryWrite(clientVo, vo,svo);
 
@@ -46,7 +46,7 @@ public class SalaryController {
 
 
     //급여 목록조회
-    @GetMapping
+    @GetMapping("list")
     public List<SalaryVo> getSalaryList(){
         List<SalaryVo> voList = service.getSalaryList();
         System.out.println("voList = " + voList);
@@ -59,12 +59,13 @@ public class SalaryController {
     @GetMapping("detail")
     public SalaryVo getSalaryByNo(@RequestParam("payrollNo") String payrollNo){
         SalaryVo vo = service.getSalaryByNo(payrollNo);
+        System.out.println("vo = " + vo);
         return vo;
     }
 
 
     //급여 삭제
-    @DeleteMapping
+    @DeleteMapping("delete")
     public int getSalaryDelete(@RequestParam("empNo") String empNo, @RequestParam("payrollNo")String payrollNo){
         int result = service.getSalaryDelete(empNo,payrollNo);
         return result;

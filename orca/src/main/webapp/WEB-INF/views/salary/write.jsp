@@ -5,7 +5,7 @@
 
         <head>
             <meta charset="UTF-8">
-            <title>Home</title>
+            <title>salary write</title>
             <!-- 파비콘 -->
             <link rel="icon" href="img/logo.png" type="image/png">
             <link rel="stylesheet" href="/css/managementSupport/main.css">
