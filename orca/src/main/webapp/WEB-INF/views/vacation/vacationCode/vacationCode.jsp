@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>휴가 코드 조회</title>
+    <title>휴가 관리</title>
     <style>
         table {
             width: 100%;
@@ -20,16 +20,46 @@
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #6eadff;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 50px;
+        }
+        .button-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #6eadff;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .button.edit {
+            background-color: #6eadff;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>휴가 코드 조회</h2>
+        <h2>휴가 관리</h2>
+        <div class="button-container">
+            <button class="button" id="addVacationCodeBtn">휴가 등록</button>
+            <button class="button edit" id="editVacationCodeBtn">휴가 수정</button>
+        </div>
         <table id="vacationCodesTable">
             <thead>
                 <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
                     <th>휴가 코드</th>
                     <th>휴가 이름</th>
                 </tr>
