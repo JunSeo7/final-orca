@@ -129,7 +129,7 @@ public interface SalaryMapper {
                    ,MEALS = #{svo.meals}
                    ,TOTAL_SALARY = #{svo.totalSalary}
                    ,PAYMENT_DATE = SYSDATE
-            WHERE EMP_NO = #{vo.empNo}
+            WHERE PAYROLL_NO = #{svo.payrollNo}
             """)
     int salaryUpdate(@Param("clientVo") ClientVo clientVo,@Param("vo") UserVo vo,@Param("svo") SalaryVo svo);
     //    @Update("UPDATE PAYROLL\n" +

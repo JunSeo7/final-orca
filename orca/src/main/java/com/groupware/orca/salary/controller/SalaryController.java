@@ -23,7 +23,7 @@ public class SalaryController {
 
     //급여계산 입력
     @PostMapping("write")
-    public double salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo) {
+    public int salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo) {
         int result = service.salaryWrite(clientVo, vo,svo);
 
         return result;
@@ -33,11 +33,6 @@ public class SalaryController {
     //급여계산 수정
     @PostMapping("edit")
     public int salaryUpdate(ClientVo clientVo,UserVo vo,SalaryVo svo){
-        System.out.println("vo = " + vo);
-        System.out.println("clientVo = " + clientVo);
-        System.out.println("svo = " + svo);
-        System.out.println("service = " + service);
-
         int result = service.salaryUpdate(vo,clientVo,svo);
 
         return result;

@@ -11,7 +11,6 @@
     <link rel="icon" href="img/logo.png" type="image/png">
     <link rel="stylesheet" href="/css/managementSupport/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script defer src="/js/managementSupport/main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/salary/list.css">
 </head>
@@ -76,6 +75,27 @@
 
             </div>
 
+            <div id="editArea">
+                <h1>급여 수정</h1>
+                <form action="salary/edit" method="post">
+                    사원번호 :<input type="text" name="empNo" >
+                    <br>
+                    직급수당: <input type="text" name="position" >
+                    <br>
+                    상여금: <input type="text" name="bonus" >
+                    <br>
+                    식대: <input type="text" name="meals" >
+                    <br>
+                    휴일근무시간: <input type="text" name="holidayTime" >
+                    <br>
+                    연장근무시간: <input type="text" name="overTime" >
+                    <br>
+                    자녀 수: <input type="text" name="person" >
+                    <br>
+                    <input type="submit" name="edit" placeholder="수정하기">
+                </form>
+            </div>
+
         </div>
     </main>
 </body>
@@ -90,7 +110,7 @@
     url: "http://127.0.0.1:8080/orca/salary/list",
     method: "GET", 
     success: function(x){
-
+        $('div.editArea').remove();
         const voList = x;
         console.log(voList);
         
@@ -121,6 +141,7 @@
         console.log();
         $('h1.salary-list').remove();
         $('table.salaryWrite').remove();
+        $('div.editArea').remove();
         $.ajax({
         url: "http://127.0.0.1:8080/orca/salary/detail",
         method: "GET",
@@ -131,7 +152,7 @@
             const detailArea = document.querySelector("#detailArea");
             console.log(data);
             let str = "";
-            str += "<h2>상세조회</h2>";
+            str += "<h1>급여 상세조회</h1>";
             str += "<h3>번호 : " + data.payrollNo + "</h3>";
             str += "<h3>사원번호 : " + data.empNo + "</h3>";
             str += "<h3>지급날짜 : " + data.name + "</h3>";
@@ -148,9 +169,9 @@
             str += "<h3>연장근로수당 : " + data.meals + "</h3>";
             str += "<h3>식대 : " + data.totalSalary + "</h3>";
             str += "<h3>최종급여 : " + data.paymentDate + "</h3>";
-            str += "<a href='http://127.0.0.1:8080/salary/list'>급여 목록으로 돌아가기</a>";
-            // str += `<button onclick='edit(${x.no});'>수정하기</button>`;
-            // str += `<button onclick='del(${x.no});'>삭제하기</button>`; 
+            str += "<a href='http://127.0.0.1:8080/orca/salaryList'>급여 목록으로 돌아가기</a>";
+            str += "<button onclick='edit("+ data.payrollNo + ", " + data.empNo + ", \"" + data.position + "\", " + data.bonus + ", " + data.meals + ", " + data.holiday + ", " + data.overTimeWork + ");'>수정하기</button>";
+            str += "<button onclick='del("+ data.payrollNo + data.empNo + ");'>삭제하기</button>"; 
 
             detailArea.innerHTML = str;
         },
@@ -161,4 +182,44 @@
     
 
     
+</script>
+
+<script>
+
+    function edit(payrollNo){
+        $('div.detailArea').remove();
+    
+        const divFrom = document.querySelector("#editArea");
+
+        $.ajax({
+            url: "http://127.0.0.1:8080/orca/salary/edit",
+            method: "GET",
+            data: {
+                payrollNo:payrollNo
+            },
+            success: function(data){
+                console.log(data);
+            },
+        });
+    }
+
+</script>
+
+<script>
+
+    function del(payrollNo,empNo){
+        $.ajax({
+            url: "http://127.0.0.1:8080/orca/salary/delete", 
+            method: "delete",
+            data: {
+                payrollNo:payrollNo,
+                empNo:empNo
+            },
+            success: function(data){
+                console.log("del result :"+ x);
+            },
+            
+        });
+    }
+
 </script>
