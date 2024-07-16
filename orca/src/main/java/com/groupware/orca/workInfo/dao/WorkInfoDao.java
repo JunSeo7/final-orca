@@ -13,7 +13,7 @@ public class WorkInfoDao {
 
     private final WorkInfoMapper mapper;
 
-    public List<WorkInfoVo> workList(String empNo) {
+    public List<WorkInfoVo> workList(int empNo) {
 
         return mapper.workList(empNo);
     }
@@ -32,11 +32,11 @@ public class WorkInfoDao {
     }
 
 
-    public String getStartWorkTime(String empNo, String workDate) {
+    public String getStartWorkTime(int empNo, String workDate) {
         return mapper.getStartWorkTime(empNo, workDate);
     }
 
-    public String getEndWorkTime(String empNo, String workDate) {
+    public String getEndWorkTime(int empNo, String workDate) {
         return mapper.getEndWorkTime(empNo, workDate);
     }
 }

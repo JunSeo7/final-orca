@@ -10,10 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,21 +24,21 @@ public class VacationRestController {
 
     // 휴가 코드 불러오기
     @GetMapping
-    public ResponseEntity<List<VacationRefVo>> loadVacationCode(){
-        List<VacationRefVo> VRVo = service.loadVacationCode();
-        return ResponseEntity.ok(VRVo);
-
+    public ResponseEntity<List<VacationRefVo>> loadVacationCode() {
+        List<VacationRefVo> vacationCodes = service.loadVacationCode();
+        return ResponseEntity.ok(vacationCodes);
     }
 
     // 휴가 신청
     @PostMapping
     @Transactional
-    public void enrollVacation(VacationVo vo, HttpSession httpSession){
+    public String enrollVacation(VacationVo vo, HttpSession httpSession){
+
         int empNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setEmpNo(empNo);
 
-        // 결재 문서 생성
         DocumentVo documentVo = new DocumentVo();
+
         documentVo.setWriterNo(empNo);
         documentVo.setTitle(documentVo.getTitle());
         documentVo.setCategoryNo(documentVo.getCategoryNo());
@@ -56,6 +53,7 @@ public class VacationRestController {
         vo.setDocNo(docNo);
 
         service.enrollVacation(vo);
+        return "redirect:/orca/document/list";
 
     }
 
