@@ -324,59 +324,68 @@
             return imgTag ? imgTag : '';
         }
 
-        function showModal(boardNo) {
-            $.ajax({
-                url: "/orca/board/" + boardNo,
-                method: "GET",
-                dataType: "json",
-                success: function (response) {
-                    $('#modal-title').text(response.title);
-                    $('#modal-title').attr('data-board-no', response.boardNo);
-                    $('#hit').text(response.hit);
-                    $('#teamName').text(response.teamName);
-                    $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
-                    $('#insert-name').text(response.employeeName);
+       function showModal(boardNo) {
+           $.ajax({
+               url: "/orca/board/" + boardNo,
+               method: "GET",
+               dataType: "json",
+               success: function (response) {
+                   $('#modal-title').text(response.title);
+                   $('#modal-title').attr('data-board-no', response.boardNo);
+                   $('#hit').text(response.hit);
+                   $('#teamName').text(response.teamName);
+                   $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
+                   $('#insert-name').text(response.employeeName);
 
-                    // 날짜 포맷 변경
-                    const enrollDate = new Date(response.enrollDate);
-                    const formattedDate = enrollDate.toLocaleString('ko-KR', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: true
-                    });
-                    $('#enrolldate').text(formattedDate);
+                   const enrollDate = new Date(response.enrollDate);
+                   const formattedDate = enrollDate.toLocaleString('ko-KR', {
+                       year: 'numeric',
+                       month: 'long',
+                       day: 'numeric',
+                       hour: '2-digit',
+                       minute: '2-digit',
+                       second: '2-digit',
+                       hour12: true
+                   });
+                   $('#enrolldate').text(formattedDate);
 
-                    const bookmarkButton = document.querySelector('.bookmark-button');
-                    bookmarkButton.setAttribute('data-board-no', boardNo);
+                   const bookmarkButton = document.querySelector('.bookmark-button');
+                   bookmarkButton.setAttribute('data-board-no', boardNo);
 
-                    $('#boardModal').show();
-                    const lat = parseFloat(response.latitude);
-                    const lng = parseFloat(response.longitude);
-                    if (!isNaN(lat) && !isNaN(lng)) {
-                        $('#map').show();
-                        map.relayout();
-                        var moveLatLon = new kakao.maps.LatLng(lat, lng);
-                        map.setCenter(moveLatLon);
-                        var marker = new kakao.maps.Marker({
-                            position: new kakao.maps.LatLng(lat, lng)
-                        });
-                        marker.setMap(map);
-                    } else {
-                        $('#map').hide();
-                    }
-                    showComments(boardNo);
-                    checkLikeStatus(boardNo);
-                    checkBookmarkStatus(boardNo);  // 현재 게시물의 북마크 상태 확인
-                },
-                error: function () {
-                    alert("게시물 상세 정보를 불러오는데 실패했습니다.");
-                }
-            });
-        }
+                   // 로그인한 사용자와 작성자가 같을 경우에만 수정, 삭제 버튼 표시
+                   const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
+                   if (currentUserNo == response.insertUserNo) {
+                       $('.updateButton').show();
+                       $('.deleteButton').show();
+                   } else {
+                       $('.updateButton').hide();
+                       $('.deleteButton').hide();
+                   }
+
+                   $('#boardModal').show();
+                   const lat = parseFloat(response.latitude);
+                   const lng = parseFloat(response.longitude);
+                   if (!isNaN(lat) && !isNaN(lng)) {
+                       $('#map').show();
+                       map.relayout();
+                       var moveLatLon = new kakao.maps.LatLng(lat, lng);
+                       map.setCenter(moveLatLon);
+                       var marker = new kakao.maps.Marker({
+                           position: new kakao.maps.LatLng(lat, lng)
+                       });
+                       marker.setMap(map);
+                   } else {
+                       $('#map').hide();
+                   }
+                   showComments(boardNo);
+                   checkLikeStatus(boardNo);
+                   checkBookmarkStatus(boardNo);
+               },
+               error: function () {
+                   alert("게시물 상세 정보를 불러오는데 실패했습니다.");
+               }
+           });
+       }
 
         function checkLikeStatus(boardNo) {
             $.ajax({
@@ -470,7 +479,48 @@
             }
 
             return html;
-        }
+        }function getCommentHtml(comment) {
+             var isReply = comment.replyCommentNo !== null;
+             var commentClass = isReply ? 'comment reply' : 'comment';
+
+             var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
+             var employeeName = comment.employeeName;
+             var teamName = comment.teamName;
+
+             if (comment.isAnonymous === "Y") {
+                 employeeName = '***';
+                 teamName = '***';
+             } else if (!employeeName) {
+                 employeeName = '알 수 없음';
+             }
+
+             html += '<div class="author">작성자: ' + employeeName + '</div>';
+             html += '<div class="team">팀: ' + teamName + '</div>';
+             html += '<div class="date">' + comment.enrollDate + '</div>';
+             html += '<div class="content">' + comment.content + '</div>';
+
+             const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
+             if (currentUserNo == comment.insertUserNo) {
+                 html += '<div class="actions">';
+                 html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
+                 html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
+                 html += '</div>';
+             }
+
+             html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
+             html += '</div>';
+
+             if (comment.replies && comment.replies.length > 0) {
+                 html += '<div class="reply-container">';
+                 comment.replies.forEach(function (reply) {
+                     html += getCommentHtml(reply);
+                 });
+                 html += '</div>';
+             }
+
+             return html;
+         }
+
 
         function showComments(boardNo) {
             $.ajax({
