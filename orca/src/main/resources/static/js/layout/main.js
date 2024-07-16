@@ -1,4 +1,3 @@
-const empNo = '<%= ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() %>';
 const workDate = new Date().toISOString().split('T')[0]; // 현재 날짜 부분만 추출
 
 // 출근 버튼
@@ -8,7 +7,6 @@ function startWorkClick() {
         url: "/orca/re/work/goWork",
         method: 'post',
         data: {
-            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {
@@ -34,7 +32,6 @@ function endWorkClick() {
         url: "/orca/re/work/leaveWork",
         method: 'post',
         data: {
-            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {
@@ -59,7 +56,6 @@ function loadWorkTimes() {
         url: "/orca/re/work/getStartWorkTime",
         method: 'get',
         data: {
-            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {
@@ -84,7 +80,6 @@ function loadWorkTimes() {
         url: "/orca/re/work/getEndWorkTime",
         method: 'get',
         data: {
-            empNo: empNo,
             workDate: workDate,
         },
         success: function(response) {

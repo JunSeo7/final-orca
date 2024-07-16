@@ -30,7 +30,7 @@ public class WorkInfoRestController {
         if (loginUser != null) {
             int empNo = loginUser.getEmpNo();
 
-            List<WorkInfoVo> wVo = service.workList(String.valueOf(empNo));
+            List<WorkInfoVo> wVo = service.workList(empNo);
 
             System.out.println("wVo = " + wVo);
 
@@ -89,7 +89,7 @@ public class WorkInfoRestController {
     public ResponseEntity<Map<String, Object>> getStartWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
         int empNo = loginUser.getEmpNo();
-        String startWorkTime = service.getStartWorkTime(String.valueOf(empNo), workDate);
+        String startWorkTime = service.getStartWorkTime(empNo, workDate);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("startWorkTime", startWorkTime);
@@ -101,7 +101,7 @@ public class WorkInfoRestController {
     public ResponseEntity<Map<String, Object>> getEndWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
         int empNo = loginUser.getEmpNo();
-        String endWorkTime = service.getEndWorkTime(String.valueOf(empNo), workDate);
+        String endWorkTime = service.getEndWorkTime(empNo, workDate);
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("endWorkTime", endWorkTime);

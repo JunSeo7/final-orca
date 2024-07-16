@@ -115,6 +115,27 @@ showVacationCode.addEventListener('click', function () {
             console.error('데이터 로드 실패', error);
         }
     });
+
+    $.ajax({
+            url: "http://127.0.0.1:8080/orca/re/vacation",
+            method: "get",
+            success: function(data) {
+                const x = document.querySelector("#vacationCodesTable tbody");
+                console.log(x);
+                let str = "";
+
+                for(let i = 0; i < data.length; i++) {
+                    str += "<tr>";
+                    str += "<td>" + data[i].vacationCode + "</td>";
+                    str += "<td>" + data[i].vacationName + "</td>";
+                    str += "</tr>";
+                }
+                x.innerHTML = str;
+            },
+            error: function(error) {
+                console.error("데이터를 가져오는데 실패했습니다.", error);
+            }
+        });
 });
 
 

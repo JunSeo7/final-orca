@@ -14,7 +14,7 @@ public interface WorkInfoMapper {
     @Select("SELECT P.NAME , WORK_DATE , TO_CHAR(START_TIME, 'hh24:mi:ss') , TO_CHAR(END_TIME, 'hh24:mi:ss') , OVERTIME_WORK , HOLIDAY_WORK " +
             "FROM WORK_INFO W JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO " +
             "WHERE W.EMP_NO = #{empNo}")
-    List<WorkInfoVo> workList(String empNo);
+    List<WorkInfoVo> workList(int empNo);
 
     //출근
     @Insert("INSERT INTO WORK_INFO (WORK_NO, EMP_NO, WORK_DATE, START_TIME) VALUES (#{workNo}, #{empNo}, SYSDATE ,SYSDATE)")
@@ -36,9 +36,9 @@ public interface WorkInfoMapper {
 
     // 출근 시간 조회
     @Select("SELECT START_TIME FROM WORK_INFO WHERE EMP_NO = #{empNo} AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
-    String getStartWorkTime(String empNo, String workDate);
+    String getStartWorkTime(int empNo, String workDate);
 
     // 퇴근 시간 조회
     @Select("SELECT END_TIME FROM WORK_INFO WHERE EMP_NO = #{empNo} AND TRUNC(WORK_DATE) = TRUNC(SYSDATE)")
-    String getEndWorkTime(String empNo, String workDate);
+    String getEndWorkTime(int empNo, String workDate);
 }

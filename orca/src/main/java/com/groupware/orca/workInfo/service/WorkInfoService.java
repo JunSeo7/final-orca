@@ -25,7 +25,7 @@ public class WorkInfoService {
     private static final Logger logger = LoggerFactory.getLogger(WorkInfoService.class);
 
     // 근무 정보 조회
-    public List<WorkInfoVo> workList(String empNo) {
+    public List<WorkInfoVo> workList(int empNo) {
         return dao.workList(empNo);
     }
 
@@ -70,11 +70,11 @@ public class WorkInfoService {
         dao.overTimeWork(vo);
     }
 
-    public String getStartWorkTime(String empNo, String workDate) {
+    public String getStartWorkTime(int empNo, String workDate) {
         return dao.getStartWorkTime(empNo, workDate);
     }
 
-    public String getEndWorkTime(String empNo, String workDate) {
+    public String getEndWorkTime(int empNo, String workDate) {
         return dao.getEndWorkTime(empNo, workDate);
     }
 }
