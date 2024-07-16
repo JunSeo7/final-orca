@@ -206,7 +206,7 @@ function inputEmployeeRegistration() {
 
             const bankName = $('#bankName').val();
             let bankNumber = $('#bankNumber').val();
-            bankNumber = bankName + ' ' + bankNumber;
+            bankNumber = bankName + '-' + bankNumber;
 
             formData.append('bankNumber', bankNumber);
 
@@ -417,8 +417,17 @@ function showEmployeeDetails(empNo) {
                 showEmployeeList();
             });
             getEmployeeDetails(empNo);
-            document.querySelector('.btn-primary').addEventListener('click', function(){
+            let editBtn = document.querySelector('.btn-primary')
+            editBtn.addEventListener('click', function () {
                 showEmployeeEdit(empNo);
+            });
+
+            let delBtn = document.querySelector('.btn-danger')
+            delBtn.addEventListener('click', function () {
+                const userResponse = confirm("정말로 삭제하시겠습니까?");
+                if (userResponse) {
+                    deleteEmployee(empNo);
+                }
             });
         },
         error: function (error) {
@@ -426,6 +435,29 @@ function showEmployeeDetails(empNo) {
         }
     });
 };
+
+function deleteEmployee(empNo){
+    $.ajax({
+        type: 'post',
+        url: `/orca/humanResources/deleteEmployee`,
+        data: {
+            empNo: empNo
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            if(response === 1){
+                alert("사원 삭제 성공!");
+                showEmployeeList();
+            }else{
+                alert("사원 삭제 실패");
+            }
+        },
+        error: function (error) {
+            console.error('사원 삭제 실패', error);
+        }
+    });
+}
 
 function getEmployeeDetails(empNo) {
     $.ajax({
@@ -439,7 +471,7 @@ function getEmployeeDetails(empNo) {
             $('#empNo').text(data.empNo);
             $('#name').text(data.name);
             $('#gender').text(data.gender);
-            $('#socialSecurityNo').text(data.socialSecurityNo);
+            $('#social-security-no').text(data.socialSecurityNo);
             $('#phone').text(data.phone);
             $('#extensionCall').text(data.extensionCall);
             $('#email').text(data.email);
@@ -462,24 +494,31 @@ function getEmployeeDetails(empNo) {
     });
 }
 
-function showEmployeeEdit(empNo){
+function showEmployeeEdit(empNo) {
     $.ajax({
         type: 'get',
         url: '/orca/humanResources/showEmployeeEdit',
         dataType: 'html',
         success: function (response) {
-            console.log(response);
+
             while (mainDiv.firstChild) {
                 mainDiv.removeChild(mainDiv.firstChild);
             }
             mainDiv.innerHTML = response;
+            getEditSelects(empNo);
+
             let backList = document.querySelector('.backList');
             backList.addEventListener('click', function () {
                 showEmployeeDetails(empNo);
             });
-            getEmployeeDetails(empNo);
-            document.querySelector('.btn-primary').addEventListener('click', function(){
-                EmployeeEdit(empNo);
+            let cancelBtn = document.querySelector('#cancelEdit');
+            cancelBtn.addEventListener('click', function () {
+                showEmployeeDetails(empNo);
+            });
+
+
+            document.querySelector('.btn-primary').addEventListener('click', function () {
+                employeeEdit(empNo);
             });
         },
         error: function (error) {
@@ -488,6 +527,186 @@ function showEmployeeEdit(empNo){
     });
 }
 
-function EmployeeDetails(empNo){
+function getEditSelects(empNo) {
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/getSelects',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);  // 받아온 데이터를 콘솔에 출력하여 확인
+
+            // 부서 데이터를 추출하여 옵션으로 추가
+            const deptSelect = $('#deptCode');
+            response[0].forEach(dept => {
+                const option = $('<option></option>');
+                option.val(dept.deptCode);
+                option.text(dept.partName);
+                deptSelect.append(option);
+            });
+
+            // 팀 데이터를 추출하여 옵션으로 추가
+            const teamSelect = $('#teamCode');
+            response[1].forEach(team => {
+                const option = $('<option></option>');
+                option.val(team.teamCode);
+                option.text(team.teamName);
+                teamSelect.append(option);
+            });
+
+            // 직급 데이터를 추출하여 옵션으로 추가
+            const positionSelect = $('#positionCode');
+            response[2].forEach(position => {
+                const option = $('<option></option>');
+                option.val(position.positionCode);
+                option.text(position.nameOfPosition);
+                positionSelect.append(option);
+            });
+            validation();
+            getEmployeeEditData(empNo);
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+let updatedData = {};
+
+function getEmployeeEditData(empNo) {
+    $.ajax({
+        type: 'get',
+        url: `/orca/humanResources/getEmployeeDetails`,
+        data: {
+            empNo: empNo
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            $('#empNo').text(data.empNo);  // 예시: 사원번호는 span 태그에 텍스트로 설정
+            $('#name').val(data.name);  // 이름은 input 태그의 value에 설정
+            $('#gender').val(data.gender);  // 성별은 select 태그의 value에 설정
+            $('#social-security-no').val(data.socialSecurityNo);  // 주민등록번호는 input 태그의 value에 설정
+            $('#phone').val(data.phone);  // 전화번호는 input 태그의 value에 설정
+            $('#extensionCall').val(data.extensionCall);  // 내선번호는 input 태그의 value에 설정
+            $('#email').val(data.email);  // 이메일은 input 태그의 value에 설정
+            $('#address').val(data.address);  // 주소는 input 태그의 value에 설정
+            $('#dateOfEmployment').val(data.dateOfEmployment);  // 입사일은 input 태그의 value에 설정
+            $('#height').val(data.height);  // 키는 input 태그의 value에 설정
+            $('#weight').val(data.weight);  // 몸무게는 input 태그의 value에 설정
+            $('#bloodType').val(data.bloodType);  // 혈액형은 select 태그의 value에 설정
+            $('#religion').val(data.religion);  // 종교는 input 태그의 value에 설정
+            const parts = data.bankNumber.split('-');
+            const bankName = parts[0];
+            const bankNumber = parts[1];
+            $('#bankName').val(bankName);
+            $('#bankNumber').val(bankNumber);
+            $('#deptCode').val(data.deptCode);  // 부서명은 input 태그의 value에 설정
+            $('#positionCode').val(data.positionCode);  // 직위명은 input 태그의 value에 설정
+            $('#teamCode').val(data.teamCode);  // 팀명은 input 태그의 value에 설정
+            $('#profileImage').attr('src', '/upload/user/' + data.imgChangeName); // 이미지 경로 설정
+
+            updatedData.empNo = data.empNo;
+            updatedData.name = data.name;
+            updatedData.gender = data.gender;
+            updatedData.socialSecurityNo = data.socialSecurityNo;
+            updatedData.phone = data.phone;
+            updatedData.extensionCall = data.extensionCall;
+            updatedData.email = data.email;
+            updatedData.address = data.address;
+            updatedData.dateOfEmployment = data.dateOfEmployment;
+            updatedData.height = data.height;
+            updatedData.weight = data.weight;
+            updatedData.bloodType = data.bloodType;
+            updatedData.religion = data.religion;
+            updatedData.bankNumber = data.bankNumber;
+            updatedData.deptCode = data.deptCode;
+            updatedData.positionCode = data.positionCode;
+            updatedData.teamCode = data.teamCode;
+        },
+        error: function (error) {
+            console.error('사원 상세 조회 실패', error);
+        }
+    });
+}
+
+function employeeEdit(empNo) {
     console.log(empNo);
+    let formData = new FormData();  // FormData 객체 생성
+    let isUpdate = false;
+
+    function appendFormData(fieldId, fieldName, updatedFieldValue) {
+        let fieldValue = $(fieldId).val();
+
+        if (fieldId === '#bankNumber') {
+            const bankName = $('#bankName').val();
+            fieldValue = bankName + '-' + fieldValue;
+            console.log(fieldValue);
+        }
+
+        if (fieldValue !== updatedFieldValue) {
+            if (fieldValue.trim() === '') {
+                if (updatedFieldValue !== null) {
+                    isUpdate = true;
+                    formData.append(fieldName, fieldValue);
+                }
+            } else {
+                formData.append(fieldName, fieldValue);
+                isUpdate = true;
+            }
+        }
+    }
+
+
+    appendFormData('#name', 'name', updatedData.name);
+    appendFormData('#gender', 'gender', updatedData.gender);
+    appendFormData('#social-security-no', 'socialSecurityNo', updatedData.socialSecurityNo);
+    appendFormData('#phone', 'phone', updatedData.phone);
+    appendFormData('#extensionCall', 'extensionCall', updatedData.extensionCall);
+    appendFormData('#email', 'email', updatedData.email);
+    appendFormData('#address', 'address', updatedData.address);
+    appendFormData('#dateOfEmployment', 'dateOfEmployment', updatedData.dateOfEmployment);
+    appendFormData('#height', 'height', updatedData.height);
+    appendFormData('#weight', 'weight', updatedData.weight);
+    appendFormData('#bloodType', 'bloodType', updatedData.bloodType);
+    appendFormData('#religion', 'religion', updatedData.religion);
+    appendFormData('#bankNumber', 'bankNumber', updatedData.bankNumber);
+    appendFormData('#deptCode', 'deptCode', updatedData.deptCode);
+    appendFormData('#positionCode', 'positionCode', updatedData.positionCode);
+    appendFormData('#teamCode', 'teamCode', updatedData.teamCode);
+
+
+    // 파일 업로드를 위한 처리
+    let fileInput = document.getElementById('image');
+    if (fileInput.files.length > 0) {
+        formData.append('image', fileInput.files[0]);
+        isUpdate = true;
+    }
+    console.log(isUpdate);
+
+    // 변경된 데이터가 있는 경우에만 Ajax를 통해 서버로 전송
+    if (isUpdate) {
+        formData.append('empNo', empNo);
+        $.ajax({
+            type: 'post',  // 예시로 post로 설정
+            url: '/orca/humanResources/updateEmployee',  // 데이터 업데이트를 처리할 서버 URL
+            data: formData,
+            contentType: false,  // 필수
+            processData: false,  // 필수
+            dataType: 'json',
+            success: function (response) {
+                // 성공적으로 업데이트된 경우 처리
+                console.log('데이터 업데이트 성공', response);
+                if (response === 1) {
+                    alert("사원 정보 수정 성공!")
+                } else {
+                    alert("사원 정보 수정 실패")
+                }
+            },
+            error: function (error) {
+                console.error('데이터 업데이트 실패', error);
+            }
+        });
+    } else {
+        alert("변경된 내용이 없습니다.");
+    }
 }

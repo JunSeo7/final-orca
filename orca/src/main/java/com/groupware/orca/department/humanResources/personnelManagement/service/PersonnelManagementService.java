@@ -35,4 +35,13 @@ public class PersonnelManagementService {
     public UserVo getEmployeeDetails(int empNo) {
         return dao.getEmployeeDetails(empNo);
     }
+
+    public int updateEmployee(UserVo employeeVo) {
+        return dao.updateEmployee(employeeVo);
+    }
+
+
+    public int deleteEmployee(int empNo) {
+        return dao.deleteEmployee(empNo);
+    }
 }

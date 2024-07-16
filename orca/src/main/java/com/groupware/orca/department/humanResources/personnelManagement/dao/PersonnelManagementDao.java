@@ -47,4 +47,12 @@ public class PersonnelManagementDao {
     public UserVo getEmployeeDetails(int empNo) {
         return mapper.getEmployeeDetails(empNo);
     }
+
+    public int updateEmployee(UserVo employeeVo) {
+        return mapper.updateEmployee(employeeVo);
+    }
+
+    public int deleteEmployee(int empNo) {
+        return mapper.deleteEmployee(empNo);
+    }
 }
