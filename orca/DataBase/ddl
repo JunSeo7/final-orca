@@ -187,7 +187,7 @@ CREATE TABLE PERSONNEL_INFORMATION (
    , DATE_OF_EMPLOYMENT   TIMESTAMP          DEFAULT SYSDATE NOT NULL
    , HEIGHT               NUMBER              NOT NULL
    , WEIGHT               NUMBER              NOT NULL
-   , BLOOD_TYPE           CHAR(3)              NOT NULL
+   , BLOOD_TYPE           VARCHAR(3)              NOT NULL
    , RELIGION               VARCHAR2(20)
    , SALARY               NUMBER              NOT NULL
    , BANK_NUMBER           VARCHAR2(30)       NOT NULL
