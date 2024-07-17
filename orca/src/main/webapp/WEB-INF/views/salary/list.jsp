@@ -39,13 +39,12 @@
             <div class="sidebar-nav">
                 <div class="approval title-toggle">◾ 급여 관리</div>
                 <div class="approval-list">
-                    <div class="toggle">◽ 급여 입력</div>
-                    <div class="toggle">◽ 급여 목록</div>
+                    <div class="toggle"><a href="/orca/salaryWrite">◽ 급여 입력</a></div>
+                    <div class="toggle"><a href="/orca/salaryList">◽ 급여 목록</a></div>
                 </div>
                 <div class="calnedar title-toggle">◾ 4대보험</div>
                 <div class="calendar-link link">
-                    <div class="calendar-list toggle">◽입력 - 수정</div>
-                    <!-- <div class="calendar-wirte toggle">◽ 조회</div> -->
+                    <div class="calendar-wirte toggle">◽ 조회 - 수정</div>
                 </div>
             </div>
         </nav>
@@ -54,7 +53,7 @@
         <div class="main" id="content">
             <h1 class="salary-list">급여 목록조회</h1>
 
-            <table class="salaryWrite">
+            <table class="salaryList">
                 <thead>
                     <tr>
                         <th>글 번호</th>
@@ -71,28 +70,22 @@
                 </tbody>
             </table>
 
+
             <div id="detailArea">
 
             </div>
 
-            <div id="editArea">
+            <div id="editArea" style="display:none;">
                 <h1>급여 수정</h1>
-                <form action="salary/edit" method="post">
-                    사원번호 :<input type="text" name="empNo" >
-                    <br>
-                    직급수당: <input type="text" name="position" >
-                    <br>
-                    상여금: <input type="text" name="bonus" >
-                    <br>
-                    식대: <input type="text" name="meals" >
-                    <br>
-                    휴일근무시간: <input type="text" name="holidayTime" >
-                    <br>
-                    연장근무시간: <input type="text" name="overTime" >
-                    <br>
-                    자녀 수: <input type="text" name="person" >
-                    <br>
-                    <input type="submit" name="edit" placeholder="수정하기">
+                <form id="editForm">
+                    사원번호: <input type="text" name="empNo"><br>
+                    직급수당: <input type="text" name="position"><br>
+                    상여금: <input type="text" name="bonus"><br>
+                    식대: <input type="text" name="meals"><br>
+                    휴일근무시간: <input type="text" name="holidayTime"><br>
+                    연장근무시간: <input type="text" name="overTime"><br>
+                    자녀 수: <input type="text" name="person"><br>
+                    <input type="submit" value="수정하기">
                 </form>
             </div>
 
@@ -105,10 +98,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
+    
 
     $.ajax({
     url: "http://127.0.0.1:8080/orca/salary/list",
-    method: "GET", 
+    method: "GET",
     success: function(x){
         $('div.editArea').remove();
         const voList = x;
@@ -131,22 +125,21 @@
     },
 
     });
-  
 </script>
 
 
 <script>
 
     function detail(payrollNo){
-        console.log();
         $('h1.salary-list').remove();
-        $('table.salaryWrite').remove();
+        $('table.salaryList').remove();
         $('div.editArea').remove();
         $.ajax({
         url: "http://127.0.0.1:8080/orca/salary/detail",
         method: "GET",
         data: {
             payrollNo: payrollNo
+
         } , 
         success: function(data){
             const detailArea = document.querySelector("#detailArea");
@@ -155,25 +148,37 @@
             str += "<h1>급여 상세조회</h1>";
             str += "<h3>번호 : " + data.payrollNo + "</h3>";
             str += "<h3>사원번호 : " + data.empNo + "</h3>";
-            str += "<h3>지급날짜 : " + data.name + "</h3>";
-            str += "<h3>이름 : " + data.nationalPension + "</h3>";
-            str += "<h3>국민연금 : " + data.healthInsurance + "</h3>";
-            str += "<h3>건강보험 : " + data.longCare + "</h3>";
-            str += "<h3>장기요양보험 : " + data.employmentInsurance + "</h3>";
-            str += "<h3>고용보험 : " + data.incomeTax + "</h3>";
-            str += "<h3>소득세 : " + data.localIncomeTax + "</h3>";
-            str += "<h3>지방소득세 : " + data.position + "</h3>";
-            str += "<h3>직급수당 : " + data.bonus + "</h3>";
-            str += "<h3>보너스 : " + data.holiday + "</h3>";
-            str += "<h3>휴일근무수당 : " + data.overTimeWork + "</h3>";
-            str += "<h3>연장근로수당 : " + data.meals + "</h3>";
-            str += "<h3>식대 : " + data.totalSalary + "</h3>";
-            str += "<h3>최종급여 : " + data.paymentDate + "</h3>";
+            str += "<h3>이름 : " + data.name + "</h3>";
+            str += "<h3>국민연금 : " + data.nationalPension + "</h3>";
+            str += "<h3>건강보험 : " + data.healthInsurance + "</h3>";
+            str += "<h3>장기요양보험 : " + data.longCare + "</h3>";
+            str += "<h3>고용보험 : " + data.employmentInsurance + "</h3>";
+            str += "<h3>소득세 : " + data.incomeTax + "</h3>";
+            str += "<h3>지방소득세 : " + data.localIncomeTax + "</h3>";
+            str += "<h3>직급수당 : " + data.position + "</h3>";
+            str += "<h3>보너스 : " + data.bonus + "</h3>";
+            str += "<h3>휴일근무수당 : " + data.holiday + "</h3>";
+            str += "<h3>연장근로수당 : " + data.overTimeWork + "</h3>";
+            str += "<h3>식대 : " + data.meals + "</h3>";
+            str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
+            str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
             str += "<a href='http://127.0.0.1:8080/orca/salaryList'>급여 목록으로 돌아가기</a>";
-            str += "<button onclick='edit("+ data.payrollNo + ", " + data.empNo + ", \"" + data.position + "\", " + data.bonus + ", " + data.meals + ", " + data.holiday + ", " + data.overTimeWork + ");'>수정하기</button>";
-            str += "<button onclick='del("+ data.payrollNo + data.empNo + ");'>삭제하기</button>"; 
-
+            str += "<button onclick='edit("+ data.payrollNo+ ");'>수정하기</button>";
+            str += "<button onclick='del("+ data.payrollNo + ");'>삭제하기</button>"; 
             detailArea.innerHTML = str;
+
+            // 수정 폼 태그 추가
+            document.querySelector("#editArea input[name='empNo']").value = data.empNo;
+            document.querySelector("#editArea input[name='position']").value = data.position;
+            document.querySelector("#editArea input[name='bonus']").value = data.bonus;
+            document.querySelector("#editArea input[name='meals']").value = data.meals;
+            document.querySelector("#editArea input[name='holidayTime']").value = data.holidayTime;
+            document.querySelector("#editArea input[name='overTime']").value = data.overTime;
+            document.querySelector("#editArea input[name='person']").value = data.person;
+            
+            
+
+            
         },
 
 
@@ -186,37 +191,62 @@
 
 <script>
 
-    function edit(payrollNo){
-        $('div.detailArea').remove();
-    
-        const divFrom = document.querySelector("#editArea");
+function edit(payrollNo) {
+            $('#detailArea').hide();
+            $('#editArea').show();
+        }
 
-        $.ajax({
-            url: "http://127.0.0.1:8080/orca/salary/edit",
-            method: "GET",
-            data: {
-                payrollNo:payrollNo
-            },
-            success: function(data){
-                console.log(data);
-            },
+        // 폼 제출 시 처리
+        $(document).ready(function() {
+            $('#editForm').on('submit', function(e) {
+                e.preventDefault();
+
+                var empNo = $('#empNo').val();
+                var position = $('#position').val();
+                var bonus = $('#bonus').val();
+                var meals = $('#meals').val();
+                var holidayTime = $('#holidayTime').val();
+                var overTime = $('#overTime').val();
+                var person = $('#person').val();
+
+                $.ajax({
+                    url: "http://127.0.0.1:8080/orca/salary/edit",
+                    method: "POST",
+                    data: {
+                        empNo:empNo,
+                        position:position,
+                        bonus:bonus,
+                        meals:meals,
+                        holidayTime:holidayTime,
+                        overTime:overTime,
+                        person:person
+                    },
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        console.log(data);
+                        // 수정 완료 후 상세보기 다시 표시
+                        $('#editArea').hide();
+                        // detail(data.payrollNo);
+                        // $('#detailArea').show();
+                        $('.salaryList').show();
+                    }
+                });
+            });
         });
-    }
 
 </script>
 
 <script>
 
-    function del(payrollNo,empNo){
+    function del(payrollNo){
         $.ajax({
             url: "http://127.0.0.1:8080/orca/salary/delete", 
             method: "delete",
             data: {
                 payrollNo:payrollNo,
-                empNo:empNo
             },
             success: function(data){
-                console.log("del result :"+ x);
+                console.log("del result :"+ data);
             },
             
         });

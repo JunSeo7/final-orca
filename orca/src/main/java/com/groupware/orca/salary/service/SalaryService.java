@@ -133,14 +133,8 @@ public class SalaryService {
 
         RatesVo rvo = dao.getRatesVo();
 
-
-        System.out.println("vo.getSalary() - svo.getMeals() = " + (vo.getSalary() - svo.getMeals()));
-
-        System.out.println("vo = " + vo);
+        System.out.println("salaryWrite vo = " + vo);
         double realSalary = vo.getSalary()- svo.getMeals(); //월급에서 비과세 빼고 공제사항 계산
-        System.out.println("realSalary = " + realSalary);
-        System.out.println("vo.getSalary() = " + vo.getSalary());
-        System.out.println(" svo.getMeals() = " +svo.getMeals());
 
         // 공제 항목 계산
         double nationalPension = realSalary * rvo.getPensionPercentage();
@@ -173,11 +167,6 @@ public class SalaryService {
         svo.setPosition(clientVo.getPosition());
         svo.setMeals(clientVo.getMeals());
 
-        System.out.println("localIncomTax : "+ localIncomeTax);
-        System.out.println("incomeTaxBASES(clientVo,vo)/12 : "+calculateInComeTax(totalDeduction)/12);
-        System.out.println("rvo.getLocalIncomeTaxPercentage() : "+rvo.getLocalIncomeTaxPersentage());
-        System.out.println("rvo.getPensionPercentage() : "+rvo.getPensionPercentage());
-
         int result = dao.salaryWrite(vo, clientVo, svo);
 
         try {
@@ -202,21 +191,23 @@ public class SalaryService {
         return dao.ratesWrite(vo);
     }
 
-    //급여 전체 목록조회
+    //급여 전체 목록조회 page
     public List<SalaryVo> getSalaryList() {
         return dao.getSalaryList();
     }
 
 
+
+
     //급여 수정
     public int salaryUpdate(UserVo vo,ClientVo clientVo, SalaryVo svo) {
         vo = dao.getUserVo(vo.getEmpNo());
+        System.out.println("salaryUpdate vo = " + vo);
+
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
         RatesVo rvo = dao.getRatesVo();
 
         double realSalary =  vo.getSalary() - svo.getMeals();
-
-        System.out.println("rvo : "+rvo);
 
         // 공제 항목 계산
         double nationalPension = realSalary * rvo.getPensionPercentage();
@@ -273,14 +264,16 @@ public class SalaryService {
     }
 
     //급여 삭제
-    public int getSalaryDelete(String empNo, String payrollNo) {
-        return dao.getSalaryDelete(empNo,payrollNo);
+    public int getSalaryDelete(String payrollNo) {
+        return dao.getSalaryDelete(payrollNo);
     }
 
     //급여 검색
     public List<SalaryVo> searchSalary(String empNo) {
         return dao.searchSalary(empNo);
     }
+
+
 }
 
 
