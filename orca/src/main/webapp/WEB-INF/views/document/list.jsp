@@ -28,7 +28,7 @@
             </select>
 
             <input class="search_text" type="text" id="searchText" placeholder="검색어 입력">
-            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" id="searchButton">
+            <img class="search_img" src=alt="검색 아이콘" id="searchButton" alt="검색 아이콘" id="searchButton">
         </div>
     </div>
 
@@ -67,15 +67,22 @@
                                         <div>${document.deptName}</div>
                                         <div>${document.creditDate}</div>
                                     </div>
+                                    <img class="rightChevronIcon" src="/img/document/right-chevron.png" alt="화살표 아이콘" id="rightChevron">
+
                                     <!-- 결재 진행 상태 추가 -->
-                                    <c:forEach var="approver" items="${document.approverVoList}">
+                                    <c:forEach var="approver" items="${document.approverVoList}" varStatus="status">
                                         <div class="status_step appr_${approver.approvalStage}">
                                             <div class="stageName">[${approver.seq}][${approver.apprStageName}]${approver.approvalStage}</div>
                                             <div class="approverName">${approver.approverName}[${approver.positionName}]</div>
                                             <div>[${approver.approverClassificationNo}]${approver.deptName}</div>
                                             <div>${approver.approvalDate}</div>
                                         </div>
+                                        <c:if test="${status.index != document.approverVoList.size() - 1}">
+                                            <img class="rightChevronIcon" src="/img/document/right-chevron.png" alt="화살표 아이콘" id="rightChevron">
+                                        </c:if>
                                     </c:forEach>
+
+
                                 </div>
                             </div>
                         </div>
