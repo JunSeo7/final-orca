@@ -13,11 +13,15 @@
             </head>
 
             <body>
-                <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); %>
+                <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); String
+                    imgChangeName=(loginUserVo.getImgChangeName() !=null) ? loginUserVo.getImgChangeName()
+                    : "profile.png" ; %>
+
                     <aside id="sidebar">
                         <div class="profile" onclick="toggleProfile()">
-                            <img src="/upload/user/<%= loginUserVo.getImgChangeName() %>" alt="Profile Picture"
-                                class="profile-pic">
+
+                            <img src="/upload/user/<%= imgChangeName %>" alt="Profile Picture" class="profile-pic">
+
                             <p class="profile-info">
                                 <%= loginUserVo.getTeamName() %> | <span>
                                         <%= loginUserVo.getName() %>
@@ -27,13 +31,13 @@
                         <hr>
 
                         <div id="profileDetail" class="profile-detail hidden">
-                            <p>상태 설정</p>
-                            <p>@멘션 확인하기</p>
-                            <p>파일 리스트</p>
-                            <p>직책</p>
-                            <p>생년월일</p>
-                            <p>휴대전화</p>
-                            <p>raji1004@naver.com</p>
+                            <div id="empNo"></div>
+                            <div id="partName"></div>
+                            <div id="position"></div>
+                            <div id="phone"></div>
+                            <div id="extensionCall"></div>
+                            <div id="email"></div>
+                            <div id="change-password">비밀번호 변경</div>
                             <button onclick="logout()">로그아웃</button>
                         </div>
 
@@ -46,7 +50,6 @@
                             <li class="nav-item"><a href="#">드라이브</a></li>
                             <li class="nav-item"><a href="#">메일</a></li>
                             <li class="nav-item"><a href="#">부서 로그인</a></li>
-                            <li class="nav-item"><a href="#">설정</a></li>
                         </ul>
                     </aside>
             </body>

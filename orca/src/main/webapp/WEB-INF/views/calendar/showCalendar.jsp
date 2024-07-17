@@ -19,7 +19,9 @@
                 <header>
                     <div class="header-left" onclick="loadPage('home.jsp')">
                         <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
-                        <h2>ORCA</h2>
+                        <a href="/orca/home" style="text-decoration: none; color:black;">
+                            <h2>ORCA</h2>
+                        </a>
                     </div>
                     <div class="header-right">
                         <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
@@ -30,26 +32,26 @@
                 </header>
                 <button id="toggleSidebar" onclick="toggleSidebar()">메뉴</button>
                 <aside id="sidebar">
+                    <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); String
+                        imgChangeName=(loginUserVo.getImgChangeName() !=null) ? loginUserVo.getImgChangeName()
+                        : "profile.png" ; %>
                     <div class="profile" onclick="toggleProfile()">
-                        <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); %>
-                            <img src="/upload/user/<%= loginUserVo.getImgChangeName() %>" alt="Profile Picture"
-                                class="profile-pic">
-                            <p class="profile-info">
-                                <%= loginUserVo.getTeamName() %> | <span>
-                                        <%= loginUserVo.getName() %>
-                                    </span>
-                            </p>
+                        <img src="/upload/user/<%= imgChangeName %>" alt="Profile Picture" class="profile-pic">
+                        <p class="profile-info">
+                            <%= loginUserVo.getTeamName() %> | <span>
+                                    <%= loginUserVo.getName() %>
+                                </span>
+                        </p>
                     </div>
 
                     <div id="profileDetail" class="profile-detail hidden">
-                        <p>상태 설정</p>
-                        <p>상태 메시지</p>
-                        <p>@멘션 확인하기</p>
-                        <p>파일 리스트</p>
-                        <p>직책</p>
-                        <p>생년월일</p>
-                        <p>휴대전화</p>
-                        <p>raji1004@naver.com</p>
+                        <div id="empNo"></div>
+                        <div id="partName"></div>
+                        <div id="position"></div>
+                        <div id="phone"></div>
+                        <div id="extensionCall"></div>
+                        <div id="email"></div>
+                        <div id="change-password">비밀번호 변경</div>
                         <button onclick="logout()">로그아웃</button>
                     </div>
                     <div class="aside-Calendar-sell">

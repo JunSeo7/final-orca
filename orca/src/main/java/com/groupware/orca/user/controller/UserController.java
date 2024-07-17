@@ -2,6 +2,7 @@ package com.groupware.orca.user.controller;
 
 import com.groupware.orca.user.service.UserService;
 import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -59,5 +60,20 @@ public class UserController {
         return userVo;
     }
 
+    @GetMapping("logout")
+    @ResponseBody
+    public int logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        boolean logout = false;
+        if(session != null) {
+            session.invalidate();
+            logout = true;
+        }
+        return logout ? 1 : 0;
+    }
 
+    @GetMapping("changePassword")
+    public String changePassword() {
+        return "user/changePassword";
+    }
 }

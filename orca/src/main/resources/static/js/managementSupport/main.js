@@ -22,6 +22,33 @@ function toggleSidebar() {
 function toggleProfile() {
     const profileDetail = document.getElementById('profileDetail');
     profileDetail.classList.toggle('hidden');  // 프로필 상세 정보 숨김/표시 토글
+    if (!profileDetail.classList.contains('hidden')) {
+        $.ajax({
+            url: "/orca/user/getUserVo",
+            method: 'get',
+            dataType: 'json',
+            success: function (response) {
+
+                let empNo = document.querySelector('#empNo');
+                let partName = document.querySelector('#partName');
+                let position = document.querySelector('#position');
+                let phone = document.querySelector('#phone');
+                let extensionCall = document.querySelector('#extensionCall');
+                let email = document.querySelector('#email');
+
+
+                empNo.textContent = '사번 : ' + response.empNo;
+                partName.textContent = '부서명 : ' + response.partName;
+                position.textContent = '직급 : ' + response.nameOfPosition;
+                phone.textContent = '전화번호 : ' + response.phone;
+                extensionCall.textContent = '내선번호 : ' + response.extensionCall;
+                email.textContent = '이메일 : ' + response.email;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
 }
 
 /* 프로필 숨김 함수 */
@@ -34,8 +61,31 @@ function hideProfile() {
 
 /* 로그아웃 함수 */
 function logout() {
-    alert('로그아웃 되었습니다.');  // 로그아웃 알림
+    const userResponse = confirm("정말로 종료하시겠습니까?");
+    if (userResponse) {
+        $.ajax({
+            url: "/orca/user/logout",
+            method: 'get',
+            dataType: 'json',
+            success: function (response) {
+                if (response === 1) {
+                    alert('로그아웃 되었습니다.');
+                    window.location.href = "/orca/user/login";
+                } else {
+                    alert('로그아웃 실패');
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
 }
+
+let changePwd = document.querySelector("#change-password")
+changePwd.addEventListener('click', function () {
+    window.location.href = "/orca/user/changePassword";
+})
 
 const approval = document.querySelector('.approval');
 const approvalList = document.querySelector('.approval-list');
@@ -681,10 +731,10 @@ function searchListCalendarPage(page, keyword) {
                 let notFound = $('<div>');
                 let notFoundText = $('<div>');
 
-                notFoundText.addClass('notFoundText');  
+                notFoundText.addClass('notFoundText');
 
                 keywordValue.text("'" + keyword + "'");
-                keywordValue.addClass('keyword');  
+                keywordValue.addClass('keyword');
                 notFound.text("에 대한 검색결과 입니다. 0건");
 
                 notFoundText.append(keywordValue);
@@ -695,8 +745,8 @@ function searchListCalendarPage(page, keyword) {
                 instructions.append('- 한글을 영어로 혹은 영어를 입력했는지 확인해 보세요.<br>');
                 instructions.append('- 검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.<br>');
                 instructions.append('- 두 단어 이상의 검색어인 경우, 띄어쓰기를 확인해 보세요.');
-                instructions.addClass('check-list');  
-                
+                instructions.addClass('check-list');
+
                 pageFooter.append(notFoundText);
                 pageFooter.append(instructions);
             }

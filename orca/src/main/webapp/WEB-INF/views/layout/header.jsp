@@ -15,7 +15,9 @@
     <header>
         <div class="header-left">
             <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
-            <h2 class="header-title">ORCA</h2>
+            <a href="/orca/home" style="text-decoration: none; color:black;">
+                <h2>ORCA</h2>
+            </a>
         </div>
         <div class="header-right">
             <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
