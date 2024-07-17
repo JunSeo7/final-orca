@@ -5,6 +5,7 @@ import com.groupware.orca.board.vo.BoardFileVo;
 import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.department.humanResources.personnelManagement.service.PersonnelManagementService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.ServletContext;
@@ -173,5 +174,39 @@ public class PersonnelManagementController {
     public int deleteEmployee(@RequestParam("empNo") int empNo) {
         int result = service.deleteEmployee(empNo);
         return result;
+    }
+
+    @GetMapping("searchListEmployee")
+    public String searchListCalendar() {
+        System.out.println("요청 넘어옴");
+        return "humanResources/personnelManagement/showEmployeeList";
+    }
+
+    @GetMapping("searchListEmployeePage")
+    @ResponseBody
+    public Pagination searchListEmployeePage(SearchVo searchVo) {
+        System.out.println("searchVo = " + searchVo);
+        searchVo.setPageSize(10);
+        searchVo.setRecordSize(7);
+        if (searchVo.getKeyword() != null) {
+            searchVo.setKeyword(searchVo.getKeyword().replaceAll("\\s+", ""));
+        }
+        int totalRecordCount = service.getSearchEmployeeCnt(searchVo);
+        Pagination pagination = new Pagination(totalRecordCount, searchVo);
+        return pagination;
+    }
+
+    @GetMapping("searchListEmployeeData")
+    @ResponseBody
+    public List<UserVo> searchListEmployeeData(@RequestParam("startNum") int startNum,
+                                               @RequestParam("endNum") int endNum,
+                                               @RequestParam("keyword") String keyword,
+                                               @RequestParam("searchType") String searchType) {
+        if (keyword != null) {
+            keyword = keyword.replaceAll("\\s+", "");
+        }
+
+        List<UserVo> employeeVoList = service.searchListEmployeeData(keyword, startNum, endNum, searchType);
+        return employeeVoList;
     }
 }

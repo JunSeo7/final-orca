@@ -1,5 +1,6 @@
 package com.groupware.orca.department.humanResources.personnelManagement.service;
 
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.department.humanResources.personnelManagement.dao.PersonnelManagementDao;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +44,13 @@ public class PersonnelManagementService {
 
     public int deleteEmployee(int empNo) {
         return dao.deleteEmployee(empNo);
+    }
+
+    public int getSearchEmployeeCnt(SearchVo searchVo) {
+        return dao.getSearchEmployeeCnt(searchVo);
+    }
+
+    public List<UserVo> searchListEmployeeData(String keyword, int startNum, int endNum, String searchType) {
+        return dao.searchListEmployeeData(keyword, startNum, endNum, searchType);
     }
 }

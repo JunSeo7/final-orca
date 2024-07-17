@@ -4,8 +4,6 @@ import com.groupware.orca.user.service.UserService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,6 @@ public class UserController {
         return "user/login";
     }
 
-    ;
 
     @PostMapping("login")
     public String login(UserVo vo, HttpSession httpSession, Model model) {
@@ -53,7 +50,7 @@ public class UserController {
         return "redirect:/orca/home";
     }
 
-    @PostMapping("getUserVo")
+    @GetMapping("getUserVo")
     @ResponseBody
     public UserVo getUserVo(HttpSession httpSession) {
         int userNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();

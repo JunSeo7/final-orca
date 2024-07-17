@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   function updateClock() {
-      const clockElement = document.getElementById('clock');
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    const clockElement = document.getElementById('clock');
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
   }
   updateClock();
   setInterval(updateClock, 1000);
@@ -23,6 +23,18 @@ function toggleSidebar() {
 function toggleProfile() {
   const profileDetail = document.getElementById('profileDetail');
   profileDetail.classList.toggle('hidden');  // 프로필 상세 정보 숨김/표시 토글
+
+  $.ajax({
+    url: "/orca/user/getUserVo",
+    method: 'get',
+    dataType: 'json',
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  })
 }
 
 /* 프로필 숨김 함수 */
@@ -37,3 +49,4 @@ function hideProfile() {
 function logout() {
   alert('로그아웃 되었습니다.');  // 로그아웃 알림
 }
+

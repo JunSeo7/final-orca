@@ -11,7 +11,7 @@
 <body>
 <header>
         <div class="header-left" onclick="loadPage('home.jsp')">
-            <img src="logo.png" alt="Logo" class="logo">
+            <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
             <h2>ORCA</h2>
         </div>
         <div class="header-right">

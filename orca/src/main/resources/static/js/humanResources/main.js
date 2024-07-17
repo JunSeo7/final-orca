@@ -117,31 +117,35 @@ showVacationCode.addEventListener('click', function () {
     });
 
     $.ajax({
-            url: "http://127.0.0.1:8080/orca/re/vacation",
-            method: "get",
-            success: function(data) {
-                const x = document.querySelector("#vacationCodesTable tbody");
-                console.log(x);
-                let str = "";
+        url: "http://127.0.0.1:8080/orca/re/vacation",
+        method: "get",
+        success: function (data) {
+            const x = document.querySelector("#vacationCodesTable tbody");
+            console.log(x);
+            let str = "";
 
-                for(let i = 0; i < data.length; i++) {
-                    str += "<tr>";
-                    str += "<td><input type='checkbox' class='rowCheckbox'></td>";
-                    str += "<td>" + data[i].vacationCode + "</td>";
-                    str += "<td>" + data[i].vacationName + "</td>";
-                    str += "</tr>";
-                }
-                x.innerHTML = str;
-            },
-            error: function(error) {
-                console.error("데이터를 가져오는데 실패했습니다.", error);
+            for (let i = 0; i < data.length; i++) {
+                str += "<tr>";
+                str += "<td><input type='checkbox' class='rowCheckbox'></td>";
+                str += "<td>" + data[i].vacationCode + "</td>";
+                str += "<td>" + data[i].vacationName + "</td>";
+                str += "</tr>";
             }
+
+            x.innerHTML = str;
+        },
+        error: function (error) {
+            console.error("데이터를 가져오는데 실패했습니다.", error);
+        }
+    });
+
         });
 
         function deleteCheckVCode(){
             const checkboxArr = document.querySelectAll("input[type=checkbox]")
             console.log("checkboxArr : ", checkboxArr)
         }
+
 });
 
 
@@ -316,6 +320,7 @@ function showEmployeeList() {
             }
             mainDiv.innerHTML = response;
             listEmployeePage(page);
+            searchListEmployee();
         },
         error: function (error) {
             console.error('데이터 로드 실패', error);
@@ -421,7 +426,6 @@ function listEmployeeData(pagination) {
                 employeeContainer.appendChild(employeeDiv);
             });
 
-
         },
         error: function (error) {
             console.error('데이터 로드 실패', error);
@@ -463,7 +467,7 @@ function showEmployeeDetails(empNo) {
     });
 };
 
-function deleteEmployee(empNo){
+function deleteEmployee(empNo) {
     $.ajax({
         type: 'post',
         url: `/orca/humanResources/deleteEmployee`,
@@ -473,10 +477,10 @@ function deleteEmployee(empNo){
         dataType: 'json',
         success: function (response) {
             console.log(response);
-            if(response === 1){
+            if (response === 1) {
                 alert("사원 삭제 성공!");
                 showEmployeeList();
-            }else{
+            } else {
                 alert("사원 삭제 실패");
             }
         },
@@ -736,4 +740,178 @@ function employeeEdit(empNo) {
     } else {
         alert("변경된 내용이 없습니다.");
     }
+}
+
+function searchListEmployee() {
+    $(document).ready(function () {
+        // 폼 제출 시 Ajax로 데이터를 전송한다.
+        $('#employee-search-form').on('submit', function (event) {
+            console.log("입력됨");
+            event.preventDefault();
+            // 아래 변수에 담아주는 건 뭐냐?
+            // 사용자가 form에 입력한 데이터를 수집하여 이를 Ajax 요청으로 서버에 전송하기 위해 작성되었다.
+
+            const keyword = $('#searchInput').val();
+            const searchType = $('#searchType').val();
+            console.log(keyword);
+            console.log(searchType);
+
+            $.ajax({
+                // 위에 form에서 이미 post로 /messenger/write에 보내주고 있다.
+                // 그렇기에, form의 action 속성 값을 사용한다.
+                url: $(this).attr('action'),
+                method: "get",
+                dataType: 'html',
+                success: (response) => {
+                    while (mainDiv.firstChild) {
+                        mainDiv.removeChild(mainDiv.firstChild);
+                    }
+                    mainDiv.innerHTML = response;
+                    let page = 1;
+                    searchListEmployeePage(page, keyword, searchType);
+                    searchListEmployee();
+                },
+                error: (xhr, status, error) => {
+                    console.log(error);
+                }
+            });
+        });
+    });
+}
+
+
+
+
+
+function searchListEmployeePage(page, keyword, searchType) {
+    const pagination = {};
+    let totalPage = document.querySelector('.totalPage');
+    console.log(keyword);
+    console.log(searchType);
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/searchListEmployeePage',
+        data: {
+            page: page,
+            keyword: keyword,
+            searchType: searchType
+        },
+        dataType: 'json',
+        success: function (response) {
+            Object.assign(pagination, response);
+            if (pagination.totalRecordCount > 0) {
+                Object.assign(pagination, response);
+
+                while (totalPage.firstChild) {
+                    totalPage.removeChild(totalPage.firstChild);
+                }
+
+                if (pagination.existPrevPage) {
+                    let existPrevPage = document.createElement('a');
+                    existPrevPage.textContent = '이전';
+                    totalPage.appendChild(existPrevPage);
+                    existPrevPage.addEventListener('click', function () {
+                        listEmployeePage(pagination.startPage - 1);
+                    });
+                }
+
+                for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                    let aPage = document.createElement('a');
+                    aPage.textContent = i;
+                    if (i == page) {
+                        aPage.classList.add('current-page');
+                    }
+                    totalPage.appendChild(aPage);
+                    aPage.addEventListener('click', function () {
+                        listEmployeePage(i);
+                    });
+                }
+
+                if (pagination.existNextPage) {
+                    let existNextPage = document.createElement('a');
+                    existNextPage.textContent = '이후';
+                    totalPage.appendChild(existNextPage);
+                    existNextPage.addEventListener('click', function () {
+                        listEmployeePage(pagination.endPage + 1);
+                    });
+                }
+                searchListEmployeeData(pagination, keyword, searchType);
+            } else {
+                let pageFooter = $('.pageFooter');
+                let keywordValue = $('<div>');
+                let notFound = $('<div>');
+                let notFoundText = $('<div>');
+
+                notFoundText.addClass('notFoundText');
+
+                keywordValue.text("'" + keyword + "'");
+                keywordValue.addClass('keyword');
+                notFound.text("에 대한 검색결과 입니다. 0건");
+
+                notFoundText.append(keywordValue);
+                notFoundText.append(notFound);
+
+                let instructions = $('<p>');
+                instructions.append('- 단어의 철자가 정확한지 확인해 보세요.<br>');
+                instructions.append('- 한글을 영어로 혹은 영어를 입력했는지 확인해 보세요.<br>');
+                instructions.append('- 검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.<br>');
+                instructions.addClass('check-list');
+
+                pageFooter.append(notFoundText);
+                pageFooter.append(instructions);
+            }
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+function searchListEmployeeData(pagination, keyword, searchType) {
+
+    let startNum = pagination.startNum;
+    let endNum = pagination.endNum;
+    let employeeContainer = document.querySelector('.employee-container');
+    employeeContainer.innerHTML = '';
+    $.ajax({
+        type: 'get',
+        url: '/orca/humanResources/searchListEmployeeData',
+        data: {
+            startNum: startNum,
+            endNum: endNum,
+            keyword: keyword,
+            searchType: searchType
+        },
+        dataType: 'json',
+        success: function (data) {
+            data.forEach(function (employee) {
+                let imageUrl = '/upload/user/' + employee.imgChangeName;
+
+                // employee-info 요소 생성
+                let employeeDiv = document.createElement('div');
+                employeeDiv.classList.add('employee-info');
+
+                // 이미지 요소 생성
+                let img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'img';
+                img.classList.add('employee-profile');
+                employeeDiv.appendChild(img);
+
+                // 이름, 직위, 부서 정보 추가
+                let employeeName = document.createElement('div');
+                employeeName.textContent = `${employee.name} (${employee.nameOfPosition.trim()}/${employee.partName})`;
+                employeeDiv.appendChild(employeeName);
+
+                employeeDiv.addEventListener('click', function () {
+                    showEmployeeDetails(employee.empNo);
+                })
+
+                employeeContainer.appendChild(employeeDiv);
+            });
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
 }
