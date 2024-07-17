@@ -21,15 +21,30 @@ public class UserController {
     private final UserService service;
 
     @GetMapping("login")
-    public String login(){
+    public String login() {
         return "user/login";
-    };
+    }
+
+    ;
 
     @PostMapping("login")
-    public String login(UserVo vo, HttpSession httpSession, Model model){
+    public String login(UserVo vo, HttpSession httpSession, Model model) {
+
+        // 시연을 위한 임시 로그인 ~~
+        if (vo.getEmpNo() == 2024070096) {
+            UserVo loginUserVo = service.TestLogin(vo.getEmpNo());
+            if (loginUserVo == null) {
+                model.addAttribute("message", "아이디 또는 비밀번호를 다시 확인해주세요.");
+                return "user/login";
+            }
+            httpSession.setAttribute("loginUserVo", loginUserVo);
+            return "redirect:/orca/home";
+        }
+
+        // 시큐리티 로그인
         UserVo loginUserVo = service.login(vo);
 
-        if(loginUserVo == null){
+        if (loginUserVo == null) {
             model.addAttribute("message", "아이디 또는 비밀번호를 다시 확인해주세요.");
             return "user/login";
         }
@@ -40,8 +55,8 @@ public class UserController {
 
     @PostMapping("getUserVo")
     @ResponseBody
-    public UserVo getUserVo(HttpSession httpSession){
-        int userNo = ((UserVo)httpSession.getAttribute("loginUserVo")).getEmpNo();
+    public UserVo getUserVo(HttpSession httpSession) {
+        int userNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
 
         UserVo userVo = service.getUserVo(userNo);
         return userVo;

@@ -16,4 +16,11 @@ public interface UserMapper {
             "JOIN POSITION PO ON PI.POSITION_CODE = PO.POSITION_CODE\n" +
             "WHERE EMP_NO = #{userNo}")
     UserVo getUserVo(@Param("userNo") int userNo);
+
+    @Select("SELECT PI.EMP_NO, PI.NAME, PO.NAME_OF_POSITION, T.TEAM_NAME, PI.SOCIAL_SECURITY_NO, PI.PHONE, PI.EXTENSION_CALL, PI.EMAIL\n" +
+            "FROM PERSONNEL_INFORMATION PI\n" +
+            "JOIN DEPARTMENT_TEAM T ON PI.TEAM_CODE = T.TEAM_CODE \n" +
+            "JOIN POSITION PO ON PI.POSITION_CODE = PO.POSITION_CODE\n" +
+            "WHERE EMP_NO = #{userNo}")
+    UserVo TestLogin(@Param("userNo") int userNo);
 }
