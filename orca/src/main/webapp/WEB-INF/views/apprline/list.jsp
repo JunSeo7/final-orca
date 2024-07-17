@@ -42,7 +42,7 @@
                 <span class="approval-title">[${approvalLines.categoryName}] ${approvalLines.title}</span>
                 <br>
                 <!-- 결재자 목록 -->
-                <c:forEach var="approver" items="${approvalLines.approverVoList}">
+                <c:forEach var="approver" items="${approvalLines.approverVoList}" varStatus="status">
                     <c:choose>
                         <c:when test="${approver.approverClassificationNo == 1}">
                             <span class="approver">결재:</span>
