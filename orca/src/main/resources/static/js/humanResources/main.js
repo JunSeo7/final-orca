@@ -137,6 +137,11 @@ showVacationCode.addEventListener('click', function () {
                 console.error("데이터를 가져오는데 실패했습니다.", error);
             }
         });
+
+        function deleteCheckVCode(){
+            const checkboxArr = document.querySelectAll("input[type=checkbox]")
+            console.log("checkboxArr : ", checkboxArr)
+        }
 });
 
 
