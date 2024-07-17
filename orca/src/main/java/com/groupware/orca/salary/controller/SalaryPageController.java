@@ -1,11 +1,13 @@
 package com.groupware.orca.salary.controller;
 
 import com.groupware.orca.salary.service.SalaryService;
+import com.groupware.orca.salary.vo.RatesVo;
+import com.groupware.orca.salary.vo.SalaryVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +35,13 @@ public class SalaryPageController {
         return "salary/list";
     }
 
+    //급여 검색
+    @GetMapping("salarySearch")
+    public String searchSalary(){
+        return "salary/search";
+
+    }
+
     //급여 상세조회 (화면)
     @GetMapping("salaryDetail")
     public String detail(){
@@ -52,6 +61,22 @@ public class SalaryPageController {
         return "salary/delete";
     }
 
+
+    //------------------------------------------
+
+    //4대보험 목록조회
+    @GetMapping("ratesList")
+    public String ratesList(){
+
+        return "salary/ratesList";
+    }
+
+    //4대보험 요율 수정
+    @PutMapping("ratesEdit")
+    public String ratesEdit(RatesVo rvo){
+
+        return "salary/ratesEdit";
+    }
 
 
 }

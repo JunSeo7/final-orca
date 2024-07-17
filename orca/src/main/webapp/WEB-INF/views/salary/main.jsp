@@ -43,8 +43,7 @@
                         </div>
                         <div class="calnedar title-toggle">◾ 4대보험</div>
                         <div class="calendar-link link">
-                            <div class="calendar-list toggle">◽입력 - 수정</div>
-                            <!-- <div class="calendar-wirte toggle">◽ 조회</div> -->
+                            <div class="calendar-wirte toggle">◽ 조회 - 수정</div>
                         </div>
                     </div>
                 </nav>

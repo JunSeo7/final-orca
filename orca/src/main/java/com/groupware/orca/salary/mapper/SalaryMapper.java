@@ -77,14 +77,17 @@ public interface SalaryMapper {
 
     //급여관리 목록조회
     @Select("""
-            SELECT
-                S.PAYROLL_NO
-                ,P.EMP_NO
-                ,P.NAME
-                ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
-                ,S.PAYMENT_DATE
-            FROM PAYROLL S
-            JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+               SELECT
+                   S.PAYROLL_NO
+                   ,P.EMP_NO
+                   ,P.NAME
+                   ,FLOOR(ROUND(NATIONAL_PENSION+HEALTH_INSURANCE+LONG_CARE+EMPLOYMENT_INSURANCE+INCOME_TAX+LOCAL_INCOME_TAX, 1)) AS TOTAL_DEDUCTION_ITEMS
+                   ,FLOOR(ROUND(BONUS+POSITION+HOLIDAY+OVERTIMEWORK+MEALS, 1)) AS TOTAL_ALLOWANCE_ITEMS
+                   ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
+                   ,S.PAYMENT_DATE
+                   FROM PAYROLL S
+                   JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+                   ORDER BY PAYROLL_NO DESC
             """)
     List<SalaryVo> getSalaryList();
 
@@ -144,10 +147,9 @@ public interface SalaryMapper {
 
     //급여관리 삭제
     @Delete("""
-            DELETE PAYROLL WHERE EMP_NO = #{empNo}
-            AND PAYROLL_NO = #{payrollNo}
+            DELETE PAYROLL WHERE PAYROLL_NO = #{payrollNo}
             """)
-    int getSalaryDelete(@Param("empNo") String empNo,@Param("payrollNo") String payrollNo);
+    int getSalaryDelete(@Param("payrollNo") String payrollNo);
 
     //급여 사원 검색
     @Select("""
@@ -184,6 +186,7 @@ public interface SalaryMapper {
                 WHERE RATES_NO = #{ratesNo}
             """)
     Integer ratesEdit(RatesVo rvo);
+
 
 
     //LOCAL_INCOME_TAX_PERSENTAGE
