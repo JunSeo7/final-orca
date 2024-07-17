@@ -30,6 +30,7 @@
                     </div>
                 </header>
 
+
                 <button id="toggleSidebar" class="sidebar-toggle" onclick="toggleSidebar()">메뉴</button>
                 <aside id="sidebar" class="sidebar">
                     <div class="profile" onclick="toggleProfile()">
@@ -56,6 +57,27 @@
                                 <div class="showVacationCode toggle">◽ 휴가 코드 관리</div>
                                 <div class="toggle">◽ 기타 코드 관리</div>
                             </div>
+
+            <button id="toggleSidebar" class="sidebar-toggle" onclick="toggleSidebar()">메뉴</button>
+            <aside id="sidebar" class="sidebar">
+                <div class="profile" onclick="toggleProfile()">
+                    <img src="profile.png" alt="Profile Picture" class="profile-pic">
+                    <p class="profile-info">경영지원부 1팀 | <span>양파쿵야</span></p>
+                </div>
+                <hr>
+                <nav>
+                    <div class="sidebar-nav">
+                        <div class="calnedar title-toggle">◾ 인사 관리</div>
+                        <div class="calendar-link link">
+                            <div class="employee-list toggle">◽ 전체 사원 조회</div>
+                            <div class="employee-registration toggle">◽ 사원 등록</div>
+                        </div>
+                        <div class="approval title-toggle">◾ 근태 관리</div>
+                        <div class="approval-list">
+                            <div class="toggle">◽ 전체 사원 근무 관리</div>
+                            <div class="showVacationCode toggle">◽ 휴가 코드 관리</div>
+                            <div class="toggle">◽ 기타 코드 관리</div>
+
                         </div>
                     </nav>
                 </aside>

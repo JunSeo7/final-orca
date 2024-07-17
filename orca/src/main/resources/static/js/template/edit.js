@@ -9,11 +9,13 @@ $(document).ready(function() {
     // Summernote
     $('#summernote').summernote({
         placeholder: '결재 양식 내용을 입력해주세요.',
-        height: 500,
-        minHeight: null, // 최소 높이
-        maxHeight: null, // 최대 높이
+        minHeight: 300, // 최소
+        minWidth: 200, // 최소
+        maxWidth: 1000, // 최대
         focus: true
     });
+
+
 
     // 폼 제출 이벤트 처리
         $('#editForm').on('submit', function(event) {

@@ -233,6 +233,7 @@ public class DocumentController {
     public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
+        System.out.println("vo = " + vo);
         return vo;
     }
 
@@ -254,6 +255,7 @@ public class DocumentController {
     // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 / 기안 - 취소)
     @PostMapping("updateStatus")
     public String updateStatusDocument(DocumentVo vo, HttpSession httpSession){
+        System.out.println("vo = " + vo);
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(loginUserNo);
         int result = service.updateStatusDocument(vo);
@@ -261,9 +263,10 @@ public class DocumentController {
     }
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
-    @DeleteMapping("delete")
+    @PostMapping("delete")
     public ResponseEntity<String> deleteDocumentByNo(@RequestParam int docNo, HttpSession httpSession){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        System.out.println("docNo = " + docNo);
         int result = service.deleteDocumentByNo(docNo, loginUserNo);
         if (result > 0) {
             return ResponseEntity.ok("문서가 삭제되었습니다.");

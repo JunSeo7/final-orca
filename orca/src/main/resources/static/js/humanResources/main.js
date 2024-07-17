@@ -131,12 +131,21 @@ showVacationCode.addEventListener('click', function () {
                 str += "<td>" + data[i].vacationName + "</td>";
                 str += "</tr>";
             }
+
             x.innerHTML = str;
         },
         error: function (error) {
             console.error("데이터를 가져오는데 실패했습니다.", error);
         }
     });
+
+        });
+
+        function deleteCheckVCode(){
+            const checkboxArr = document.querySelectAll("input[type=checkbox]")
+            console.log("checkboxArr : ", checkboxArr)
+        }
+
 });
 
 

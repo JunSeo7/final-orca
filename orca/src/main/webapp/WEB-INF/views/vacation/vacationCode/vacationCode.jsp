@@ -54,7 +54,7 @@
         <h2>휴가 관리</h2>
         <div class="button-container">
             <button class="button" id="addVacationCodeBtn">휴가 등록</button>
-            <button class="button edit" id="editVacationCodeBtn">휴가 수정</button>
+            <button class="button delete" id="deleteVacationCodeBtn">휴가 삭제</button>
         </div>
         <table id="vacationCodesTable">
             <thead>

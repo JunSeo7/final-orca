@@ -1,5 +1,7 @@
 package com.groupware.orca.salary.controller;
 
+import com.groupware.orca.common.vo.PageVo;
+import com.groupware.orca.common.vo.Pagination;
 import com.groupware.orca.salary.service.SalaryService;
 import com.groupware.orca.salary.vo.ClientVo;
 import com.groupware.orca.salary.vo.RatesVo;
@@ -33,6 +35,7 @@ public class SalaryController {
     //급여계산 수정
     @PostMapping("edit")
     public int salaryUpdate(ClientVo clientVo,UserVo vo,SalaryVo svo){
+
         int result = service.salaryUpdate(vo,clientVo,svo);
 
         return result;
@@ -44,7 +47,6 @@ public class SalaryController {
     @GetMapping("list")
     public List<SalaryVo> getSalaryList(){
         List<SalaryVo> voList = service.getSalaryList();
-        System.out.println("voList = " + voList);
         return voList;
     }
 
@@ -61,8 +63,8 @@ public class SalaryController {
 
     //급여 삭제
     @DeleteMapping("delete")
-    public int getSalaryDelete(@RequestParam("empNo") String empNo, @RequestParam("payrollNo")String payrollNo){
-        int result = service.getSalaryDelete(empNo,payrollNo);
+    public int getSalaryDelete( @RequestParam("payrollNo")String payrollNo){
+        int result = service.getSalaryDelete(payrollNo);
         return result;
     }
 
@@ -94,7 +96,7 @@ public class SalaryController {
     }
 
     //4대보험 요율 수정
-    @PutMapping("ratesUpdate")
+    @PutMapping("ratesEdit")
     public Integer ratesEdit(RatesVo rvo){
         Integer result = service.ratesUpdate(rvo);
         return result;

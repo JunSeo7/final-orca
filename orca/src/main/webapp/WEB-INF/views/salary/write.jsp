@@ -39,13 +39,12 @@
                     <div class="sidebar-nav">
                         <div class="approval title-toggle">◾ 급여 관리</div>
                         <div class="approval-list">
-                            <div class="toggle">◽ 급여 입력</div>
-                            <div class="toggle">◽ 급여 목록</div>
+                            <div class="toggle"><a href="/orca/salaryWrite">◽ 급여 입력</a></div>
+                            <div class="toggle"><a href="/orca/salaryList">◽ 급여 목록</a></div>
                         </div>
                         <div class="calnedar title-toggle">◾ 4대보험</div>
                         <div class="calendar-link link">
-                            <div class="calendar-list toggle">◽입력 - 수정</div>
-                            <!-- <div class="calendar-wirte toggle">◽ 조회</div> -->
+                            <div class="calendar-wirte toggle">◽ 조회 - 수정</div>
                         </div>
                     </div>
                 </nav>

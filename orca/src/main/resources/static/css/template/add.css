@@ -8,6 +8,7 @@ main {
   transition: margin-left 0.3s ease;
   padding-left: 200px;
   padding-right: 200px;
+  padding-top: 50px;
   word-break: keep-all;
 }
 
@@ -63,4 +64,13 @@ input[type="text"],textarea, select {
 .document-table th {
   background-color:  #d4e9ff;
   text-align: center;
+}
+
+/* text area 높이 조절 금지*/
+.note-editor .note-editable {
+    height: 600px; /* 고정 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤바 설정 */
+}
+.note-editor .note-statusbar {
+    display: none; /* 하단 상태바 숨기기 */
 }

@@ -36,6 +36,7 @@ main.full {
   text-align: center;
 }
 
+
 .submit_btn {
   padding: 10px 20px;
   background-color: #6eadff;
@@ -46,6 +47,18 @@ main.full {
     background-color:#368dff;
   }
 }
+
+
+/* text area 높이 조절 금지*/
+.note-editor .note-editable {
+    height: 600px; /* 고정 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤바 설정 */
+}
+.note-editor .note-statusbar {
+    display: none; /* 하단 상태바 숨기기 */
+}
+
+
 
 /* 추가적인 스타일 설정 */
 form {
