@@ -16,6 +16,8 @@
 <%@ include file="/WEB-INF/views/document/aside.jsp" %>
 <main id="content">
     <div class="container">
+
+    <div class ="content-title">
         <h2>기안서 목록</h2>
         <div class="search_box">
 
@@ -27,7 +29,10 @@
 
             <input class="search_text" type="text" id="searchText" placeholder="검색어 입력">
             <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" id="searchButton">
-            </div>
+        </div>
+    </div>
+
+    <hr>
 
 <c:choose>
      <c:when test="${empty documentList}">

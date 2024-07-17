@@ -17,17 +17,22 @@ main.full {
   margin-left: 20px;
 }
 
+.content-title{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 /* 검색창 */
 .search_box {
   position: relative;
   width: 350px;
+  height:30px;
   display: flex;
   align-items: center;
   border: 1px solid #bbb;
   border-radius: 8px;
   padding: 5px;
-  margin-bottom: 20px;
 }
 
 .search_select {
@@ -62,6 +67,8 @@ main.full {
   display: flex;
   flex-direction: column;
 }
+
+
 
 /* 문서없으면 */
 .no-document{

@@ -3,7 +3,7 @@
 
 <c:choose>
     <c:when test="${empty templateList}">
-        <div class="no-template">등록된 결재 양식이 없습니다.</div>
+        <div class="no-template">키워드에 일치하는 결재 양식이 없습니다.</div>
     </c:when>
     <c:otherwise>
         <div class="template-box">
