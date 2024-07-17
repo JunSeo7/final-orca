@@ -42,7 +42,7 @@
                             <div class="employee-list toggle">◽ 전체 사원 조회</div>
                             <div class="employee-registration toggle">◽ 사원 등록</div>
                         </div>
-                        <div class="approval title-toggle">◾ 근퇴 관리</div>
+                        <div class="approval title-toggle">◾ 근태 관리</div>
                         <div class="approval-list">
                             <div class="toggle">◽ 전체 사원 근무 관리</div>
                             <div class="showVacationCode toggle">◽ 휴가 코드 관리</div>
