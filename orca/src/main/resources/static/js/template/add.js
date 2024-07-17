@@ -3,13 +3,15 @@ $(document).ready(function() {
     fetchCategories();
 
     // textarea 라이브러리
+
+    // textarea 라이브러리 초기화
     $('#summernote').summernote({
         placeholder: '결재 양식 내용을 입력해주세요.',
-        height: 500,
-        minHeight: null, // 최소
-        maxHeight: null, // 최대
-        focus: true
-    });
+        minHeight: 300, // 최소
+           minWidth: 200, // 최소
+           maxWidth: 1000, // 최대
+           focus: true
+       });
 });
 
 // 카테고리 가져오기
