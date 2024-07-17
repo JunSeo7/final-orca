@@ -40,7 +40,7 @@ function toggleCheck(element) {
 const loginUserVo = {};
 
 $.ajax({
-    type: 'post',
+    type: 'get',
     url: '/orca/user/getUserVo',
     dataType: 'json',
     success: function (response) {

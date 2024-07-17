@@ -1,44 +1,54 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+        <%@ page import="com.groupware.orca.user.vo.UserVo" %>
+            <html>
 
-    <title>ORCA</title>
+            <head>
 
-    <link rel="stylesheet" href="/css/layout/aside.css">
-    <script defer src="/js/layout/aside.js"></script>
+                <title>ORCA</title>
 
-</head>
-<body>
-        <aside id="sidebar">
-            <div class="profile" onclick="toggleProfile()">
-                <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic">
-                <p class="profile-info">SW팀 | <span>양파쿵야</span></p>
-            </div>
-            <hr>
+                <link rel="stylesheet" href="/css/layout/aside.css">
+                <script defer src="/js/layout/aside.js"></script>
 
-              <div id="profileDetail" class="profile-detail hidden">
-                  <p>상태 설정</p>
-                  <p>상태 메시지</p>
-                  <p>@멘션 확인하기</p>
-                  <p>파일 리스트</p>
-                  <p>직책</p>
-                  <p>생년월일</p>
-                  <p>휴대전화</p>
-                  <p>raji1004@naver.com</p>
-                  <button onclick="logout()">로그아웃</button>
-              </div>
+            </head>
 
-            <ul class="nav-list">
-                <li class="nav-item"><a href="#">채팅</a></li>
-                <li class="nav-item"><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
-                <li class="nav-item"><a href="/orca/document/list">전자결재</a></li>
-                <li class="nav-item"><a href="/orca/work/workInfo">근태</a></li>
-                <li class="nav-item"><a href="#">투표</a></li>
-                <li class="nav-item"><a href="#">드라이브</a></li>
-                <li class="nav-item"><a href="#">메일</a></li>
-                <li class="nav-item"><a href="#">설정</a></li>
-            </ul>
-        </aside>
-</body>
-</html>
+            <body>
+                <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); %>
+                    <aside id="sidebar">
+                        <div class="profile" onclick="toggleProfile()">
+                            <img src="/upload/user/<%= loginUserVo.getImgChangeName() %>" alt="Profile Picture"
+                                class="profile-pic">
+                            <p class="profile-info">
+                                <%= loginUserVo.getTeamName() %> | <span>
+                                        <%= loginUserVo.getName() %>
+                                    </span>
+                            </p>
+                        </div>
+                        <hr>
+
+                        <div id="profileDetail" class="profile-detail hidden">
+                            <p>상태 설정</p>
+                            <p>@멘션 확인하기</p>
+                            <p>파일 리스트</p>
+                            <p>직책</p>
+                            <p>생년월일</p>
+                            <p>휴대전화</p>
+                            <p>raji1004@naver.com</p>
+                            <button onclick="logout()">로그아웃</button>
+                        </div>
+
+                        <ul class="nav-list">
+                            <li class="nav-item"><a href="#">채팅</a></li>
+                            <li class="nav-item"><a href="/orca/calendar/showCalendar">캘린더/할일</a></li>
+                            <li class="nav-item"><a href="/orca/document/list">전자결재</a></li>
+                            <li class="nav-item"><a href="/orca/work/workInfo">근태</a></li>
+                            <li class="nav-item"><a href="#">투표</a></li>
+                            <li class="nav-item"><a href="#">드라이브</a></li>
+                            <li class="nav-item"><a href="#">메일</a></li>
+                            <li class="nav-item"><a href="#">부서 로그인</a></li>
+                            <li class="nav-item"><a href="#">설정</a></li>
+                        </ul>
+                    </aside>
+            </body>
+
+            </html>

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <div class="container">
         <div class="search-container">
-            <form action="/search" method="GET">
-                <select id="searchCategory" name="category">
+            <form action="searchListEmployee" method="get" id="employee-search-form">
+                <select id="searchType" name="searchType">
                     <option value="name">이름</option>
                     <option value="empNo">사번</option>
-                    <option value="department">부서</option>
+                    <option value="department">부서명</option>
                 </select>
                 <input type="text" id="searchInput" name="keyword" placeholder="검색어 입력">
                 <input type="submit" value="검색">

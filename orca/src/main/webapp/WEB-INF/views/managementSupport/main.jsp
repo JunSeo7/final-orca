@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ page import="com.groupware.orca.user.vo.UserVo" %>
         <!DOCTYPE html>
         <html>
 
@@ -17,21 +18,27 @@
         <body>
             <header>
                 <div class="header-left">
-                    <img src="" alt="Logo" class="logo">
+                    <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
                     <h2 class="header-title">ORCA</h2>
                 </div>
                 <div class="header-right">
-                    <span class="icon">알림</span>
-                    <span class="icon">조직도</span>
-                    <span class="icon">설정</span>
+                    <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
+            <span class="icon"><img src="/img/header/organization-chart.png" alt="organization-chart" class="icon"></span>
+            <span class="icon"><img src="/img/header/settings.png" alt="settings" class="icon"></span>
                 </div>
             </header>
 
             <button id="toggleSidebar" class="sidebar-toggle" onclick="toggleSidebar()">메뉴</button>
             <aside id="sidebar" class="sidebar">
                 <div class="profile" onclick="toggleProfile()">
-                    <img src="profile.png" alt="Profile Picture" class="profile-pic">
-                    <p class="profile-info">경영지원부 1팀 | <span>양파쿵야</span></p>
+                    <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); %>
+                    <img src="/upload/user/<%= loginUserVo.getImgChangeName() %>" alt="Profile Picture"
+                                class="profile-pic">
+                            <p class="profile-info">
+                                <%= loginUserVo.getTeamName() %> | <span>
+                                        <%= loginUserVo.getName() %>
+                                    </span>
+                            </p>
                 </div>
                 <hr>
                 <nav>

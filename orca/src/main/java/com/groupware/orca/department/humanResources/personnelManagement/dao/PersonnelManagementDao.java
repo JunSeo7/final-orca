@@ -2,6 +2,7 @@ package com.groupware.orca.department.humanResources.personnelManagement.dao;
 
 import com.groupware.orca.common.vo.DepartmentVo;
 import com.groupware.orca.common.vo.Position;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.common.vo.TeamVo;
 import com.groupware.orca.department.humanResources.personnelManagement.mapper.PersonnelManagementMapper;
 import com.groupware.orca.department.humanResources.personnelManagement.service.PersonnelManagementService;
@@ -54,5 +55,13 @@ public class PersonnelManagementDao {
 
     public int deleteEmployee(int empNo) {
         return mapper.deleteEmployee(empNo);
+    }
+
+    public int getSearchEmployeeCnt(SearchVo searchVo) {
+        return mapper.getSearchEmployeeCnt(searchVo);
+    }
+
+    public List<UserVo> searchListEmployeeData(String keyword, int startNum, int endNum, String searchType) {
+        return mapper.searchListEmployeeData(keyword, startNum, endNum, searchType);
     }
 }

@@ -2,6 +2,7 @@ package com.groupware.orca.department.humanResources.personnelManagement.mapper;
 
 import com.groupware.orca.common.vo.DepartmentVo;
 import com.groupware.orca.common.vo.Position;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.common.vo.TeamVo;
 import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
@@ -120,4 +121,61 @@ public interface PersonnelManagementMapper {
 
     @Update("UPDATE PERSONNEL_INFORMATION SET LEAVING_DATE = SYSDATE WHERE EMP_NO = #{empNo}")
     int deleteEmployee(int empNo);
+
+    @Select("""
+                    <script>
+                        SELECT COUNT(E.EMP_NO)
+                        FROM PERSONNEL_INFORMATION E
+                        JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE
+                        WHERE E.LEAVING_DATE IS NULL AND E.POSITION_CODE > 5
+                        <if test='vo.searchType == "name"'>
+                        AND LOWER(REPLACE(E.NAME, ' ', '')) LIKE '%' || #{vo.keyword} || '%'
+                        </if>
+                        <if test='vo.searchType == "empNo"'>
+                        AND LOWER(REPLACE(E.EMP_NO, ' ', '')) LIKE '%' || #{vo.keyword} || '%'
+                        </if>
+                        <if test='vo.searchType == "department"'>
+                        AND LOWER(REPLACE(D.PARTNAME, ' ', '')) LIKE '%' || #{vo.keyword} || '%'
+                        </if>
+                    </script>
+            """)
+    int getSearchEmployeeCnt(@Param("vo") SearchVo searchVo);
+
+    @Select("""
+            <script>
+            SELECT
+                *
+            FROM
+            (
+                SELECT 
+                    A.*
+                    , ROWNUM AS RNUM
+                FROM
+                (
+                    SELECT 
+                        E.EMP_NO,
+                        E.NAME,
+                        D.PARTNAME,
+                        P.NAME_OF_POSITION,
+                        E.IMG_CHANGE_NAME
+                    FROM PERSONNEL_INFORMATION E
+                    JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE
+                    JOIN POSITION P ON P.POSITION_CODE = E.POSITION_CODE
+                    WHERE E.LEAVING_DATE IS NULL AND E.POSITION_CODE > 5
+                    <if test='searchType == "name"'>
+                        AND LOWER(REPLACE(E.NAME, ' ', '')) LIKE '%' || #{keyword} || '%'
+                    </if>
+                    <if test='searchType == "empNo"'>
+                        AND LOWER(REPLACE(E.EMP_NO, ' ', '')) LIKE '%' || #{keyword} || '%'
+                    </if>
+                    <if test='searchType == "department"'>
+                        AND LOWER(REPLACE(D.PARTNAME, ' ', '')) LIKE '%' || #{keyword} || '%'
+                    </if>
+                    ORDER BY E.POSITION_CODE ASC
+                ) A
+            )
+            WHERE RNUM BETWEEN #{startNum} AND #{endNum}
+            </script>
+            """)
+    List<UserVo> searchListEmployeeData(@Param("keyword") String keyword, @Param("startNum") int startNum, @Param("endNum") int endNum, @Param("searchType") String searchType);
 }
