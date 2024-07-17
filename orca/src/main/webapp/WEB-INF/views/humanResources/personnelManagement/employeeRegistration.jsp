@@ -56,6 +56,7 @@
                             <option value="신한은행">신한은행</option>
                             <option value="우리은행">우리은행</option>
                             <option value="하나은행">하나은행</option>
+                            <option value="신협은행">신협은행</option>
                             <option value="IBK기업은행">IBK기업</option>
                         </select>
                         <span>계좌번호 </span>
