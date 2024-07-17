@@ -23,4 +23,8 @@ public class UserService {
     public UserVo getUserVo(int userNo) {
         return dao.getUserVo(userNo);
     }
+
+    public UserVo TestLogin(int empNo) {
+        return dao.TestLogin(empNo);
+    }
 }

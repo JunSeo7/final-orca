@@ -19,4 +19,8 @@ public class UserDao {
     public UserVo getUserVo(int  userNo) {
         return mapper.getUserVo(userNo);
     }
+
+    public UserVo TestLogin(int empNo) {
+        return mapper.TestLogin(empNo);
+    }
 }
