@@ -139,12 +139,11 @@ showVacationCode.addEventListener('click', function () {
         }
     });
 
-        });
 
-        function deleteCheckVCode(){
-            const checkboxArr = document.querySelectAll("input[type=checkbox]")
-            console.log("checkboxArr : ", checkboxArr)
-        }
+    function deleteCheckVCode() {
+        const checkboxArr = document.querySelectAll("input[type=checkbox]")
+        console.log("checkboxArr : ", checkboxArr)
+    }
 
 });
 
@@ -778,10 +777,6 @@ function searchListEmployee() {
         });
     });
 }
-
-
-
-
 
 function searchListEmployeePage(page, keyword, searchType) {
     const pagination = {};
