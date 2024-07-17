@@ -90,7 +90,7 @@
             </tr>
             <tr>
                 <td colspan='2'>
-                    <textarea id="summernote" name="content"></textarea>
+                    <textarea id="summernote" name="content" class = "content"></textarea>
                 </td>
             </tr>
             <tr>

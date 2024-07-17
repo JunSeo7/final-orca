@@ -217,7 +217,7 @@ public interface DocumentMapper {
     // 결재 문서 조회(카테고리, 양식, 기안자관련)
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD HH24:MI') AS CREDIT_DATE, D.STATUS,
-                   D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
+                   D.URGENT, T.TITLE AS templateTitle,D.TEMPLATE_NO,T.CATEGORY_NO, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
             JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
