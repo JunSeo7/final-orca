@@ -29,6 +29,11 @@
             <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" id="searchButton">
             </div>
 
+<c:choose>
+     <c:when test="${empty documentList}">
+            <div class="no-document">해당 상태의 결재문서가 없습니다.</div>
+    </c:when>
+    <c:otherwise>
             <div id="documentList">
                 <c:forEach var="document" items="${documentList}">
                     <div class="document">
@@ -71,8 +76,10 @@
                         </div>
                     </div>
                 </c:forEach>
+            </div>
         </div>
-    </div>
+    </c:otherwise>
+</c:choose>
 
 </main>
 </body>
