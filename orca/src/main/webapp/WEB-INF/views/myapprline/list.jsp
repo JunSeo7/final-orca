@@ -38,6 +38,7 @@
             <div class="approval-lines">
                 <!-- 결재선 이름 및 템플릿 제목 -->
                 <span class="approval-lines-name">${approvalLines.apprLineName}</span>
+                 <br>
                 <span class="approval-title">[${approvalLines.categoryName}] ${approvalLines.title}</span>
                 <br>
                 <!-- 결재자 목록 -->

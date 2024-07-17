@@ -17,17 +17,23 @@ main.full {
   margin-left: 20px;
 }
 
+.content-title{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 /* 검색창 */
 .search_box {
   position: relative;
   width: 350px;
+  height:30px;
   display: flex;
   align-items: center;
   border: 1px solid #bbb;
   border-radius: 8px;
   padding: 5px;
-  margin-bottom: 20px;
 }
 
 .search_select {
@@ -51,7 +57,18 @@ main.full {
   cursor: pointer;
   margin-left: 10px;
 }
-
+/*add템플릿 버튼*/
+.template-add-btn{
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+      &:hover {
+        background-color:#368dff;
+      }
+}
 
 /* 결재양식 없음 메시지 */
 .no-template{
