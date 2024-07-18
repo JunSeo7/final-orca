@@ -1,5 +1,6 @@
 package com.groupware.orca.user.mapper;
 
+import com.groupware.orca.department.vo.DepartmentVo;
 import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -44,4 +45,7 @@ public interface UserMapper {
 
     @Update("UPDATE PERSONNEL_INFORMATION SET PASSWORD = #{encPassword} WHERE EMP_NO = #{vo.empNo}")
     int changePassword(@Param("encPassword") String encPassword, @Param("vo") UserVo userVo);
+
+    @Select("SELECT DEPT_CODE FROM DEPARTMENT WHERE DEPT_CODE = #{vo.deptCode} AND PASSWORD = #{vo.password}")
+    DepartmentVo departmentLogin(@Param("vo") DepartmentVo departmentVo);
 }

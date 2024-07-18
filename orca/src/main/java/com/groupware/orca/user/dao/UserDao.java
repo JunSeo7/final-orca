@@ -1,5 +1,6 @@
 package com.groupware.orca.user.dao;
 
+import com.groupware.orca.department.vo.DepartmentVo;
 import com.groupware.orca.user.mapper.UserMapper;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,9 @@ public class UserDao {
 
     public int changePassword(String encPassword, UserVo userVo) {
         return mapper.changePassword(encPassword, userVo);
+    }
+
+    public DepartmentVo departmentLogin(DepartmentVo departmentVo) {
+        return mapper.departmentLogin(departmentVo);
     }
 }

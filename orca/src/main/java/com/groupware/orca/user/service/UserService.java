@@ -1,5 +1,6 @@
 package com.groupware.orca.user.service;
 
+import com.groupware.orca.department.vo.DepartmentVo;
 import com.groupware.orca.user.dao.UserDao;
 import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,9 @@ public class UserService {
         String encPassword = encoder.encode(newPassword);
 
         return dao.changePassword(encPassword, userVo);
+    }
+
+    public DepartmentVo departmentLogin(DepartmentVo departmentVo) {
+        return dao.departmentLogin(departmentVo);
     }
 }

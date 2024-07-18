@@ -9,8 +9,8 @@ public class UserVo {
     private int empNo;
     private String name;
     private String positionCode;
-    private String deptCode;
-    private String teamCode;
+    private int deptCode;
+    private int teamCode;
     private String gender;
     private String socialSecurityNo;
     private String password;
@@ -32,6 +32,6 @@ public class UserVo {
     private String vacationDate;
     private String partName;
     private String nameOfPosition;
-    private String teamName;
+    private int teamName;
     private MultipartFile image;
 }

@@ -1,5 +1,6 @@
 package com.groupware.orca.user.controller;
 
+import com.groupware.orca.department.vo.DepartmentVo;
 import com.groupware.orca.user.service.UserService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -88,5 +89,17 @@ public class UserController {
         return "user/departmentLogin";
     }
 
+    @PostMapping("departmentLogin")
+    public String departmentLogin(HttpSession httpSession, DepartmentVo departmentVo){
+        UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
+        departmentVo.setDeptCode(userVo.getDeptCode());
+
+        DepartmentVo loginDepartVo = service.departmentLogin(departmentVo);
+
+        System.out.println("loginDepartVo = " + loginDepartVo);
+
+        httpSession.setAttribute("loginDepartVo", loginDepartVo);
+        return "redirect:/orca/home";
+    }
 
 }
