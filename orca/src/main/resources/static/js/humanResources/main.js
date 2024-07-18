@@ -84,7 +84,7 @@ function logout() {
 
 let changePwd = document.querySelector("#change-password")
 changePwd.addEventListener('click', function () {
-    window.location.href = "/orca/user/changePassword";
+    window.location.href = "/orca/user/showChangePassword";
 })
 
 const approval = document.querySelector('.approval');
@@ -225,7 +225,7 @@ function getSelects() {
             });
 
             // 직급 데이터를 추출하여 옵션으로 추가
-            const positionSelect = $('#position');
+            const positionSelect = $('#positionCode');
             response[2].forEach(position => {
                 const option = $('<option></option>');
                 option.val(position.positionCode);
@@ -268,7 +268,7 @@ function inputEmployeeRegistration() {
 
             // 사용자가 입력한 데이터를 FormData에 추가한다.
             formData.append('name', $('#name').val());
-            formData.append('positionCode', $('#position').val());
+            formData.append('positionCode', $('#positionCode').val());
             formData.append('deptCode', $('#dept').val());
             formData.append('teamCode', $('#team').val());
             formData.append('gender', $('#gender').val());
@@ -322,7 +322,7 @@ function inputEmployeeRegistration() {
                         alert("사원 등록 성공");
                         // 폼 필드 초기화
                         $('#name').val('');
-                        $('#position').val('');
+                        $('#positionCode').val('');
                         $('#dept').val('');
                         $('#team').val('');
                         $('#gender').val('');

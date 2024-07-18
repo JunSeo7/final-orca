@@ -23,4 +23,8 @@ public class UserDao {
     public UserVo TestLogin(int empNo) {
         return mapper.TestLogin(empNo);
     }
+
+    public int changePassword(String encPassword, UserVo userVo) {
+        return mapper.changePassword(encPassword, userVo);
+    }
 }
