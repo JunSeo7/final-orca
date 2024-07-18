@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 displayApprovalProcess(data.approvalLineVoList);
             },
             error: function(e) {
-                console.log("실패");
                 alert('문서 데이터 로드 중 오류가 발생했습니다.');
             }
         });
