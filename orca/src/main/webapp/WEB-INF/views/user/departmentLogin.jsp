@@ -14,7 +14,7 @@
             <body>
                 <div class="login-container">
                     <h1>부서 로그인</h1>
-                    <form action="/login" method="POST">
+                    <form action="departmentLogin" method="post">
                         <div class="form-group">
                             <label for="password">비밀번호:</label>
                             <input type="password" id="password" name="password" required>
