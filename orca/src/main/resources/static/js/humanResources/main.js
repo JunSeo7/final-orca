@@ -148,54 +148,106 @@ employeeRegistration.addEventListener('click', function () {
     });
 });
 
-const showVacationCode = document.querySelector('.showVacationCode');
-showVacationCode.addEventListener('click', function () {
-    $.ajax({
-        type: 'get',
-        url: '/orca/vacationRef/VCode',
-        dataType: 'html',
-        success: function (response) {
-            while (mainDiv.firstChild) {
-                mainDiv.removeChild(mainDiv.firstChild);
+document.addEventListener('DOMContentLoaded', function() {
+    const showVacationCode = document.querySelector('.showVacationCode');
+
+    showVacationCode.addEventListener('click', function () {
+        $.ajax({
+            type: 'get',
+            url: '/orca/vacationRef/VCode',
+            dataType: 'html',
+            success: function (response) {
+                const mainDiv = document.querySelector('#content'); // mainDiv 요소를 찾음
+                if (mainDiv) {
+                    mainDiv.innerHTML = response; // mainDiv 요소에 HTML 응답 삽입
+                    attachEventListeners(); // 이벤트 리스너 부착
+                } else {
+                    console.error('mainDiv 요소를 찾을 수 없습니다.');
+                }
+            },
+            error: function (error) {
+                console.error('데이터 로드 실패', error);
             }
-            mainDiv.innerHTML = response;
-            getSelects();
-        },
-        error: function (error) {
-            console.error('데이터 로드 실패', error);
-        }
+        });
     });
 
-    $.ajax({
-        url: "http://127.0.0.1:8080/orca/re/vacation",
-        method: "get",
-        success: function (data) {
-            const x = document.querySelector("#vacationCodesTable tbody");
-            console.log(x);
-            let str = "";
+    function attachEventListeners() {
+        const checkAll = document.getElementById('checkAll');
+        const deleteVacationCodeBtn = document.getElementById('deleteVacationCodeBtn');
+        const vacationCodesTableBody = document.querySelector('#vacationCodesTable tbody');
 
-            for (let i = 0; i < data.length; i++) {
-                str += "<tr>";
-                str += "<td><input type='checkbox' class='rowCheckbox'></td>";
-                str += "<td>" + data[i].vacationCode + "</td>";
-                str += "<td>" + data[i].vacationName + "</td>";
-                str += "</tr>";
-            }
-
-            x.innerHTML = str;
-        },
-        error: function (error) {
-            console.error("데이터를 가져오는데 실패했습니다.", error);
+        // 모든 체크박스를 체크/체크 해제하는 함수
+        if (checkAll && vacationCodesTableBody) {
+            checkAll.addEventListener('change', function() {
+                const checkboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox');
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.checked = checkAll.checked;
+                });
+            });
         }
-    });
 
+        // 삭제 버튼 클릭 이벤트 리스너
+        if (deleteVacationCodeBtn && vacationCodesTableBody) {
+            deleteVacationCodeBtn.addEventListener('click', function () {
+                const selectedCheckboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox:checked');
+                const selectedIds = [];
 
-    function deleteCheckVCode() {
-        const checkboxArr = document.querySelectAll("input[type=checkbox]")
-        console.log("checkboxArr : ", checkboxArr)
+                selectedCheckboxes.forEach(function(checkbox) {
+                    const row = checkbox.closest('tr');
+                    const vacationCode = row.children[1].textContent;
+                    selectedIds.push(vacationCode);
+                });
+
+                if (selectedIds.length > 0) {
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/orca/re/vacationRef",
+                        method: "delete",
+                        contentType: "application/json",
+                        data: JSON.stringify(selectedIds),
+                        success: function () {
+                            selectedCheckboxes.forEach(function(checkbox) {
+                                const row = checkbox.closest('tr');
+                                row.remove();
+                            });
+                        },
+                        error: function (error) {
+                            console.error("삭제 실패", error);
+                        }
+                    });
+                } else {
+                    alert("삭제할 항목을 선택하세요.");
+                }
+            });
+        }
+
+        // 휴가 코드 테이블 데이터 로드
+        $.ajax({
+            url: "http://127.0.0.1:8080/orca/re/vacation",
+            method: "get",
+            success: function (data) {
+                const vacationCodesTableBody = document.querySelector('#vacationCodesTable tbody');
+                if (vacationCodesTableBody) {
+                    let str = "";
+                    data.forEach(function(item) {
+                        str += "<tr>";
+                        str += "<td><input type='checkbox' class='rowCheckbox'></td>";
+                        str += "<td>" + item.vacationCode + "</td>";
+                        str += "<td>" + item.vacationName + "</td>";
+                        str += "</tr>";
+                    });
+                    vacationCodesTableBody.innerHTML = str;
+                } else {
+                    console.error('vacationCodesTableBody 요소를 찾을 수 없습니다.');
+                }
+            },
+            error: function (error) {
+                console.error("데이터를 가져오는데 실패했습니다.", error);
+            }
+        });
     }
-
 });
+
+
 
 
 function getSelects() {

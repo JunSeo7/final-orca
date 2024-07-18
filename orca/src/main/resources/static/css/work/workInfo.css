@@ -141,65 +141,11 @@ th {
   background-color: #f4f4f4;
 }
 
-.calendar-container {
-    width: 100%;
+#calendar {
+    margin-top: 20px;
+    width: calc(100% - 40px); /* 100% 너비에서 20px의 좌우 패딩을 뺀 값 */
+    height: 90vh;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-bottom: 1px solid #ddd;
-}
-
-.calendar-header button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.calendar-body {
-    padding: 10px;
-
-}
-
-.weekdays {
-    display: flex;
-}
-
-.weekdays div {
-    width: 14.28%;
-    text-align: center;
-    font-weight: bold;
-    padding: 5px 0;
-}
-
-.days {
-    display: flex;
-    flex-wrap: wrap;
-    height: 78vh;
-}
-
-.day {
-    width: 14.28%;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    padding: 10px;
-    text-align: center;
-}
-
-.day.off {
-    background-color: #f9f9f9;
-}
-
-.day.work-day .work-time {
-    background-color: #e0f7fa;
-    border-radius: 5px;
-    padding: 5px;
-    margin-top: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
 }

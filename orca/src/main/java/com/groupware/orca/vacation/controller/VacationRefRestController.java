@@ -3,11 +3,11 @@ package com.groupware.orca.vacation.controller;
 import com.groupware.orca.vacation.service.VacationRefService;
 import com.groupware.orca.vacation.vo.VacationRefVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,15 +30,9 @@ public class VacationRefRestController {
 
     // 휴가 코드 삭제
     @DeleteMapping
-    public ResponseEntity<String> deleteVCode(String vacationCode){
-        int result = service.deleteVCode(vacationCode);
-
-        if(result != 1){
-            throw new RuntimeException();
-        }
-
-        return ResponseEntity.ok("delete vCode !");
-
+    public ResponseEntity<VacationRefVo> deleteVCode(@RequestBody List<String> vacationCode) {
+            service.deleteVCode(vacationCode);
+            return ResponseEntity.ok().build();
     }
 
 }

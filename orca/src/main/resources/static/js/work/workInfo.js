@@ -44,89 +44,51 @@ function toggleSubMenu(menuId) {
 }
 
 // 캘린더
-document.addEventListener('DOMContentLoaded', () => {
-    const calendarHeader = document.getElementById('calendarHeader');
-    const daysContainer = document.getElementById('daysContainer');
-    const prevMonthButton = document.getElementById('prevMonth');
-    const nextMonthButton = document.getElementById('nextMonth');
+document.addEventListener('DOMContentLoaded', function() {
+    $.ajax({
+        url: '/orca/re/work/list',
+        method: 'GET',
+        success: function(data) {
+            var events = [];
+            data.forEach(function(workInfo) {
+                if (workInfo.workDate) {
+                    events.push({
+                        title: workInfo.startTime + " - " + workInfo.endTime,
+                        start: workInfo.workDate,
+                        color: getColor(workInfo)
+                    });
+                }
+            });
 
-    const attendanceData = [
-        { date: '2020-07-01', start: '09:00', end: '18:00' },
-        { date: '2020-07-02', start: '09:15', end: '18:00' },
-        { date: '2020-07-03', start: '09:00', end: '17:50' },
-        { date: '2020-07-04', start: '09:10', end: '18:10' }
-    ];
-
-    let currentYear = new Date().getFullYear();
-    let currentMonth = new Date().getMonth();
-
-    function getAttendanceStatus(startTime, endTime) {
-        const normalStart = new Date(`1970-01-01T09:10:00`);
-        const normalEnd = new Date(`1970-01-01T18:00:00`);
-        const actualStart = new Date(`1970-01-01T${startTime}:00`);
-        const actualEnd = new Date(`1970-01-01T${endTime}:00`);
-
-        if (actualStart > normalStart) {
-            return 'late';
+            const calendarEl = document.querySelector('#calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events,
+                height: 'auto',
+                contentHeight: 'auto'
+            });
+            calendar.render();
         }
-        if (actualEnd < normalEnd) {
-            return 'early';
-        }
-        return 'normal';
-    }
+    });
 
-    function renderCalendar(year, month) {
-        daysContainer.innerHTML = "";
-        calendarHeader.innerText = `${year}년 ${month + 1}월`;
-
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-
-        for (let i = 0; i < firstDayOfMonth; i++) {
-            const dayElement = document.createElement("div");
-            dayElement.classList.add("day", "off");
-            daysContainer.appendChild(dayElement);
-        }
-
-        for (let date = 1; date <= lastDateOfMonth; date++) {
-            const dayElement = document.createElement("div");
-            dayElement.classList.add("day", "work-day");
-            dayElement.innerText = date;
-
-            const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-            const attendance = attendanceData.find(d => d.date === fullDate);
-
-            if (attendance) {
-                const status = getAttendanceStatus(attendance.start, attendance.end);
-                const statusElement = document.createElement("div");
-                statusElement.classList.add("status", status);
-                statusElement.innerText = status === 'normal' ? '정상출근' : (status === 'late' ? '지각' : '조퇴');
-                dayElement.appendChild(statusElement);
-            }
-
-            daysContainer.appendChild(dayElement);
+    function getColor(workInfo) {
+        // 정상출근, 지각, 조퇴 등의 조건에 따라 색상 설정
+        if (isLate(workInfo)) {
+            return 'red';
+        } else if (isEarlyLeave(workInfo)) {
+            return 'orange';
+        } else {
+            return 'green';
         }
     }
 
-    prevMonthButton.addEventListener('click', () => {
-        currentMonth--;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        renderCalendar(currentYear, currentMonth);
-    });
+    function isLate(workInfo) {
+        const requiredStartTime = "09:10:00";
+        return workInfo.startTime > requiredStartTime;
+    }
 
-    nextMonthButton.addEventListener('click', () => {
-        currentMonth++;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        }
-        renderCalendar(currentYear, currentMonth);
-    });
-
-    renderCalendar(currentYear, currentMonth);
+    function isEarlyLeave(workInfo) {
+        const requiredEndTime = "17:50:00";
+        return workInfo.endTime < requiredEndTime;
+    }
 });
-
-

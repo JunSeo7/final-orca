@@ -32,9 +32,9 @@ public class WorkInfoService {
     // 출근
     public String startWork(WorkInfoVo vo) {
         vo.setStartTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
-        dao.startWork(vo); // dao에서 반환하는 WorkInfoVo를 그대로 반환
+        dao.startWork(vo);
         logger.info("StartWork service called, workNo: {}", vo.getWorkNo());
-        return vo.getWorkNo(); // dao에서 반환하는 WorkInfoVo를 그대로 반환
+        return vo.getWorkNo();
     }
 
     // 퇴근
@@ -77,4 +77,8 @@ public class WorkInfoService {
     public String getEndWorkTime(int empNo, String workDate) {
         return dao.getEndWorkTime(empNo, workDate);
     }
+
+
+
+
 }

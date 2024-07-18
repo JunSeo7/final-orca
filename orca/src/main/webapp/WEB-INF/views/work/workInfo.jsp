@@ -7,30 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORCA</title>
     <link rel="stylesheet" href="/css/work/workInfo.css">
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/layout/header.jsp" %>
     <%@ include file="/WEB-INF/views/enroll/aside.jsp" %>
 
     <main id="content">
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button id="prevMonth">&lt;</button>
-                <div id="calendarHeader"></div>
-                <button id="nextMonth">&gt;</button>
-            </div>
-            <div class="calendar-body">
-                <div class="weekdays">
-                    <div>일</div>
-                    <div>월</div>
-                    <div>화</div>
-                    <div>수</div>
-                    <div>목</div>
-                    <div>금</div>
-                    <div>토</div>
-                </div>
-                <div class="days" id="daysContainer"></div>
-            </div>
+        <div id="calendar">
+
         </div>
     </main>
 

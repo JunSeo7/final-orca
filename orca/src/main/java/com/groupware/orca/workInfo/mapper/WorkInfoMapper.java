@@ -11,7 +11,7 @@ public interface WorkInfoMapper {
     //휴일근무
 
     // 근무 정보 조회
-    @Select("SELECT P.NAME , WORK_DATE , TO_CHAR(START_TIME, 'hh24:mi:ss') , TO_CHAR(END_TIME, 'hh24:mi:ss') , OVERTIME_WORK , HOLIDAY_WORK " +
+    @Select("SELECT P.NAME as name, WORK_DATE as workDate, TO_CHAR(START_TIME, 'hh24:mi:ss') as startTime, TO_CHAR(END_TIME, 'hh24:mi:ss') as endTime, OVERTIME_WORK as overtimeWork, HOLIDAY_WORK as holidayWork " +
             "FROM WORK_INFO W JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO " +
             "WHERE W.EMP_NO = #{empNo}")
     List<WorkInfoVo> workList(int empNo);
