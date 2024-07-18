@@ -5,6 +5,8 @@ import com.groupware.orca.vacation.vo.VacationRefVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class VacationRefDao {
@@ -20,7 +22,7 @@ public class VacationRefDao {
         mapper.editVCode(vo);
     }
 
-    public int deleteVCode(String vacationCode) {
+    public int deleteVCode(List<String> vacationCode) {
         return mapper.deleteVCode(vacationCode);
 
     }

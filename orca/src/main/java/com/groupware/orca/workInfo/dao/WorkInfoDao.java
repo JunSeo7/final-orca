@@ -14,13 +14,15 @@ public class WorkInfoDao {
     private final WorkInfoMapper mapper;
 
     public List<WorkInfoVo> workList(int empNo) {
-
-        return mapper.workList(empNo);
+        List<WorkInfoVo> workList = mapper.workList(empNo);
+        for (WorkInfoVo workInfo : workList) {
+            System.out.println(workInfo);
+        }
+        return workList;
     }
 
     public void startWork(WorkInfoVo vo) {
         mapper.startWork(vo);
-
     }
 
     public void endWork(WorkInfoVo vo) {
@@ -30,7 +32,6 @@ public class WorkInfoDao {
     public void overTimeWork(WorkInfoVo vo) {
         mapper.overTimeWork(vo);
     }
-
 
     public String getStartWorkTime(int empNo, String workDate) {
         return mapper.getStartWorkTime(empNo, workDate);

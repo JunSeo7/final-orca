@@ -1,10 +1,9 @@
 package com.groupware.orca.vacation.mapper;
 
 import com.groupware.orca.vacation.vo.VacationRefVo;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface VacationRefMapper {
@@ -17,6 +16,14 @@ public interface VacationRefMapper {
             "WHERE VACATION_CODE = #{vacationCode}")
     void editVCode(VacationRefVo vo);
 
-    @Delete("DELETE VACATION_REFERENCE WHERE VACATION_CODE = #{vacationCode}")
-    int deleteVCode(String vacationCode);
+    @Delete("""
+                <script>
+                    DELETE FROM VACATION_REFERENCE WHERE VACATION_CODE IN
+                    <foreach item='code' collection='vacationCode' open='(' separator=',' close=')'>
+                    #{code}
+                    </foreach>
+                </script>
+            """
+            )
+    int deleteVCode(@Param("vacationCode") List<String> vacationCode);
 }

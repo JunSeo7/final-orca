@@ -27,18 +27,13 @@ public class WorkInfoRestController {
     @GetMapping("list")
     public List<WorkInfoVo> workList(HttpSession httpSession) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
-        if (loginUser != null) {
-            int empNo = loginUser.getEmpNo();
+        int empNo = loginUser.getEmpNo();
 
-            List<WorkInfoVo> wVo = service.workList(empNo);
-
-            System.out.println("wVo = " + wVo);
-
-            return wVo;
-        } else {
-            throw new IllegalStateException("로그인 후 이용가능합니다.");
-        }
+        List<WorkInfoVo> wVo = service.workList(empNo);
+        System.out.println("wVo = " + wVo);
+        return wVo;
     }
+
 
     // 출근
     @PostMapping("/goWork")
