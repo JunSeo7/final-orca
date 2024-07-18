@@ -4,6 +4,7 @@ import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper {
@@ -12,6 +13,7 @@ public interface UserMapper {
             "    , E.NAME\n" +
             "    , E.IMG_CHANGE_NAME\n" +
             "    , T.TEAM_NAME\n" +
+            "    , E.PASSWORD\n" +
             "FROM PERSONNEL_INFORMATION E\n" +
             "JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE\n" +
             "JOIN DEPARTMENT_TEAM T ON T.TEAM_CODE = E.TEAM_CODE\n" +
@@ -24,6 +26,7 @@ public interface UserMapper {
             "    , E.NAME\n" +
             "    , E.IMG_CHANGE_NAME\n" +
             "    , T.TEAM_NAME\n" +
+            "    , E.PASSWORD\n" +
             "FROM PERSONNEL_INFORMATION E\n" +
             "JOIN DEPARTMENT D ON D.DEPT_CODE = E.DEPT_CODE\n" +
             "JOIN DEPARTMENT_TEAM T ON T.TEAM_CODE = E.TEAM_CODE\n" +
@@ -38,4 +41,7 @@ public interface UserMapper {
             "JOIN POSITION PO ON PI.POSITION_CODE = PO.POSITION_CODE\n" +
             "WHERE PI.EMP_NO = #{userNo}")
     UserVo getUserVo(@Param("userNo") int userNo);
+
+    @Update("UPDATE PERSONNEL_INFORMATION SET PASSWORD = #{encPassword} WHERE EMP_NO = #{vo.empNo}")
+    int changePassword(@Param("encPassword") String encPassword, @Param("vo") UserVo userVo);
 }

@@ -10,7 +10,7 @@
 
             <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <link rel="stylesheet" href="/css/layout/main.css">
-            <script defer src="/js/user/passwordForm.js"></script>
+            <script defer src="/js/user/changePassword.js"></script>
         </head>
 
         <body>

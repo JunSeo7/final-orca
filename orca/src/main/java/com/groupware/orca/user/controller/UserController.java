@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("orca/user")
@@ -27,7 +24,7 @@ public class UserController {
 
     @PostMapping("login")
     public String login(UserVo vo, HttpSession httpSession, Model model) {
-
+        System.out.println("vo = " + vo);
         // 시연을 위한 임시 로그인 ~~
         if (vo.getEmpNo() == 2024070096 || vo.getEmpNo() == 2024070012 || vo.getEmpNo() == 2024070016) {
             UserVo loginUserVo = service.TestLogin(vo.getEmpNo());
@@ -72,8 +69,17 @@ public class UserController {
         return logout ? 1 : 0;
     }
 
-    @GetMapping("changePassword")
+    @GetMapping("showChangePassword")
     public String changePassword() {
         return "user/changePassword";
+    }
+    @PostMapping("changePassword")
+    @ResponseBody
+    public int changePassword(@RequestParam("currentPassword")String currentPassword, @RequestParam("newPassword") String newPassword, HttpSession httpSession) {
+        UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
+
+        int result = service.changePassword(currentPassword, newPassword, userVo);
+        System.out.println(result);
+        return result;
     }
 }

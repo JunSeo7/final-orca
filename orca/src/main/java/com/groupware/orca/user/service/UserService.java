@@ -14,7 +14,6 @@ public class UserService {
 
     public UserVo login(UserVo vo) {
         UserVo userVo = dao.login(vo);
-
         boolean isMatch = encoder.matches(vo.getPassword(), userVo.getPassword());
 
         return isMatch ? userVo : null;
@@ -26,5 +25,18 @@ public class UserService {
 
     public UserVo TestLogin(int empNo) {
         return dao.TestLogin(empNo);
+    }
+
+    public int changePassword(String currentPassword, String newPassword, UserVo userVo) {
+        UserVo userVoData = dao.login(userVo);
+
+        boolean isMatch = encoder.matches(currentPassword, userVoData.getPassword());
+
+        if(!isMatch){
+            return 10;
+        }
+        String encPassword = encoder.encode(newPassword);
+
+        return dao.changePassword(encPassword, userVo);
     }
 }

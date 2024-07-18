@@ -19,7 +19,7 @@
                     <div><span>주민등록번호</span><input type="text" id="social-security-no" name="socialSecurityNo" pattern="[0-9]{6}-[0-9]{7}" required></div>
                     <div>
                         <span>직급 </span>
-                        <select id="position" name="positionCode" required>
+                        <select id="positionCode" name="positionCode" required>
                             <option value="">선택하세요</option>
                         </select>
                     </div>

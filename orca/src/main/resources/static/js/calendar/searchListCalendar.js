@@ -83,7 +83,7 @@ function logout() {
 
 let changePwd = document.querySelector("#change-password")
 changePwd.addEventListener('click', function () {
-    window.location.href = "/orca/user/changePassword";
+    window.location.href = "/orca/user/showChangePassword";
 })
 
 function toggleCheck(element) {
