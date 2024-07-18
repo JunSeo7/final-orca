@@ -49,7 +49,7 @@
                             <li class="nav-item"><a href="#">투표</a></li>
                             <li class="nav-item"><a href="#">드라이브</a></li>
                             <li class="nav-item"><a href="#">메일</a></li>
-                            <li class="nav-item"><a href="#">부서 로그인</a></li>
+                            <li class="nav-item"><a href="/orca/user/showDepartmentLogin">부서 로그인</a></li>
                         </ul>
                     </aside>
             </body>

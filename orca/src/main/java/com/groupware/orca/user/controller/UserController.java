@@ -82,4 +82,12 @@ public class UserController {
         System.out.println(result);
         return result;
     }
+
+    @GetMapping("showDepartmentLogin")
+    public String showDepartmentLogin(){
+        return "user/departmentLogin";
+    }
+
+    @PostMapping()
+
 }
