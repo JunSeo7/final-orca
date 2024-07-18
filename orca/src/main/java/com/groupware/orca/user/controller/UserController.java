@@ -88,6 +88,5 @@ public class UserController {
         return "user/departmentLogin";
     }
 
-    @PostMapping()
 
 }
