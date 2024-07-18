@@ -50,6 +50,41 @@ aside.hidden {
   display: none;
 }
 
+#profileDetail {
+  padding: 25px;
+}
+
+#profileDetail>div {
+  margin-bottom: 13px;
+  font-size: 17px;
+}
+
+#change-password {
+  cursor: pointer;
+}
+
+#change-password:hover {
+  color: #368dff;
+}
+
+#profileDetail button {
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+#profileDetail button:hover {
+  background-color: #368dff;
+}
+
 /* 네비게이션 리스트 설정 */
 .nav-list,
 .sub-nav-list {

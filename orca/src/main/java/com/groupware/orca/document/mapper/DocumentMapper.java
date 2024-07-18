@@ -100,7 +100,7 @@ public interface DocumentMapper {
     // (기안 완) 내가 작성한 결재 문서 목록 조회(카테고리, 양식, 기안자관련)
     @Select("""
             <script>
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') AS CREDIT_DATE, D.STATUS, D.URGENT,
+            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
                    T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
@@ -122,7 +122,7 @@ public interface DocumentMapper {
 
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') AS CREDIT_DATE, D.STATUS, D.URGENT,
+            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
                    T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
@@ -140,7 +140,7 @@ public interface DocumentMapper {
 
     // 내가 받은 결재 (앞 결재자의 상태가 2인지 확인 하고, 그러면 보이게하기..)
     @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') AS CREDIT_DATE, D.STATUS,
+            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS,
                    D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
@@ -179,7 +179,7 @@ public interface DocumentMapper {
     //검색
     @Select("""
         <script>
-        SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, D.ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') AS CREDIT_DATE, D.STATUS, D.URGENT,
+        SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
                T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
         FROM DOCUMENT D
