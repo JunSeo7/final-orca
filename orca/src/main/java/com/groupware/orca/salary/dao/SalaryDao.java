@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,12 +54,12 @@ public class SalaryDao {
     }
 
     //4대보험 수정
-    public Integer ratesEdit(RatesVo rvo) {
+    public int ratesEdit(RatesVo rvo) {
         return mapper.ratesEdit(rvo);
     }
 
-    public List<RatesVo> getRatesList() {
-        return mapper.getRatesList();
+    public RatesVo getRatesByOne() {
+        return mapper.getRatesByOne();
     }
 
     public int delete(String ratesNo) {

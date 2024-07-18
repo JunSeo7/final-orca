@@ -11,5 +11,4 @@ public class ClientVo {
     private double position;
     private double bonus;
     private double meals;
-
 }

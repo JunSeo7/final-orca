@@ -22,8 +22,6 @@ public class SalaryVo {
     private String paymentDate;         //지급날짜
     private String name;
 
-    private double holidayTime;
-    private double overTime;
-    private int person;
+
 
 }

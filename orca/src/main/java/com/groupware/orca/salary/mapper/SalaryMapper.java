@@ -7,6 +7,7 @@ import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SalaryMapper {
@@ -54,7 +55,7 @@ public interface SalaryMapper {
 
     //4대보험 입력 쿼리문
     @Insert("INSERT INTO RATES(RATES_NO,BASE_YEAR,PENSION_PERCENTAGE,HEALTH_INSURANCE_PERCENTAGE,LONG_CARE_PERCENTAGE,EMPLOYMENT_INSURANCE_PERCENTAGE,LOCAL_INCOME_TAX_PERSENTAGE) \n" +
-            "VALUES(SEQ_RATES_NO.NEXTVAL,SYSDATE,#{pensionPercentage},#{healthInsurancePercentage},#{longCarePercentage},#{employmentInsurancePercentage},#{localIncomeTaxPersentage})")
+            "VALUES(SEQ_RATES_NO.NEXTVAL,TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 'YYYY-MM-DD'),#{pensionPercentage},#{healthInsurancePercentage},#{longCarePercentage},#{employmentInsurancePercentage},#{localIncomeTaxPersentage})")
     int ratesWrite(RatesVo vo);
 
     // 4대보험 요율 가져오기
@@ -164,9 +165,17 @@ public interface SalaryMapper {
 
     // 4대보험 목록조회
     @Select("""
-            SELECT * FROM RATES
+            SELECT
+                RATES_NO
+                 ,TO_CHAR(BASE_YEAR, 'YYYY-MM-DD') AS BASE_YEAR
+                ,PENSION_PERCENTAGE
+                ,HEALTH_INSURANCE_PERCENTAGE
+                ,LONG_CARE_PERCENTAGE
+                ,EMPLOYMENT_INSURANCE_PERCENTAGE
+                ,LOCAL_INCOME_TAX_PERSENTAGE
+            FROM RATES
             """)
-    List<RatesVo> getRatesList();
+    RatesVo getRatesByOne();
 
     //4대보험 삭제
     @Delete("""
@@ -175,17 +184,17 @@ public interface SalaryMapper {
     int delete(@Param("ratesNo") String ratesNo);
 
     // 4대 보험 수정
-    @Select("""
+    @Update("""
             UPDATE RATES
-                SET BASE_YEAR = SYSDATE
-                    ,PENSION_PERCENTAGE = #{pensionPercentage}
-                    ,HEALTH_INSURANCE_PERCENTAGE = #{healthInsurancePercentage}
-                    ,LONG_CARE_PERCENTAGE = #{longCarePercentage}
-                    ,EMPLOYMENT_INSURANCE_PERCENTAGE = #{employmentInsurancePercentage}
-                    ,LOCAL_INCOME_TAX_PERSENTAGE = #{localIncomeTaxPersentage}
-                WHERE RATES_NO = #{ratesNo}
+                SET BASE_YEAR = TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD'), 'YYYY-MM-DD')
+                    ,PENSION_PERCENTAGE = #{rvo.pensionPercentage}
+                    ,HEALTH_INSURANCE_PERCENTAGE = #{rvo.healthInsurancePercentage}
+                    ,LONG_CARE_PERCENTAGE = #{rvo.longCarePercentage}
+                    ,EMPLOYMENT_INSURANCE_PERCENTAGE = #{rvo.employmentInsurancePercentage}
+                    ,LOCAL_INCOME_TAX_PERSENTAGE = #{rvo.localIncomeTaxPersentage}
+                WHERE RATES_NO = #{rvo.ratesNo}
             """)
-    Integer ratesEdit(RatesVo rvo);
+    int ratesEdit(@Param("rvo") RatesVo rvo);
 
 
 
