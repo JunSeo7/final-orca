@@ -94,6 +94,8 @@ public class UserController {
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         departmentVo.setDeptCode(userVo.getDeptCode());
 
+        System.out.println("departmentVo = " + departmentVo);
+
         DepartmentVo loginDepartVo = service.departmentLogin(departmentVo);
 
         System.out.println("loginDepartVo = " + loginDepartVo);
