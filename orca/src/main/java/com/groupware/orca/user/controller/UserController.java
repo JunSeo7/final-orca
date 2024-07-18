@@ -90,7 +90,8 @@ public class UserController {
     }
 
     @PostMapping("departmentLogin")
-    public String departmentLogin(HttpSession httpSession, DepartmentVo departmentVo){
+    @ResponseBody
+    public DepartmentVo departmentLogin(HttpSession httpSession, DepartmentVo departmentVo){
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         departmentVo.setDeptCode(userVo.getDeptCode());
 
@@ -98,10 +99,7 @@ public class UserController {
 
         DepartmentVo loginDepartVo = service.departmentLogin(departmentVo);
 
-        System.out.println("loginDepartVo = " + loginDepartVo);
-
-        httpSession.setAttribute("loginDepartVo", loginDepartVo);
-        return "redirect:/orca/home";
+        return loginDepartVo;
     }
 
 }

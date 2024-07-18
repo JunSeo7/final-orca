@@ -8,13 +8,14 @@
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>부서 로그인</title>
+                <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script defer src="/js/user/departmentLogin.js"></script>
             </head>
 
             <body>
                 <div class="login-container">
                     <h1>부서 로그인</h1>
-                    <form action="departmentLogin" method="post">
+                    <form action="departmentLogin" method="post" id="departmentLogin">
                         <div class="form-group">
                             <label for="password">비밀번호:</label>
                             <input type="password" id="password" name="password" required>
