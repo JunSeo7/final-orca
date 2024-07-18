@@ -239,18 +239,23 @@ public class DocumentController {
 
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
     @PostMapping("edit")
-    public ResponseEntity<Void> editDocument(DocumentVo vo, HttpSession httpSession){
+    public String editDocument(
+                                DocumentVo vo,
+                                HttpSession httpSession,
 
-        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(loginUserNo);
+                                HttpServletRequest req) throws IOException {
 
-        int result = service.editDocument(vo);
-        if (result > 0) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+
+            int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+            vo.setWriterNo(loginUserNo);
+
+        System.out.println("vo = " + vo);
+
+            int result = service.editDocument(vo);
+            return "redirect:/orca/document/list";
         }
-    }
+
 
     // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 / 기안 - 취소)
     @PostMapping("updateStatus")
