@@ -5,10 +5,12 @@ import com.groupware.orca.board.mapper.CommentMapper;
 import com.groupware.orca.board.vo.CommentVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -25,21 +27,17 @@ public class CommentService {
         return comments;
     }
 
-
     public int insertComment(CommentVo commentVo) {
         return commentDao.insertComment(commentVo);
     }
-
 
     public int updateComment(CommentVo commentVo) {
         return commentDao.updateComment(commentVo);
     }
 
-
     public int deleteComment(int boardChatNo) {
         return commentDao.deleteComment(boardChatNo);
     }
-
 
     public int deleteCommentsByBoardNo(int boardNo) {
         return commentDao.deleteCommentsByBoardNo(boardNo);
