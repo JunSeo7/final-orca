@@ -1,8 +1,10 @@
 package com.groupware.orca.salary.controller;
 
 import com.groupware.orca.salary.service.SalaryService;
+import com.groupware.orca.salary.vo.ClientVo;
 import com.groupware.orca.salary.vo.RatesVo;
 import com.groupware.orca.salary.vo.SalaryVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,8 @@ public class SalaryPageController {
     public String write(){
         return "salary/write";
     }
+
+
 
     //급여 목록조회 (화면)
     @GetMapping("salaryList")
@@ -64,11 +68,11 @@ public class SalaryPageController {
 
     //------------------------------------------
 
-    //4대보험 목록조회
-    @GetMapping("ratesList")
-    public String ratesList(){
+    //4대보험 상세조회
+    @GetMapping("ratesByOne")
+    public String ratesByOne(){
 
-        return "salary/ratesList";
+        return "salary/ratesByOne";
     }
 
     //4대보험 요율 수정

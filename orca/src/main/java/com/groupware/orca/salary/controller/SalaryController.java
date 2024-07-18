@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +26,8 @@ public class SalaryController {
 
     //급여계산 입력
     @PostMapping("write")
-    public int salaryWrite(ClientVo clientVo,UserVo vo,SalaryVo svo) {
-        int result = service.salaryWrite(clientVo, vo,svo);
-
+    public int salaryWrite(ClientVo clientVo, UserVo vo, SalaryVo svo) {
+        int result = service.salaryWrite(clientVo,vo,svo);
         return result;
         //TODO 화면에서 자녀수에 따른 공제내역 사진 띄우고 적게 하기, param은 다 금액으로 입력받게 하기
     }
@@ -35,7 +35,6 @@ public class SalaryController {
     //급여계산 수정
     @PostMapping("edit")
     public int salaryUpdate(ClientVo clientVo,UserVo vo,SalaryVo svo){
-
         int result = service.salaryUpdate(vo,clientVo,svo);
 
         return result;
@@ -88,17 +87,19 @@ public class SalaryController {
         return result;
     }
 
-    //4대보험 목록조회
-    @GetMapping("ratesList")
-    public List<RatesVo> getRatesList(){
-        List<RatesVo> voList = service.getRatesList();
-        return voList;
+    //4대보험 싱세조회
+    @GetMapping("ratesByOne")
+    public RatesVo getRatesByOne(){
+        RatesVo vo = service.getRatesByOne();
+
+        return vo;
     }
 
     //4대보험 요율 수정
-    @PutMapping("ratesEdit")
-    public Integer ratesEdit(RatesVo rvo){
-        Integer result = service.ratesUpdate(rvo);
+    @PostMapping("ratesEdit")
+    public int ratesEdit(RatesVo rvo){
+        System.out.println("rvo = " + rvo);
+        int result = service.ratesEdit(rvo);
         return result;
     }
 

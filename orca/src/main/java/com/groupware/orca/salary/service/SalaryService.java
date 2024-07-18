@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -126,8 +127,9 @@ public class SalaryService {
     //연장근로수당 (입력칸 있음 - 몇 시간 더 연장근무 한건지 )
 
     //급여 입력
-    public int salaryWrite(ClientVo clientVo,UserVo vo, SalaryVo svo) {
+    public int salaryWrite(ClientVo clientVo,UserVo vo , SalaryVo svo) {
         vo = dao.getUserVo(vo.getEmpNo());
+        System.out.println("vo = " + vo);
         double totalDeduction = calculateDeduction(vo,clientVo,svo);
 //        double tax = calculateInComeTax(totalDeduction);
 
@@ -153,7 +155,6 @@ public class SalaryService {
         double totalSalary = realSalary - nationalPension - healthInsurance - longCare - employmentInsurance - incomeTax - localIncomeTax
                 + clientVo.getPosition() + clientVo.getBonus() + holiday + overTimeWork + clientVo.getMeals();
 
-        svo = new SalaryVo();
         svo.setNationalPension(nationalPension);
         svo.setHealthInsurance(healthInsurance);
         svo.setLongCare(longCare);
@@ -191,7 +192,7 @@ public class SalaryService {
         return dao.ratesWrite(vo);
     }
 
-    //급여 전체 목록조회 page
+    //급여 전체 목록조회
     public List<SalaryVo> getSalaryList() {
         return dao.getSalaryList();
     }
@@ -225,7 +226,6 @@ public class SalaryService {
         double totalSalary = realSalary - nationalPension - healthInsurance - longCare - employmentInsurance - incomeTax - localIncomeTax
                 + clientVo.getPosition() + clientVo.getBonus() + holiday + overTimeWork + clientVo.getMeals();
 
-        svo = new SalaryVo();
         svo.setNationalPension(nationalPension);
         svo.setHealthInsurance(healthInsurance);
         svo.setLongCare(longCare);
@@ -239,19 +239,19 @@ public class SalaryService {
         svo.setPosition(clientVo.getPosition());
         svo.setMeals(clientVo.getMeals());
 
-
+        System.out.println("svo service= " + svo);
         return dao.salaryUpdate(clientVo,vo,svo);
 
     }
 
     //4대보험 요율 수정
-    public Integer ratesUpdate(RatesVo rvo) {
+    public int ratesEdit(RatesVo rvo) {
         return dao.ratesEdit(rvo);
     }
 
     //요율 전체 보기
-    public List<RatesVo> getRatesList() {
-        return dao.getRatesList();
+    public RatesVo getRatesByOne() {
+        return dao.getRatesByOne();
     }
 
     public int delete(String ratesNo) {
