@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.groupware.orca.user.vo.UserVo" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,73 +18,7 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script defer src="/js/board/board.js"></script>
     <style>
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50%;
-            background-color: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 1050;
-            display: none;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .modal-header, .modal-footer {
-            padding: 15px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-        .modal-footer {
-            border-top: none;
-            text-align: right;
-        }
-        .modal-body {
-            padding: 15px;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header h5 {
-            margin: 0;
-        }
-        .modal-header .close {
-            background: none;
-            border: none;
-            font-size: 1.5em;
-        }
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-        }
+
     </style>
 </head>
 <body>
@@ -265,58 +200,54 @@
             });
         });
 
-      function loadGrid(categoryNo) {
-          $("#jqGrid").jqGrid({
-              url: '/orca/board/list/' + categoryNo,
-              mtype: "GET",
-              styleUI: 'jQueryUI',
-              datatype: "json",
-              colModel: [
-                  {label: '게시판 번호', name: 'boardNo', width: 30},
-                  {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
-                  {label: '조회수', name: 'hit', width: 50},
-                  {label: '썸네일', name: 'content', width: 50, formatter: extractImage},
-                  {
-                      label: '작성 시간',
-                      name: 'enrollDate',
-                      width: 50,
-                      formatter: function (cellValue, options, rowObject) {
-                          const enrollDate = new Date(cellValue);
-                          const formattedDate = enrollDate.toLocaleDateString('ko-KR', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                              second: '2-digit',
-                              hour12: true
-                          });
-                          return formattedDate;
-                      }
-                  },
-                  {label: '신고', name: 'boardNo', width: 50, formatter: function (cellValue, options, rowObject) {
-                      return '<button onclick="openReportModal(' + cellValue + ')">신고</button>';
-                  }}
-              ],
-              viewrecords: true,
-              width: 1400,
-              height: 600,
-              rowNum: 10,
-              pager: "#jqGridPager"
-          });
-      }
-
-      function titleFormatter(cellvalue, options, rowObject) {
-          // 숨겨진 게시물인지 확인
-          if (rowObject.isHidden === 'Y') {
-              return "<span class='hidden-post'>숨겨진 게시물</span>";
-          } else {
-              return "<a href='javascript:;' onclick='showModal(" + rowObject.boardNo + ")'>" + cellvalue + "</a>";
-          }
-      }
+        function loadGrid(categoryNo) {
+            $("#jqGrid").jqGrid({
+                url: '/orca/board/list/' + categoryNo,
+                mtype: "GET",
+                styleUI: 'jQueryUI',
+                datatype: "json",
+                colModel: [
+                    {label: '게시판 번호', name: 'boardNo', width: 30},
+                    {label: '제목', name: 'title', key: true, width: 75, formatter: titleFormatter},
+                    {label: '조회수', name: 'hit', width: 50},
+                    {label: '썸네일', name: 'content', width: 50, formatter: extractImage},
+                    {
+                        label: '작성 시간',
+                        name: 'enrollDate',
+                        width: 50,
+                        formatter: function (cellValue, options, rowObject) {
+                            const enrollDate = new Date(cellValue);
+                            const formattedDate = enrollDate.toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
+                            });
+                            return formattedDate;
+                        }
+                    },
+                    {label: '신고', name: 'boardNo', width: 50, formatter: function (cellValue, options, rowObject) {
+                        return '<button onclick="openReportModal(' + cellValue + ')">신고</button>';
+                    }}
+                ],
+                viewrecords: true,
+                width: 1400,
+                height: 600,
+                rowNum: 20,
+                pager: "#jqGridPager"
+            });
+        }
 
         function titleFormatter(cellvalue, options, rowObject) {
-            return "<a href='javascript:;' onclick='showModal(" + rowObject.boardNo + ")'>" + cellvalue + "</a>";
+            // 숨겨진 게시물인지 확인
+            if (rowObject.isHidden === 'Y') {
+                return "<span class='hidden-post'>숨겨진 게시물</span>";
+            } else {
+                return "<a href='javascript:;' onclick='showModal(" + rowObject.boardNo + ")'>" + cellvalue + "</a>";
+            }
         }
 
         function extractImage(cellValue, options, rowObject) {
@@ -324,68 +255,68 @@
             return imgTag ? imgTag : '';
         }
 
-       function showModal(boardNo) {
-           $.ajax({
-               url: "/orca/board/" + boardNo,
-               method: "GET",
-               dataType: "json",
-               success: function (response) {
-                   $('#modal-title').text(response.title);
-                   $('#modal-title').attr('data-board-no', response.boardNo);
-                   $('#hit').text(response.hit);
-                   $('#teamName').text(response.teamName);
-                   $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
-                   $('#insert-name').text(response.employeeName);
+        function showModal(boardNo) {
+            $.ajax({
+                url: "/orca/board/" + boardNo,
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                    $('#modal-title').text(response.title);
+                    $('#modal-title').attr('data-board-no', response.boardNo);
+                    $('#hit').text(response.hit);
+                    $('#teamName').text(response.teamName);
+                    $('#modal-content').html(response.content ? response.content : '내용이 없습니다.');
+                    $('#insert-name').text(response.employeeName);
 
-                   const enrollDate = new Date(response.enrollDate);
-                   const formattedDate = enrollDate.toLocaleString('ko-KR', {
-                       year: 'numeric',
-                       month: 'long',
-                       day: 'numeric',
-                       hour: '2-digit',
-                       minute: '2-digit',
-                       second: '2-digit',
-                       hour12: true
-                   });
-                   $('#enrolldate').text(formattedDate);
+                    const enrollDate = new Date(response.enrollDate);
+                    const formattedDate = enrollDate.toLocaleString('ko-KR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    });
+                    $('#enrolldate').text(formattedDate);
 
-                   const bookmarkButton = document.querySelector('.bookmark-button');
-                   bookmarkButton.setAttribute('data-board-no', boardNo);
+                    const bookmarkButton = document.querySelector('.bookmark-button');
+                    bookmarkButton.setAttribute('data-board-no', boardNo);
 
-                   // 로그인한 사용자와 작성자가 같을 경우에만 수정, 삭제 버튼 표시
-                   const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
-                   if (currentUserNo == response.insertUserNo) {
-                       $('.updateButton').show();
-                       $('.deleteButton').show();
-                   } else {
-                       $('.updateButton').hide();
-                       $('.deleteButton').hide();
-                   }
+                    // 로그인한 사용자와 작성자가 같을 경우에만 수정, 삭제 버튼 표시
+                    const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
+                    if (currentUserNo == response.insertUserNo) {
+                        $('.updateButton').show();
+                        $('.deleteButton').show();
+                    } else {
+                        $('.updateButton').hide();
+                        $('.deleteButton').hide();
+                    }
 
-                   $('#boardModal').show();
-                   const lat = parseFloat(response.latitude);
-                   const lng = parseFloat(response.longitude);
-                   if (!isNaN(lat) && !isNaN(lng)) {
-                       $('#map').show();
-                       map.relayout();
-                       var moveLatLon = new kakao.maps.LatLng(lat, lng);
-                       map.setCenter(moveLatLon);
-                       var marker = new kakao.maps.Marker({
-                           position: new kakao.maps.LatLng(lat, lng)
-                       });
-                       marker.setMap(map);
-                   } else {
-                       $('#map').hide();
-                   }
-                   showComments(boardNo);
-                   checkLikeStatus(boardNo);
-                   checkBookmarkStatus(boardNo);
-               },
-               error: function () {
-                   alert("게시물 상세 정보를 불러오는데 실패했습니다.");
-               }
-           });
-       }
+                    $('#boardModal').show();
+                    const lat = parseFloat(response.latitude);
+                    const lng = parseFloat(response.longitude);
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        $('#map').show();
+                        map.relayout();
+                        var moveLatLon = new kakao.maps.LatLng(lat, lng);
+                        map.setCenter(moveLatLon);
+                        var marker = new kakao.maps.Marker({
+                            position: new kakao.maps.LatLng(lat, lng)
+                        });
+                        marker.setMap(map);
+                    } else {
+                        $('#map').hide();
+                    }
+                    showComments(boardNo, response.categoryNo); // Pass the category number
+                    checkLikeStatus(boardNo);
+                    checkBookmarkStatus(boardNo);
+                },
+                error: function () {
+                    alert("게시물 상세 정보를 불러오는데 실패했습니다.");
+                }
+            });
+        }
 
         function checkLikeStatus(boardNo) {
             $.ajax({
@@ -420,6 +351,8 @@
                     method: "DELETE",
                     success: function () {
                         likeButton.classList.remove('liked');
+
+
                         updateLikeCount(boardNo, -1);
                     }
                 });
@@ -442,106 +375,101 @@
             likeCountElement.innerText = likeCount;
         }
 
-   function getCommentHtml(comment) {
-       var isReply = comment.replyCommentNo !== null;
-       var commentClass = isReply ? 'comment reply' : 'comment';
+        function getCommentHtml(comment, categoryNo) {
+            var isReply = comment.replyCommentNo !== null;
+            var commentClass = isReply ? 'comment reply' : 'comment';
 
-       var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
-       var employeeName = comment.employeeName;
-       var teamName = comment.teamName;
+            var html = '<div class="' + commentClass + '" data-comment-no="' + comment.boardChatNo + '">';
+            var employeeName = comment.employeeName;
+            var teamName = comment.teamName;
 
-       if (comment.isAnonymous === "Y") {
-           employeeName = '***';
-           teamName = '***';
-       } else if (!employeeName) {
-           employeeName = '알 수 없음';
-       }
+            if (categoryNo == 3 && comment.isAnonymous === "Y") {
+                employeeName = '***';
+                teamName = '***';
+            } else if (!employeeName) {
+                employeeName = '알 수 없음';
+            }
 
-       html += '<div class="author">작성자: ' + employeeName + '</div>';
-       html += '<div class="team">팀: ' + teamName + '</div>';
-       html += '<div class="date">' + comment.enrollDate + '</div>';
-       html += '<div class="content">' + comment.content + '</div>';
+            html += '<div class="author">작성자: ' + employeeName + '</div>';
+            html += '<div class="team">팀: ' + teamName + '</div>';
+            html += '<div class="date">' + comment.enrollDate + '</div>';
+            html += '<div class="content">' + comment.content + '</div>';
 
-       const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
-       if (currentUserNo == comment.insertUserNo) {
-           html += '<div class="actions">';
-           html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
-           html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
-           html += '</div>';
-       }
+            const currentUserNo = '<%= ((UserVo) session.getAttribute("loginUserVo")) != null ? ((UserVo) session.getAttribute("loginUserVo")).getEmpNo() : "" %>';
+            if (currentUserNo == comment.insertUserNo) {
+                html += '<div class="actions">';
+                html += '<button onclick="editComment(' + comment.boardChatNo + ')">수정</button>';
+                html += '<button onclick="deleteComment(' + comment.boardChatNo + ')">삭제</button>';
+                html += '</div>';
+            }
 
-       html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
-       html += '</div>';
+            html += '<button onclick="replyComment(' + comment.boardChatNo + ')">답글</button>';
+            html += '</div>';
 
-       if (comment.replies && comment.replies.length > 0) {
-           html += '<div class="reply-container">';
-           comment.replies.forEach(function (reply) {
-               html += getCommentHtml(reply);
-           });
-           html += '</div>';
-       }
+            if (comment.replies && comment.replies.length > 0) {
+                html += '<div class="reply-container">';
+                comment.replies.forEach(function (reply) {
+                    html += getCommentHtml(reply, categoryNo); // Pass category number to replies
+                });
+                html += '</div>';
+            }
 
-       return html;
-   }
-
-
-function showComments(boardNo) {
-    $.ajax({
-        url: "/orca/board/comment/list?boardNo=" + boardNo,
-        method: "GET",
-        dataType: "json",
-        success: function (response) {
-            var comments = response.filter(comment => comment.boardNo == boardNo); // 필터링
-            var commentMap = {};
-
-            // 모든 댓글을 맵에 넣고 대댓글 리스트를 초기화
-            comments.forEach(function (comment) {
-                commentMap[comment.boardChatNo] = comment;
-                commentMap[comment.boardChatNo].replies = [];
-            });
-
-            // 대댓글을 부모 댓글의 대댓글 리스트에 추가
-            comments.forEach(function (comment) {
-                if (comment.replyCommentNo !== null) {
-                    commentMap[comment.replyCommentNo].replies.push(comment);
-                }
-            });
-
-            // 최상위 댓글만 추려서 HTML 생성
-            var commentsHtml = '';
-            comments.forEach(function (comment) {
-                if (comment.replyCommentNo === null) {
-                    commentsHtml += getCommentHtml(comment);
-                }
-            });
-
-            $('#comments-container').html(commentsHtml);
-        },
-        error: function () {
-            alert("댓글을 불러오는데 실패했습니다.");
+            return html;
         }
-    });
-}
 
+        function showComments(boardNo, categoryNo) {
+            $.ajax({
+                url: "/orca/board/comment/list?boardNo=" + boardNo,
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                    var comments = response.filter(comment => comment.boardNo == boardNo);
+                    var commentMap = {};
+
+                    comments.forEach(function (comment) {
+                        commentMap[comment.boardChatNo] = comment;
+                        commentMap[comment.boardChatNo].replies = [];
+                    });
+
+                    comments.forEach(function (comment) {
+                        if (comment.replyCommentNo !== null) {
+                            commentMap[comment.replyCommentNo].replies.push(comment);
+                        }
+                    });
+
+                    var commentsHtml = '';
+                    comments.forEach(function (comment) {
+                        if (comment.replyCommentNo === null) {
+                            commentsHtml += getCommentHtml(comment, categoryNo); // Pass category number
+                        }
+                    });
+
+                    $('#comments-container').html(commentsHtml);
+                },
+                error: function () {
+                    alert("댓글을 불러오는데 실패했습니다.");
+                }
+            });
+        }
 
         function addComment() {
             var content = $('#new-comment-content').val();
-            var replyCommentNo = $('#reply-comment-no').val();
-
             if (!content.trim()) {
                 alert("댓글 내용을 입력하세요.");
                 return;
             }
-
             var boardNo = $('#modal-title').data('boardNo');
-            var isAnonymous = $("#categorySelect").val() === '3' ? "Y" : "N";
-
+            var categoryNo = $("#categorySelect").val(); // 현재 카테고리 번호 가져오기
             var comment = {
                 boardNo: boardNo,
                 content: content,
-                isAnonymous: isAnonymous,
-                replyCommentNo: replyCommentNo ? replyCommentNo : null
+                isAnonymous: 'N', // 기본값 설정
+                categoryNo: categoryNo // 카테고리 번호 추가
             };
+
+            if (categoryNo == '3') {
+                comment.isAnonymous = 'Y';
+            }
 
             $.ajax({
                 url: "/orca/board/comment/add",
@@ -550,8 +478,7 @@ function showComments(boardNo) {
                 data: JSON.stringify(comment),
                 success: function () {
                     $('#new-comment-content').val('');
-                    $('#reply-comment-no').val('');
-                    showComments(boardNo);
+                    showComments(boardNo, categoryNo); // 댓글 갱신 시 카테고리 번호 전달
                 },
                 error: function () {
                     alert("댓글 작성에 실패했습니다.");
@@ -564,12 +491,14 @@ function showComments(boardNo) {
             if (content) {
                 var boardNo = $('#modal-title').data('boardNo');
                 var isAnonymous = $("#categorySelect").val() === '3' ? "Y" : "N";
+                var categoryNo = $("#categorySelect").val(); // 카테고리 번호 가져오기
 
                 var comment = {
                     boardNo: boardNo,
                     content: content,
                     isAnonymous: isAnonymous,
-                    replyCommentNo: replyCommentNo
+                    replyCommentNo: replyCommentNo,
+                    categoryNo: categoryNo // 카테고리 번호 추가
                 };
 
                 $.ajax({
@@ -578,7 +507,7 @@ function showComments(boardNo) {
                     contentType: "application/json",
                     data: JSON.stringify(comment),
                     success: function () {
-                        showComments(boardNo);
+                        showComments(boardNo, categoryNo); // 댓글 갱신 시 카테고리 번호 전달
                     },
                     error: function () {
                         alert("답글 작성에 실패했습니다.");
@@ -597,7 +526,7 @@ function showComments(boardNo) {
                     contentType: "application/json",
                     data: JSON.stringify({boardChatNo: boardChatNo, content: newContent}),
                     success: function () {
-                        showComments($('#modal-title').data('boardNo'));
+                        showComments($('#modal-title').data('boardNo'), $("#categorySelect").val()); // 댓글 갱신 시 카테고리 번호 전달
                     },
                     error: function () {
                         alert("댓글 수정에 실패했습니다.");
@@ -613,7 +542,7 @@ function showComments(boardNo) {
                     method: "POST",
                     data: {boardChatNo: boardChatNo},
                     success: function () {
-                        showComments($('#modal-title').data('boardNo'));
+                        showComments($('#modal-title').data('boardNo'), $("#categorySelect").val()); // 댓글 갱신 시 카테고리 번호 전달
                     },
                     error: function () {
                         alert("댓글 삭제에 실패했습니다.");
@@ -768,42 +697,42 @@ function showComments(boardNo) {
             $('#reportModal').hide();
         }
 
-       function submitReport() {
-           var boardNo = $('#reportBoardNo').val();
-           var category = $('#reportCategory').val();
-           var content = $('#reportContent').val();
+        function submitReport() {
+            var boardNo = $('#reportBoardNo').val();
+            var category = $('#reportCategory').val();
+            var content = $('#reportContent').val();
 
-           console.log("boardNo: ", boardNo);
-           console.log("category: ", category);
-           console.log("content: ", content);
+            console.log("boardNo: ", boardNo);
+            console.log("category: ", category);
+            console.log("content: ", content);
 
-           if (!boardNo || !category || !content) {
-               alert("모든 필드를 채워주세요.");
-               return;
-           }
+            if (!boardNo || !category || !content) {
+                alert("모든 필드를 채워주세요.");
+                return;
+            }
 
-           $.ajax({
-               url: "/orca/board/penalty",
-               method: "POST",
-               data: {
-                   penaltyCategoryNo: category,
-                   penaltyContent: content,
-                   boardNo: boardNo
-               },
-               success: function (response) {
-                   alert(response);
-                   closeReportModal();
+            $.ajax({
+                url: "/orca/board/penalty",
+                method: "POST",
+                data: {
+                    penaltyCategoryNo: category,
+                    penaltyContent: content,
+                    boardNo: boardNo
+                },
+                success: function (response) {
+                    alert(response);
+                    closeReportModal();
 
-                   if (response === "신고가 누적되어 게시물이 숨겨졌습니다.") {
-                       $("#jqGrid").trigger("reloadGrid");
-                   }
-               },
-               error: function (jqXHR, textStatus, errorThrown) {
-                   console.log(jqXHR.responseText);
-                   alert("신고 접수에 실패했습니다.");
-               }
-           });
-       }
+                    if (response === "신고가 누적되어 게시물이 숨겨졌습니다.") {
+                        $("#jqGrid").trigger("reloadGrid");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseText);
+                    alert("신고 접수에 실패했습니다.");
+                }
+            });
+        }
 
     </script>
 </body>
