@@ -28,7 +28,7 @@
             </select>
 
             <input class="search_text" type="text" id="searchText" placeholder="검색어 입력">
-            <img class="search_img" src=alt="검색 아이콘" id="searchButton" alt="검색 아이콘" id="searchButton">
+            <img class="search_img" src="/img/document/search.png" alt="검색 아이콘" id="searchButton" alt="검색 아이콘" id="searchButton">
         </div>
     </div>
 
@@ -42,7 +42,16 @@
             <div id="documentList">
                 <c:forEach var="document" items="${documentList}">
                     <div class="document">
-                      <p>${document.creditDate}</p>
+
+                    <c:choose>
+                        <c:when test="${not empty document.creditDate}">
+                            <p>${document.creditDate}</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p>${document.enrollDate}</p>
+                        </c:otherwise>
+                    </c:choose>
+
                         <div class="status_box status_box_${document.status}" data-doc-no="${document.docNo}">
                             <div class="status_details">
 
@@ -62,8 +71,8 @@
 
                                 <div class="status_steps">
                                     <div class="status_step writer_${document.status}">
-                                        <div class="statusName">${document.statusName}[${document.status}]</div>
-                                        <div class="writerName">${document.writerName}[${document.positionName}]</div>
+                                        <div class="statusName">${document.statusName}</div>
+                                        <div class="writerName">${document.writerName} ${document.positionName}</div>
                                         <div>${document.deptName}</div>
                                         <div>${document.creditDate}</div>
                                     </div>
@@ -72,9 +81,9 @@
                                     <!-- 결재 진행 상태 추가 -->
                                     <c:forEach var="approver" items="${document.approverVoList}" varStatus="status">
                                         <div class="status_step appr_${approver.approvalStage}">
-                                            <div class="stageName">[${approver.seq}][${approver.apprStageName}]${approver.approvalStage}</div>
-                                            <div class="approverName">${approver.approverName}[${approver.positionName}]</div>
-                                            <div>[${approver.approverClassificationNo}]${approver.deptName}</div>
+                                            <div class="stageName">${approver.apprStageName}</div>
+                                            <div class="approverName">${approver.approverName} ${approver.positionName}</div>
+                                            <div>${approver.deptName}</div>
                                             <div>${approver.approvalDate}</div>
                                         </div>
                                         <c:if test="${status.index != document.approverVoList.size() - 1}">

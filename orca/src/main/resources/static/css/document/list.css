@@ -69,7 +69,6 @@ main.full {
 }
 
 
-
 /* 문서없으면 */
 .no-document{
   border: 1px solid #ddd;
@@ -96,6 +95,12 @@ main.full {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transform: translateY(-3px);
   }
+}
+
+.document p {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 50px;
 }
 
 .document_info{
