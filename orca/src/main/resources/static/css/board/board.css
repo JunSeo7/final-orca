@@ -361,3 +361,16 @@ body {
             border: 1px solid #ced4da;
             border-radius: 4px;
         }
+
+#new-comment-content {
+    width: calc(100% - 150px); /* 버튼의 너비를 제외한 100% */
+    max-width: 600px;
+    height: 40px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-right: 10px;
+    box-sizing: border-box;
+}

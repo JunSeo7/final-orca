@@ -9,7 +9,7 @@
     <title>게시판 목록</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/board/board.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -18,8 +18,61 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script defer src="/js/board/board.js"></script>
     <style>
+/* JqGrid의 배경색을 페이지 배경색과 일치시키기 */
+.ui-jqgrid {
+   // background-color: #87CEFA; /* 이미지의 배경색과 일치 */
+}
+
+/* 테이블 헤더 스타일 변경 */
+.ui-jqgrid .ui-jqgrid-htable th {
+    background-color: #1e90ff; /* 헤더 배경색 변경 */
+    color: #ffffff; /* 헤더 글자색 변경 */
+    font-weight: bold;
+}
+
+/* 테이블 바디 스타일 변경 */
+.ui-jqgrid .ui-jqgrid-btable td {
+    //background-color: #ffffff; /* 바디 배경색 변경 */
+    color: #333333; /* 바디 글자색 변경 */
+}
+
+/* 페이저 스타일 변경 */
+.ui-jqgrid .ui-jqgrid-pager {
+    background-color: #1e90ff; /* 페이저 배경색 변경 */
+    color: #ffffff; /* 페이저 글자색 변경 */
+}
+
+/* 페이저 버튼 스타일 변경 */
+.ui-jqgrid .ui-pg-button {
+    background-color: #1e90ff; /* 버튼 배경색 변경 */
+    color: #ffffff; /* 버튼 글자색 변경 */
+}
+
+/* JqGrid 테두리 스타일 수정 */
+.ui-jqgrid, .ui-jqgrid-view, .ui-jqgrid-hdiv, .ui-jqgrid-bdiv, .ui-jqgrid-pager {
+    border: 1px solid #1e90ff;
+}
+
+/* JqGrid 테이블 행 hover 스타일 수정 */
+.ui-jqgrid .ui-jqgrid-btable tr.jqgrow:hover {
+    background-color: #d3e9ff; /* hover 배경색 변경 */
+    cursor: pointer;
+}
+
+/* 클릭된 행의 스타일 수정 */
+.ui-jqgrid .ui-jqgrid-btable tr.jqgrow:active {
+    background-color: #a8d8ff; /* 클릭된 행 배경색 변경 */
+}
+
+button{
+background-color: #d3e9ff; /* hover 배경색 변경 */
+ border: 2px solid white; /* 테두리 두께와 색상 설정 */
+  border-radius: 15px; /* 둥근 모서리 설정 */
+      padding: 10px 20px; /* 안쪽 여백 설정 */
+}
 
     </style>
+     <link rel="stylesheet" type="text/css" href="/css/board/board.css">
 </head>
 <body>
     <header>
@@ -78,7 +131,10 @@
         </nav>
     </aside>
     <main id="content">
-        <h2>게시판 목록</h2>
+
+           <a href="/orca/board/insert">📝</a>
+
+            <div></div>
         <select id="categorySelect">
             <option value="1">자유 게시판</option>
             <option value="2">팀 게시판</option>
@@ -87,8 +143,7 @@
         </select>
         <input type="text" id="searchTitle" placeholder="제목으로 검색">
         <button id="searchBtn">검색</button>
-        <a href="/orca/board/insert">게시물 작성하기</a>
-        <a href="/orca/board/statistics">게시물 통계보기</a>
+ <a href="/orca/board/statistics">📊</a>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </main>
@@ -116,8 +171,10 @@
             <div id="comments-container" class="comment-container"></div>
             <textarea id="new-comment-content" placeholder="댓글을 입력하세요"></textarea>
             <input type="hidden" id="reply-comment-no">
+                 <div></div>
             <button onclick="addComment()">댓글 작성</button>
             <div id="map"></div>
+            <div></div>
             <button id="btn-kakao" class="kakao-share-button">💬</button>
         </div>
     </div>
@@ -593,7 +650,7 @@
             var boardNo = $('#modal-title').data('boardNo');
             var title = $('#modal-title').text();
             var description = $('#modal-content').text().substring(0, 100);
-            var linkUrl = 'http://127.0.0.1:8080/orca/board/' + boardNo;
+            var linkUrl = 'http://127.0.0.1:8080/orca/board';
             var imageUrl = 'https://via.placeholder.com/300';
 
             Kakao.Link.sendDefault({
