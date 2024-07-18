@@ -19,7 +19,7 @@ public class SalaryPageController {
     private final SalaryService service;
 
     //회계팀 메인 화면
-    @GetMapping("main")
+    @GetMapping("salaryMain")
     public String main(){
         return "salary/main";
     }
@@ -81,6 +81,21 @@ public class SalaryPageController {
 
         return "salary/ratesEdit";
     }
+//---------------------------------
+
+
+    //개인 명세서 목록
+    @GetMapping("personList")
+    public String salaryPersonList(){
+        return "salary/person/list";
+    }
+
+    //개인 명세서 상세
+    @GetMapping("personDetail")
+    public String salaryPersonDetail(){
+        return "salary/person/detail";
+    }
+
 
 
 }

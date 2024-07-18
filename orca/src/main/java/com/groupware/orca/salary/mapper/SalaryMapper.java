@@ -7,7 +7,6 @@ import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface SalaryMapper {
@@ -64,7 +63,7 @@ public interface SalaryMapper {
 
     //사원 정보 가져오기 (salary, empNo)
     @Select("SELECT * FROM PERSONNEL_INFORMATION WHERE EMP_NO = #{empNo}")
-    UserVo getUserVo(int empNo);
+    UserVo getUserVo(@Param("empNo") int empNo);
 
     //화면에 보여줄 때는 이 쿼리문 사용하기!!
     //            SELECT
@@ -90,7 +89,7 @@ public interface SalaryMapper {
                    JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
                    ORDER BY PAYROLL_NO DESC
             """)
-    List<SalaryVo> getSalaryList();
+    List<SalaryVo> getSalaryList(UserVo vo);
 
 
     //급여상세조회
@@ -116,7 +115,7 @@ public interface SalaryMapper {
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
               WHERE  PAYROLL_NO = #{payrollNo}
             """)
-    SalaryVo getSalaryByNo(@Param("payrollNo") String payrollNo);
+    SalaryVo getSalaryByNo(@Param("payrollNo") String payrollNo, UserVo vo);
 
     //급여관리 수정
     @Update("""
@@ -150,7 +149,7 @@ public interface SalaryMapper {
     @Delete("""
             DELETE PAYROLL WHERE PAYROLL_NO = #{payrollNo}
             """)
-    int getSalaryDelete(@Param("payrollNo") String payrollNo);
+    int getSalaryDelete(@Param("payrollNo") String payrollNo, UserVo vo);
 
     //급여 사원 검색
     @Select("""
@@ -159,7 +158,7 @@ public interface SalaryMapper {
             JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
             WHERE P.EMP_NO = #{empNo}
             """)
-    List<SalaryVo> searchSalary(@Param("empNo") String empNo);
+    List<SalaryVo> searchSalary(@Param("empNo") String empNo, UserVo vo);
 
     //----------------------------------------------------------------------------------------------
 
@@ -175,7 +174,7 @@ public interface SalaryMapper {
                 ,LOCAL_INCOME_TAX_PERSENTAGE
             FROM RATES
             """)
-    RatesVo getRatesByOne();
+    RatesVo getRatesByOne(UserVo vo);
 
     //4대보험 삭제
     @Delete("""
@@ -194,7 +193,7 @@ public interface SalaryMapper {
                     ,LOCAL_INCOME_TAX_PERSENTAGE = #{rvo.localIncomeTaxPersentage}
                 WHERE RATES_NO = #{rvo.ratesNo}
             """)
-    int ratesEdit(@Param("rvo") RatesVo rvo);
+    int ratesEdit(@Param("rvo") RatesVo rvo, UserVo vo);
 
 
 

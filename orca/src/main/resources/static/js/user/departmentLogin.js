@@ -23,7 +23,7 @@ $(document).ready(function () {
                     }else if(deptCode === 3){
                         window.location.href = "/orca/managementSupport/main";
                     }else if(deptCode === 4){
-                        window.location.href = "/orca/main";
+                        window.location.href = "/orca/salaryMain";
                     }else{
                         alert("개설되지 않은 부서페이지 입니다. 관리자에게 문의하세요")
                     }
