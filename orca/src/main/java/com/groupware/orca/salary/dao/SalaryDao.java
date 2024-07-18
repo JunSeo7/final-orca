@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,15 +31,15 @@ public class SalaryDao {
         return mapper.getUserVo(empNo);
     }
 
-    public List<SalaryVo> getSalaryList() {
+    public List<SalaryVo> getSalaryList(UserVo vo) {
         System.out.println("SalaryDao.getSalaryList");
-        return mapper.getSalaryList();
+        return mapper.getSalaryList(vo);
     }
     
     // 급여계산 상세조회
-    public SalaryVo getSalaryByNo(String empNo) {
-        System.out.println("empNo = " + empNo);
-        return mapper.getSalaryByNo(empNo);
+    public SalaryVo getSalaryByNo(String payrollNo, UserVo vo) {
+        System.out.println("empNo = " + payrollNo);
+        return mapper.getSalaryByNo(payrollNo,vo);
     }
 
     //급여계산 수정
@@ -54,12 +53,12 @@ public class SalaryDao {
     }
 
     //4대보험 수정
-    public int ratesEdit(RatesVo rvo) {
-        return mapper.ratesEdit(rvo);
+    public int ratesEdit(RatesVo rvo, UserVo vo) {
+        return mapper.ratesEdit(rvo,vo);
     }
 
-    public RatesVo getRatesByOne() {
-        return mapper.getRatesByOne();
+    public RatesVo getRatesByOne(UserVo vo) {
+        return mapper.getRatesByOne(vo);
     }
 
     public int delete(String ratesNo) {
@@ -67,13 +66,13 @@ public class SalaryDao {
     }
 
     //급여 삭제
-    public int getSalaryDelete( String payrollNo) {
-        return mapper.getSalaryDelete(payrollNo);
+    public int getSalaryDelete(String payrollNo, UserVo vo) {
+        return mapper.getSalaryDelete(payrollNo,vo);
     }
 
     //급여 검색
-    public List<SalaryVo> searchSalary(String empNo) {
-        return mapper.searchSalary(empNo);
+    public List<SalaryVo> searchSalary(String empNo, UserVo vo) {
+        return mapper.searchSalary(empNo,vo);
     }
 
 

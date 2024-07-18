@@ -18,6 +18,7 @@ public class PersonSalaryController {
 
     private final PersonSalaryService service;
 
+    //급여 상세조회
     @GetMapping("person/detail")
     @ResponseBody
     public SalaryVo getPersonSalaryList(@RequestParam("payrollNo") String payrollNo,@RequestParam("empNo") String empNo){

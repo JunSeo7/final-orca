@@ -4,6 +4,7 @@ import com.groupware.orca.salary.vo.SalaryVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 @Mapper
@@ -59,5 +60,5 @@ public interface PersonSalaryMapper {
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
               WHERE P.EMP_NO = #{empNo}
             """)
-    List<SalaryVo> getPersonSalaryList(String empNo);
+    List<SalaryVo> getPersonSalaryList(@Param("empNo") String empNo);
 }
