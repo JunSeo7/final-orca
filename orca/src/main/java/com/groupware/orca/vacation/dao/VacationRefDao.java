@@ -14,7 +14,6 @@ public class VacationRefDao {
     private final VacationRefMapper mapper;
 
     public void registrationVCode(VacationRefVo vo) {
-
         mapper.registrationVCode(vo);
     }
 
@@ -22,8 +21,8 @@ public class VacationRefDao {
         mapper.editVCode(vo);
     }
 
-    public int deleteVCode(List<String> vacationCode) {
-        return mapper.deleteVCode(vacationCode);
+    public void deleteVCode(List<String> vacationCode) {
+        mapper.deleteVCode(vacationCode);
 
     }
 }
