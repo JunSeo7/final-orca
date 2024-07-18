@@ -3,7 +3,6 @@ package com.groupware.orca.vacation.controller;
 import com.groupware.orca.vacation.service.VacationRefService;
 import com.groupware.orca.vacation.vo.VacationRefVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class VacationRefRestController {
 
     // 휴가 코드 등록
     @PostMapping("registrationVCode")
-    public void vCode(VacationRefVo vo){
+    public void registrationVCode(VacationRefVo vo){
         service.registrationVCode(vo);
     }
 

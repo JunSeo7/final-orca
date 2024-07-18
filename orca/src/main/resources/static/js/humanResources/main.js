@@ -148,7 +148,7 @@ employeeRegistration.addEventListener('click', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
     const showVacationCode = document.querySelector('.showVacationCode');
 
     showVacationCode.addEventListener('click', function () {
@@ -157,10 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
             url: '/orca/vacationRef/VCode',
             dataType: 'html',
             success: function (response) {
-                const mainDiv = document.querySelector('#content'); // mainDiv 요소를 찾음
+                const mainDiv = document.querySelector('#content');
                 if (mainDiv) {
-                    mainDiv.innerHTML = response; // mainDiv 요소에 HTML 응답 삽입
-                    attachEventListeners(); // 이벤트 리스너 부착
+                    mainDiv.innerHTML = response;
+                    attachEventListeners();
                 } else {
                     console.error('mainDiv 요소를 찾을 수 없습니다.');
                 }
@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const deleteVacationCodeBtn = document.getElementById('deleteVacationCodeBtn');
         const vacationCodesTableBody = document.querySelector('#vacationCodesTable tbody');
 
-        // 모든 체크박스를 체크/체크 해제하는 함수
         if (checkAll && vacationCodesTableBody) {
             checkAll.addEventListener('change', function() {
                 const checkboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox');
@@ -186,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // 삭제 버튼 클릭 이벤트 리스너
         if (deleteVacationCodeBtn && vacationCodesTableBody) {
             deleteVacationCodeBtn.addEventListener('click', function () {
                 const selectedCheckboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox:checked');
@@ -220,12 +218,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // 휴가 코드 테이블 데이터 로드
         $.ajax({
             url: "http://127.0.0.1:8080/orca/re/vacation",
             method: "get",
             success: function (data) {
-                const vacationCodesTableBody = document.querySelector('#vacationCodesTable tbody');
                 if (vacationCodesTableBody) {
                     let str = "";
                     data.forEach(function(item) {
@@ -243,6 +239,47 @@ document.addEventListener('DOMContentLoaded', function() {
             error: function (error) {
                 console.error("데이터를 가져오는데 실패했습니다.", error);
             }
+        });
+
+        // 모달창 관련 이벤트 리스너 추가
+        const addVacationCodeBtn = document.getElementById('addVacationCodeBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const vacationModal = document.getElementById('vacationModal');
+        const vacationForm = document.getElementById('vacationForm');
+
+        addVacationCodeBtn.addEventListener('click', function() {
+            vacationModal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', function() {
+            vacationModal.style.display = 'none';
+        });
+
+        vacationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const vacationCode = document.getElementById('vacationCode').value;
+            const vacationName = document.getElementById('vacationName').value;
+
+            $.ajax({
+                url: "http://127.0.0.1:8080/orca/re/vacationRef/registrationVCode",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ vacationCode: vacationCode, vacationName: vacationName }),
+                success: function () {
+                    const newRow = `
+                        <tr>
+                            <td><input type="checkbox" class="rowCheckbox"></td>
+                            <td>${vacationCode}</td>
+                            <td>${vacationName}</td>
+                        </tr>
+                    `;
+                    vacationCodesTableBody.insertAdjacentHTML('beforeend', newRow);
+                    vacationModal.style.display = 'none';
+                },
+                error: function (error) {
+                    console.error("등록 실패", error);
+                }
+            });
         });
     }
 });
