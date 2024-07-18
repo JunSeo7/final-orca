@@ -1,23 +1,51 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 결재선 표시 함수
-    function displayApprovalProcess(approverVoList) {
-        const approvalProcessContainer = document.querySelector('.approval-process');
-        approvalProcessContainer.innerHTML = '';
+    // 결재선 프로세스 업데이트
+    function updateApprovalProcess(approvers) {
+        const processContainer = document.querySelector('.approval-process');
+        processContainer.innerHTML = '';
 
-        approverVoList.forEach(approver => {
-            const approverDiv = document.createElement('div');
-            approverDiv.className = 'approver';
-            approverDiv.innerHTML = `
-                <div class="approver-info">
-                    <span class="approver-name">${approver.approverName}</span>
-                    <span class="approver-position">${approver.positionName}</span>
-                    <span class="approver-dept">${approver.deptName}</span>
-                </div>
-                <div class="approver-stage">
-                    <span class="stage-name">${approver.apprStageName}</span>
-                </div>
-            `;
-            approvalProcessContainer.appendChild(approverDiv);
+        approvers.forEach((approver, index) => {
+            const approverDiv = document.createElement('span');
+            approverDiv.textContent = `${approver.seq} ${approver.deptName} ${approver.approverName} ${approver.positionName}`;
+            processContainer.appendChild(approverDiv);
+
+            // 인풋 태그 - 결재선 정보 숨기기
+            const hiddenSeqInput = document.createElement('input');
+            hiddenSeqInput.type = 'hidden';
+            hiddenSeqInput.name = 'seq';
+            hiddenSeqInput.value = approver.seq;
+            processContainer.appendChild(hiddenSeqInput);
+
+            const hiddenApproverNoInput = document.createElement('input');
+            hiddenApproverNoInput.type = 'hidden';
+            hiddenApproverNoInput.name = 'approverNo';
+            hiddenApproverNoInput.value = approver.approverNo;
+            processContainer.appendChild(hiddenApproverNoInput);
+
+            const hiddenDeptCodeInput = document.createElement('input');
+            hiddenDeptCodeInput.type = 'hidden';
+            hiddenDeptCodeInput.name = 'deptCode';
+            hiddenDeptCodeInput.value = approver.deptCode;
+            processContainer.appendChild(hiddenDeptCodeInput);
+
+            const hiddenPositionCodeInput = document.createElement('input');
+            hiddenPositionCodeInput.type = 'hidden';
+            hiddenPositionCodeInput.name = 'positionCode';
+            hiddenPositionCodeInput.value = approver.positionCode;
+            processContainer.appendChild(hiddenPositionCodeInput);
+
+            const hiddenApproverClassificationNoInput = document.createElement('input');
+            hiddenApproverClassificationNoInput.type = 'hidden';
+            hiddenApproverClassificationNoInput.name = 'approverClassificationNo';
+            hiddenApproverClassificationNoInput.value = approver.approverClassificationNo;
+            processContainer.appendChild(hiddenApproverClassificationNoInput);
+
+            if (index < approvers.length - 1) {
+                const arrowDiv = document.createElement('span');
+                arrowDiv.classList.add('arrow');
+                arrowDiv.textContent = ' ⇨ '; // 화살표 추가
+                processContainer.appendChild(arrowDiv);
+            }
         });
     }
 
@@ -60,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 $('#referrerList').html(referrerListHtml);
 
                 // 결재선 업데이트
-                displayApprovalProcess(data.approvalLineVoList);
+                updateApprovalProcess(data.approverVoList);
             },
             error: function(e) {
                 alert('문서 데이터 로드 중 오류가 발생했습니다.');

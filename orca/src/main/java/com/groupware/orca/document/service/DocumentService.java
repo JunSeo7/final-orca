@@ -66,7 +66,6 @@ public class DocumentService {
             }
             int approverResult = dao.writeDocumentApprover(approverList);
             result += approverResult;
-            System.out.println("결재선 등록 결과 = " + approverResult);
         }
         if (referencerList != null) {
             for (ReferencerVo referencer : referencerList) {
@@ -74,7 +73,6 @@ public class DocumentService {
             }
             int referencerResult = dao.writeDocumentReferrer(referencerList);
             result += referencerResult;
-            System.out.println("참조인 등록 결과 = " + referencerResult);
         }
         if (fileList != null) {
             for (DocFileVo file : fileList) {
@@ -82,7 +80,6 @@ public class DocumentService {
             }
             int fileResult = dao.writeDocumentFile(fileList);
             result += fileResult;
-            System.out.println("파일 등록 결과 = " + fileResult);
         }
         System.out.println("최종 결과 = " + result);
         return result;

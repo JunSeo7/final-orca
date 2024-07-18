@@ -306,17 +306,20 @@ public interface DocumentMapper {
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
     @Update("""
             <script>
-            UPDATE DOCUMENT
-            <set>
-                <if test="title != null">TITLE = #{title},</if>
-                <if test="content != null">CONTENT = #{content},</if>
-                <if test="urgent != null">URGENT = #{urgent},</if>
-                <if test="templateNo != null">TEMPLATE_NO = #{templateNo},</if>
-                <if test="status != null">STATUS = #{status},</if>
-            </set>
-            WHERE DOC_NO = #{docNo}
-              AND WRITER_NO = #{writerNo}
-              AND STATUS = 1
+                UPDATE DOCUMENT
+                <set>
+                    <if test="title != null">TITLE = #{title},</if>
+                    <if test="content != null">CONTENT = #{content},</if>
+                    <if test="urgent != null">URGENT = #{urgent},</if>
+                    <if test="status != null">STATUS = #{status},</if>
+                    <choose>
+                      <when test="status == 2">CREDIT_DATE = SYSDATE,</when>
+                      <otherwise></otherwise>
+                     </choose>
+                </set>
+                WHERE DOC_NO = #{docNo}
+                  AND WRITER_NO = #{writerNo}
+                  AND STATUS = 1
             </script>
             """)
     int editDocument(DocumentVo vo);

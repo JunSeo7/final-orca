@@ -28,7 +28,7 @@
 
 <main id="content">
     <h1>결재수정</h1>
-    <form id="documentForm" method="post" action="/orca/document/edit" enctype="multipart/form-data">
+    <form id="documentForm" method="post" action="/orca/document/edit">
         <input type="hidden" name="docNo" value="${param.docNo}">
         <table class="document-table">
             <tr>
@@ -85,12 +85,6 @@
             <tr>
                 <td colspan='2'>
                     <textarea id="summernote" name="content"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th>첨부파일</th>
-                <td>
-                    <input type="file" name="fileList" multiple>
                 </td>
             </tr>
             <tr>
