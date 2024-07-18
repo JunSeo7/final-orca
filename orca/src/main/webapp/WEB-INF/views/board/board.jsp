@@ -23,21 +23,31 @@
 </head>
 <body>
     <header>
-        <div class="header-left" onclick="loadPage('home.jsp')">
-            <img src="logo.png" alt="Logo" class="logo">
-            <h2>ORCA</h2>
-        </div>
-        <div class="header-right">
-            <span>알림</span>
-            <span>조직도</span>
-            <span>설정</span>
-        </div>
+      <div class="header-left">
+                 <a href="/orca/home"><img src="/img/header/logo.png" alt="Logo" class="logo"></a>
+                 <a href="/orca/home" style="text-decoration: none; color:black;">
+                     <h2>ORCA</h2>
+                 </a>
+             </div>
+             <div class="header-right">
+                 <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
+                 <span class="icon"><img src="/img/header/organization-chart.png" alt="organization-chart" class="icon"></span>
+                 <span class="icon"><img src="/img/header/settings.png" alt="settings" class="icon"></span>
+             </div>
     </header>
     <button id="toggleSidebar" onclick="toggleSidebar()">메뉴</button>
+    <% UserVo loginUserVo=(UserVo) session.getAttribute("loginUserVo"); String
+                        imgChangeName=(loginUserVo.getImgChangeName() !=null) ? loginUserVo.getImgChangeName()
+                        : "profile.png" ; %>
     <aside id="sidebar">
         <div class="profile" onclick="toggleProfile()">
-            <img src="profile.png" alt="Profile Picture" class="profile-pic">
-            <p>SW팀 | <span>양파쿵야</span></p>
+            <img src="/upload/user/<%= imgChangeName %>" alt="Profile Picture" class="profile-pic">
+
+                                        <p class="profile-info">
+                                            <%= loginUserVo.getTeamName() %> | <span>
+                                                    <%= loginUserVo.getName() %>
+                                                </span>
+                                        </p>
         </div>
         <hr>
         <div id="profileDetail" class="profile-detail hidden">
