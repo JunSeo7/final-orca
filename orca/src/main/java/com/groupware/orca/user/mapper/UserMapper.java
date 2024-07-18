@@ -1,6 +1,6 @@
 package com.groupware.orca.user.mapper;
 
-import com.groupware.orca.department.vo.DepartmentVo;
+import com.groupware.orca.common.vo.DepartmentVo;
 import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

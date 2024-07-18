@@ -1,6 +1,6 @@
 package com.groupware.orca.user.controller;
 
-import com.groupware.orca.department.vo.DepartmentVo;
+import com.groupware.orca.common.vo.DepartmentVo;
 import com.groupware.orca.user.service.UserService;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpServletRequest;
