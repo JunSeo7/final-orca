@@ -48,7 +48,7 @@ function searchTemplateData(searchType, searchText) {
             displayResults(data);
         },
         error: function(error) {
-            console.error('Error:', error);
+            alert("결재양식 검색 중 오류가 발생했습니다.");
         }
     });
 }
@@ -130,10 +130,11 @@ function setDeleteButtonListeners() {
                 method: 'POST',
                 success: function(data) {
                     console.log('Template delete:', data);
+                    alert("결재양식이 삭제 되었습니다.");
                     location.reload();
                 },
                 error: function(e) {
-                    console.error('Error:', e);
+                    alert("결재양식 삭제 중 오류가 발생했습니다.");
                 }
             });
         });

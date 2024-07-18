@@ -89,23 +89,100 @@ aside.hidden {
   margin-right: 8px;
 }
 
-/* 폴더 아이콘 설정 */
-.nav-icon.folder {
-  background: url('folder-icon.png') no-repeat center center;
-  background-size: contain;
+
+#profileDetail {
+  padding: 25px;
 }
 
-/* 파일 아이콘 설정 */
-.nav-icon.file {
-  background: url('file-icon.png') no-repeat center center;
-  background-size: contain;
+#profileDetail>div {
+  margin-bottom: 13px;
+  font-size: 17px;
 }
 
-/* 설정 아이콘 설정 */
-.nav-icon.settings {
-  background: url('settings-icon.png') no-repeat center center;
-  background-size: contain;
+#change-password {
+  cursor: pointer;
 }
+
+#change-password:hover {
+  color: #368dff;
+}
+
+#profileDetail button {
+  background-color: #6eadff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+#profileDetail button:hover {
+  background-color: #368dff;
+}
+
+
+/* 네비게이션 링크 호버 상태 설정 */
+
+.sidebar-nav a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 링크의 색상을 부모 요소의 색상과 동일하게 설정 */
+}
+
+.sidebar-nav a:hover {
+    color: #368dff;
+}
+
+.sidebar-nav .toggle {
+    display: block; /* 링크를 블록 요소로 변경하여 클릭 영역 확장 */
+    padding: 5px 0; /* 적절한 패딩 추가 */
+}
+
+nav ul li a:hover {
+    color: #368dff;
+}
+
+.sidebar-nav {
+    display: grid;
+    gap: 10px;
+    font-weight: 900;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.sidebar-nav>div {
+    display: grid;
+    align-items: center;
+}
+
+.approval-list {
+    position: relative;
+    left: 15px;
+    gap: 5px;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.link>div {
+    position: relative;
+    left: 15px;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    width: max-content;
+}
+
+.toggle:hover,
+.link>div:hover,
+.title-toggle:hover {
+    cursor: pointer;
+    color: #368dff;
+}
+
 
 /* 결재작성 버튼 */
 .draft_write {

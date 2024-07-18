@@ -115,7 +115,7 @@ public interface DocumentMapper {
                 AND D.STATUS = #{status}
             </if>
             AND D.WRITER_NO = #{loginUserNo}
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC, D.DOC_NO DESC
             </script>
             """)
     List<DocumentVo> getDocumentList(int loginUserNo, Integer status);
@@ -134,7 +134,7 @@ public interface DocumentMapper {
             LEFT JOIN DEPARTMENT DEPT ON DEPT.DEPT_CODE = PI.DEPT_CODE
             LEFT JOIN POSITION P ON P.POSITION_CODE = PI.POSITION_CODE
             WHERE D.DEL_YN = 'N' AND DRL.REFERRER_NO = #{loginUserNo} AND D.STATUS = 3
-            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+            ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC, D.DOC_NO DESC
             """)
     List<DocumentVo> getPublicDocumentList(int loginUserNo);
 
@@ -205,7 +205,7 @@ public interface DocumentMapper {
           </when>
         </choose>
         AND D.WRITER_NO = #{loginUserNo}
-        ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC
+        ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC, D.DOC_NO DESC
         </script>
         """)
     List<DocumentVo> searchDocumentList(@Param("loginUserNo") int loginUserNo,

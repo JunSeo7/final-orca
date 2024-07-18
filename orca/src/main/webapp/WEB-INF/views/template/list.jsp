@@ -17,7 +17,7 @@
         <%@ include file="/WEB-INF/views/layout/header.jsp" %>
         <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-<main id="content">
+<main id="content" class="main">
 <div class="content-title">
     <h2>결재 양식 목록</h2>
 
