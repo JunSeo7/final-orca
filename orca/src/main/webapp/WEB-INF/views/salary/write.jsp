@@ -173,3 +173,9 @@
                 });
             </script>
 
+<style>
+    .salartWriteMain{
+        margin-top: 20%;
+        margin-left: 50%;
+    }
+</style>

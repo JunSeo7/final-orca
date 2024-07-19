@@ -2,6 +2,7 @@ package com.groupware.orca.salary.service;
 
 import com.groupware.orca.salary.dao.PersonSalaryDao;
 import com.groupware.orca.salary.vo.SalaryVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,13 @@ public class PersonSalaryService {
     private final PersonSalaryDao dao;
 
 
-    public SalaryVo getPersonSalary(String payrollNo, String empNo) {
+    public SalaryVo getPersonSalary(String payrollNo, String empNo, UserVo userVo) {
 
-        return dao.getPersonSalary(payrollNo,empNo);
+        return dao.getPersonSalary(payrollNo,empNo,userVo);
     }
 
 
-    public List<SalaryVo> getPersonSalaryList(String empNo) {
-        return dao.getPersonSalaryList(empNo);
+    public List<SalaryVo> getPersonSalaryList(String empNo, UserVo userVo) {
+        return dao.getPersonSalaryList(empNo,userVo);
     }
 }
