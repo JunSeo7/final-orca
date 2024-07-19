@@ -253,16 +253,14 @@ public class DocumentController {
         List<DocFileVo> fileVoList = document.getFileVoList();
 
         // 파일 목록에서 URL 가져오기
-        for (DocFileVo file : fileVoList) {
-            // 파일의 변경된 이름(changeName)을 사용하여 S3 URL 가져오기
-            String changeName = "document/"+file.getChangeName();
-            URL url = s3.getUrl(bucketName, changeName);
-            System.out.println("url = " + url);
-            file.setFileUrl(url);
+        if(fileVoList!=null) {
+            for (DocFileVo file : fileVoList) {
+                // S3 URL 가져오기
+                String changeName = "document/" + file.getChangeName();
+                URL url = s3.getUrl(bucketName, changeName);
+                file.setFileUrl(url);
+            }
         }
-
-        System.out.println("document = " + document);
-
         model.addAttribute("document", document);
         return "document/detail";
     }
