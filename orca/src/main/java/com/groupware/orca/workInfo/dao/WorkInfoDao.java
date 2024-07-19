@@ -1,5 +1,7 @@
 package com.groupware.orca.workInfo.dao;
 
+import com.groupware.orca.common.vo.PageVo;
+import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.mapper.WorkInfoMapper;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +43,11 @@ public class WorkInfoDao {
         return mapper.getEndWorkTime(empNo, workDate);
     }
 
-    public List<WorkInfoVo> allWorkList() {
-        return mapper.allWorkList();
+    public List<WorkInfoVo> getAllWorkInfo(int offset, int limit) {
+        return mapper.getAllWorkInfo(offset, limit);
+    }
+
+    public int selectTotalRecords() {
+        return mapper.selectTotalRecords();
     }
 }

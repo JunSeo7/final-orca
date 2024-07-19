@@ -64,7 +64,7 @@
                             </div>
                             <div class="approval title-toggle">◾ 근퇴 관리</div>
                             <div class="approval-list">
-                                <div class="toggle">◽ 전체 사원 근무 관리</div>
+                                <div class="showAllWorkInfo toggle">◽ 전체 사원 근무 관리</div>
                                 <div class="showVacationCode toggle">◽ 휴가 코드 관리</div>
                                 <div class="toggle">◽ 기타 코드 관리</div>
                             </div>
