@@ -22,7 +22,7 @@ public class SalaryController {
 
     //급여계산 입력
     @PostMapping("write")
-    public int salaryWrite(@RequestParam("clientVo") ClientVo clientVo){
+    public int salaryWrite( ClientVo clientVo){
         System.out.println("clientVo = " + clientVo);
         int result = service.salaryWrite(clientVo);
         return result;
