@@ -129,9 +129,16 @@ main {
   font-size: 16px;
   margin-top: 10px;
 }
+
 .document{
     border: 1px solid #ddd;
     padding: 5px;
     font-size: 13px;
     margin-top: 5px;
 }
+
+.work-time p {
+    font-size: 20px;
+    color: #808080;
+}
+
