@@ -62,9 +62,10 @@
                                             <span>캘린더/할일</span>
                                             <button class="refresh-button">⟳</button>
                                         </div>
-                                        <div class="meal-table">
-                                            <p>캘린더/할일</p>
+                                        <div class="calendar-sell">
+                                            <div class="meal-table" id="calendar">
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
