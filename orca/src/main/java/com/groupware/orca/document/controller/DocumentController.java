@@ -1,5 +1,8 @@
 package com.groupware.orca.document.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.groupware.orca.approvalLine.vo.ApprovalLineVo;
 import com.groupware.orca.approvalLine.vo.ApproverVo;
 import com.groupware.orca.document.service.DocumentService;
@@ -22,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,8 +37,13 @@ public class DocumentController {
 
     private final DocumentService service;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+    private final AmazonS3 s3;
+
+    @Value("${aws.s3.bucket-name}")
+    private String bucketName;
+
+//    @Value("${file.upload-dir}")
+//    private String uploadDir;
 
     // 결재 작성 화면
     @GetMapping("write")
@@ -133,26 +142,26 @@ public class DocumentController {
 //                    dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
 //                }
 
-                if (!uploadDir.contains("document")) {
-                    uploadDir += "/document";
-                }
-
-                File dir = new File(uploadDir);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
+//                if (!uploadDir.contains("document")) {
+//                    uploadDir += "/document";
+//                }
+//
+//                File dir = new File(uploadDir);
+//                if (!dir.exists()) {
+//                    dir.mkdirs();
+//                }
 
                 String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
                 String ext = originFileName.substring(originFileName.lastIndexOf("."));
                 String changeName = title + System.currentTimeMillis() + "_" + random + ext;
 
-                try (FileOutputStream fos = new FileOutputStream(uploadDir +"/"+ changeName)) {
-                    byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
-                    int size;
-                    while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
-                        fos.write(buf, 0, size); // 버퍼에 있는 데이터를 출력 스트림에 씀
-                    }
-                }
+//                try (FileOutputStream fos = new FileOutputStream(uploadDir +"/"+ changeName)) {
+//                    byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
+//                    int size;
+//                    while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
+//                        fos.write(buf, 0, size); // 버퍼에 있는 데이터를 출력 스트림에 씀
+//                    }
+//                }
 
                 // DB에 파일 정보 저장
                 DocFileVo fileVo = new DocFileVo();
@@ -160,6 +169,19 @@ public class DocumentController {
                 fileVo.setChangeName(changeName);
 
                 fileVoList.add(fileVo);
+
+                // 폴더 경로를 포함한 파일 이름 지정
+                String folderName = "document/";
+                String fileName = folderName + fileVo.getChangeName();
+
+                //s3 에 업로드하깅
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentType(file.getContentType());
+                metadata.setContentLength(file.getSize());
+                PutObjectResult putObjectResult = s3.putObject(bucketName,fileName,file.getInputStream(),metadata);
+
+                URL url = s3.getUrl(bucketName,fileName);
+                System.out.println("url = " + url);
             }
             vo.setFileVoList(fileVoList);
         }
@@ -169,7 +191,6 @@ public class DocumentController {
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }
-
 
     // 올린결재
     // 내가 작성한 결재 문서 목록 조회
@@ -253,17 +274,14 @@ public class DocumentController {
     // 기안서 수정 (임시저장 상태일 경우만) // 제목, 내용, 상태(기안)만 수정가능
     @PostMapping("edit")
     public String editDocument(
-                                DocumentVo vo,
-                                HttpSession httpSession,
-
-                                HttpServletRequest req) throws IOException {
-
-
+            DocumentVo vo,
+            HttpSession httpSession,
+            HttpServletRequest req) throws IOException {
 
             int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
             vo.setWriterNo(loginUserNo);
 
-        System.out.println("vo = " + vo);
+            System.out.println("vo = " + vo);
 
             int result = service.editDocument(vo);
             return "redirect:/orca/document/list";
@@ -282,14 +300,11 @@ public class DocumentController {
 
     // 결재 기안 철회(아무도 결재승인 안했을 경우 가능)
     @PostMapping("delete")
-    public ResponseEntity<String> deleteDocumentByNo(@RequestParam int docNo, HttpSession httpSession){
+    public String deleteDocumentByNo(int docNo, HttpSession httpSession){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         System.out.println("docNo = " + docNo);
         int result = service.deleteDocumentByNo(docNo, loginUserNo);
-        if (result > 0) {
-            return ResponseEntity.ok("문서가 삭제되었습니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문서 삭제 중 오류가 발생했습니다.");
-        }
+
+        return "redirect:/orca/document/list";
     }
 }

@@ -209,7 +209,7 @@ function createCalendarCompany() {
 
 }
 
-const mainDiv = document.querySelector('.main');
+const mainDiv = document.querySelector('main');
 const calnedarWrite = document.querySelector('.calendar-wirte');
 calnedarWrite.addEventListener('click', function () {
     $.ajax({
