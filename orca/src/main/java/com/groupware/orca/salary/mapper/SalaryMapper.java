@@ -34,7 +34,7 @@ public interface SalaryMapper {
             VALUES
             (
                SEQ_PAYROLL_NO.NEXTVAL
-              ,#{vo.empNo}
+              ,#{clientVo.empNo}
               ,#{svo.nationalPension}
               ,#{svo.healthInsurance}
               ,#{svo.longCare}
@@ -50,7 +50,7 @@ public interface SalaryMapper {
               ,SYSDATE
             )
             """)
-    int salaryWrite(@Param("vo") UserVo vo, ClientVo clientVo,@Param("svo") SalaryVo svo);
+    int salaryWrite(@Param("clientVo") ClientVo clientVo, @Param("svo") SalaryVo svo);
 
     //4대보험 입력 쿼리문
     @Insert("INSERT INTO RATES(RATES_NO,BASE_YEAR,PENSION_PERCENTAGE,HEALTH_INSURANCE_PERCENTAGE,LONG_CARE_PERCENTAGE,EMPLOYMENT_INSURANCE_PERCENTAGE,LOCAL_INCOME_TAX_PERSENTAGE) \n" +
@@ -89,7 +89,7 @@ public interface SalaryMapper {
                    JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
                    ORDER BY PAYROLL_NO DESC
             """)
-    List<SalaryVo> getSalaryList(UserVo vo);
+    List<SalaryVo> getSalaryList();
 
 
     //급여상세조회
@@ -115,7 +115,7 @@ public interface SalaryMapper {
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
               WHERE  PAYROLL_NO = #{payrollNo}
             """)
-    SalaryVo getSalaryByNo(@Param("payrollNo") String payrollNo, UserVo vo);
+    SalaryVo getSalaryByNo(@Param("payrollNo") String payrollNo);
 
     //급여관리 수정
     @Update("""
@@ -125,6 +125,7 @@ public interface SalaryMapper {
                    ,LONG_CARE = #{svo.longCare}
                    ,EMPLOYMENT_INSURANCE = #{svo.employmentInsurance}
                    ,INCOME_TAX = #{svo.incomeTax}
+                   ,LOCAL_INCOME_TAX = #{svo.localIncomeTax}
                    ,POSITION = #{svo.position}
                    ,BONUS = #{svo.bonus}
                    ,HOLIDAY = #{svo.holiday}
@@ -134,7 +135,7 @@ public interface SalaryMapper {
                    ,PAYMENT_DATE = SYSDATE
             WHERE PAYROLL_NO = #{svo.payrollNo}
             """)
-    int salaryUpdate(@Param("clientVo") ClientVo clientVo,@Param("vo") UserVo vo,@Param("svo") SalaryVo svo);
+    int salaryUpdate( ClientVo clientVo, @Param("svo") SalaryVo svo);
     //    @Update("UPDATE PAYROLL\n" +
 //            "    SET HOLIDAY = #{clientVo.holidayTime}\n" +
 //            "    , POSITION = #{clientVo.position}\n" +
@@ -149,7 +150,7 @@ public interface SalaryMapper {
     @Delete("""
             DELETE PAYROLL WHERE PAYROLL_NO = #{payrollNo}
             """)
-    int getSalaryDelete(@Param("payrollNo") String payrollNo, UserVo vo);
+    int getSalaryDelete(@Param("payrollNo") String payrollNo);
 
     //급여 사원 검색
     @Select("""
@@ -158,7 +159,7 @@ public interface SalaryMapper {
             JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
             WHERE P.EMP_NO = #{empNo}
             """)
-    List<SalaryVo> searchSalary(@Param("empNo") String empNo, UserVo vo);
+    List<SalaryVo> searchSalary(@Param("empNo") String empNo);
 
     //----------------------------------------------------------------------------------------------
 
@@ -174,7 +175,7 @@ public interface SalaryMapper {
                 ,LOCAL_INCOME_TAX_PERSENTAGE
             FROM RATES
             """)
-    RatesVo getRatesByOne(UserVo vo);
+    RatesVo getRatesByOne();
 
     //4대보험 삭제
     @Delete("""
@@ -193,7 +194,7 @@ public interface SalaryMapper {
                     ,LOCAL_INCOME_TAX_PERSENTAGE = #{rvo.localIncomeTaxPersentage}
                 WHERE RATES_NO = #{rvo.ratesNo}
             """)
-    int ratesEdit(@Param("rvo") RatesVo rvo, UserVo vo);
+    int ratesEdit(@Param("rvo") RatesVo rvo);
 
 
 

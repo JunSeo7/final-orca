@@ -2,6 +2,8 @@ package com.groupware.orca.salary.controller;
 
 import com.groupware.orca.salary.service.PersonSalaryService;
 import com.groupware.orca.salary.vo.SalaryVo;
+import com.groupware.orca.user.vo.UserVo;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +19,23 @@ import java.util.List;
 public class PersonSalaryController {
 
     private final PersonSalaryService service;
-
-    //급여 상세조회
-    @GetMapping("person/detail")
-    @ResponseBody
-    public SalaryVo getPersonSalaryList(@RequestParam("payrollNo") String payrollNo,@RequestParam("empNo") String empNo){
-        SalaryVo vo = service.getPersonSalary(payrollNo,empNo);
-        return vo;
-    }
+    private final HttpSession httpSession;
 
     //급여 목록조회
     @GetMapping("person/list")
     @ResponseBody
     public List<SalaryVo> getPersonSalaryList(@RequestParam("empNo") String empNo){
-        List<SalaryVo> voList = service.getPersonSalaryList(empNo);
+        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
+        List<SalaryVo> voList = service.getPersonSalaryList(empNo,vo);
         return voList;
+    }
+    //급여 상세조회
+    @GetMapping("person/detail")
+    @ResponseBody
+    public SalaryVo getPersonSalaryList(@RequestParam("payrollNo") String payrollNo,@RequestParam("empNo") String empNo){
+        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
+        SalaryVo svo = service.getPersonSalaryByOne(payrollNo,empNo,vo);
+        return svo;
     }
 
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ClientVo {
+    private String payrollNo;
     private int empNo;
     private double holidayTime;
     private double overTime;
