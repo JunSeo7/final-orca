@@ -40,4 +40,8 @@ public class WorkInfoDao {
     public String getEndWorkTime(int empNo, String workDate) {
         return mapper.getEndWorkTime(empNo, workDate);
     }
+
+    public List<WorkInfoVo> allWorkList() {
+        return mapper.allWorkList();
+    }
 }

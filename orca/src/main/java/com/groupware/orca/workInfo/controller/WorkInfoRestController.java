@@ -22,6 +22,12 @@ public class WorkInfoRestController {
     private final WorkInfoService service;
     private static final Logger logger = LoggerFactory.getLogger(WorkInfoRestController.class);
 
+    // 모든 사원 근무 정보 리스트
+    @GetMapping("allList")
+    public List<WorkInfoVo> allWorkList(){
+        List<WorkInfoVo> Wvo = service.allWorkList();
+        return Wvo;
+    }
 
     // 개인 근무정보 리스트
     @GetMapping("list")
