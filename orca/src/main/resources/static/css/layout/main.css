@@ -135,3 +135,113 @@ main {
     font-size: 13px;
     margin-top: 5px;
 }
+
+/* -----------------캘린더---------------- */
+/* 캘린더 전체 컨테이너에 쉐도우 추가 */
+.calendar-sell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#calendar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 5px;  /* 패딩 축소 */
+  background-color: #fff;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;  /* 전체 폰트 사이즈 축소 */
+  width: 200px;
+}
+
+/* 캘린더 헤더 스타일 */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;  /* 마진 축소 */
+}
+
+.calendar-header button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px;  /* 버튼 크기 축소 */
+  cursor: pointer;
+  font-size: 9px;  /* 버튼 폰트 사이즈 축소 */
+}
+
+.calendar-header button:hover {
+  background-color: #0056b3;
+}
+
+.calendar-header div {
+  font-size: 1em;  /* 타이틀 폰트 사이즈 축소 */
+  font-weight: bold;
+}
+
+/* 날짜 셀에 쉐도우 추가 */
+.date {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1px;
+  padding: 3px;  /* 날짜 셀 패딩 축소 */
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18px;  /* 날짜 셀의 높이 축소 */
+  width: 18px;   /* 날짜 셀의 너비 축소 */
+}
+.date:hover{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.309);
+}
+/* 캘린더 그리드 스타일 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;  /* 셀 간의 간격 축소 */
+}
+
+/* 주 이름 스타일 */
+.day {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2px;  /* 마진 축소 */
+  font-size: 8px;  /* 요일 폰트 사이즈 축소 */
+}
+
+/* 오늘 날짜 스타일 */
+.today {
+  background-color: #f0f8ff;
+  font-weight: bold;
+}
+
+/* 일요일 스타일 */
+.sunday {
+  color: red;
+}
+
+/* 토요일 스타일 */
+.saturday {
+  color: blue;
+}
+
+/* 이전 및 이후 달의 날짜 스타일 */
+.other-month {
+  color: #aaa;
+}
+
+/* 일요일 색상 스타일 */
+.redColor {
+  color: red;
+}
+
+/* 토요일 색상 스타일 */
+.blueColor {
+  color: blue;
+}
+
+
