@@ -54,6 +54,7 @@
                         <div id="change-password">비밀번호 변경</div>
                         <button onclick="logout()">로그아웃</button>
                     </div>
+                    <hr>
                     <div class="aside-Calendar-sell">
                         <div class="aside-Calendar">
                             <div class="new-schedule" onclick="submitNewEvent()">
@@ -93,7 +94,7 @@
                 <main id="content">
                     <div id="calendar"></div>
                     <form action="searchListCalendar" method="get" id="calendar-search-form">
-                        <input type="text" name="keyword" class="search-text">
+                        <input type="text" name="keyword" class="search-text" placeholder="검색어를 입력하세요">
                         <i class="fas fa-search search-icon"></i>
                     </form>
                 </main>

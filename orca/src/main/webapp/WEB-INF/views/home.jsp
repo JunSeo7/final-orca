@@ -66,7 +66,6 @@
                                             <button class="refresh-button">⟳</button>
                                         </div>
                                         <div class="meal-table">
-                                            <p>캘린더/할일</p>
 
                                         </div>
                                     </div>

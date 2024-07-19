@@ -147,8 +147,8 @@ function displayDocuments(documents) {
             return;
         }
 
-        // 최신 5개 문서만 표시
-        const latestDocuments = filteredDocuments.slice(0, 5);
+        // 최신 4개 문서만 표시
+        const latestDocuments = filteredDocuments.slice(0, 4);
 
         latestDocuments.forEach(doc => {
             const docDiv = $('<div>').addClass('document');

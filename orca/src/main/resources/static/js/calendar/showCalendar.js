@@ -569,14 +569,15 @@ function editEvent(Data) {
                         data: JSON.stringify(vo),
                         success: function (response) {
                             if (response === 1) {
+                                alert("캘린더 수정 성공!");
                                 getCalendarDetail();
                             } else {
-                                alert("캘린더 수정 실패!");
+                                alert("캘린더 수정 실패");
                             }
                         },
                         error: function (error) {
                             console.log(error);
-                            alert("캘린더 수정 실패!");
+                            alert("캘린더 수정 실패");
                         }
                     })
                 }
