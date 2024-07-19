@@ -47,115 +47,43 @@ public interface WorkInfoMapper {
     // 모든 사원 근무 정보 조회
     @Select("""
             <script>
-                SELECT 
-                    P.EMP_NO, 
-                    P.NAME as name,
-                    TO_CHAR(W.WORK_DATE, 'YYYY-MM-DD') as workDate,
-                    D.PARTNAME,
-                    PT.NAME_OF_POSITION,
-                    DT.TEAM_NAME,
-                    TO_CHAR(START_TIME, 'hh24:mi:ss') as startTime,
-                    TO_CHAR(END_TIME, 'hh24:mi:ss') as endTime,
-                    OVERTIME_WORK as overtimeWork,
-                    HOLIDAY_WORK as holidayWork
-                FROM WORK_INFO W
+                SELECT * FROM (
+                    SELECT ROWNUM AS rnum, a.* FROM (
+                        SELECT 
+                            P.EMP_NO, 
+                            P.NAME as name,
+                            TO_CHAR(W.WORK_DATE, 'YYYY-MM-DD') as workDate,
+                            D.PARTNAME,
+                            PT.NAME_OF_POSITION,
+                            DT.TEAM_NAME,
+                            TO_CHAR(START_TIME, 'hh24:mi:ss') as startTime,
+                            TO_CHAR(END_TIME, 'hh24:mi:ss') as endTime,
+                            OVERTIME_WORK as overtimeWork,
+                            HOLIDAY_WORK as holidayWork
+                        FROM WORK_INFO W
+                        JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO
+                        LEFT JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE
+                        LEFT JOIN DEPARTMENT_TEAM DT ON P.TEAM_CODE = DT.TEAM_CODE
+                        LEFT JOIN POSITION PT ON P.POSITION_CODE = PT.POSITION_CODE
+                        WHERE TRUNC(W.WORK_DATE) = TRUNC(SYSDATE)
+                        ORDER BY PT.POSITION_CODE DESC
+                    ) a
+                    WHERE ROWNUM &lt;= #{offset} + #{limit}
+                )
+                WHERE rnum &gt; #{offset}
+            </script>
+            """)
+    List<WorkInfoVo> getAllWorkInfo(@Param("offset") int offset, @Param("limit") int limit);
+
+    @Select("""
+            <script>
+                SELECT COUNT(*) FROM WORK_INFO W
                 JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO
                 LEFT JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE
                 LEFT JOIN DEPARTMENT_TEAM DT ON P.TEAM_CODE = DT.TEAM_CODE
                 LEFT JOIN POSITION PT ON P.POSITION_CODE = PT.POSITION_CODE
                 WHERE TRUNC(W.WORK_DATE) = TRUNC(SYSDATE)
-                ORDER BY PT.POSITION_CODE DESC
             </script>
             """)
-    List<WorkInfoVo> getAllWorkInfo();
-
-    @Select("SELECT COUNT(*) FROM WORK_INFO W JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO LEFT JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE LEFT JOIN DEPARTMENT_TEAM DT ON P.TEAM_CODE = DT.TEAM_CODE LEFT JOIN POSITION PT ON P.POSITION_CODE = PT.POSITION_CODE")
-    int dataCount();
-
-    @Select("""
-    <script>
-        SELECT
-            *
-        FROM
-        (
-            SELECT
-                A.*,
-                ROWNUM AS RNUM
-            FROM
-            (
-                SELECT 
-                    P.EMP_NO, 
-                    P.NAME as name,
-                    TO_CHAR(W.WORK_DATE, 'YYYY-MM-DD') as workDate,
-                    D.PARTNAME,
-                    PT.NAME_OF_POSITION,
-                    DT.TEAM_NAME,
-                    TO_CHAR(START_TIME, 'hh24:mi:ss') as startTime,
-                    TO_CHAR(END_TIME, 'hh24:mi:ss') as endTime,
-                    OVERTIME_WORK as overtimeWork,
-                    HOLIDAY_WORK as holidayWork
-                FROM WORK_INFO W
-                JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO
-                LEFT JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE
-                LEFT JOIN DEPARTMENT_TEAM DT ON P.TEAM_CODE = DT.TEAM_CODE
-                LEFT JOIN POSITION PT ON P.POSITION_CODE = PT.POSITION_CODE
-                ORDER BY PT.POSITION_CODE DESC
-            ) A
-        )
-        WHERE RNUM BETWEEN #{startNum} AND #{endNum}
-    </script>
-    """)
-    List<WorkInfoVo> getData(int startNum, int endNum);
-
-    @Select("""
-    <script>
-        SELECT
-            *
-        FROM
-        (
-            SELECT
-                A.*,
-                ROWNUM AS RNUM
-            FROM
-            (
-                SELECT 
-                    P.EMP_NO, 
-                    P.NAME as name,
-                    TO_CHAR(W.WORK_DATE, 'YYYY-MM-DD') as workDate,
-                    D.PARTNAME,
-                    PT.NAME_OF_POSITION,
-                    DT.TEAM_NAME,
-                    TO_CHAR(START_TIME, 'hh24:mi:ss') as startTime,
-                    TO_CHAR(END_TIME, 'hh24:mi:ss') as endTime,
-                    OVERTIME_WORK as overtimeWork,
-                    HOLIDAY_WORK as holidayWork
-                FROM WORK_INFO W
-                JOIN PERSONNEL_INFORMATION P ON W.EMP_NO = P.EMP_NO
-                LEFT JOIN DEPARTMENT D ON P.DEPT_CODE = D.DEPT_CODE
-                LEFT JOIN DEPARTMENT_TEAM DT ON P.TEAM_CODE = DT.TEAM_CODE
-                LEFT JOIN POSITION PT ON P.POSITION_CODE = PT.POSITION_CODE
-                <if test="name != null and name != ''">
-                    AND P.NAME LIKE '%' || #{name} || '%'
-                </if>
-                <if test="partName != null and partName != ''">
-                    AND D.PARTNAME LIKE '%' || #{partName} || '%'
-                </if>
-                <if test="startDate != null and startDate != ''">
-                    AND W.WORK_DATE &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
-                </if>
-                <if test="endDate != null and endDate != ''">
-                    AND W.WORK_DATE &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
-                </if>
-                ORDER BY PT.POSITION_CODE DESC
-            ) A
-        )
-        WHERE RNUM BETWEEN #{startNum} AND #{endNum}
-    </script>
-""")
-    List<WorkInfoVo> searchData(@Param("name") String name,
-                                @Param("partName") String partName,
-                                @Param("startDate") String startDate,
-                                @Param("endDate") String endDate,
-                                @Param("startNum") int startNum,
-                                @Param("endNum") int endNum);
+    int selectTotalRecords();
 }
