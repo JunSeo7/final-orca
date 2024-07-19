@@ -86,6 +86,12 @@ changePwd.addEventListener('click', function () {
     window.location.href = "/orca/user/showChangePassword";
 })
 
+let organizationChart = document.querySelector('.organizationChart');
+console.log(organizationChart);
+organizationChart.addEventListener('click', function () {
+    window.location.href = "/orca/organizationChart/showOrganizationChart";
+})
+
 function toggleCheck(element) {
     element.parentNode.classList.toggle('checked');
 }

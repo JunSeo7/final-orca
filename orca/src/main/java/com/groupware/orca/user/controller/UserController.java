@@ -25,6 +25,9 @@ public class UserController {
 
     @PostMapping("login")
     public String login(UserVo vo, HttpSession httpSession, Model model) {
+
+        httpSession.removeAttribute("loginUserVo");
+
         System.out.println("vo = " + vo);
         // 시연을 위한 임시 로그인 ~~
         if (vo.getEmpNo() == 2024070096 || vo.getEmpNo() == 2024070012 || vo.getEmpNo() == 2024070016) {

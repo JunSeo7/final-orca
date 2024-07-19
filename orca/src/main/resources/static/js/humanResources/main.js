@@ -29,12 +29,12 @@ function toggleProfile() {
             dataType: 'json',
             success: function (response) {
 
-                let empNo = document.querySelector('#empNo');
-                let partName = document.querySelector('#partName');
-                let position = document.querySelector('#position');
-                let phone = document.querySelector('#phone');
-                let extensionCall = document.querySelector('#extensionCall');
-                let email = document.querySelector('#email');
+                let empNo = document.querySelector('.empNo');
+                let partName = document.querySelector('.partName');
+                let position = document.querySelector('.position');
+                let phone = document.querySelector('.phone');
+                let extensionCall = document.querySelector('.extensionCall');
+                let email = document.querySelector('.email');
 
 
                 empNo.textContent = '사번 : ' + response.empNo;
@@ -85,6 +85,12 @@ function logout() {
 let changePwd = document.querySelector("#change-password")
 changePwd.addEventListener('click', function () {
     window.location.href = "/orca/user/showChangePassword";
+})
+
+let organizationChart = document.querySelector('.organizationChart');
+console.log(organizationChart);
+organizationChart.addEventListener('click', function () {
+    window.location.href = "/orca/organizationChart/showOrganizationChart";
 })
 
 const approval = document.querySelector('.approval');
@@ -148,7 +154,7 @@ employeeRegistration.addEventListener('click', function () {
     });
 });
 
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const showVacationCode = document.querySelector('.showVacationCode');
 
     showVacationCode.addEventListener('click', function () {
@@ -177,9 +183,9 @@ employeeRegistration.addEventListener('click', function () {
         const vacationCodesTableBody = document.querySelector('#vacationCodesTable tbody');
 
         if (checkAll && vacationCodesTableBody) {
-            checkAll.addEventListener('change', function() {
+            checkAll.addEventListener('change', function () {
                 const checkboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox');
-                checkboxes.forEach(function(checkbox) {
+                checkboxes.forEach(function (checkbox) {
                     checkbox.checked = checkAll.checked;
                 });
             });
@@ -190,7 +196,7 @@ employeeRegistration.addEventListener('click', function () {
                 const selectedCheckboxes = vacationCodesTableBody.querySelectorAll('.rowCheckbox:checked');
                 const selectedIds = [];
 
-                selectedCheckboxes.forEach(function(checkbox) {
+                selectedCheckboxes.forEach(function (checkbox) {
                     const row = checkbox.closest('tr');
                     const vacationCode = row.children[1].textContent;
                     selectedIds.push(vacationCode);
@@ -203,7 +209,7 @@ employeeRegistration.addEventListener('click', function () {
                         contentType: "application/json",
                         data: JSON.stringify(selectedIds),
                         success: function () {
-                            selectedCheckboxes.forEach(function(checkbox) {
+                            selectedCheckboxes.forEach(function (checkbox) {
                                 const row = checkbox.closest('tr');
                                 row.remove();
                             });
@@ -224,7 +230,7 @@ employeeRegistration.addEventListener('click', function () {
             success: function (data) {
                 if (vacationCodesTableBody) {
                     let str = "";
-                    data.forEach(function(item) {
+                    data.forEach(function (item) {
                         str += "<tr>";
                         str += "<td><input type='checkbox' class='rowCheckbox'></td>";
                         str += "<td>" + item.vacationCode + "</td>";
@@ -247,15 +253,15 @@ employeeRegistration.addEventListener('click', function () {
         const vacationModal = document.getElementById('vacationModal');
         const vacationForm = document.getElementById('vacationForm');
 
-        addVacationCodeBtn.addEventListener('click', function() {
+        addVacationCodeBtn.addEventListener('click', function () {
             vacationModal.style.display = 'flex';
         });
 
-        closeModalBtn.addEventListener('click', function() {
+        closeModalBtn.addEventListener('click', function () {
             vacationModal.style.display = 'none';
         });
 
-        vacationForm.addEventListener('submit', function(event) {
+        vacationForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const vacationCode = document.getElementById('vacationCode').value;
             const vacationName = document.getElementById('vacationName').value;
@@ -540,6 +546,9 @@ function listEmployeeData(pagination) {
         success: function (data) {
             data.forEach(function (employee) {
                 let imageUrl = '/upload/user/' + employee.imgChangeName;
+                if (employee.imgChangeName === null) {
+                    imageUrl = '/upload/user/profile.png';
+                }
 
                 // employee-info 요소 생성
                 let employeeDiv = document.createElement('div');
@@ -637,10 +646,22 @@ function getEmployeeDetails(empNo) {
         },
         dataType: 'json',
         success: function (data) {
+            let imageUrl = data.imgChangeName;
+            if (data.imgChangeName === null) {
+                imageUrl = 'profile.png';
+            }
+            $(document).ready(function () {
+                console.log('data.empNo:', data.empNo); // data.empNo 값을 로그에 출력
+                console.log('data.name:', data.name); // data.name 값을 로그에 출력
+                $('#empNo').text(data.empNo);
+                $('#name').text(data.name);
+                console.log('empNo element content:', $('#empNo').text()); // 설정 후 empNo 요소의 내용을 로그에 출력
+                console.log('name element content:', $('#name').text()); // 설정 후 name 요소의 내용을 로그에 출력
+            });
             $('#empNo').text(data.empNo);
             $('#name').text(data.name);
             $('#gender').text(data.gender);
-            $('#social-security-no').text(data.socialSecurityNo);
+            $('#socialSecurityNo').text(data.socialSecurityNo);
             $('#phone').text(data.phone);
             $('#extensionCall').text(data.extensionCall);
             $('#email').text(data.email);
@@ -654,7 +675,7 @@ function getEmployeeDetails(empNo) {
             $('#partName').text(data.partName);
             $('#nameOfPosition').text(data.nameOfPosition);
             $('#teamName').text(data.teamName);
-            $('#profileImage').attr('src', '/upload/user/' + data.imgChangeName); // 이미지 경로 설정
+            $('#profileImage').attr('src', '/upload/user/' + imageUrl); // 이미지 경로 설정
 
         },
         error: function (error) {
@@ -750,6 +771,11 @@ function getEmployeeEditData(empNo) {
         },
         dataType: 'json',
         success: function (data) {
+            let imageUrl = data.imgChangeName;
+            if (data.imgChangeName === null) {
+                imageUrl = 'profile.png';
+            }
+
             console.log(data);
             $('#empNo').text(data.empNo);  // 예시: 사원번호는 span 태그에 텍스트로 설정
             $('#name').val(data.name);  // 이름은 input 태그의 value에 설정
@@ -772,7 +798,7 @@ function getEmployeeEditData(empNo) {
             $('#deptCode').val(data.deptCode);  // 부서명은 input 태그의 value에 설정
             $('#positionCode').val(data.positionCode);  // 직위명은 input 태그의 value에 설정
             $('#teamCode').val(data.teamCode);  // 팀명은 input 태그의 value에 설정
-            $('#profileImage').attr('src', '/upload/user/' + data.imgChangeName); // 이미지 경로 설정
+            $('#profileImage').attr('src', '/upload/user/' + imageUrl); // 이미지 경로 설정
 
             updatedData.empNo = data.empNo;
             updatedData.name = data.name;
@@ -1020,7 +1046,9 @@ function searchListEmployeeData(pagination, keyword, searchType) {
         success: function (data) {
             data.forEach(function (employee) {
                 let imageUrl = '/upload/user/' + employee.imgChangeName;
-
+                if (employee.imgChangeName === null) {
+                    imageUrl = '/upload/user/profile.png';
+                }
                 // employee-info 요소 생성
                 let employeeDiv = document.createElement('div');
                 employeeDiv.classList.add('employee-info');
