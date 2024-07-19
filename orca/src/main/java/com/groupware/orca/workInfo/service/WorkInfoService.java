@@ -81,13 +81,19 @@ public class WorkInfoService {
     }
 
     // 모든 사원 근무 정보 조회
-    public List<WorkInfoVo> getAllWorkInfo(PageVo pageVo) {
-        int offset = pageVo.getOffset();
-        int limit = pageVo.getRecordSize();
-        return dao.getAllWorkInfo(offset, limit);
+    public List<WorkInfoVo> getAllWorkInfo() {
+        return dao.getAllWorkInfo();
     }
 
-    public int getTotalRecords() {
-        return dao.selectTotalRecords();
+    public int dataCount() {
+        return dao.dataCount();
+    }
+
+    public List<WorkInfoVo> getData(int startNum, int endNum) {
+        return dao.getData(startNum, endNum);
+    }
+
+    public List<WorkInfoVo> searchData(String name, String partName, String startDate, String endDate, int startNum, int endNum) {
+        return dao.searchData(name, partName, startDate, endDate, startNum, endNum);
     }
 }

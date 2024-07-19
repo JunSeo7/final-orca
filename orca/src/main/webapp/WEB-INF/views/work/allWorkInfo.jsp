@@ -69,16 +69,38 @@
             text-align: center;
             margin-top: 20px;
         }
+        button.pagination-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+
+        /* 버튼에 마우스 올렸을 때 */
+        button.pagination-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 현재 페이지 버튼 스타일 */
+        button.pagination-button.current-page {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>사원 근무 정보</h1>
-        <div class="search-bar">
-            <input type="text" placeholder="부서">
-            <input type="text" placeholder="이름">
-            <input type="text" placeholder="날짜">
-            <button>검색</button>
+        <div>
+            <input type="text" id="name" placeholder="이름">
+            <input type="text" id="partName" placeholder="부서이름">
+            <input type="date" id="startDate">
+            <input type="date" id="endDate">
+            <button id="searchButton">검색</button>
         </div>
         <div id="content">
             <table id="allWorkInfoTable">
