@@ -87,7 +87,11 @@
                     <main class="personSalary">
                         <h1 id="salary-list">개인명세서 목록</h1>
 
-                        <table class="salaryPersonList">
+
+                       
+
+                        <table class="salaryPsersonList">
+
                             <thead>
                                 <tr>
                                     <th>글 번호</th>
@@ -103,6 +107,7 @@
 
                             </tbody>
 
+
                         </table>
 
                         <div id="detailArea">
@@ -113,6 +118,7 @@
             </body>
 
             </html>
+
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -125,6 +131,11 @@
                         url: "http://127.0.0.1:8080/orca/salary/person/list",
                         method: "get",
                         success: function (x) {
+
+
+                            console.log(x);
+                            $('div.editArea').remove();
+
                             const voList = x;
                             console.log(voList);
 
@@ -148,17 +159,25 @@
                     });
                 }
 
+
             </script>
 
             <script>
 
+
                 function detail(payrollNo) {
                     $('h1.salary-list').remove();
                     $('table.salaryPersonList').remove();
+
+
+                function detail(payrollNo) {
+                    $('h1.salary-list').remove();
+                    $('table.salaryPsersonList').remove();
                     $.ajax({
                         url: "http://127.0.0.1:8080/orca/salary/person/detail",
                         method: "GET",
                         data: {
+
                             payrollNo: payrollNo,
                             empNo: empNo
 
@@ -184,6 +203,7 @@
                             str += "<h3>식대 : " + data.meals + "</h3>";
                             str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
                             str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
+
                             str += "<a href='http://127.0.0.1:8080/orca/salaryList'>목록으로 돌아가기</a>";
                             detailArea.innerHTML = str;
 

@@ -12,6 +12,10 @@ public class WorkInfoVo {
     private String endTime;
     private double overtimeWork;
     private double holidayWork;
+    private String partName;
+    private String nameOfPosition;
+    private String teamName;
+    private String name;
 
     public String getFormattedStartTime() {
         return formatTime(startTime);

@@ -62,7 +62,7 @@ header {
 /* ------------------------------------------------------------------------- */
 /* 어사이드 바 설정 */
 aside {
-    background-color: #f4f4f4;
+    background-color: white;
     padding: 20px;
     width: 200px;
     position: fixed;
@@ -71,6 +71,7 @@ aside {
     bottom: 0;
     overflow-y: auto;
     transition: transform 0.3s ease;
+    border-right: 1px solid rgb(212, 212, 212);
 }
 
 /* 어사이드 바 숨김 상태 설정 */
@@ -197,7 +198,7 @@ nav ul li a:hover {
 /* ------------------------------------------------------------------------- */
 /* 사이드(일정 등록 + 사이드 캘린더 + 캘린더 바)*/
 .aside-Calendar-sell {
-    height: 310px;
+    height: 300px;
 }
 
 /*일정 등록*/
@@ -241,14 +242,14 @@ nav ul li a:hover {
     padding: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #f4f4f4;
+    background-color: white;
     color: #333;
     width: 75px;
 }
 
 /* 선택된 옵션 스타일링 */
 .selectContainer select option:checked {
-    background-color: #e0e0e0;
+    background-color: white;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -298,7 +299,7 @@ nav ul li a:hover {
 }
 
 .side-calendar-header button {
-    background-color: #f4f4f4;
+    background-color: white;
     border: none;
     border-radius: 25px;
     box-sizing: border-box;
@@ -771,7 +772,7 @@ nav ul li a:hover {
     /* 오른쪽 패딩을 충분히 주어 아이콘 공간 확보 */
     border: 2px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s, box-shadow 0.3s;
 }

@@ -154,6 +154,121 @@ employeeRegistration.addEventListener('click', function () {
     });
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const showAllWorkInfo = document.querySelector('.showAllWorkInfo');
+    const recordSize = 12;  // 한 페이지에 보여줄 데이터 수
+    let currentPage = 1;   // 현재 페이지 번호
+    let totalPages = 5;    // 총 페이지 수 (예시로 5 페이지로 설정, 실제 데이터에 맞게 설정 필요)
+
+    showAllWorkInfo.addEventListener('click', function () {
+        loadWorkInfo(currentPage, recordSize);
+    });
+
+    function loadWorkInfo(page, recordSize) {
+        $.ajax({
+            type: 'get',
+            url: '/orca/work/allWorkInfo',
+            data: {
+                page: page,
+                recordSize: recordSize
+            },
+            dataType: 'html',
+            success: function (response) {
+                const mainDiv = document.querySelector('#content');
+                if (mainDiv) {
+                    mainDiv.innerHTML = response;
+                    attachEventListeners(page, recordSize);
+                } else {
+                    console.error('mainDiv 요소를 찾을 수 없습니다.');
+                }
+            },
+            error: function (error) {
+                console.error('데이터 로드 실패', error);
+            }
+        });
+    }
+
+    function attachEventListeners(page, recordSize) {
+        const allWorkInfoTable = document.querySelector('#allWorkInfoTable tbody');
+        if (allWorkInfoTable) {
+            $.ajax({
+                url: 'http://127.0.0.1:8080/orca/re/work/allList',
+                method: 'get',
+                data: {
+                    page: page,
+                    recordSize: recordSize
+                },
+                success: function (data) {
+                    let str = '';
+                    data.forEach(function (item) {
+                        str += '<tr>';
+                        str += '<td>' + item.empNo + '</td>';
+                        str += '<td>' + item.workDate + '</td>';
+                        str += '<td>' + item.name + '</td>';
+                        str += '<td>' + item.partName + '</td>';
+                        str += '<td>' + item.nameOfPosition + '</td>';
+                        str += '<td>' + item.startTime + '</td>';
+                        str += '<td>' + item.endTime + '</td>';
+                        str += '<td>' + item.overtimeWork + '</td>';
+                        str += '<td>' + item.holidayWork + '</td>';
+                        str += '</tr>';
+                    });
+                    allWorkInfoTable.innerHTML = str;
+                    renderPagination(page, recordSize);
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는데 실패했습니다.', error);
+                }
+            });
+        } else {
+            console.error('allWorkInfoTable 요소를 찾을 수 없습니다.');
+        }
+    }
+
+    function renderPagination(page, recordSize) {
+        const pagination = document.getElementById('pagination');
+        if (pagination) {
+            pagination.innerHTML = '';
+
+            const prevButton = document.createElement('button');
+            prevButton.innerText = '<';
+            prevButton.disabled = page === 1;
+            prevButton.addEventListener('click', function () {
+                if (page > 1) {
+                    loadWorkInfo(page - 1, recordSize);
+                }
+            });
+            pagination.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.classList.toggle('active', i === page);
+                button.addEventListener('click', function () {
+                    loadWorkInfo(i, recordSize);
+                });
+                pagination.appendChild(button);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.innerText = '>';
+            nextButton.disabled = page === totalPages;
+            nextButton.addEventListener('click', function () {
+                if (page < totalPages) {
+                    loadWorkInfo(page + 1, recordSize);
+                }
+            });
+            pagination.appendChild(nextButton);
+        } else {
+            console.error('pagination 요소를 찾을 수 없습니다.');
+        }
+    }
+
+    // 초기 데이터 로드
+    loadWorkInfo(currentPage, recordSize);
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     const showVacationCode = document.querySelector('.showVacationCode');
 

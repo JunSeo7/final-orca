@@ -24,5 +24,9 @@ public class WorkInfoController {
         return "work/workInfo";
     }
 
-    // 휴일 근무
+    // 전체 사원 근무 조회 화면
+    @GetMapping("allWorkInfo")
+    public String showAllWorkInfo(){
+        return "work/allWorkInfo";
+    }
 }

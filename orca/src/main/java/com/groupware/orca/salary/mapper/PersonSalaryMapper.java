@@ -10,8 +10,7 @@ import java.util.List;
 @Mapper
 public interface PersonSalaryMapper {
 
-
-
+    //상세조회
     @Select("""
             SELECT
                 S.PAYROLL_NO
@@ -34,9 +33,8 @@ public interface PersonSalaryMapper {
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
               WHERE P.EMP_NO = #{empNo}
                 AND S.PAYROLL_NO = #{payrollNo}
-            
             """)
-    SalaryVo getPersonSalary(@Param("payrollNo") String payrollNo, @Param("empNo") String empNo, UserVo userVo);
+  SalaryVo getPersonSalaryByOne(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
 
     @Select("""
             SELECT
@@ -53,4 +51,5 @@ public interface PersonSalaryMapper {
                 ORDER BY PAYROLL_NO DESC
             """)
     List<SalaryVo> getPersonSalaryList(@Param("empNo") String empNo, UserVo userVo);
+
 }

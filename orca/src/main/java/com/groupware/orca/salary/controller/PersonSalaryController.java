@@ -30,14 +30,13 @@ public class PersonSalaryController {
         return vo;
     }
 
+
     //급여 목록조회
     @GetMapping("person/list")
     @ResponseBody
     public List<SalaryVo> getPersonSalaryList(@RequestParam("empNo") String empNo){
+
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         List<SalaryVo> voList = service.getPersonSalaryList(empNo,userVo);
         return voList;
     }
-
-
-}
