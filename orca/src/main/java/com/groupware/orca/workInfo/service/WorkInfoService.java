@@ -1,5 +1,7 @@
 package com.groupware.orca.workInfo.service;
 
+import com.groupware.orca.common.vo.PageVo;
+import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.dao.WorkInfoDao;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +80,14 @@ public class WorkInfoService {
         return dao.getEndWorkTime(empNo, workDate);
     }
 
+    // 모든 사원 근무 정보 조회
+    public List<WorkInfoVo> getAllWorkInfo(PageVo pageVo) {
+        int offset = pageVo.getOffset();
+        int limit = pageVo.getRecordSize();
+        return dao.getAllWorkInfo(offset, limit);
+    }
 
-
-
+    public int getTotalRecords() {
+        return dao.selectTotalRecords();
+    }
 }

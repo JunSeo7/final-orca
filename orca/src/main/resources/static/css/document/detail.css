@@ -75,8 +75,14 @@ main.full {
 .status, .stage{
     font-weight: bold; /* 글씨 두껍게 */
 }
+
+/*승인 text*/
 .stage_2{
     color:#274ca3;
+}
+/*반려 text*/
+.stage_3{
+    color:#FF4A0D;
 }
 
 .stage img{
@@ -194,7 +200,9 @@ main.full {
   color: #ffffff;
 }
 
-
+.attachment-img{
+    height: 300px;
+}
 
 /* 버튼 컨테이너 */
 .button-container {

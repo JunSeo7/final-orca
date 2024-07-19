@@ -45,14 +45,11 @@
                                         <div class="work-time">
                                             <div class="time-display">
                                                 <div>
-                                                    <span class="time-icon" id="startWork">⏰출근시간</span>
-                                                    <button id="startWorkButton"
-                                                        onclick="startWorkClick();">⏰출근</button>
+                                                    <span class="time-icon" id="startWork" onclick="startWorkClick();">⏰출근시간</span>
                                                     <p class="time" id="sWorkTime">--:--</p>
                                                 </div>
                                                 <div>
-                                                    <span class="time-icon" id="endWork">⏱퇴근시간</span>
-                                                    <button id="endWorkButton" onclick="endWorkClick();">⏱퇴근</button>
+                                                    <span class="time-icon" id="endWork" onclick="endWorkClick();">⏱퇴근시간</span>
                                                     <p class="time" id="eWorkTime">--:--</p>
                                                 </div>
                                             </div>

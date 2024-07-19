@@ -2,6 +2,7 @@ package com.groupware.orca.salary.dao;
 
 import com.groupware.orca.salary.mapper.PersonSalaryMapper;
 import com.groupware.orca.salary.vo.SalaryVo;
+import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,11 +15,11 @@ public class PersonSalaryDao {
     private final PersonSalaryMapper mapper;
 
 
-    public SalaryVo getPersonSalary(String payrollNo, String empNo) {
-        return mapper.getPersonSalary(payrollNo,empNo);
+    public SalaryVo getPersonSalaryByOne(String payrollNo, String empNo, UserVo vo) {
+        return mapper.getPersonSalaryByOne(payrollNo,empNo,vo);
     }
 
-    public List<SalaryVo> getPersonSalaryList(String empNo) {
-        return mapper.getPersonSalaryList(empNo);
+    public List<SalaryVo> getPersonSalaryList(String empNo, UserVo vo) {
+        return mapper.getPersonSalaryList(empNo,vo);
     }
 }

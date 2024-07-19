@@ -1,5 +1,6 @@
 package com.groupware.orca.workInfo.controller;
 
+import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.service.WorkInfoService;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
@@ -22,6 +23,18 @@ public class WorkInfoRestController {
     private final WorkInfoService service;
     private static final Logger logger = LoggerFactory.getLogger(WorkInfoRestController.class);
 
+    // 모든 사원 근무 정보 리스트
+    @GetMapping("allList")
+    public List<WorkInfoVo> getAllWorkInfo(@RequestParam int page, @RequestParam int recordSize) {
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setRecordSize(recordSize);
+
+        // 예시: 데이터베이스에서 페이지에 해당하는 데이터를 가져오는 로직 추가
+        List<WorkInfoVo> workInfoList = service.getAllWorkInfo(pageVo);
+
+        return workInfoList;
+    }
 
     // 개인 근무정보 리스트
     @GetMapping("list")

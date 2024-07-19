@@ -74,7 +74,7 @@
                             <button onclick="logout()">로그아웃</button>
                         </div>
 
-                        
+
 
                         <!-- <div class="profile" onclick="toggleProfile()">
                                 <img src="profile.png" alt="Profile Picture" class="profile-pic">
@@ -97,14 +97,14 @@
                         </nav>
                     </aside>
                     <main id="salartWriteMain">
-                        
+
                         <div class="salaryWrite" id="content">
                             <h1>급여 입력</h1>
 
                             <form action="/orca/salary/write" method="post" id="salaryForm">
-                                사원번호 :<input type="text" name="empNo" id="empNo">
+                                사원번호 :<input type="text" name="empNo" class="empNo">
                                 <br>
-                                직급수당: <input type="text" name="position" id="position">
+                                직급수당: <input type="text" name="position" class="position">
                                 <br>
                                 상여금: <input type="text" name="bonus" id="bonus">
                                 <br>
@@ -119,11 +119,6 @@
                                 <input type="submit" name="작성하기">
                             </form>
 
-                        </div>
-
-                        <div id="ss">
-
-                        </div>
                     </main>
             </body>
 
@@ -133,24 +128,36 @@
                 $(document).ready(function () {
                     $('#salaryForm').submit(function (e) {
                         e.preventDefault(); // 폼 제출 기본 동작 방지
-                        console.log("123");
+
                         // 폼 데이터를 가져오기
-                        var formData = {
-                            empNo: $('#empNo').val(),
-                            position: $('#position').val(),
-                            bonus: $('#bonus').val(),
-                            meals: $('#meals').val(),
-                            holidayTime: $('#holidayTime').val(),
-                            overTime: $('#overTime').val(),
-                            person: $('#person').val()
-                        };
+                        console.log("폼 제출 시작");
+
+                        // 직접 DOM으로 데이터 가져오기
+                        var empNo = document.querySelector('.empNo').value;
+                        var position = document.querySelector('.position').value;
+                        var bonus = document.getElementById('bonus').value;
+                        var meals = document.getElementById('meals').value;
+                        var holidayTime = document.getElementById('holidayTime').value;
+                        var overTime = document.getElementById('overTime').value;
+                        var person = document.getElementById('person').value;
+
+                        console.log(empNo);
+                        console.log(position);
 
                         // AJAX 요청
                         $.ajax({
                             url: 'http://127.0.0.1:8080/orca/salary/write',
-                            method: 'post',
+                            method: 'POST', // POST 방식으로 요청
                             dataType: 'json',
-                            data: formData,
+                            data: {
+                                empNo: empNo,
+                                position: position,
+                                bonus: bonus,
+                                meals: meals,
+                                holidayTime: holidayTime,
+                                overTime: overTime,
+                                person: person
+                            },
                             success: function (response) {
                                 // 성공적으로 데이터를 서버에 전송한 후 처리할 내용
                                 console.log('데이터 전송 성공');
@@ -171,5 +178,5 @@
                         });
                     });
                 });
-            </script>
 
+            </script>

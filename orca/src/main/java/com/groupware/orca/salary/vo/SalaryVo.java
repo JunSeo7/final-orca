@@ -22,6 +22,4 @@ public class SalaryVo {
     private String paymentDate;         //지급날짜
     private String name;
 
-
-
 }

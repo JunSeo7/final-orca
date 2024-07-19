@@ -118,8 +118,8 @@
                         </c:when>
                         <c:otherwise>
                             <c:forEach var="file" items="${files}">
-                                <img src="/static/upload/document/${file.changeName}" alt="${file.changeName}" class="attachment-img"><br/>
-                                <a href="/static/upload/document/${file.changeName}" download> ${file.changeName}</a><br/>
+                                <img src="/upload/document/${file.changeName}" alt="${file.changeName}" class="attachment-img"><br/>
+                                <a href="/upload/document/${file.changeName}" download> ${file.changeName}</a><br/>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>

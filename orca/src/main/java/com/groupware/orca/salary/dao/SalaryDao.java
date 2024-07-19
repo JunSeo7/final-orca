@@ -16,9 +16,9 @@ public class SalaryDao {
 
     private final SalaryMapper mapper;
 
-    public int salaryWrite(UserVo vo,ClientVo clientVo,SalaryVo svo) {
+    public int salaryWrite(ClientVo clientVo, SalaryVo svo) {
         System.out.println("SalaryDao.salaryWrite");
-        return mapper.salaryWrite(vo,clientVo,svo);
+        return mapper.salaryWrite(clientVo,svo);
     }
 
     //급여계산 4대보험 요율 가져오기
@@ -31,20 +31,21 @@ public class SalaryDao {
         return mapper.getUserVo(empNo);
     }
 
-    public List<SalaryVo> getSalaryList(UserVo vo) {
-        System.out.println("SalaryDao.getSalaryList");
-        return mapper.getSalaryList(vo);
+    public List<SalaryVo> getSalaryList() {
+        System.out.println("SalaryDao.getSalaryList!!!!!!!!!!!~~~~~~~~~");
+        return mapper.getSalaryList();
     }
     
     // 급여계산 상세조회
-    public SalaryVo getSalaryByNo(String payrollNo, UserVo vo) {
-        System.out.println("empNo = " + payrollNo);
-        return mapper.getSalaryByNo(payrollNo,vo);
+    public SalaryVo getSalaryByNo(String payrollNo) {
+        return mapper.getSalaryByNo(payrollNo);
     }
 
     //급여계산 수정
-    public int salaryUpdate(ClientVo clientVo, UserVo vo,SalaryVo svo) {
-        return mapper.salaryUpdate(clientVo,vo,svo);
+    public int salaryUpdate(ClientVo clientVo, SalaryVo svo) {
+        System.out.println("SalaryDao.salaryUpdate");
+
+        return mapper.salaryUpdate(clientVo,svo);
     }
 
     //4대보험 입력
@@ -53,12 +54,12 @@ public class SalaryDao {
     }
 
     //4대보험 수정
-    public int ratesEdit(RatesVo rvo, UserVo vo) {
-        return mapper.ratesEdit(rvo,vo);
+    public int ratesEdit(RatesVo rvo) {
+        return mapper.ratesEdit(rvo);
     }
 
-    public RatesVo getRatesByOne(UserVo vo) {
-        return mapper.getRatesByOne(vo);
+    public RatesVo getRatesByOne() {
+        return mapper.getRatesByOne();
     }
 
     public int delete(String ratesNo) {
@@ -66,13 +67,13 @@ public class SalaryDao {
     }
 
     //급여 삭제
-    public int getSalaryDelete(String payrollNo, UserVo vo) {
-        return mapper.getSalaryDelete(payrollNo,vo);
+    public int getSalaryDelete(String payrollNo) {
+        return mapper.getSalaryDelete(payrollNo);
     }
 
     //급여 검색
-    public List<SalaryVo> searchSalary(String empNo, UserVo vo) {
-        return mapper.searchSalary(empNo,vo);
+    public List<SalaryVo> searchSalary(String empNo) {
+        return mapper.searchSalary(empNo);
     }
 
 

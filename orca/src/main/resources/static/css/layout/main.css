@@ -129,12 +129,14 @@ main {
   font-size: 16px;
   margin-top: 10px;
 }
+
 .document{
     border: 1px solid #ddd;
     padding: 5px;
     font-size: 13px;
     margin-top: 5px;
 }
+
 
 /* -----------------캘린더---------------- */
 /* 캘린더 전체 컨테이너에 쉐도우 추가 */
@@ -242,6 +244,13 @@ main {
 /* 토요일 색상 스타일 */
 .blueColor {
   color: blue;
+}
+
+
+
+.work-time p {
+    font-size: 20px;
+    color: #808080;
 }
 
 
