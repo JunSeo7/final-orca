@@ -79,6 +79,8 @@ public class WorkInfoService {
     }
 
 
-
-
+    // 모든 사원 근무 정보 조회
+    public List<WorkInfoVo> allWorkList() {
+        return dao.allWorkList();
+    }
 }

@@ -102,11 +102,13 @@
                 <h2>휴가 등록</h2>
                 <form id="vacationForm">
                     <div>
-                        <label for="vacationCode">휴가 코드:</label>
+                        <label for="vacationCode">휴가 코드</label>
+                        <br />
                         <input type="text" id="vacationCode" name="vacationCode" required>
                     </div>
                     <div>
-                        <label for="vacationName">휴가 이름:</label>
+                        <label for="vacationName">휴가 이름</label>
+                        <br />
                         <input type="text" id="vacationName" name="vacationName" required>
                     </div>
                     <div style="margin-top: 20px;">

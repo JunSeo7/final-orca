@@ -267,10 +267,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const vacationName = document.getElementById('vacationName').value;
 
             $.ajax({
-                url: "http://127.0.0.1:8080/orca/re/vacationRef/registrationVCode",
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({ vacationCode: vacationCode, vacationName: vacationName }),
+                url: "/orca/re/vacationRef/registrationVCode",
+                method: "post",
+                data: {
+                    vacationCode: vacationCode,
+                    vacationName: vacationName
+                },
                 success: function () {
                     const newRow = `
                         <tr>
