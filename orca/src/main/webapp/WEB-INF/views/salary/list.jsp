@@ -100,6 +100,11 @@
                         <div class="main" id="content">
                             <h1 class="salary-list">급여 목록조회</h1>
 
+                            <div id="searchArea">
+                                <input type="text" id="search" placeholder="검색할 사원 번호 입력">
+                                <button onclick="search()">검색</button>
+                            </div>
+
                             <table class="salaryList">
                                 <thead>
                                     <tr>
@@ -144,41 +149,69 @@
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+
+            <script>
+                // 검색 기능 구현
+                function search() {
+                    var empNo = document.getElementById('search').value.trim(); // 입력된 검색어 가져오기
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/orca/salary/search",
+                        method: "get",
+                        data: {
+                            empNo: empNo
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            renderSalaryList(data); // 검색된 결과로 급여 목록을 렌더링
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('데이터 가져오기 실패:', error);
+                        }
+                    });
+                }
+            </script>
+
             <script>
 
-                salaryList();
+                $(document).ready(function () {
+                    salaryList(); // 페이지 로드 시 급여 목록 조회
+                });
 
+                // 급여 목록 조회 함수
                 function salaryList() {
                     $.ajax({
                         url: "http://127.0.0.1:8080/orca/salary/list",
                         method: "get",
-                        success: function (x) {
-                            console.log(x);
-                            $('div.editArea').remove();
-                            const voList = x;
-                            console.log(voList);
-
-                            const tbody = document.querySelector("tbody");
-                            let str = "";
-                            for (let i = 0; i < voList.length; ++i) {
-                                str += "<tr>";
-                                str += "<td>" + voList[i].payrollNo + "</td>";
-                                str += "<td>" + voList[i].empNo + "</td>";
-                                str += "<td>" + voList[i].name + "</td>";
-                                str += "<td>" + voList[i].totalSalary + "</td>";
-                                str += "<td>" + voList[i].paymentDate + "</td>";
-                                str += "<td><button onclick='detail(" + voList[i].payrollNo + ");'>조회</button></td>";
-                                str += "</tr>";
-                            }
-
-                            tbody.innerHTML = str;
-
+                        success: function (data) {
+                            console.log(data);
+                            renderSalaryList(data); // 데이터를 받아와서 렌더링 함수 호출
                         },
-
+                        error: function (xhr, status, error) {
+                            console.error('데이터 가져오기 실패:', error);
+                        }
                     });
                 }
 
+                // 급여 목록을 렌더링하는 함수
+                function renderSalaryList(voList) {
+                    const tbody = document.querySelector("tbody");
+                    let str = "";
+                    for (let i = 0; i < voList.length; ++i) {
+                        str += "<tr>";
+                        str += "<td>" + voList[i].payrollNo + "</td>";
+                        str += "<td>" + voList[i].empNo + "</td>";
+                        str += "<td>" + voList[i].name + "</td>";
+                        str += "<td>" + voList[i].totalSalary + "</td>";
+                        str += "<td>" + voList[i].paymentDate + "</td>";
+                        str += "<td><button onclick='detail(" + voList[i].payrollNo + ");'>조회</button></td>";
+                        str += "</tr>";
+                    }
+                    tbody.innerHTML = str;
+                }
+
             </script>
+
+
 
 
             <script>
@@ -277,7 +310,7 @@
                                 method: "post",
                                 dataType: 'json',
                                 data: {
-                                    payrollNo:payrollNo,
+                                    payrollNo: payrollNo,
                                     empNo: empNo,
                                     position: position,
                                     bonus: bonus,

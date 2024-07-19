@@ -76,13 +76,13 @@ public class SalaryController {
     //------------------------------------------------------------------------------------
 
 
-    //4대보험 입력
-    @PostMapping("ratesInsert")
-    public int ratesInsert(RatesVo vo){
-        int result = service.ratesWrite(vo);
-
-        return result;
-    }
+//    //4대보험 입력
+//    @PostMapping("ratesInsert")
+//    public int ratesInsert(RatesVo vo){
+//        int result = service.ratesWrite(vo);
+//
+//        return result;
+//    }
 
     //4대보험 싱세조회
     @GetMapping("ratesByOne")
@@ -99,12 +99,12 @@ public class SalaryController {
         return result;
     }
 
-    //4대보험 요율 삭제
-    @PostMapping("ratesDelete")
-    public int ratesDelete(@RequestParam("ratesNo") String ratesNo){
-        int result = service.delete(ratesNo);
-
-        return result;
-    }
+//    //4대보험 요율 삭제
+//    @PostMapping("ratesDelete")
+//    public int ratesDelete(@RequestParam("ratesNo") String ratesNo){
+//        int result = service.delete(ratesNo);
+//
+//        return result;
+//    }
 
 }

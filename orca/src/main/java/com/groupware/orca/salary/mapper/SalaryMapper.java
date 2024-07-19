@@ -154,10 +154,21 @@ public interface SalaryMapper {
 
     //급여 사원 검색
     @Select("""
-            SELECT *\s
-            FROM PAYROLL S\s
+            <script>
+            SELECT
+                S.PAYROLL_NO
+               ,P.EMP_NO
+               ,P.NAME
+               ,FLOOR(ROUND(NATIONAL_PENSION+HEALTH_INSURANCE+LONG_CARE+EMPLOYMENT_INSURANCE+INCOME_TAX+LOCAL_INCOME_TAX, 1)) AS TOTAL_DEDUCTION_ITEMS
+               ,FLOOR(ROUND(BONUS+POSITION+HOLIDAY+OVERTIMEWORK+MEALS, 1)) AS TOTAL_ALLOWANCE_ITEMS
+               ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
+               ,S.PAYMENT_DATE
+            FROM PAYROLL S
             JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+            <if test='empNo != null'>
             WHERE P.EMP_NO = #{empNo}
+            </if>
+             </script>
             """)
     List<SalaryVo> searchSalary(@Param("empNo") String empNo);
 
