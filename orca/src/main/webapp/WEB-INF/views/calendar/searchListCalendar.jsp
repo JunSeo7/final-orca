@@ -26,7 +26,7 @@
                 <div class="header-right">
                     <span class="icon"><img src="/img/header/bell.png" alt="bell" class="icon"></span>
                     <span class="icon"><img src="/img/header/organization-chart.png" alt="organization-chart"
-                            class="icon"></span>
+                            class="icon organizationChart"></span>
                     <span class="icon"><img src="/img/header/settings.png" alt="settings" class="icon"></span>
                 </div>
             </header>
