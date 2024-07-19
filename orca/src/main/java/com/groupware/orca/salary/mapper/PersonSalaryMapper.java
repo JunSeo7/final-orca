@@ -5,31 +5,10 @@ import com.groupware.orca.user.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 @Mapper
 public interface PersonSalaryMapper {
-
-
-
-    //목록조회
-    @Select("""
-            SELECT
-               S.PAYROLL_NO
-               ,P.EMP_NO
-               ,P.NAME
-               ,FLOOR(ROUND(NATIONAL_PENSION+HEALTH_INSURANCE+LONG_CARE+EMPLOYMENT_INSURANCE+INCOME_TAX+LOCAL_INCOME_TAX, 1)) AS TOTAL_DEDUCTION_ITEMS
-               ,FLOOR(ROUND(BONUS+POSITION+HOLIDAY+OVERTIMEWORK+MEALS, 1)) AS TOTAL_ALLOWANCE_ITEMS
-               ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
-               ,S.PAYMENT_DATE
-               FROM PAYROLL S
-               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
-               ORDER BY PAYROLL_NO DESC
-               WHERE P.EMP_NO = #{empNo}
-            """)
-    List<SalaryVo> getPersonSalaryList(@Param("empNo") String empNo, UserVo vo);
-
 
     //상세조회
     @Select("""
@@ -54,8 +33,23 @@ public interface PersonSalaryMapper {
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
               WHERE P.EMP_NO = #{empNo}
                 AND S.PAYROLL_NO = #{payrollNo}
-            
             """)
-    SalaryVo getPersonSalaryByOne(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
+  SalaryVo getPersonSalaryByOne(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
+
+    @Select("""
+            SELECT
+               S.PAYROLL_NO
+               ,P.EMP_NO
+               ,P.NAME
+               ,FLOOR(ROUND(NATIONAL_PENSION+HEALTH_INSURANCE+LONG_CARE+EMPLOYMENT_INSURANCE+INCOME_TAX+LOCAL_INCOME_TAX, 1)) AS TOTAL_DEDUCTION_ITEMS
+               ,FLOOR(ROUND(BONUS+POSITION+HOLIDAY+OVERTIMEWORK+MEALS, 1)) AS TOTAL_ALLOWANCE_ITEMS
+               ,FLOOR(ROUND(TOTAL_SALARY, 1)) AS TOTAL_SALARY
+               ,S.PAYMENT_DATE
+               FROM PAYROLL S
+               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
+                WHERE P.EMP_NO = #{empNo}
+                ORDER BY PAYROLL_NO DESC
+            """)
+    List<SalaryVo> getPersonSalaryList(@Param("empNo") String empNo, UserVo userVo);
 
 }

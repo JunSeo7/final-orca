@@ -21,22 +21,22 @@ public class PersonSalaryController {
     private final PersonSalaryService service;
     private final HttpSession httpSession;
 
-    //급여 목록조회
-    @GetMapping("person/list")
-    @ResponseBody
-    public List<SalaryVo> getPersonSalaryList(@RequestParam("empNo") String empNo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        List<SalaryVo> voList = service.getPersonSalaryList(empNo,vo);
-        return voList;
-    }
     //급여 상세조회
     @GetMapping("person/detail")
     @ResponseBody
     public SalaryVo getPersonSalaryList(@RequestParam("payrollNo") String payrollNo,@RequestParam("empNo") String empNo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        SalaryVo svo = service.getPersonSalaryByOne(payrollNo,empNo,vo);
-        return svo;
+        UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
+        SalaryVo vo = service.getPersonSalary(payrollNo,empNo,userVo);
+        return vo;
     }
 
 
-}
+    //급여 목록조회
+    @GetMapping("person/list")
+    @ResponseBody
+    public List<SalaryVo> getPersonSalaryList(@RequestParam("empNo") String empNo){
+
+        UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
+        List<SalaryVo> voList = service.getPersonSalaryList(empNo,userVo);
+        return voList;
+    }

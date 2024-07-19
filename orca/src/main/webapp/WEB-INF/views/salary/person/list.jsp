@@ -87,7 +87,11 @@
                     <main class="personSalary">
                         <h1 id="salary-list">개인명세서 목록</h1>
 
+
+                       
+
                         <table class="salaryPsersonList">
+
                             <thead>
                                 <tr>
                                     <th>글 번호</th>
@@ -102,21 +106,36 @@
                             <tbody>
 
                             </tbody>
+
+
                         </table>
+
+                        <div id="detailArea">
+
+                        </div>
 
                     </main>
             </body>
 
             </html>
 
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
             <script>
-                function salaryList() {
+
+                salaryPersonList();
+
+                function salaryPersonList() {
                     $.ajax({
                         url: "http://127.0.0.1:8080/orca/salary/person/list",
                         method: "get",
                         success: function (x) {
+
+
                             console.log(x);
                             $('div.editArea').remove();
+
                             const voList = x;
                             console.log(voList);
 
@@ -139,9 +158,16 @@
 
                     });
                 }
+
+
             </script>
 
             <script>
+
+
+                function detail(payrollNo) {
+                    $('h1.salary-list').remove();
+                    $('table.salaryPersonList').remove();
 
 
                 function detail(payrollNo) {
@@ -151,7 +177,9 @@
                         url: "http://127.0.0.1:8080/orca/salary/person/detail",
                         method: "GET",
                         data: {
-                            payrollNo: payrollNo
+
+                            payrollNo: payrollNo,
+                            empNo: empNo
 
                         },
                         success: function (data) {
@@ -175,10 +203,27 @@
                             str += "<h3>식대 : " + data.meals + "</h3>";
                             str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
                             str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
-                            str += "<a href='http://127.0.0.1:8080/orca/salaryList'>급여 목록으로 돌아가기</a>";
+
+                            str += "<a href='http://127.0.0.1:8080/orca/salaryList'>목록으로 돌아가기</a>";
+                            detailArea.innerHTML = str;
+
 
                         },
 
+
                     });
                 }
+
+
+
             </script>
+
+            <style>
+                .personSalary{
+                    margin-top: 20%;
+                    margin-left: 45%;
+                }
+
+
+
+            </style>
