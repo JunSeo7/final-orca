@@ -15,12 +15,12 @@ public class PersonSalaryDao {
     private final PersonSalaryMapper mapper;
 
 
-    public SalaryVo getPersonSalaryByNo(String payrollNo, String empNo, UserVo userVo) {
-        return mapper.getPersonSalaryByNo(payrollNo, empNo, userVo);
+    public SalaryVo getPersonSalaryByNo(UserVo userVo, String payrollNo) {
+        return mapper.getPersonSalaryByNo( userVo,payrollNo);
     }
 
-    public List<SalaryVo> getPersonSalaryList(String empNo, UserVo userVo) {
-        return mapper.getPersonSalaryList(empNo, userVo);
+    public List<SalaryVo> getPersonSalaryList(UserVo userVo) {
+        return mapper.getPersonSalaryList( userVo);
 
     }
 }

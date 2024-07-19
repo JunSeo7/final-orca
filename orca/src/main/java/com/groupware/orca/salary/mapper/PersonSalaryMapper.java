@@ -31,10 +31,10 @@ public interface PersonSalaryMapper {
                   ,S.PAYMENT_DATE
               FROM PAYROLL S
               JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
-              WHERE P.EMP_NO = #{empNo}
+              WHERE P.EMP_NO = #{vo.empNo}
                 AND S.PAYROLL_NO = #{payrollNo}
             """)
-  SalaryVo getPersonSalaryByNo(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
+  SalaryVo getPersonSalaryByNo(@Param("vo") UserVo vo, @Param("payrollNo") String payrollNo);
 
     @Select("""
             SELECT
@@ -47,9 +47,9 @@ public interface PersonSalaryMapper {
                ,S.PAYMENT_DATE
                FROM PAYROLL S
                JOIN PERSONNEL_INFORMATION P ON P.EMP_NO = S.EMP_NO
-                WHERE P.EMP_NO = #{empNo}
+                WHERE P.EMP_NO = #{userVo.empNo}
                 ORDER BY PAYROLL_NO DESC
             """)
-    List<SalaryVo> getPersonSalaryList(@Param("empNo") String empNo, UserVo userVo);
+    List<SalaryVo> getPersonSalaryList(@Param("userVo") UserVo userVo);
 
 }
