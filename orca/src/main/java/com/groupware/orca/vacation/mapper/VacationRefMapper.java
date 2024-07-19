@@ -12,7 +12,7 @@ public interface VacationRefMapper {
             "VALUES (#{vacationCode}, #{vacationName})")
     void registrationVCode(VacationRefVo vo);
 
-    @Update("UPDATE VACATION_REFERENCE SET VACATION_NAME = #{vacationName} " +
+    @Update("UPDATE VACATION_REFERENCE SET VACATION_NAME = #{vacationName}" +
             "WHERE VACATION_CODE = #{vacationCode}")
     void editVCode(VacationRefVo vo);
 

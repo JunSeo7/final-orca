@@ -281,8 +281,6 @@ function attachEventListenersData(pagination) {
 
 
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const showVacationCode = document.querySelector('.showVacationCode');
 
@@ -333,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (selectedIds.length > 0) {
                     $.ajax({
-                        url: "http://127.0.0.1:8080/orca/re/vacationRef",
+                        url: "/orca/re/vacationRef",
                         method: "delete",
                         contentType: "application/json",
                         data: JSON.stringify(selectedIds),
@@ -354,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         $.ajax({
-            url: "http://127.0.0.1:8080/orca/re/vacation",
+            url: "/orca/re/vacation",
             method: "get",
             success: function (data) {
                 if (vacationCodesTableBody) {
@@ -367,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         str += "</tr>";
                     });
                     vacationCodesTableBody.innerHTML = str;
+                    attachRowClickEvent();  // 행 클릭 이벤트 리스너를 다시 추가
                 } else {
                     console.error('vacationCodesTableBody 요소를 찾을 수 없습니다.');
                 }
@@ -381,13 +380,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const closeModalBtn = document.getElementById('closeModalBtn');
         const vacationModal = document.getElementById('vacationModal');
         const vacationForm = document.getElementById('vacationForm');
+        const closeEditModalBtn = document.getElementById('closeEditModalBtn');
+        const editVacationCodeModal = document.getElementById('editVacationCodeModal');
 
         addVacationCodeBtn.addEventListener('click', function () {
-            vacationModal.style.display = 'flex';
+            vacationModal.style.display = 'block';
         });
 
         closeModalBtn.addEventListener('click', function () {
             vacationModal.style.display = 'none';
+        });
+
+        closeEditModalBtn.addEventListener('click', function () {
+            editVacationCodeModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === vacationModal) {
+                vacationModal.style.display = 'none';
+            }
+            if (event.target === editVacationCodeModal) {
+                editVacationCodeModal.style.display = 'none';
+            }
         });
 
         vacationForm.addEventListener('submit', function (event) {
@@ -412,14 +426,81 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     vacationCodesTableBody.insertAdjacentHTML('beforeend', newRow);
                     vacationModal.style.display = 'none';
+                    attachRowClickEvent();  // 새로 추가된 행에도 클릭 이벤트 리스너를 추가
                 },
                 error: function (error) {
                     console.error("등록 실패", error);
                 }
             });
         });
+
+        function attachRowClickEvent() {
+            const editVacationCodeModal = document.getElementById('editVacationCodeModal');
+            const editVacationCodeForm = document.getElementById('editVacationCodeForm');
+
+            // 각 휴가 코드 칼럼 클릭 이벤트 추가
+            document.querySelectorAll('#vacationCodesTable tbody tr').forEach(row => {
+                row.addEventListener('click', function () {
+                    const vacationCode = this.children[1].textContent;
+                    const vacationName = this.children[2].textContent;
+
+                    document.getElementById('editVacationCode').value = vacationCode;
+                    document.getElementById('editVacationName').value = vacationName;
+
+                    editVacationCodeModal.style.display = 'block';
+                });
+            });
+
+            // 모달 닫기 버튼 클릭 이벤트
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function () {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+
+            // 모달 외부 클릭 시 닫기
+            window.addEventListener('click', function (event) {
+                if (event.target === editVacationCodeModal) {
+                    editVacationCodeModal.style.display = 'none';
+                }
+                if (event.target === vacationModal) {
+                    vacationModal.style.display = 'none';
+                }
+            });
+
+            // 폼 제출 이벤트 처리
+            editVacationCodeForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const vacationCode = document.getElementById('editVacationCode').value;
+                const vacationName = document.getElementById('editVacationName').value;
+
+                $.ajax({
+                    url: "/orca/re/vacationRef/editVCode",
+                    method: "post",
+                    data: { 
+                        vacationCode: vacationCode, 
+                        vacationName: vacationName 
+                    },
+                    success: function () {
+                        alert("휴가 코드가 수정되었습니다.");
+                        editVacationCodeModal.style.display = 'none';
+                        location.reload(); // 페이지를 새로고침하여 변경 사항 반영
+                    },
+                    error: function (error) {
+                        console.error("수정 실패", error);
+                        alert("휴가 코드 수정에 실패했습니다.");
+                    }
+                });
+            });
+        }
     }
 });
+
+
+
+
+
 
 
 function getSelects() {
