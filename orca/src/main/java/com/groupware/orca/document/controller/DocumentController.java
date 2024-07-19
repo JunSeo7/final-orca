@@ -10,6 +10,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +32,9 @@ import java.util.UUID;
 public class DocumentController {
 
     private final DocumentService service;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     // 결재 작성 화면
     @GetMapping("write")
@@ -121,19 +126,27 @@ public class DocumentController {
 
                 InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
                 ServletContext context = req.getServletContext();
-                String path = context.getRealPath("/static/upload/document/");
+//                String path = context.getRealPath("/static/upload/document");
 
-                java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
+//                java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
+//                if (!dir.exists()) {
+//                    dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
+//                }
+
+                if (!uploadDir.contains("document")) {
+                    uploadDir += "/document";
+                }
+
+                File dir = new File(uploadDir);
                 if (!dir.exists()) {
-                    dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
+                    dir.mkdirs();
                 }
 
                 String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
                 String ext = originFileName.substring(originFileName.lastIndexOf("."));
                 String changeName = title + System.currentTimeMillis() + "_" + random + ext;
 
-
-                try (FileOutputStream fos = new FileOutputStream(path + changeName)) {
+                try (FileOutputStream fos = new FileOutputStream(uploadDir +"/"+ changeName)) {
                     byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
                     int size;
                     while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
