@@ -103,6 +103,12 @@ $.ajax({
 function toggleCheck(element) {
     element.parentNode.classList.toggle('checked');
 }
+
+let organizationChart = document.querySelector('.organizationChart');
+console.log(organizationChart);
+organizationChart.addEventListener('click', function () {
+    window.location.href = "/orca/organizationChart/showOrganizationChart";
+})
 //------------------------------------------------------------------------------------------------------------------------
 // 캘린더
 //-- 캐린더 바 요청 보내기

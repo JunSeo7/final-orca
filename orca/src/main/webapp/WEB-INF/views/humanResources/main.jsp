@@ -46,12 +46,12 @@
                     </div>
                     <hr>
                     <div id="profileDetail" class="profile-detail hidden">
-                        <div id="empNo"></div>
-                        <div id="partName"></div>
-                        <div id="position"></div>
-                        <div id="phone"></div>
-                        <div id="extensionCall"></div>
-                        <div id="email"></div>
+                        <div class="empNo"></div>
+                        <div class="partName"></div>
+                        <div class="position"></div>
+                        <div class="phone"></div>
+                        <div class="extensionCall"></div>
+                        <div class="email"></div>
                         <div id="change-password">비밀번호 변경</div>
                         <button onclick="logout()">로그아웃</button>
                     </div>
