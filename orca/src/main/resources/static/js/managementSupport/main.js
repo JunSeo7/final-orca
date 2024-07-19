@@ -138,7 +138,7 @@ toggleElements.forEach(function (element) {
 function createCalendarCompany() {
     const submit = document.getElementById('submit');
     const eventTitle = document.getElementById('title');
-    const eventDescription = document.getElementById('content');
+    const eventDescription = document.getElementById('calendar-content');
     const startDate = document.getElementById('startDate');
     const endDate = document.getElementById('endDate');
 
@@ -158,13 +158,14 @@ function createCalendarCompany() {
     });
 
     submit.addEventListener('click', function (event) {
+        console.log(document.getElementById('calendar-content').value);
         // 날짜 유효성 검사
         if (new Date(startDate.value) > new Date(endDate.value)) {
             event.preventDefault();
             alert('시작일은 종료일보다 이전이어야 합니다.');
         } else {
             const title = document.getElementById('title');
-            const content = document.getElementById('content');
+            const content = document.getElementById('calendar-content');
             const startDate = document.getElementById('startDate');
             const endDate = document.getElementById('endDate');
             $.ajax({
@@ -179,17 +180,17 @@ function createCalendarCompany() {
                 },
                 success: function (response) {
                     if (response == 1) {
-                        alert("캘린더 삭제 성공!");
+                        alert("캘린더 작성 성공!");
                         document.getElementById('title').value = '';
-                        document.getElementById('content').value = '';
+                        document.getElementById('calendar-content').value = '';
                         document.getElementById('startDate').value = '';
                         document.getElementById('endDate').value = '';
                     } else {
-                        alert("캘린더 삭제 실패");
+                        alert("캘린더 작성 실패");
                     }
                 },
                 error: function (error) {
-                    alert("캘린더 삭제 실패");
+                    alert("캘린더 작성 실패");
                 }
             });
         }
@@ -559,8 +560,15 @@ function editEvent(Data) {
             updateCnt++;
         }
         if (contentElement !== Data.content) {
-            vo.content = contentElement;
-            updateCnt++;
+            if (contentElement.trim() === '') {
+                if (Data.content !== null) {
+                    vo.content = contentElement;
+                    updateCnt++;
+                }
+            } else {
+                vo.content = contentElement;
+                updateCnt++;
+            }
         }
         if (startDateElement !== Data.startDate) {
             vo.startDate = startDateElement;

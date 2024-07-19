@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             <label for="content">일정 내용</label>
-            <textarea id="content" name="content" rows="4"></textarea>
+            <textarea id="calendar-content" name="content" rows="4"></textarea>
         </div>
         <div class="form-group">
             <label for="startDate">시작일</label>
