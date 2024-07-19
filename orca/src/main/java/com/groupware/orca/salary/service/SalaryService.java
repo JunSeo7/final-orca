@@ -165,6 +165,8 @@ public class SalaryService {
         svo.setBonus(clientVo.getBonus());
         svo.setPosition(clientVo.getPosition());
         svo.setMeals(clientVo.getMeals());
+        svo.setPayrollNo(clientVo.getPayrollNo());
+        svo.setEmpNo(clientVo.getEmpNo());
 
         int result = dao.salaryWrite(clientVo, svo);
 

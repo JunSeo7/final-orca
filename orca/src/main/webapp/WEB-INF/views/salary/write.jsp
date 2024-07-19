@@ -106,18 +106,19 @@
                                 <br>
                                 직급수당: <input type="text" name="position" class="position">
                                 <br>
-                                상여금: <input type="text" name="bonus" id="bonus">
+                                상여금: <input type="text" name="bonus" class="bonus">
                                 <br>
-                                식대: <input type="text" name="meals" id="meals">
+                                식대: <input type="text" name="meals" class="meals">
                                 <br>
-                                휴일근무시간: <input type="text" name="holidayTime" id="holidayTime">
+                                휴일근무시간: <input type="text" name="holidayTime" class="holidayTime">
                                 <br>
-                                연장근무시간: <input type="text" name="overTime" id="overTime">
+                                연장근무시간: <input type="text" name="overTime" class="overTime">
                                 <br>
-                                자녀 수: <input type="text" name="person" id="person">
+                                자녀 수: <input type="text" name="person" class="person">
                                 <br>
                                 <input type="submit" name="작성하기">
                             </form>
+                        </div>
 
                     </main>
             </body>
@@ -133,21 +134,26 @@
                         console.log("폼 제출 시작");
 
                         // 직접 DOM으로 데이터 가져오기
-                        var empNo = document.querySelector('.empNo').value;
-                        var position = document.querySelector('.position').value;
-                        var bonus = document.getElementById('bonus').value;
-                        var meals = document.getElementById('meals').value;
-                        var holidayTime = document.getElementById('holidayTime').value;
-                        var overTime = document.getElementById('overTime').value;
-                        var person = document.getElementById('person').value;
+                        var empNo = $('.empNo').val();
+                        var position = $('.position').val();
+                        var bonus = $('.bonus').val();
+                        var meals = $('.meals').val();
+                        var holidayTime = $('.holidayTime').val();
+                        var overTime = $('.overTime').val();
+                        var person = $('.person').val();
 
                         console.log(empNo);
                         console.log(position);
+                        console.log(bonus);
+                        console.log(meals);
+                        console.log(holidayTime);
+                        console.log(overTime);
+                        console.log(person);
 
                         // AJAX 요청
                         $.ajax({
-                            url: 'http://127.0.0.1:8080/orca/salary/write',
-                            method: 'POST', // POST 방식으로 요청
+                            url: '/orca/salary/write',
+                            method: 'post', // POST 방식으로 요청
                             dataType: 'json',
                             data: {
                                 empNo: empNo,
@@ -167,7 +173,7 @@
                                     window.location.href = "/orca/salaryList";
                                 } else {
                                     alert("급여 작성 실패하셨습니다.");
-                                    window.location.href = "orca/salaryWrite";
+                                    window.location.href = "/orca/salaryWrite";
                                 }
                             },
                             error: function (xhr, status, error) {
@@ -178,12 +184,11 @@
                         });
                     });
                 });
-              </script>
+            </script>
 
-<style>
-    .salartWriteMain{
-        margin-top: 50%;
-        margin-left: 50%;
-    }
-</style>
-
+            <style>
+                #salartWriteMain {
+                    margin-top: 20%;
+                    margin-left: 50%;
+                }
+            </style>
