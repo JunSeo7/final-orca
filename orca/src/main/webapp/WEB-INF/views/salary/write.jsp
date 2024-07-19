@@ -182,7 +182,7 @@
 
 <style>
     .salartWriteMain{
-        margin-top: 20%;
+        margin-top: 50%;
         margin-left: 50%;
     }
 </style>

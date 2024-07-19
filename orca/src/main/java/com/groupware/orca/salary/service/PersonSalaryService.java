@@ -15,14 +15,14 @@ public class PersonSalaryService {
     private final PersonSalaryDao dao;
 
 
+    public SalaryVo getPersonSalaryByNo(String payrollNo, String empNo, UserVo userVo) {
 
-    public SalaryVo getPersonSalary(String payrollNo, String empNo, UserVo userVo) {
-
-        return dao.getPersonSalary(payrollNo,empNo,userVo);
+        return dao.getPersonSalaryByNo(payrollNo, empNo, userVo);
     }
 
 
     public List<SalaryVo> getPersonSalaryList(String empNo, UserVo userVo) {
-        return dao.getPersonSalaryList(empNo,userVo);
+        return dao.getPersonSalaryList(empNo, userVo);
 
+    }
 }
