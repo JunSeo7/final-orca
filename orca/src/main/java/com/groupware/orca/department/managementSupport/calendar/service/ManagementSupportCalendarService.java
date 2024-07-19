@@ -18,8 +18,10 @@ public class ManagementSupportCalendarService {
         if (vo.getTitle().length() > 13) {
             throw new InvalidInputException("글자수가 최대입니다. (제목은 13자 이내)");
         }
-        if (vo.getContent().length() > 332) {
-            throw new InvalidInputException("글자수가 최대입니다. (내용은 332자 이내)");
+        if (vo.getContent() != null) {
+            if (vo.getContent().length() > 332) {
+                throw new InvalidInputException("글자수가 최대입니다. (내용은 332자 이내)");
+            }
         }
 
         if (!vo.getTitle().isEmpty() && !vo.getStartDate().isEmpty() && !vo.getEndDate().isEmpty()) {
@@ -68,7 +70,7 @@ public class ManagementSupportCalendarService {
         return dao.deleteCalendar(calendarNo);
     }
 
-    public List<CalendarVo> searchListCalendarData(String keyword,int startNum, int endNum) {
+    public List<CalendarVo> searchListCalendarData(String keyword, int startNum, int endNum) {
         return dao.searchListCalendarData(keyword, startNum, endNum);
     }
 
