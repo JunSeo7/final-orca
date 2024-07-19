@@ -20,21 +20,21 @@ public class PersonSalaryController {
 
     //급여 상세조회
     @GetMapping("person/detail")
-    public SalaryVo getPersonSalaryByNo(@RequestParam("payrollNo") String payrollNo, @RequestParam("empNo") String empNo) {
+    public SalaryVo getPersonSalaryByNo(@RequestParam("payrollNo")String payrollNo) {
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         System.out.println("userVo = " + userVo);
-        SalaryVo vo = service.getPersonSalaryByNo(payrollNo, empNo, userVo);
+        SalaryVo vo = service.getPersonSalaryByNo(userVo,payrollNo);
         return vo;
     }
 
 
     //급여 목록조회
     @GetMapping("person/list")
-    public List<SalaryVo> getPersonSalaryList(@RequestParam("empNo") String empNo) {
+    public List<SalaryVo> getPersonSalaryList() {
 
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         System.out.println("userVo = " + userVo);
-        List<SalaryVo> voList = service.getPersonSalaryList(empNo, userVo);
+        List<SalaryVo> voList = service.getPersonSalaryList(userVo);
         return voList;
     }
 }
