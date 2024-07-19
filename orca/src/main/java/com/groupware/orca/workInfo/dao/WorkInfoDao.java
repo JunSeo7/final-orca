@@ -43,11 +43,19 @@ public class WorkInfoDao {
         return mapper.getEndWorkTime(empNo, workDate);
     }
 
-    public List<WorkInfoVo> getAllWorkInfo(int offset, int limit) {
-        return mapper.getAllWorkInfo(offset, limit);
+    public List<WorkInfoVo> getAllWorkInfo() {
+        return mapper.getAllWorkInfo();
     }
 
-    public int selectTotalRecords() {
-        return mapper.selectTotalRecords();
+    public int dataCount() {
+        return mapper.dataCount();
+    }
+
+    public List<WorkInfoVo> getData(int startNum, int endNum) {
+        return mapper.getData(startNum, endNum);
+    }
+
+    public List<WorkInfoVo> searchData(String name, String partName, String startDate, String endDate, int startNum, int endNum) {
+        return mapper.searchData(name, partName, startDate, endDate, startNum, endNum);
     }
 }

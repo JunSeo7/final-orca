@@ -1,6 +1,7 @@
 package com.groupware.orca.workInfo.controller;
 
 import com.groupware.orca.common.vo.PageVo;
+import com.groupware.orca.common.vo.Pagination;
 import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.service.WorkInfoService;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
@@ -25,13 +26,8 @@ public class WorkInfoRestController {
 
     // 모든 사원 근무 정보 리스트
     @GetMapping("allList")
-    public List<WorkInfoVo> getAllWorkInfo(@RequestParam int page, @RequestParam int recordSize) {
-        PageVo pageVo = new PageVo();
-        pageVo.setPage(page);
-        pageVo.setRecordSize(recordSize);
-
-        // 예시: 데이터베이스에서 페이지에 해당하는 데이터를 가져오는 로직 추가
-        List<WorkInfoVo> workInfoList = service.getAllWorkInfo(pageVo);
+    public List<WorkInfoVo> getAllWorkInfo() {
+        List<WorkInfoVo> workInfoList = service.getAllWorkInfo();
 
         return workInfoList;
     }
@@ -120,5 +116,38 @@ public class WorkInfoRestController {
     @PostMapping("overtime")
     public void overTimeWork(WorkInfoVo vo) {
         service.overTimeWork(vo);
+    }
+
+    @GetMapping("getPage")
+    public Pagination getPage(@RequestParam("page") int page){
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setPageSize(10);
+        pageVo.setRecordSize(12);
+        int dataCount = service.dataCount();
+        Pagination pagination = new Pagination(dataCount, pageVo);
+        return pagination;
+    }
+
+    @GetMapping("getData")
+    @ResponseBody
+    public List<WorkInfoVo> getData(@RequestParam("startNum") int startNum,
+                                         @RequestParam("endNum") int endNum) {
+        List<WorkInfoVo> workInfoVoList = service.getData(startNum, endNum);
+        return workInfoVoList;
+    }
+
+    @GetMapping("searchData")
+    @ResponseBody
+    public List<WorkInfoVo> searchData(
+            @RequestParam("name") String name,
+            @RequestParam("partName") String partName,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("startNum") int startNum,
+            @RequestParam("endNum") int endNum) {
+
+        List<WorkInfoVo> workInfoVoList = service.searchData(name, partName, startDate, endDate, startNum, endNum);
+        return workInfoVoList;
     }
 }
