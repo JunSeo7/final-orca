@@ -89,6 +89,7 @@
 
                         <h1 id="salary-list">개인명세서 목록</h1>
 
+                        
                         <table class="salaryPsersonList">
 
                             <thead>
@@ -212,9 +213,12 @@
                     });
                 }
 
-                
+
 
             </script>
+
+            
+
 
             <style>
                 .personSalary {
