@@ -48,32 +48,43 @@
             background-color: #6eadff;
         }
 
-         }
         .modal {
+            display: none; /* 초기 상태에서 모달을 숨김 */
             position: fixed;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            top: 0;
+            z-index: 1;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
+            overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .modal_body {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            transform: translate(-50%, -50%);
+        .modal-content {
             position: absolute;
             top: 50%;
             left: 50%;
+            transform: translate(-50%, -50%);
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px; /* 최대 너비 설정 */
+            background-color: #fefefe;
         }
-        .modal_body h2 {
-            margin-top: 0;
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -97,27 +108,51 @@
         </table>
     </div>
 
-     <div class="modal" id="vacationModal">
-            <div class="modal_body">
-                <h2>휴가 등록</h2>
-                <form id="vacationForm">
-                    <div>
-                        <label for="vacationCode">휴가 코드</label>
-                        <br />
-                        <input type="text" id="vacationCode" name="vacationCode" required>
-                    </div>
-                    <div>
-                        <label for="vacationName">휴가 이름</label>
-                        <br />
-                        <input type="text" id="vacationName" name="vacationName" required>
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <button type="submit" class="button">등록</button>
-                        <button type="button" class="button" id="closeModalBtn">닫기</button>
-                    </div>
-                </form>
-            </div>
+    <div class="modal" id="vacationModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>휴가 등록</h2>
+            <form id="vacationForm">
+                <div>
+                    <label for="vacationCode">휴가 코드</label>
+                    <br />
+                    <input type="text" id="vacationCode" name="vacationCode" required>
+                </div>
+                <div>
+                    <label for="vacationName">휴가 이름</label>
+                    <br />
+                    <input type="text" id="vacationName" name="vacationName" required>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button type="submit" class="button">등록</button>
+                    <button type="button" class="button" id="closeModalBtn">닫기</button>
+                </div>
+            </form>
         </div>
+    </div>
+
+    <div id="editVacationCodeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>휴가 코드 수정</h2>
+            <form id="editVacationCodeForm">
+                <div>
+                    <label for="editVacationCode">휴가 코드:</label>
+                    <br />
+                    <input type="text" id="editVacationCode" name="vacationCode">
+                </div>
+                <div>
+                    <label for="editVacationName">휴가 이름:</label>
+                    <br />
+                    <input type="text" id="editVacationName" name="vacationName">
+                </div>
+                <div style="margin-top: 20px;">
+                    <button type="submit" class="button">저장</button>
+                    <button type="button" class="button" id="closeEditModalBtn">닫기</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
