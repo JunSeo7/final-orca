@@ -22,7 +22,7 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 
-<main id="content">
+<main id="content" class="main">
     <h2>기본 결재선 관리</h2>
     <hr>
     <p>* 결재양식의 기본 결재선을 등록하고 관리합니다.</p>

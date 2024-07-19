@@ -60,7 +60,7 @@
                             <a href="/orca/document/edit?docNo=${document.docNo}"  doc-no="${document.docNo}">
                                 <img class="edit-btn" src="/img/document/edit.png" alt="수정 아이콘">
                             </a>
-                            <a onclick="/orca/document/delete?docNo=${document.docNo}" doc-no="${document.docNo}">
+                            <a onclick="deleteDocument(this)" data-doc-no="${document.docNo}">
                                 <img class="delete-btn" src="/img/document/delete.png" alt="삭제 아이콘">
                             </a>
                         <div>

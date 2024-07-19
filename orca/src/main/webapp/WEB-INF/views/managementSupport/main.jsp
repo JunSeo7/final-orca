@@ -61,8 +61,8 @@
                             <div class="sidebar-nav">
                                 <div class="approval title-toggle">◾ 결재 관리</div>
                                 <div class="approval-list">
-                                    <div class="toggle">◽ 결재 양식 관리</div>
-                                    <div class="toggle">◽ 기본 결재선 관리</div>
+                                    <div class="toggle" onclick="location.href='/orca/template/list'">◽ 결재 양식 관리</div>
+                                    <div class="toggle" onclick="location.href='/orca/apprline/list'">◽ 기본 결재선 관리</div>
                                 </div>
                                 <div class="calnedar title-toggle">◾ 사내 캘린더 관리</div>
                                 <div class="calendar-link link">
