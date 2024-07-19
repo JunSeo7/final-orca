@@ -8,6 +8,8 @@ import com.groupware.orca.salary.vo.SalaryVo;
 import com.groupware.orca.user.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,23 +19,22 @@ import java.util.List;
 public class SalaryController {
 
     private final SalaryService service;
-    private final HttpSession httpSession;
-
 
     //급여계산 입력
     @PostMapping("write")
-    public int salaryWrite(UserVo vo, ClientVo clientVo, SalaryVo svo){
-        vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        int result = service.salaryWrite(vo,clientVo,svo);
+    public int salaryWrite(@RequestParam("clientVo") ClientVo clientVo){
+        System.out.println("clientVo = " + clientVo);
+        int result = service.salaryWrite(clientVo);
         return result;
         //TODO 화면에서 자녀수에 따른 공제내역 사진 띄우고 적게 하기, param은 다 금액으로 입력받게 하기
     }
 
     //급여계산 수정
     @PostMapping("edit")
-    public int salaryUpdate(ClientVo clientVo,UserVo vo,SalaryVo svo){
-        vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        int result = service.salaryUpdate(vo,clientVo,svo);
+    public int salaryUpdate(ClientVo clientVo){
+        System.out.println("clientVo = " + clientVo);
+        int result = service.salaryUpdate(clientVo);
+
         return result;
     }
 
@@ -42,8 +43,7 @@ public class SalaryController {
     //급여 목록조회
     @GetMapping("list")
     public List<SalaryVo> getSalaryList(){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        List<SalaryVo> voList = service.getSalaryList(vo);
+        List<SalaryVo> voList = service.getSalaryList();
         return voList;
     }
 
@@ -52,9 +52,7 @@ public class SalaryController {
     //상세조회
     @GetMapping("detail")
     public SalaryVo getSalaryByNo(@RequestParam("payrollNo") String payrollNo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        SalaryVo svo = service.getSalaryByNo(payrollNo,vo);
-        System.out.println("vo = " + vo);
+        SalaryVo svo = service.getSalaryByNo(payrollNo);
         return svo;
     }
 
@@ -62,16 +60,14 @@ public class SalaryController {
     //급여 삭제
     @DeleteMapping("delete")
     public int getSalaryDelete( @RequestParam("payrollNo")String payrollNo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        int result = service.getSalaryDelete(payrollNo,vo);
+        int result = service.getSalaryDelete(payrollNo);
         return result;
     }
 
     //급여 검색
     @GetMapping("search")
     public List<SalaryVo> searchSalary(@RequestParam("empNo") String empNo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        List<SalaryVo> voList = service.searchSalary(empNo,vo);
+        List<SalaryVo> voList = service.searchSalary(empNo);
 
         return voList;
 
@@ -91,8 +87,7 @@ public class SalaryController {
     //4대보험 싱세조회
     @GetMapping("ratesByOne")
     public RatesVo ratesByOne(){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        RatesVo rvo = service.getRatesByOne(vo);
+        RatesVo rvo = service.getRatesByOne();
 
         return rvo;
     }
@@ -100,9 +95,7 @@ public class SalaryController {
     //4대보험 요율 수정
     @PostMapping("ratesEdit")
     public int ratesEdit(RatesVo rvo){
-        UserVo vo = (UserVo) httpSession.getAttribute("loginUserVo");
-        System.out.println("rvo = " + rvo);
-        int result = service.ratesEdit(rvo,vo);
+        int result = service.ratesEdit(rvo);
         return result;
     }
 

@@ -25,13 +25,13 @@ public class SalaryService {
     //(전)소득세 계산(단계 많음.. 1. 소득 공제 2. 공제 다 더하기== 과세표준 3. 소득세율 적용 4. 범위에 해당하는 소득세율 다 더하기 == 근로소득세) -> 얼렁뚱땅
     //(후)연말 정산 (연말에 전년도에 냈던 세금과 월급을 계산해서 최종 세금을 계산함. 이때 가족공제(인적공제)를 해서 정확한 세금계산을 할 수 있음.)
     //(후)원천징수(근로소득에서 세금을 공제함. 따라서 기본 공제액 150만원)
-    private double calculateDeduction(UserVo vo,ClientVo clientVo,SalaryVo svo){
+    private double calculateDeduction(ClientVo clientVo){
 
         //비과세 뺌 (인적공제 가격 화면에 보여주기-> 회계팀이 직접 입력)
 
-        vo = dao.getUserVo(vo.getEmpNo());
+        UserVo vo = dao.getUserVo(clientVo.getEmpNo());
         System.out.println("calculateDeduction vo = " + vo);
-        double totalIncome = vo.getSalary()-svo.getMeals(); //총 급여
+        double totalIncome = vo.getSalary()- clientVo.getMeals(); //총 급여
 
         // 공제대상 가족 수
         int familyCount = clientVo.getPerson();
@@ -127,17 +127,14 @@ public class SalaryService {
     //연장근로수당 (입력칸 있음 - 몇 시간 더 연장근무 한건지 )
 
     //급여 입력
-    public int salaryWrite(UserVo vo,ClientVo clientVo , SalaryVo svo) {
-        double totalDeduction = calculateDeduction(vo,clientVo,svo);
+    public int salaryWrite(ClientVo clientVo) {
+        UserVo vo = dao.getUserVo(clientVo.getEmpNo());
 
-        vo = dao.getUserVo(vo.getEmpNo());
-        System.out.println("vo = " + vo);
-
+        double totalDeduction = calculateDeduction(clientVo);
 
         RatesVo rvo = dao.getRatesVo();
 
-        System.out.println("salaryWrite vo = " + vo);
-        double realSalary = vo.getSalary()- svo.getMeals(); //월급에서 비과세 빼고 공제사항 계산
+        double realSalary = vo.getSalary()- clientVo.getMeals(); //월급에서 비과세 빼고 공제사항 계산
 
         // 공제 항목 계산
         double nationalPension = realSalary * rvo.getPensionPercentage();
@@ -146,9 +143,6 @@ public class SalaryService {
         double employmentInsurance = realSalary * rvo.getEmploymentInsurancePercentage();
         double incomeTax = calculateInComeTax(totalDeduction);  // 소득세 계산 메소드 호출
         double localIncomeTax = calculateInComeTax(totalDeduction) * rvo.getLocalIncomeTaxPersentage();
-        System.out.println("localIncomeTax = " + localIncomeTax);
-        System.out.println("incomeTax = " + incomeTax);
-        System.out.println("rvo = " + rvo);
 
         // 수당 항목 계산
         double holiday =  9860 * 1.5 * clientVo.getHolidayTime();
@@ -158,6 +152,7 @@ public class SalaryService {
         double totalSalary = realSalary - nationalPension - healthInsurance - longCare - employmentInsurance - incomeTax - localIncomeTax
                 + clientVo.getPosition() + clientVo.getBonus() + holiday + overTimeWork + clientVo.getMeals();
 
+        SalaryVo svo = new SalaryVo();
         svo.setNationalPension(nationalPension);
         svo.setHealthInsurance(healthInsurance);
         svo.setLongCare(longCare);
@@ -171,7 +166,7 @@ public class SalaryService {
         svo.setPosition(clientVo.getPosition());
         svo.setMeals(clientVo.getMeals());
 
-        int result = dao.salaryWrite(vo, clientVo, svo);
+        int result = dao.salaryWrite(clientVo, svo);
 
         try {
 
@@ -196,22 +191,23 @@ public class SalaryService {
     }
 
     //급여 전체 목록조회
-    public List<SalaryVo> getSalaryList(UserVo vo) {
-        return dao.getSalaryList(vo);
+    public List<SalaryVo> getSalaryList() {
+        return dao.getSalaryList();
     }
 
 
 
 
     //급여 수정
-    public int salaryUpdate(UserVo vo,ClientVo clientVo, SalaryVo svo) {
-        vo = dao.getUserVo(vo.getEmpNo());
+    public int salaryUpdate(ClientVo clientVo) {
+        UserVo vo = dao.getUserVo(clientVo.getEmpNo());
+
         System.out.println("salaryUpdate vo = " + vo);
 
-        double totalDeduction = calculateDeduction(vo,clientVo,svo);
+        double totalDeduction = calculateDeduction(clientVo);
         RatesVo rvo = dao.getRatesVo();
 
-        double realSalary =  vo.getSalary() - svo.getMeals();
+        double realSalary =  vo.getSalary() - clientVo.getMeals();
 
         // 공제 항목 계산
         double nationalPension = realSalary * rvo.getPensionPercentage();
@@ -220,9 +216,7 @@ public class SalaryService {
         double employmentInsurance = realSalary * rvo.getEmploymentInsurancePercentage();
         double incomeTax = calculateInComeTax(totalDeduction);  // 소득세 계산 메소드 호출
         double localIncomeTax = calculateInComeTax(totalDeduction) * rvo.getLocalIncomeTaxPersentage();
-        System.out.println("localIncomeTax = " + localIncomeTax);
-        System.out.println("incomeTax = " + incomeTax);
-        System.out.println("rvo = " + rvo);
+
 
         // 수당 항목 계산
         double holiday =  9860 * 1.5 * clientVo.getHolidayTime();
@@ -232,6 +226,7 @@ public class SalaryService {
         double totalSalary = realSalary - nationalPension - healthInsurance - longCare - employmentInsurance - incomeTax - localIncomeTax
                 + clientVo.getPosition() + clientVo.getBonus() + holiday + overTimeWork + clientVo.getMeals();
 
+        SalaryVo svo = new SalaryVo();
         svo.setNationalPension(nationalPension);
         svo.setHealthInsurance(healthInsurance);
         svo.setLongCare(longCare);
@@ -244,38 +239,43 @@ public class SalaryService {
         svo.setBonus(clientVo.getBonus());
         svo.setPosition(clientVo.getPosition());
         svo.setMeals(clientVo.getMeals());
+        svo.setPayrollNo(clientVo.getPayrollNo());
+        svo.setEmpNo(clientVo.getEmpNo());
 
-        System.out.println("svo service= " + svo);
-        return dao.salaryUpdate(clientVo,vo,svo);
+        System.out.println("svo = " + svo);
+        System.out.println("totalSalary = " + totalSalary);
+        System.out.println("clientVo = " + clientVo);
+
+        return dao.salaryUpdate(clientVo,svo);
 
     }
 
     //4대보험 요율 수정
-    public int ratesEdit(RatesVo rvo, UserVo vo) {
-        return dao.ratesEdit(rvo,vo);
+    public int ratesEdit(RatesVo rvo) {
+        return dao.ratesEdit(rvo);
     }
 
     //요율 전체 보기
-    public RatesVo getRatesByOne(UserVo vo) {
-        return dao.getRatesByOne(vo);
+    public RatesVo getRatesByOne() {
+        return dao.getRatesByOne();
     }
 
     public int delete(String ratesNo) {
         return dao.delete(ratesNo);
     }
 
-    public SalaryVo getSalaryByNo(String payrollNo, UserVo vo) {
-        return dao.getSalaryByNo(payrollNo,vo);
+    public SalaryVo getSalaryByNo(String payrollNo) {
+        return dao.getSalaryByNo(payrollNo);
     }
 
     //급여 삭제
-    public int getSalaryDelete(String payrollNo, UserVo vo) {
-        return dao.getSalaryDelete(payrollNo,vo);
+    public int getSalaryDelete(String payrollNo) {
+        return dao.getSalaryDelete(payrollNo);
     }
 
     //급여 검색
-    public List<SalaryVo> searchSalary(String empNo, UserVo vo) {
-        return dao.searchSalary(empNo,vo);
+    public List<SalaryVo> searchSalary(String empNo) {
+        return dao.searchSalary(empNo);
     }
 
 

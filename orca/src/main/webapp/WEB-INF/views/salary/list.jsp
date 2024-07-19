@@ -74,7 +74,7 @@
                             <button onclick="logout()">로그아웃</button>
                         </div>
 
-                        
+
 
                         <!-- <div class="profile" onclick="toggleProfile()">
                                 <img src="profile.png" alt="Profile Picture" class="profile-pic">
@@ -125,8 +125,8 @@
                             <div id="editArea" style="display:none;">
                                 <h1>급여 수정</h1>
                                 <form id="editForm">
-                                    사원번호: <input type="text" name="empNo" id="empNo"><br>
-                                    직급수당: <input type="text" name="position" id="position"><br>
+                                    사원번호: <input type="text" name="empNo" class="empNo" readonly><br>
+                                    직급수당: <input type="text" name="position" class="position"><br>
                                     상여금: <input type="text" name="bonus" id="bonus"><br>
                                     식대: <input type="text" name="meals" id="meals"><br>
                                     휴일근무시간: <input type="text" name="holidayTime" id="holidayTime"><br>
@@ -189,7 +189,8 @@
                     $('div.editArea').remove();
                     $.ajax({
                         url: "http://127.0.0.1:8080/orca/salary/detail",
-                        method: "GET",
+                        method: "get",
+
                         data: {
                             payrollNo: payrollNo
 
@@ -250,32 +251,53 @@
 
                     // 폼 제출 시 처리
                     $(document).ready(function () {
-                        $('#editForm').on('submit', function (e) {
+                        $('#editArea').on('submit', function (e) {
                             e.preventDefault();
 
-                            let formData = {
-                                payrollNo: payrollNo,
-                                empNo: $('#empNo').val(),
-                                position: $('#position').val(),
-                                bonus: $('#bonus').val(),
-                                meals: $('#meals').val(),
-                                holidayTime: $('#holidayTime').val(),
-                                overTime: $('#overTime').val(),
-                                person: $('#person').val()
+                            var empNo = document.querySelector('.empNo').value;
+                            var position = document.querySelector('.position').value;
+                            var bonus = document.getElementById('bonus').value;
+                            var meals = document.getElementById('meals').value;
+                            var holidayTime = document.getElementById('holidayTime').value;
+                            var overTime = document.getElementById('overTime').value;
+                            var person = document.getElementById('person').value;
 
-                            };
+                            console.log(payrollNo);
+                            console.log(empNo);
+                            console.log(position);
+                            console.log(bonus);
+                            console.log(meals);
+                            console.log(holidayTime);
+                            console.log(overTime);
+                            console.log(person);
+
 
                             $.ajax({
                                 url: "http://127.0.0.1:8080/orca/salary/edit",
                                 method: "post",
                                 dataType: 'json',
-                                data: formData,
+                                data: {
+                                    payrollNo:payrollNo,
+                                    empNo: empNo,
+                                    position: position,
+                                    bonus: bonus,
+                                    meals: meals,
+                                    holidayTime: holidayTime,
+                                    overTime: overTime,
+                                    person: person
+                                },
+
+
                                 success: function (data) {
                                     alert("급여 수정 성공하셨습니다.");
                                     $('#editArea').hide();
                                     window.location.href = "/orca/salaryList";
 
                                 },
+                                error: function (xhr, status, error) {
+                                    console.error('데이터 전송 실패:', error);
+                                    alert("급여 수정 실패하셨습니다.");
+                                }
                             });
                         });
                     });
@@ -302,7 +324,3 @@
                 }
 
             </script>
-
-
-            
-           

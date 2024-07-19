@@ -85,8 +85,100 @@
                     </aside>
 
                     <main class="personSalary">
-                        <h1>개인명세서 목록</h1>
+                        <h1 id="salary-list">개인명세서 목록</h1>
+
+                        <table class="salaryPsersonList">
+                            <thead>
+                                <tr>
+                                    <th>글 번호</th>
+                                    <th>사번</th>
+                                    <th>이름</th>
+                                    <th>최종 급여(원)</th>
+                                    <th>날짜</th>
+                                    <th>상세조회</th>
+                                    <!-- <button onclick="detail();">조회</button> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
                     </main>
             </body>
 
             </html>
+
+            <script>
+                function salaryList() {
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/orca/salary/person/list",
+                        method: "get",
+                        success: function (x) {
+                            console.log(x);
+                            $('div.editArea').remove();
+                            const voList = x;
+                            console.log(voList);
+
+                            const tbody = document.querySelector("tbody");
+                            let str = "";
+                            for (let i = 0; i < voList.length; ++i) {
+                                str += "<tr>";
+                                str += "<td>" + voList[i].payrollNo + "</td>";
+                                str += "<td>" + voList[i].empNo + "</td>";
+                                str += "<td>" + voList[i].name + "</td>";
+                                str += "<td>" + voList[i].totalSalary + "</td>";
+                                str += "<td>" + voList[i].paymentDate + "</td>";
+                                str += "<td><button onclick='detail(" + voList[i].payrollNo + ");'>조회</button></td>";
+                                str += "</tr>";
+                            }
+
+                            tbody.innerHTML = str;
+
+                        },
+
+                    });
+                }
+            </script>
+
+            <script>
+
+
+                function detail(payrollNo) {
+                    $('h1.salary-list').remove();
+                    $('table.salaryPsersonList').remove();
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/orca/salary/person/detail",
+                        method: "GET",
+                        data: {
+                            payrollNo: payrollNo
+
+                        },
+                        success: function (data) {
+                            const detailArea = document.querySelector("#detailArea");
+                            console.log(data);
+                            let str = "";
+                            str += "<h1>급여 상세조회</h1>";
+                            str += "<h3>번호 : " + data.payrollNo + "</h3>";
+                            str += "<h3>사원번호 : " + data.empNo + "</h3>";
+                            str += "<h3>이름 : " + data.name + "</h3>";
+                            str += "<h3>국민연금 : " + data.nationalPension + "</h3>";
+                            str += "<h3>건강보험 : " + data.healthInsurance + "</h3>";
+                            str += "<h3>장기요양보험 : " + data.longCare + "</h3>";
+                            str += "<h3>고용보험 : " + data.employmentInsurance + "</h3>";
+                            str += "<h3>소득세 : " + data.incomeTax + "</h3>";
+                            str += "<h3>지방소득세 : " + data.localIncomeTax + "</h3>";
+                            str += "<h3>직급수당 : " + data.position + "</h3>";
+                            str += "<h3>보너스 : " + data.bonus + "</h3>";
+                            str += "<h3>휴일근무수당 : " + data.holiday + "</h3>";
+                            str += "<h3>연장근로수당 : " + data.overTimeWork + "</h3>";
+                            str += "<h3>식대 : " + data.meals + "</h3>";
+                            str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
+                            str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
+                            str += "<a href='http://127.0.0.1:8080/orca/salaryList'>급여 목록으로 돌아가기</a>";
+
+                        },
+
+                    });
+                }
+            </script>
