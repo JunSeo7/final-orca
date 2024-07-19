@@ -155,119 +155,133 @@ employeeRegistration.addEventListener('click', function () {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const showAllWorkInfo = document.querySelector('.showAllWorkInfo');
-    const recordSize = 12;  // 한 페이지에 보여줄 데이터 수
-    let currentPage = 1;   // 현재 페이지 번호
-    let totalPages = 5;    // 총 페이지 수 (예시로 5 페이지로 설정, 실제 데이터에 맞게 설정 필요)
+// 화면 불러오기
+const showAllWorkInfo = document.querySelector('.showAllWorkInfo');
 
-    showAllWorkInfo.addEventListener('click', function () {
-        loadWorkInfo(currentPage, recordSize);
+showAllWorkInfo.addEventListener('click', function () {
+    let page = 1;
+    $.ajax({
+        type: 'get',
+        url: '/orca/work/allWorkInfo',
+        data: {
+            page: page
+        },
+        dataType: 'html',
+        success: function (response) {
+            const mainDiv = document.querySelector('#content');
+            if (mainDiv) {
+                mainDiv.innerHTML = response;
+                attachEventListeners(page);
+            } else {
+                console.error('mainDiv 요소를 찾을 수 없습니다.');
+            }
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
     });
-
-    function loadWorkInfo(page, recordSize) {
-        $.ajax({
-            type: 'get',
-            url: '/orca/work/allWorkInfo',
-            data: {
-                page: page,
-                recordSize: recordSize
-            },
-            dataType: 'html',
-            success: function (response) {
-                const mainDiv = document.querySelector('#content');
-                if (mainDiv) {
-                    mainDiv.innerHTML = response;
-                    attachEventListeners(page, recordSize);
-                } else {
-                    console.error('mainDiv 요소를 찾을 수 없습니다.');
-                }
-            },
-            error: function (error) {
-                console.error('데이터 로드 실패', error);
-            }
-        });
-    }
-
-    function attachEventListeners(page, recordSize) {
-        const allWorkInfoTable = document.querySelector('#allWorkInfoTable tbody');
-        if (allWorkInfoTable) {
-            $.ajax({
-                url: 'http://127.0.0.1:8080/orca/re/work/allList',
-                method: 'get',
-                data: {
-                    page: page,
-                    recordSize: recordSize
-                },
-                success: function (data) {
-                    let str = '';
-                    data.forEach(function (item) {
-                        str += '<tr>';
-                        str += '<td>' + item.empNo + '</td>';
-                        str += '<td>' + item.workDate + '</td>';
-                        str += '<td>' + item.name + '</td>';
-                        str += '<td>' + item.partName + '</td>';
-                        str += '<td>' + item.nameOfPosition + '</td>';
-                        str += '<td>' + item.startTime + '</td>';
-                        str += '<td>' + item.endTime + '</td>';
-                        str += '<td>' + item.overtimeWork + '</td>';
-                        str += '<td>' + item.holidayWork + '</td>';
-                        str += '</tr>';
-                    });
-                    allWorkInfoTable.innerHTML = str;
-                    renderPagination(page, recordSize);
-                },
-                error: function (error) {
-                    console.error('데이터를 가져오는데 실패했습니다.', error);
-                }
-            });
-        } else {
-            console.error('allWorkInfoTable 요소를 찾을 수 없습니다.');
-        }
-    }
-
-    function renderPagination(page, recordSize) {
-        const pagination = document.getElementById('pagination');
-        if (pagination) {
-            pagination.innerHTML = '';
-
-            const prevButton = document.createElement('button');
-            prevButton.innerText = '<';
-            prevButton.disabled = page === 1;
-            prevButton.addEventListener('click', function () {
-                if (page > 1) {
-                    loadWorkInfo(page - 1, recordSize);
-                }
-            });
-            pagination.appendChild(prevButton);
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.innerText = i;
-                button.classList.toggle('active', i === page);
-                button.addEventListener('click', function () {
-                    loadWorkInfo(i, recordSize);
-                });
-                pagination.appendChild(button);
-            }
-
-            const nextButton = document.createElement('button');
-            nextButton.innerText = '>';
-            nextButton.disabled = page === totalPages;
-            nextButton.addEventListener('click', function () {
-                if (page < totalPages) {
-                    loadWorkInfo(page + 1, recordSize);
-                }
-            });
-            pagination.appendChild(nextButton);
-        } else {
-            console.error('pagination 요소를 찾을 수 없습니다.');
-        }
-    }
-
-    // 초기 데이터 로드
-    loadWorkInfo(currentPage, recordSize);
 });
+
+// pagination 객체 받아오기
+function attachEventListeners(page) {
+    const pagination = {};
+    let totalPage = document.querySelector('#pagination');
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/re/work/getPage',
+        dataType: 'json',
+        data: {
+            page: page
+        },
+        success: function (response) {
+            Object.assign(pagination, response);
+            console.log(pagination);
+            while (totalPage.firstChild) {
+                totalPage.removeChild(totalPage.firstChild);
+            }
+
+            if (pagination.existPrevPage) {
+                let prevButton = document.createElement('button');
+                prevButton.textContent = '이전';
+                prevButton.classList.add('pagination-button');
+                totalPage.appendChild(prevButton);
+                prevButton.addEventListener('click', function () {
+                    attachEventListeners(pagination.startPage - 1);
+                });
+            }
+
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                let pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.classList.add('pagination-button');
+                if (i == page) {
+                    pageButton.classList.add('current-page');
+                }
+                totalPage.appendChild(pageButton);
+                pageButton.addEventListener('click', function () {
+                    attachEventListeners(i);
+                });
+            }
+
+            if (pagination.existNextPage) {
+                let nextButton = document.createElement('button');
+                nextButton.textContent = '이후';
+                nextButton.classList.add('pagination-button');
+                totalPage.appendChild(nextButton);
+                nextButton.addEventListener('click', function () {
+                    attachEventListeners(pagination.endPage + 1);
+                });
+            }
+            attachEventListenersData(pagination);
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+// 데이터 받아오기
+function attachEventListenersData(pagination) {
+    let startNum = pagination.startNum;
+    let endNum = pagination.endNum;
+    let employeeContainer = document.querySelector('#allWorkInfoTable tbody');
+    employeeContainer.innerHTML = '';
+
+    $.ajax({
+        type: 'get',
+        url: '/orca/re/work/getData',
+        data: {
+            startNum: startNum,
+            endNum: endNum
+        },
+        dataType: 'json',
+        success: function (data) {
+            let str = '';
+            data.forEach(function (item) {
+                str += '<tr>';
+                str += '<td>' + item.empNo + '</td>';
+                str += '<td>' + item.workDate + '</td>';
+                str += '<td>' + item.name + '</td>';
+                str += '<td>' + item.partName + '</td>';
+                str += '<td>' + item.nameOfPosition + '</td>';
+                str += '<td>' + item.startTime + '</td>';
+                str += '<td>' + item.endTime + '</td>';
+                str += '<td>' + item.overtimeWork + '</td>';
+                str += '<td>' + item.holidayWork + '</td>';
+                str += '</tr>';
+            });
+            employeeContainer.innerHTML = str;
+        },
+        error: function (error) {
+            console.error('데이터 로드 실패', error);
+        }
+    });
+}
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const showVacationCode = document.querySelector('.showVacationCode');
@@ -406,8 +420,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
-
 
 
 function getSelects() {
