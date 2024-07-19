@@ -34,7 +34,7 @@ public interface PersonSalaryMapper {
               WHERE P.EMP_NO = #{empNo}
                 AND S.PAYROLL_NO = #{payrollNo}
             """)
-  SalaryVo getPersonSalaryByOne(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
+  SalaryVo getPersonSalaryByNo(@Param("payrollNo") String payrollNo,@Param("empNo") String empNo,UserVo vo);
 
     @Select("""
             SELECT
