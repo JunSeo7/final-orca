@@ -607,8 +607,9 @@ COMMIT;
 --------------------------------------------------------
 -- 문서 파일 더미 데이터 (DOC_FILES)
 --------------------------------------------------------
-INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES (SEQ_DOC_FILES.NEXTVAL, 1, '변경된_파일_이름_1.txt', '원본_파일_이름_1.txt', 'N');
-INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES (SEQ_DOC_FILES.NEXTVAL, 2, '변경된_파일_이름_2.txt', '원본_파일_이름_2.txt', 'N');
+INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES (SEQ_DOC_FILES.NEXTVAL, 6, '교육 신청서 (사내, 단기 국내 위탁)_06.jpg', '교육 신청서.jpg', 'N');
+INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES (SEQ_DOC_FILES.NEXTVAL, 8, '출장비 정산서(해외)_08.jpg', '출장비 정산서.jpg', 'N');
+INSERT INTO DOC_FILES (FILE_NO, DOC_NO, CHANGE_NAME, ORIGIN_NAME, DEL_YN) VALUES (SEQ_DOC_FILES.NEXTVAL, 15, '출장비 정산서(국내)_15.png', '출장비 정산서(국내).png', 'N');
 
 --------------------------------------------------------
 -- 문서 참조자 리스트 더미 데이터 (DOC_REFERENCE_LIST)
