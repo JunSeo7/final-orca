@@ -102,25 +102,33 @@
                             <h1>급여 입력</h1>
 
                             <form action="/orca/salary/write" method="post" id="salaryForm">
-                                사원번호 :<input type="text" name="empNo" class="empNo">
-                                <br>
-                                직급수당: <input type="text" name="position" class="position">
-                                <br>
-                                상여금: <input type="text" name="bonus" class="bonus">
-                                <br>
-                                식대: <input type="text" name="meals" class="meals">
-                                <br>
-                                휴일근무시간: <input type="text" name="holidayTime" class="holidayTime">
-                                <br>
-                                연장근무시간: <input type="text" name="overTime" class="overTime">
-                                <br>
-                                자녀 수: <input type="text" name="person" class="person">
-                                <br>
-                                <input type="submit" name="작성하기">
+                                <label for="employeeId">사원번호 </label>
+                                <input type="text" name="empNo" class="empNo">
+
+                                <label for="salary">직급수당</label>
+                                <input type="text" name="position" class="position">
+
+                                <label for="bonus">상여금</label>
+                                <input type="text" name="bonus" class="bonus">
+
+                                <label for="mealAllowance">식대</label>
+                                <input type="text" name="meals" class="meals">
+
+                                <label for="weekdayWorkingHours">휴일근무시간</label>
+                                <input type="text" name="holidayTime" class="holidayTime">
+
+                                <label for="overtimeHours">연장근무시간</label>
+                                <input type="text" name="overTime" class="overTime">
+
+                                <label for="numberOfChildren">자녀 수</label>
+                                <input type="text" name="person" class="person">
+
+                                <input type="submit" name="작성하기" id="submitButton" value="작성하기">
                             </form>
                         </div>
 
                     </main>
+
             </body>
 
             </html>
@@ -188,7 +196,71 @@
 
             <style>
                 #salartWriteMain {
-                    margin-top: 20%;
-                    margin-left: 50%;
+                    margin-top: 10%;
+                    margin-left: 35%;
+                    margin-right: 40%;
+                    width: 500px;
+                    height: 500px;
+                    border: 1px solid black;
+                    text-align: center;
+                }
+
+
+                #salaryForm {
+                    width: 500px;
+                    height: 400px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: repeat(8, 1fr);
+                    align-items: center;
+
+                    justify-items: center;
+                    /* 텍스트 상자를 수평으로 가운데 정렬 */
+
+
+
+                }
+
+                #salaryForm>label {
+                    margin-left: 40%;
+
+                }
+
+                input {
+                    width: 40%;
+                    margin-right: 25%;
+                }
+
+                input.holidayTime {
+                    width: 10%;
+                }
+
+                input.overTime {
+                    width: 10%;
+                }
+
+                input.person {
+                    width: 10%;
+                }
+
+
+                /* 제출 버튼을 두 칸 차지하도록 설정 */
+                #submitButton {
+                    grid-column: 1 / span 2;
+                    grid-row: 8;
+
+                    width: 70%;
+                    height: 50px;
+
+                    background: #67a8cd;
+                    color: white;
+                    border-style: outset;
+                    border-color: #67a8cd;
+                    font: bold15px arial, sans-serif;
+                    text-shadow: none;
+                     margin: 5%;
+
+
+
                 }
             </style>
