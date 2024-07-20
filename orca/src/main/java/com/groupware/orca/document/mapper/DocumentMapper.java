@@ -183,6 +183,11 @@ public interface DocumentMapper {
                T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
                PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
         FROM DOCUMENT D
+           JOIN (
+               SELECT DOC_NO, MIN(APPROVER_NO) AS APPROVER_NO
+               FROM APPR_LINE
+               GROUP BY DOC_NO
+           ) A ON D.DOC_NO = A.DOC_NO
         JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
         JOIN DOC_TEMPLATE T ON D.TEMPLATE_NO = T.TEMPLATE_NO
         JOIN DOC_TEMPLATE_CATEGORY TC ON T.CATEGORY_NO = TC.CATEGORY_NO
@@ -204,7 +209,7 @@ public interface DocumentMapper {
               AND D.CONTENT LIKE '%' || #{searchText} || '%'
           </when>
         </choose>
-        AND D.WRITER_NO = #{loginUserNo}
+        AND (D.WRITER_NO = #{loginUserNo} OR A.APPROVER_NO = #{loginUserNo})
         ORDER BY D.URGENT DESC, D.CREDIT_DATE DESC, D.DOC_NO DESC
         </script>
         """)
@@ -233,7 +238,7 @@ public interface DocumentMapper {
     // 결재선 목록 조회
     @Select("""
             SELECT DISTINCT AL.DOC_NO AS approvalDocNo, AL.SEQ, TO_CHAR(AL.APPROVAL_DATE, 'YYYY-MM-DD HH24:MI') AS APPROVAL_DATE
-                            , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName, DEPT.PARTNAME AS deptName
+                            , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName,PI.IMG_CHANGE_NAME profile, DEPT.PARTNAME AS deptName
                             , P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME AS apprStageName, AL.APPROVER_NO
             FROM APPR_LINE AL
             JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO

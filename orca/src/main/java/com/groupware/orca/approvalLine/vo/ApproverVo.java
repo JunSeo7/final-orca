@@ -2,6 +2,8 @@ package com.groupware.orca.approvalLine.vo;
 
 import lombok.Data;
 
+import java.net.URL;
+
 @Data
 public class ApproverVo {
 
@@ -14,6 +16,8 @@ public class ApproverVo {
 
     private int approverNo;             // 결재자 번호
     private String approverName;        // 결재자 이름
+    private String profile;             // 결재자 프로필 changeName
+    private URL profileUrl;             // 프로필 url
     private int deptCode;               // 부서 코드
     private String deptName;            // 부서 이름
     private int positionCode;           // 직위 코드

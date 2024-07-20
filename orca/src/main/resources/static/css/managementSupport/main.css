@@ -1,20 +1,70 @@
 /* 전체 페이지 설정 */
 /*메인*/
 main {
-    margin-top: 120px;
-    margin-left: 240px;
-    padding-bottom: 100px;
-    flex-grow: 1;
-    overflow-y: auto;
-    transition: margin-left 0.3s ease;
-    padding-left: 200px;
-    padding-right: 200px;
-    word-break: keep-all;
+  margin-top: 90px;
+  margin-left: 240px;
+  padding-bottom: 100px;
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 50px;
+  word-break: keep-all;
 }
 
 /* 메인 컨텐츠 확장 상태 설정 */
 main.full {
     margin-left: 20px;
+}
+
+.main-inner{
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+
+.left, .right {
+    width: 48%;
+    height:80%;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.left p, .right p {
+    margin: 0;
+}
+
+#template-list, #apprline-list {
+    display: flex;
+    flex-wrap: wrap; /* 요소들이 줄 바꿈되도록 설정 */
+}
+
+#template-list div, #apprline-list div {
+    flex: 1 1 40%;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    white-space: nowrap; /* 글자가 한 줄로 표시되도록 설정 */
+    overflow: hidden; /* 넘치는 글자를 숨김 */
+    text-overflow: ellipsis; /* 넘치는 글자를 '...'으로 표시 */
+}
+
+/* hover 시 스타일 추가 */
+#template-list div:hover, #apprline-list div:hover {
+    background-color: #6eadff;
+    color:white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
 }
 
 body {
@@ -91,23 +141,6 @@ aside {
 /* 어사이드 바 숨김 상태 설정 */
 aside.hidden {
     transform: translateX(-220px);
-}
-
-/* 메인 컨텐츠 설정 */
-main {
-    margin-top: 60px;
-    /* 헤더 높이 */
-    margin-left: 220px;
-    /* 어사이드 너비 */
-    padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
-    transition: margin-left 0.3s ease;
-}
-
-/* 메인 컨텐츠 확장 상태 설정 */
-main.full {
-    margin-left: 20px;
 }
 
 /* 프로필 설정 */
@@ -207,13 +240,6 @@ nav ul li a:hover {
     color: #368dff;
 }
 
-/* 메인 */
-.main {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-}
 
 #profileDetail {
     padding: 25px;

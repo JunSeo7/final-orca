@@ -64,8 +64,6 @@ public class ApprovalLineController {
         }
     }
 
-
-
     // 결재선 전체목록 (양식/결재라인)
     // 세션 - 관리자 아니면 나가세요 하기
     @GetMapping("list")
@@ -73,6 +71,16 @@ public class ApprovalLineController {
         List<ApprovalLineVo> approvalLines = service.getApprovalLines();
         model.addAttribute("approvalLines", approvalLines);
         return "apprline/list";
+    }
+
+    // 결재선 전체목록 (양식/결재라인)
+    // 세션 - 관리자 아니면 나가세요 하기
+    @GetMapping("getlist")
+    @ResponseBody
+    public List<ApprovalLineVo> getApprLines(HttpSession httpSession) {
+        List<ApprovalLineVo> approvalLines = service.getApprovalLines();
+        System.out.println("approvalLines = " + approvalLines);
+        return approvalLines;
     }
 
     // 결재선 삭제
