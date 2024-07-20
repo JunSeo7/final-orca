@@ -41,6 +41,32 @@ main.full {
     margin: 0;
 }
 
+#template-list, #apprline-list {
+    display: flex;
+    flex-wrap: wrap; /* 요소들이 줄 바꿈되도록 설정 */
+}
+
+#template-list div, #apprline-list div {
+    flex: 1 1 40%;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    white-space: nowrap; /* 글자가 한 줄로 표시되도록 설정 */
+    overflow: hidden; /* 넘치는 글자를 숨김 */
+    text-overflow: ellipsis; /* 넘치는 글자를 '...'으로 표시 */
+}
+
+/* hover 시 스타일 추가 */
+#template-list div:hover, #apprline-list div:hover {
+    background-color: #6eadff;
+    color:white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
+}
+
 body {
     display: flex;
     margin: 0;

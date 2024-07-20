@@ -23,7 +23,7 @@ $(document).ready(function() {
             var apprlineList = $('#apprline-list');
             apprlineList.empty();
             data.forEach(function(apprline) {
-                apprlineList.append('<div>' + apprline.title + '</div>');
+                apprlineList.append('<div>' + apprline.apprLineName + '</div>');
             });
         },
         error: function(e) {
