@@ -140,9 +140,9 @@ public interface DocumentMapper {
 
     // 내가 받은 결재 (앞 결재자의 상태가 2인지 확인 하고, 그러면 보이게하기..)
     @Select("""
-            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS,
-                   D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
-                   PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
+            SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE
+                   , D.STATUS,D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName
+                   , PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
             JOIN APPR_LINE A ON D.DOC_NO = A.DOC_NO
             JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
@@ -238,8 +238,8 @@ public interface DocumentMapper {
     // 결재선 목록 조회
     @Select("""
             SELECT DISTINCT AL.DOC_NO AS approvalDocNo, AL.SEQ, TO_CHAR(AL.APPROVAL_DATE, 'YYYY-MM-DD HH24:MI') AS APPROVAL_DATE
-                            , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName,PI.IMG_CHANGE_NAME profile, DEPT.PARTNAME AS deptName
-                            , P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME AS apprStageName, AL.APPROVER_NO
+                  , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName,PI.IMG_CHANGE_NAME profile, DEPT.PARTNAME AS deptName
+                  , P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME AS apprStageName, AL.APPROVER_NO
             FROM APPR_LINE AL
             JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO
             LEFT JOIN APPR_STAGE_LIST ASL ON AL.APPROVAL_STAGE = ASL.APPR_STAGE_NO
@@ -280,25 +280,21 @@ public interface DocumentMapper {
                    WHERE A.DOC_NO = B.DOC_NO
                      AND A.SEQ - 1 = B.SEQ
                      AND B.APPROVAL_STAGE = 2
-                       ))
-                       AND (
+                       )) AND (
                            EXISTS (
                                SELECT 1
                                FROM APPR_LINE C
                                WHERE A.DOC_NO = C.DOC_NO
                                  AND A.SEQ + 1 = C.SEQ
                                  AND C.APPROVAL_STAGE = 1
-                           )
-                           OR
+                           ) OR
                            NOT EXISTS (
                                SELECT 1
                                FROM APPR_LINE C
                                WHERE A.DOC_NO = C.DOC_NO
                                  AND A.SEQ + 1 = C.SEQ
-                           )
-                       )
-                       THEN 1
-                       ELSE 0
+                       ))
+                       THEN 1 ELSE 0
                    END AS isMyTurn
             FROM APPR_LINE A
             WHERE A.DOC_NO = #{docNo}

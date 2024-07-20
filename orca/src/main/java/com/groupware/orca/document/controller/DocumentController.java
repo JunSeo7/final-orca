@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,13 +38,10 @@ public class DocumentController {
 
     private final DocumentService service;
 
+    // s3 - 결재문서 파일저장
     private final AmazonS3 s3;
-
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
-
-//    @Value("${file.upload-dir}")
-//    private String uploadDir;
 
     // 결재 작성 화면
     @GetMapping("write")
@@ -93,8 +91,19 @@ public class DocumentController {
             String[] approverClassificationNo,
             String[] referencerNo,
             @RequestParam("fileList") MultipartFile[] fileList,
-            HttpServletRequest req) throws IOException {
-        
+            HttpServletRequest req,
+            RedirectAttributes redirectAttributes
+            ) throws Exception {
+
+        if ((UserVo) httpSession.getAttribute("loginUserVo") == null) {
+                redirectAttributes.addFlashAttribute("message", "로그인한 후 진행해주세요.");
+                return "redirect:/orca/user/login";
+            }
+
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+
+        vo.setWriterNo(loginUserNo);
+
         // 결재자 등록
         List<ApproverVo> approverVoList = new ArrayList<>();
         for (int i = 0; i < seq.length; ++i) {
@@ -135,33 +144,10 @@ public class DocumentController {
 
                 InputStream is = file.getInputStream(); // 파일의 입력 스트림을 가져옴
                 ServletContext context = req.getServletContext();
-//                String path = context.getRealPath("/static/upload/document");
-
-//                java.io.File dir = new java.io.File(path); // 파일 저장 경로의 디렉토리 객체 생성
-//                if (!dir.exists()) {
-//                    dir.mkdirs(); // 디렉토리가 존재하지 않으면 생성
-//                }
-
-//                if (!uploadDir.contains("document")) {
-//                    uploadDir += "/document";
-//                }
-//
-//                File dir = new File(uploadDir);
-//                if (!dir.exists()) {
-//                    dir.mkdirs();
-//                }
 
                 String random = UUID.randomUUID().toString(); // 고유한 파일 이름 생성을 위한 랜덤 문자열 생성
                 String ext = originFileName.substring(originFileName.lastIndexOf("."));
                 String changeName = title + System.currentTimeMillis() + "_" + random + ext;
-
-//                try (FileOutputStream fos = new FileOutputStream(uploadDir +"/"+ changeName)) {
-//                    byte[] buf = new byte[1024]; // 파일을 읽고 쓰기 위한 버퍼 생성
-//                    int size;
-//                    while ((size = is.read(buf)) != -1) { // 입력 스트림에서 데이터를 읽어 버퍼에 저장
-//                        fos.write(buf, 0, size); // 버퍼에 있는 데이터를 출력 스트림에 씀
-//                    }
-//                }
 
                 // DB에 파일 정보 저장
                 DocFileVo fileVo = new DocFileVo();
@@ -174,7 +160,7 @@ public class DocumentController {
                 String folderName = "document/";
                 String fileName = folderName + fileVo.getChangeName();
 
-                //s3 에 업로드하깅
+                //s3에 업로드
                 ObjectMetadata metadata = new ObjectMetadata();
                 metadata.setContentType(file.getContentType());
                 metadata.setContentLength(file.getSize());
@@ -186,8 +172,7 @@ public class DocumentController {
             vo.setFileVoList(fileVoList);
         }
 
-        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        vo.setWriterNo(loginUserNo);
+
         int result = service.writeDocument(vo);
         return "redirect:/orca/document/list";
     }

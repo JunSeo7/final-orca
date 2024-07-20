@@ -6,6 +6,7 @@ import com.groupware.orca.document.dao.DocumentDao;
 import com.groupware.orca.document.vo.*;
 import com.groupware.orca.docTemplate.vo.TemplateVo;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,14 +43,15 @@ public class DocumentService {
 
     // 결재 작성
     @Transactional
-    public int writeDocument(DocumentVo vo)  {
-//          throws Exception
+    public int writeDocument(DocumentVo vo) {
+
 //        if (vo.getTitle().length() > 30) {
 //            throw new InvalidInputException("글자수가 최대입니다. (제목은 30자 이내)");
 //        }
 //        if (vo.getContent().length() > 1000) {
 //            throw new InvalidInputException("글자수가 최대입니다. (내용은 1000자 이내)");
 //        }
+
         int result = 0;
         dao.writeDocument(vo);
         int docNo = vo.getDocNo();
@@ -152,15 +154,11 @@ public class DocumentService {
 
         // 내 차례인지 확인
         Integer isMyTurn = dao.isMyTurn(docNo, loginUserNo);
-
-        System.out.println("isMyTurn = " + isMyTurn);
-
         if (isMyTurn != null && isMyTurn== 1) {
             documentVo.setMyTurn(true);
         } else {
             documentVo.setMyTurn(false);
         }
-
 
         return documentVo;
     }
