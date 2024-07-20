@@ -51,6 +51,15 @@ public class TemplateController {
         return "template/list";
     }
 
+    // 결재양식 목록
+    @GetMapping("getlist")
+    @ResponseBody
+    public List<TemplateVo> getMainTemplateList(HttpSession httpSession){
+        List<TemplateVo> templateList = service.getTemplateList();
+        System.out.println("templateList = " + templateList);
+        return templateList;
+    }
+
     // 결재양식 검색
     @GetMapping("/search/data")
     @ResponseBody

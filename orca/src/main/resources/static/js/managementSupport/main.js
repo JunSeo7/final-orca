@@ -1,3 +1,38 @@
+$(document).ready(function() {
+    // 결재 양식 목록 가져오기
+    $.ajax({
+        url: '/orca/template/getlist',
+        method: 'GET',
+        success: function(data) {
+            var templateList = $('#template-list');
+            templateList.empty();
+            data.forEach(function(template) {
+                templateList.append('<div>' + template.title + '</div>');
+            });
+        },
+        error: function(e) {
+                alert('접근 권한이 없습니다.');
+        }
+    });
+
+    // 기본 결재선 목록 가져오기
+    $.ajax({
+        url: '/orca/apprline/getlist',
+        method: 'GET',
+        success: function(data) {
+            var apprlineList = $('#apprline-list');
+            apprlineList.empty();
+            data.forEach(function(apprline) {
+                apprlineList.append('<div>' + apprline.title + '</div>');
+            });
+        },
+        error: function(e) {
+            alert('접근 권한이 없습니다.');
+        }
+    });
+});
+
+
 /* 페이지 로드 함수 */
 function loadPage(page) {
     fetch(page)  // 페이지 파일을 가져옴

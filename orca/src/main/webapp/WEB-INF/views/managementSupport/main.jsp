@@ -72,9 +72,20 @@
                             </div>
                         </nav>
                 </aside>
-                <main>
-                    <div class="main" id="content">
-                        <h1>경영지원부</h1>
+                <main class="main" id="content">
+                    <div class="main-inner">
+                        <div class="left">
+                            <h2>결재 관리</h2>
+                            <h3>결재 양식 목록</h3>
+                            <div id="template-list"></div>
+                            <h3>기본 결재선 목록</h3>
+                            <div id="apprline-list"></div>
+                        </div>
+                        <div class="right">
+                             <h2>사내 캘린더 관리</h2>
+                             <h3>결재 양식 목록</h3>
+                             <h3>기본 결재선 목록</h3>
+                        </div>
                     </div>
                 </main>
             </body>
