@@ -14,6 +14,7 @@ public interface UserMapper {
             "    , E.NAME\n" +
             "    , E.IMG_CHANGE_NAME\n" +
             "    , E.DEPT_CODE\n" +
+            "    , D.PARTNAME\n" +
             "    , T.TEAM_NAME\n" +
             "    , E.PASSWORD\n" +
             "FROM PERSONNEL_INFORMATION E\n" +
@@ -28,6 +29,7 @@ public interface UserMapper {
             "    , E.NAME\n" +
             "    , E.IMG_CHANGE_NAME\n" +
             "    , E.DEPT_CODE\n" +
+            "    , D.PARTNAME\n" +
             "    , T.TEAM_NAME\n" +
             "    , E.PASSWORD\n" +
             "FROM PERSONNEL_INFORMATION E\n" +

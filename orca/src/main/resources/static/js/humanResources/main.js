@@ -478,9 +478,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 $.ajax({
                     url: "/orca/re/vacationRef/editVCode",
                     method: "post",
-                    data: { 
-                        vacationCode: vacationCode, 
-                        vacationName: vacationName 
+                    data: {
+                        vacationCode: vacationCode,
+                        vacationName: vacationName
                     },
                     success: function () {
                         alert("휴가 코드가 수정되었습니다.");
@@ -1047,20 +1047,24 @@ function employeeEdit(empNo) {
             fieldValue = bankName + '-' + fieldValue;
             console.log(fieldValue);
         }
+        
 
-        if (fieldValue !== updatedFieldValue) {
+        if (String(fieldValue) !== String(updatedFieldValue)) {
             if (fieldValue.trim() === '') {
                 if (updatedFieldValue !== null) {
+                    console.log("is문");
                     isUpdate = true;
                     formData.append(fieldName, fieldValue);
+
                 }
             } else {
                 formData.append(fieldName, fieldValue);
+                console.log("esle문");
                 isUpdate = true;
+
             }
         }
     }
-
 
     appendFormData('#name', 'name', updatedData.name);
     appendFormData('#gender', 'gender', updatedData.gender);
@@ -1082,12 +1086,13 @@ function employeeEdit(empNo) {
 
     // 파일 업로드를 위한 처리
     let fileInput = document.getElementById('image');
+    console.log(fileInput);
     if (fileInput.files.length > 0) {
         formData.append('image', fileInput.files[0]);
         isUpdate = true;
     }
     console.log(isUpdate);
-
+    console.log(formData);
     // 변경된 데이터가 있는 경우에만 Ajax를 통해 서버로 전송
     if (isUpdate) {
         formData.append('empNo', empNo);
