@@ -100,12 +100,13 @@
                         <div class="main" id="content">
                             <h1 class="salary-list">급여 목록조회</h1>
 
-                            <div id="searchArea">
-                                <input type="text" id="search" placeholder="검색할 사원 번호 입력">
-                                <button onclick="search()">검색</button>
-                            </div>
+                            
 
                             <table class="salaryList">
+                                <div id="searchArea">
+                                    <input type="text" id="search" placeholder="검색할 사원 번호 입력">
+                                    <button onclick="search()">검색</button>
+                                </div>
                                 <thead>
                                     <tr>
                                         <th>글 번호</th>
@@ -217,6 +218,7 @@
             <script>
 
                 function detail(payrollNo) {
+                    $('div#searchArea').remove();
                     $('h1.salary-list').remove();
                     $('table.salaryList').remove();
                     $('div.editArea').remove();
@@ -272,12 +274,11 @@
                     });
                 }
 
-
-
             </script>
 
             <script>
                 function edit(payrollNo) {
+                    $('div#searchArea').remove();
                     $('#detailArea').hide();
                     $('#editArea').show();
 
@@ -357,3 +358,7 @@
                 }
 
             </script>
+
+            <style>
+
+            </style>
