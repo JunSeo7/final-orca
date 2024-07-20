@@ -26,26 +26,4 @@ public class OrganizationChartController {
         return "organizationChart/showOrganizationChart";
     }
 
-    @GetMapping("getDepartment")
-    @ResponseBody
-    public List<DepartmentVo> getDepartment() {
-        List<DepartmentVo> departmentVoList = service.getDepartment();
-        return departmentVoList;
-    }
-
-    @GetMapping("getTeam")
-    @ResponseBody
-    public List<TeamVo> getTeam(@RequestParam("deptCode") int deptCode) {
-        List<TeamVo> teamVoList = service.getTeam(deptCode);
-        return teamVoList;
-    }
-
-    @GetMapping("getOrganizationChartList")
-    @ResponseBody
-    public List<UserVo> getOrganizationChartList(@RequestParam("deptCode") int deptCode, @RequestParam("teamCode")int teamCode) {
-        List<UserVo> userVoList = service.getOrganizationChartList(deptCode, teamCode);
-        return userVoList;
-    }
-
-
 }
