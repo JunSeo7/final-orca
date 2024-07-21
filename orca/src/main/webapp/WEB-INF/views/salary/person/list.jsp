@@ -81,7 +81,7 @@
                             <li class="nav-item"><a href="#">드라이브</a></li>
                             <li class="nav-item"><a href="#">메일</a></li>
                             <li class="nav-item"><a href="/orca/user/showDepartmentLogin">부서 로그인</a></li>
-                            <li class="nav-item"><a href="/orca/personList">개인명세서 목록 / 조회</a></li>
+                            <li class="nav-item"><a href="/orca/accountingDivision/personList">개인명세서 목록 / 조회</a></li>
                         </ul>
                     </aside>
 
