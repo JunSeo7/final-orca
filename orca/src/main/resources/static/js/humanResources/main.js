@@ -497,12 +497,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
-
-
-
-
-
 function getSelects() {
     $.ajax({
         type: 'get',
@@ -540,8 +534,11 @@ function getSelects() {
             validation();
             inputEmployeeRegistration();
         },
-        error: function (error) {
-            console.error('데이터 로드 실패', error);
+        error: function (xhr, status, error) {
+            alert("부서 불러오기 실패 '관리자에게 문의하세요.'")
+            console.log('Status Code:', xhr.status);
+            console.log('Status Text:', xhr.statusText);
+            console.log('Error:', error);
         }
     });
 }
@@ -622,35 +619,33 @@ function inputEmployeeRegistration() {
                 processData: false,  // 필수: FormData를 문자열로 변환하지 않음
                 contentType: false,  // 필수: 기본 content-type 설정 방지
                 success: function (data) {
-                    console.log('서버 응답:', data);
-                    if (data === 1) {
-                        alert("사원 등록 성공");
-                        // 폼 필드 초기화
-                        $('#name').val('');
-                        $('#positionCode').val('');
-                        $('#dept').val('');
-                        $('#team').val('');
-                        $('#gender').val('');
-                        $('#social-security-no').val('');
-                        $('#password').val('');
-                        $('#phone').val('');
-                        $('#ext').val('');
-                        $('#email').val('');
-                        $('#address').val('');
-                        $('#height').val('');
-                        $('#weight').val('');
-                        $('#bloodType').val('');
-                        $('#religion').val('');
-                        $('#salary').val('');
-                        $('#bankName').val('');
-                        $('#bankNumber').val('');
-                        $('#image').val(''); // 파일 필드 초기화
-                    } else {
-                        alert("사원 등록 실패");
-                    }
+                    alert("사원 등록 성공");
+                    // 폼 필드 초기화
+                    $('#name').val('');
+                    $('#positionCode').val('');
+                    $('#dept').val('');
+                    $('#team').val('');
+                    $('#gender').val('');
+                    $('#social-security-no').val('');
+                    $('#password').val('');
+                    $('#phone').val('');
+                    $('#ext').val('');
+                    $('#email').val('');
+                    $('#address').val('');
+                    $('#height').val('');
+                    $('#weight').val('');
+                    $('#bloodType').val('');
+                    $('#religion').val('');
+                    $('#salary').val('');
+                    $('#bankName').val('');
+                    $('#bankNumber').val('');
+                    $('#image').val(''); 
                 },
                 error: function (xhr, status, error) {
-                    console.error('데이터 전송 중 오류 발생:', error);
+                    console.log('Status Code:', xhr.status);
+                    console.log('Status Text:', xhr.statusText);
+                    console.log('Error:', error);
+                    alert("사원 등록 실패");
                 }
             });
         });
@@ -1047,7 +1042,7 @@ function employeeEdit(empNo) {
             fieldValue = bankName + '-' + fieldValue;
             console.log(fieldValue);
         }
-        
+
 
         if (String(fieldValue) !== String(updatedFieldValue)) {
             if (fieldValue.trim() === '') {

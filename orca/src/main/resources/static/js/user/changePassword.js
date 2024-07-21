@@ -1,7 +1,6 @@
 const passwordForm = document.getElementById('passwordForm');
 $(document).ready(function () {
     passwordForm.addEventListener('submit', function (event) {
-        console.log("넘어옴");
         event.preventDefault();
 
         const currentPassword = document.getElementById('currentPassword').value;
@@ -29,21 +28,23 @@ $(document).ready(function () {
                         if (response === 1) {
                             alert("비밀번호 변경 성공!");
                             window.location.href = "/orca/user/login";
-                        } else if (response === 10) {
+                        } 
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Status Code:', xhr.status);
+                        console.log('Status Text:', xhr.statusText);
+                        console.log('Error:', error);
+                        console.log('Response Text:', xhr.responseText);
+                        if(xhr.responseText === '-1'){
                             alert('현재 비밀번호를 다시 확인해주세요.');
-                        } else {
+                        }else{
                             alert('비밀번호 변경 실패');
                         }
-                    },
-                    error: function (error) {
-                        console.log(error);
                     }
                 })
             }
         }
-        // 비밀번호 변경 API 호출 등의 로직 추가 가능 (서버와의 통신)
 
-        // 예시로 경고창을 띄우는 코드
     });
 })
 

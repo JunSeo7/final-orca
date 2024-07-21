@@ -34,7 +34,7 @@ public class UserService {
         boolean isMatch = encoder.matches(currentPassword, userVoData.getPassword());
 
         if(!isMatch){
-            return 10;
+            return -1;
         }
         String encPassword = encoder.encode(newPassword);
 
