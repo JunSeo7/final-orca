@@ -38,9 +38,7 @@ public class TemplateController {
     // 결재양식 등록 기능
     @PostMapping("add")
     public String addTemplate(TemplateVo vo, HttpSession httpSession) {
-        System.out.println("vo = " + vo);
         int result = service.addTemplate(vo);
-        System.out.println("result = " + result);
         return "redirect:/orca/template/list";
     }
     // 결재양식 목록
@@ -56,7 +54,6 @@ public class TemplateController {
     @ResponseBody
     public List<TemplateVo> getMainTemplateList(HttpSession httpSession){
         List<TemplateVo> templateList = service.getTemplateList();
-        System.out.println("templateList = " + templateList);
         return templateList;
     }
 
@@ -75,9 +72,7 @@ public class TemplateController {
                 vo.setCategoryName(searchText);
             }
 
-        System.out.println("vo 들어온거= " + vo);
         List<TemplateVo> templateList = service.getsearchTemplateList(vo);
-        System.out.println("vo 결과= " + templateList);
 
         return templateList;
     }
@@ -93,7 +88,6 @@ public class TemplateController {
     // 결재양식 수정 화면
     @GetMapping("edit")
     public String editTemplate(@RequestParam("templateNo") String templateNo, Model model, HttpSession httpSession) {
-        System.out.println("templateNo = " + templateNo);
         model.addAttribute("templateNo", templateNo);
         return "template/edit";
     }
@@ -101,9 +95,7 @@ public class TemplateController {
     @GetMapping("getTemplateData")
     @ResponseBody
     public TemplateVo getTemplateData(@RequestParam("templateNo") int templateNo, HttpSession httpSession) {
-        System.out.println("templateNo = " + templateNo);
         TemplateVo vo = service.getTemplateDetail(templateNo);
-        System.out.println("vo = " + vo);
         return vo;
     }
     // 결재양식 수정 기능
@@ -113,7 +105,6 @@ public class TemplateController {
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
 
         int result = service.editTemplate(vo);
-        System.out.println("result = " + result);
         if (result > 0) {
             return ResponseEntity.ok().build();
         } else {

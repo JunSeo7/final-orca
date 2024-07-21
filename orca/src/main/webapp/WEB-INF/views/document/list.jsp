@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.groupware.orca.user.vo.UserVo" %>
 
 <!DOCTYPE html>
 <html>
@@ -70,7 +69,7 @@
 
                             <c:choose>
                                 <c:when test="${document.profile != null}">
-                                    <img src="/img/user/${document.profile}" alt="Profile Picture" class="profile-pic-small">
+                                    <img src="/upload/user/${document.profile}" alt="Profile Picture" class="profile-pic-small">
                                 </c:when>
                                 <c:otherwise>
                                     <img src="/upload/user/profile.png" alt="Profile Picture" class="profile-pic-small">
