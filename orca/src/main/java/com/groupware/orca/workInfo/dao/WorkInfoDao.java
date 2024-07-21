@@ -7,6 +7,7 @@ import com.groupware.orca.workInfo.vo.WorkInfoVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -57,5 +58,9 @@ public class WorkInfoDao {
 
     public List<WorkInfoVo> searchData(String name, String partName, String startDate, String endDate, int startNum, int endNum) {
         return mapper.searchData(name, partName, startDate, endDate, startNum, endNum);
+    }
+
+    public List<WorkInfoVo> getWorkRecordsBetween(int empNo, LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
+        return mapper.getWorkRecordsBetween(empNo, startOfWeek, endOfWeek);
     }
 }

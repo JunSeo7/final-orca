@@ -79,16 +79,13 @@ public class ApprovalLineController {
     @ResponseBody
     public List<ApprovalLineVo> getApprLines(HttpSession httpSession) {
         List<ApprovalLineVo> approvalLines = service.getApprovalLines();
-        System.out.println("approvalLines = " + approvalLines);
         return approvalLines;
     }
 
     // 결재선 삭제
     @PostMapping("delete")
     public String deleteApprLine(@RequestParam("apprLineNo") int apprLineNo) {
-        System.out.println("apprLineNo = " + apprLineNo);
         int result = service.deleteApprLine(apprLineNo);
-        System.out.println("result = " + result);
         return "redirect:/orca/apprline/list";
     }
 
@@ -97,7 +94,6 @@ public class ApprovalLineController {
     @PostMapping("status")
     public String updateStatusApprLine(ApproverVo vo, HttpSession httpSession){
         vo.setApproverNo(((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo());
-        System.out.println("결재선 - 승인, 반려처리 vo = " + vo);
         int result = service.updateStatusApprLine(vo);
         return "redirect:/orca/document/list";
     }

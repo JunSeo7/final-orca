@@ -23,8 +23,9 @@ public class VacationRefRestController {
 
     // 휴가 코드 수정
     @PostMapping("editVCode")
-    public void editVCode(VacationRefVo vo){
+    public ResponseEntity<Void> editVCode(@RequestBody VacationRefVo vo) {
         service.editVCode(vo);
+        return ResponseEntity.ok().build();
     }
 
     // 휴가 코드 삭제

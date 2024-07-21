@@ -34,9 +34,7 @@ public class TemplateDao {
     public List<ApprovalLineVo> selectApproverLineVo(int apprLineNo) {
         // ApproverLine 정보 가져오기
         List<ApprovalLineVo> approvalLineVoList = mapper.selectApproverLineVo(apprLineNo);
-        System.out.println("approverLineVoList = " + approvalLineVoList);
         if(approvalLineVoList ==null){
-            System.out.println("approverLineVoList null= " + approvalLineVoList);
         }
         return approvalLineVoList;
     }

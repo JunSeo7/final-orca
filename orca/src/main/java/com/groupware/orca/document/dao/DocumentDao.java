@@ -40,7 +40,6 @@ public class DocumentDao {
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
         if(approvers ==null){
-            System.out.println("approverLineVoList= " + approvers);
         } return approvers;
     }
 
@@ -97,6 +96,13 @@ public class DocumentDao {
         return mapper.searchDocumentList(loginUserNo, searchType, searchText, status);
     }
 
+    public List<DocStatusVo> getDocStatusList(int loginUserNo) {
+        return mapper.getDocStatusList(loginUserNo);
+    }
+    public int getSendDocStatusList(int loginUserNo) {
+        return mapper.getSendDocStatusList(loginUserNo);
+    }
+
     // 문서 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련) - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo) {
@@ -133,7 +139,6 @@ public class DocumentDao {
     public int deleteDocumentByNo(int docNo, int loginUserNo) {
         return mapper.deleteDocumentByNo(docNo, loginUserNo);
     }
-
 
 
 }

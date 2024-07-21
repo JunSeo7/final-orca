@@ -245,11 +245,18 @@ main {
   color: blue;
 }
 
-
-
 .work-time p {
     font-size: 20px;
     color: #808080;
+}
+
+.time-icon:hover {
+    cursor: pointer;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 

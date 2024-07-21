@@ -42,7 +42,6 @@ public class ApprovalLineService {
         if (count > 0) {
             throw new IllegalStateException("해당 양식에는 이미 기본 결재선이 존재합니다.");
         }
-        System.out.println("Inserting approval line: " + approvalLineVo);
         result += dao.insertApprovalLine(approvalLineVo);
 
         List<ApproverVo> approverList = approvalLineVo.getApproverVoList();
@@ -51,7 +50,6 @@ public class ApprovalLineService {
                 approver.setApprLineNo(approvalLineVo.getApprLineNo()); // 방금 만든 결재선 번호 사용
                 result += dao.insertApprover(approver);
             }
-            System.out.println("Total result count: " + result);
         } return result;
     }
 
@@ -85,11 +83,9 @@ public class ApprovalLineService {
             for (ApproverVo apprLine : apprLines) {
                 if (apprLine.getApprovalStage() == 3) { // 반려
                     anyRejected = true;
-                    System.out.println("반려 1개 있어서 반려로 넘어가여 = " + apprLine);
                     break;
                 } else if (apprLine.getApprovalStage() != 2) { // 승인되지 않은 결재선이 있으면
                     allApproved = false;
-                    System.out.println("승인안된거 있어서 넘어가여 안녕 = " + apprLine);
                 }
             }
 
@@ -97,11 +93,9 @@ public class ApprovalLineService {
             if (anyRejected) {
                 // 한명이라도 반려했으면 문서 상태를 반려로 변경
                 dao.updateDocumentStatus(vo.getDocNo(), 4); // 4: 반려
-                System.out.println("종결 반려 anyRejected = " + anyRejected);
             } else if (allApproved) {
                 // 모두 승인했으면 문서 상태를 승인으로 변경
                 dao.updateDocumentStatus(vo.getDocNo(), 3); // 3: 종결
-                System.out.println("종결 승인 anyRejected = " + anyRejected);
             }
         }
         return result;

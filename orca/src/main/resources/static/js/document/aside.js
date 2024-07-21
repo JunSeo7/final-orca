@@ -37,7 +37,6 @@ function toggleProfile() {
                 let extensionCall = document.querySelector('#extensionCall');
                 let email = document.querySelector('#email');
 
-
                 empNo.textContent = '사번 : ' + response.empNo;
                 partName.textContent = '부서명 : ' + response.partName;
                 position.textContent = '직급 : ' + response.nameOfPosition;

@@ -11,7 +11,7 @@ function startWorkClick() {
         },
         success: function (response) {
             if (response.success) {
-                alert('출근 시간이 기록되었습니다.');
+                alert('출근 하셨습니다.');
                 location.reload();
             } else {
                 alert('출근 시간 기록에 실패했습니다.');
@@ -36,7 +36,7 @@ function endWorkClick() {
         },
         success: function (response) {
             if (response.success) {
-                alert('퇴근 시간이 기록되었습니다.');
+                alert('퇴근 하셨습니다.');
                 location.reload();
             } else {
                 alert('퇴근 시간 기록에 실패했습니다. ' + response.message);
@@ -272,4 +272,76 @@ function changeMonth(offset) {
     }
     todayText();
 }
+
+// 누적 근무 시간 (이번주 뜨게 함)
+document.addEventListener('DOMContentLoaded', function () {
+    function getStartOfWeek(date) {
+        const startOfWeek = new Date(date);
+        const dayOfWeek = startOfWeek.getDay();
+        const diff = startOfWeek.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+        startOfWeek.setDate(diff);
+        return startOfWeek;
+    }
+
+    function getEndOfWeek(date) {
+        const endOfWeek = new Date(date);
+        const dayOfWeek = endOfWeek.getDay();
+        const diff = endOfWeek.getDate() - dayOfWeek + (dayOfWeek === 0 ? 0 : 7);
+        endOfWeek.setDate(diff);
+        return endOfWeek;
+    }
+
+    function formatDateString(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${month}.${day}`;
+    }
+
+    function calculateTotalWorkTime(workRecords) {
+        let totalSeconds = 0;
+        workRecords.forEach(record => {
+            const startTime = new Date(record.startTime);
+            const endTime = record.endTime ? new Date(record.endTime) : null;
+
+            if (endTime) {
+                const secondsWorked = (endTime - startTime) / 1000; // 초 단위로 계산
+                totalSeconds += secondsWorked;
+            }
+        });
+
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+        return { hours, minutes, seconds };
+    }
+
+    function formatTime({ hours, minutes, seconds }) {
+        return `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const now = new Date();
+    const startOfWeek = getStartOfWeek(now);
+    const endOfWeek = getEndOfWeek(now);
+    const formattedStartOfWeek = formatDateString(startOfWeek);
+    const formattedEndOfWeek = formatDateString(endOfWeek);
+
+    $.ajax({
+        url: "/orca/re/work/weekly",
+        method: "GET",
+        success: function (workRecords) {
+            const { hours, minutes, seconds } = calculateTotalWorkTime(workRecords);
+            const accumulatedWorkTimeText = `이번 주 (${formattedStartOfWeek}~${formattedEndOfWeek})`;
+            document.getElementById('accumulatedWorkTime').textContent = accumulatedWorkTimeText;
+
+            const actualWorkTimeText = `누적 근무 시간: ${formatTime({ hours, minutes, seconds })} / 52h`;
+            document.getElementById('actualWorkTime').textContent = actualWorkTimeText;
+        },
+        error: function (error) {
+            console.error('Error fetching work records:', error);
+        }
+    });
+});
+
+
 

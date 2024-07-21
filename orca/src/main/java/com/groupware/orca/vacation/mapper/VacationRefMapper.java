@@ -25,5 +25,5 @@ public interface VacationRefMapper {
                 </script>
             """
             )
-    int deleteVCode(@Param("vacationCode") List<String> vacationCode);
+    void deleteVCode(@Param("vacationCode") List<String> vacationCode);
 }
