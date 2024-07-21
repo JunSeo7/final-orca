@@ -5,6 +5,7 @@ import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -158,4 +159,7 @@ public interface WorkInfoMapper {
                                 @Param("endDate") String endDate,
                                 @Param("startNum") int startNum,
                                 @Param("endNum") int endNum);
+
+    @Select("SELECT * FROM WORK_INFO WHERE EMP_NO = #{empNo} AND WORK_DATE BETWEEN #{startOfWeek} AND #{endOfWeek}")
+    List<WorkInfoVo> getWorkRecordsBetween(@Param("empNo") int empNo, @Param("startOfWeek") LocalDateTime startOfWeek, @Param("endOfWeek") LocalDateTime endOfWeek);
 }

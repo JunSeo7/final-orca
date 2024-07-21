@@ -409,6 +409,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const vacationCode = document.getElementById('vacationCode').value;
             const vacationName = document.getElementById('vacationName').value;
 
+            if (vacationCode.length > 4) {
+                alert("휴가 코드는 4글자 이하로 입력해주세요.");
+                return;
+            }
+
             $.ajax({
                 url: "/orca/re/vacationRef/registrationVCode",
                 method: "post",
@@ -438,9 +443,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const editVacationCodeModal = document.getElementById('editVacationCodeModal');
             const editVacationCodeForm = document.getElementById('editVacationCodeForm');
 
+            $('#vacationCodesTable tbody tr').off('click');
+
             // 각 휴가 코드 칼럼 클릭 이벤트 추가
             document.querySelectorAll('#vacationCodesTable tbody tr').forEach(row => {
-                row.addEventListener('click', function () {
+                row.addEventListener('click', function (event) {
+                    // 첫 번째 열을 클릭한 경우 이벤트를 무시
+                    if (event.target.type === 'checkbox' || event.target.cellIndex === 0) {
+                        return;
+                    }
+
                     const vacationCode = this.children[1].textContent;
                     const vacationName = this.children[2].textContent;
 
@@ -475,17 +487,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 const vacationCode = document.getElementById('editVacationCode').value;
                 const vacationName = document.getElementById('editVacationName').value;
 
+                const data = {
+                    vacationCode: vacationCode,
+                    vacationName: vacationName
+                };
+
                 $.ajax({
                     url: "/orca/re/vacationRef/editVCode",
                     method: "post",
-                    data: {
-                        vacationCode: vacationCode,
-                        vacationName: vacationName
-                    },
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
                     success: function () {
-                        alert("휴가 코드가 수정되었습니다.");
+                        alert("휴가 이름이 수정되었습니다.");
                         editVacationCodeModal.style.display = 'none';
-                        location.reload(); // 페이지를 새로고침하여 변경 사항 반영
+
+                        // jQuery를 사용하여 해당 행 찾기 및 업데이트
+                        const row = $(`#vacationCodesTable tbody tr`).filter(function() {
+                            return $(this).find('td').eq(1).text() === vacationCode;
+                        });
+                        if (row.length > 0) {
+                            row.find('td').eq(2).text(vacationName);
+                        }
                     },
                     error: function (error) {
                         console.error("수정 실패", error);
@@ -496,11 +518,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-
-
-
-
-
 
 
 function getSelects() {

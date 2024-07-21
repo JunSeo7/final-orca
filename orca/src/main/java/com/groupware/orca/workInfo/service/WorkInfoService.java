@@ -96,4 +96,8 @@ public class WorkInfoService {
     public List<WorkInfoVo> searchData(String name, String partName, String startDate, String endDate, int startNum, int endNum) {
         return dao.searchData(name, partName, startDate, endDate, startNum, endNum);
     }
+
+    public List<WorkInfoVo> getWorkRecordsBetween(int empNo, LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
+        return dao.getWorkRecordsBetween(empNo, startOfWeek, endOfWeek);
+    }
 }
