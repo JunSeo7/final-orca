@@ -73,4 +73,8 @@ public class CalendarService {
     public int getSearchCalendarCnt(String keyword) {
         return dao.getSearchCalendarCnt(keyword);
     }
+
+    public CalendarVo getCalendarByOne(int calendarNo) {
+        return dao.getCalendarByOne(calendarNo);
+    }
 }

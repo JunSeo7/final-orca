@@ -27,7 +27,7 @@ public class UserController {
         try {
             httpSession.removeAttribute("loginUserVo");
             // 시연을 위한 임시 로그인 ~~
-            if (vo.getEmpNo() == 2024070096 || vo.getEmpNo() == 2024070012 || vo.getEmpNo() == 2024070016 || vo.getEmpNo() == 2024070011 || vo.getEmpNo() == 2024070091) {
+            if (vo.getEmpNo() == 2024070096 || vo.getEmpNo() == 2024070012 || vo.getEmpNo() == 2024070016 || vo.getEmpNo() == 2024070011 || vo.getEmpNo() == 2024070091 || vo.getEmpNo() == 2024070099) {
                 UserVo loginUserVo = service.TestLogin(vo.getEmpNo());
                 if (loginUserVo == null) {
                     model.addAttribute("message", "아이디 또는 비밀번호를 다시 확인해주세요.");

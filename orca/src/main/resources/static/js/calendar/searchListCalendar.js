@@ -87,7 +87,6 @@ changePwd.addEventListener('click', function () {
 })
 
 let organizationChart = document.querySelector('.organizationChart');
-console.log(organizationChart);
 organizationChart.addEventListener('click', function () {
     window.location.href = "/orca/organizationChart/showOrganizationChart";
 })
@@ -275,7 +274,6 @@ searchListCalendarPage(page, keyword);
 function searchListCalendarPage(page, keyword) {
     const pagination = {};
     let totalPage = document.querySelector('.totalPage');
-    console.log(keyword);
     $.ajax({
         type: 'get',
         url: '/orca/calendar/searchListCalendarPage',
@@ -367,7 +365,6 @@ function searchListCalendarData(pagination, keyword) {
         },
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             let tbody = $('.custom-table tbody');
             tbody.empty(); // 기존의 내용을 모두 지웁니다.
 
@@ -413,7 +410,6 @@ let originalData = {};
 let isEditCalendar = false;
 
 function detailCalendar(calendarNo) {
-    console.log(calendarNo);
     $.ajax({
         type: 'get',
         url: '/orca/calendar/searchDetailCalendar',
@@ -434,13 +430,12 @@ function detailCalendar(calendarNo) {
 function getCalendarByOne(calendarNo) {
     $.ajax({
         type: 'get',
-        url: '/orca/managementSupport/getCalendarByOne',
+        url: '/orca/calendar/getCalendarByOne',
         data: {
             calendarNo: calendarNo
         },
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             //캘린더 삭제 버튼 이벤트 추가
             const viewDeleteButton = document.querySelector('.view-delete-button');
             // 새로운 이벤트 리스너 추가

@@ -1,5 +1,6 @@
 package com.groupware.orca.department.humanResources.personnelManagement.controller;
 
+import com.groupware.orca.calendar.vo.CalendarVo;
 import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.common.vo.Pagination;
 import com.groupware.orca.common.vo.SearchVo;
@@ -94,7 +95,7 @@ public class PersonnelManagementRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
         } catch (Exception e) {
             // 기타 오류 발생
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-1);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(-2);
         }
     }
 

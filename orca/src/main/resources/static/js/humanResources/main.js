@@ -666,6 +666,7 @@ function inputEmployeeRegistration() {
                 error: function (xhr, status, error) {
                     console.log('Status Code:', xhr.status);
                     console.log('Status Text:', xhr.statusText);
+                    console.log('Response Text:', xhr.responseText);
                     console.log('Error:', error);
                     alert("사원 등록 실패");
                 }
@@ -1114,6 +1115,7 @@ function employeeEdit(empNo) {
             },
             error: function (error) {
                 console.error('데이터 업데이트 실패', error);
+                alert("사원 정보 수정 실패")
             }
         });
     } else {

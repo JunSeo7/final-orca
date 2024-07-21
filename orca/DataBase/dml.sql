@@ -91,12 +91,185 @@ VALUES ('2024070016', '최지연' ,7, 4, 11, 'F', '9704042327453', '2123356', '0
 --회계 사원
 INSERT INTO PERSONNEL_INFORMATION(EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO, PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, HEIGHT, WEIGHT, BLOOD_TYPE, SALARY, BANK_NUMBER)
 VALUES ('2024070090', '이주형' ,11, 4, 11, 'M', '6003033327411', '1123456', '01042852221', '03154212340', 'person29@naver.com', '포항 노틸러스 103호', '230', '120', 'B', 130000, '국민은행-94325550933181');
+-- 경영 사원
+INSERT INTO PERSONNEL_INFORMATION(EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO, PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, RELIGION, HEIGHT, WEIGHT, BLOOD_TYPE, SALARY, BANK_NUMBER)
+VALUES ('2024070099', '삼경빈' ,8, 3, 6, 'M', '6003033327911', '1123451', '01043852221', '03154212340', 'person99@naver.com', '인천광역시 101번거리', '무교' ,'230', '120', 'B', 130000, '국민은행-94325510933181');
 
 INSERT INTO PERSONNEL_INFORMATION(EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO, PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, HEIGHT, WEIGHT, BLOOD_TYPE, SALARY, BANK_NUMBER)
 VALUES ('2024070096', '최혜원' ,11, 4, 11, 'F', '0303034327453', '4123356', '01079652222', '03154212340', 'person20@naver.com', '안산드레스', '180', '70', 'AB', 100000, '신협은행-14325550949981');
 
+--사원 더미데이터 생성
+DECLARE
+   v_name           VARCHAR2(50);
+   v_position_code   NUMBER;
+   v_dept_code       NUMBER;
+   v_team_code       NUMBER;
+   v_gender          CHAR(1);
+   v_social_security CHAR(14);
+   v_password        VARCHAR2(100);
+   v_phone           CHAR(11);
+   v_extension_call  CHAR(11);
+   v_email           VARCHAR2(50);
+   v_address         VARCHAR2(100);
+   v_religion        VARCHAR2(20);
+   v_height          NUMBER;
+   v_weight          NUMBER;
+   v_blood_type      VARCHAR2(3);
+   v_salary          NUMBER;
+   v_bank_number     VARCHAR2(30);
+
+   -- 은행명 배열 선언
+   v_banks SYS.ODCIVARCHAR2LIST := SYS.ODCIVARCHAR2LIST(
+      '농협은행', '국민은행', '신한은행', '우리은행', '하나은행',
+      '신협은행', 'IBK기업은행'
+   );
+
+   -- 성과 이름 배열 선언
+   v_surnames SYS.ODCIVARCHAR2LIST := SYS.ODCIVARCHAR2LIST(
+      '김', '이', '박', '최', '정', '강', '조', '윤', '임', '오', '서', '한', '구', '홍', '류', '천', '황'
+   );
+
+   v_first_names SYS.ODCIVARCHAR2LIST := SYS.ODCIVARCHAR2LIST(
+      '수로', '민식', '지훈', '지우', '서연', '예진', '하늘', '지아', '준호', '영수', '영희', '민준',
+      '유진', '지현', '보미', '진수', '정우', '다은', '승현', '세진', '수빈', '태훈', '수진', '하윤',
+      '지연', '지우', '현호', '미연', '수정', '미연', '미진', '미주', '태수', '준우', '현진', '현준',
+      '태식', '태주', '강산', '경민', '호민', '다연', '진수', '혜정', '민시', '주원', '주민', '현수',
+      '태수', '민정', '민지', '명수', '재석', '지환', '준하', '유이', '사랑', '정민', '경수', '혜주'
+   );
+
+   v_max_employees NUMBER := 500;
+   v_remaining_employees NUMBER := v_max_employees - 6;
+
+BEGIN
+   -- 포지션 코드 1부터 6까지 각각 한 명씩 생성
+   FOR pos_code IN 1..6 LOOP
+      v_name := v_surnames(TRUNC(DBMS_RANDOM.VALUE(1, v_surnames.COUNT))) || v_first_names(TRUNC(DBMS_RANDOM.VALUE(1, v_first_names.COUNT)));
+      v_position_code := pos_code;
+      v_dept_code := TRUNC(DBMS_RANDOM.VALUE(1, 6));
+      v_team_code := TRUNC(DBMS_RANDOM.VALUE(1, 13));
+      v_gender := CASE WHEN DBMS_RANDOM.VALUE(0, 1) < 0.5 THEN 'M' ELSE 'F' END;
+      v_social_security := TO_CHAR(TRUNC(DBMS_RANDOM.VALUE(1000000000000, 9999999999999)));
+      v_password := DBMS_RANDOM.STRING('X', 8) || DBMS_RANDOM.STRING('A', 2);
+      v_phone := '010' || LPAD(TRUNC(DBMS_RANDOM.VALUE(10000000, 99999999)), 8, '0');
+      v_extension_call := LPAD(TRUNC(DBMS_RANDOM.VALUE(10000000000, 99999999999)), 11, '0');
+      v_email := DBMS_RANDOM.STRING('L', 5) || '@example.com';
+      v_address := '서울특별시 ' || DBMS_RANDOM.STRING('L', 3) || '로 ' || DBMS_RANDOM.STRING('L', 3) || '동';
+      v_religion := CASE TRUNC(DBMS_RANDOM.VALUE(1, 6))
+                      WHEN 1 THEN '불교'
+                      WHEN 2 THEN '천주교'
+                      WHEN 3 THEN '개신교'
+                      WHEN 4 THEN '원주율'
+                      WHEN 5 THEN '유교'
+                      ELSE '무교'
+                    END;
+      v_height := TRUNC(DBMS_RANDOM.VALUE(150, 200));
+      v_weight := TRUNC(DBMS_RANDOM.VALUE(50, 100));
+      v_blood_type := CASE TRUNC(DBMS_RANDOM.VALUE(1, 5))
+                        WHEN 1 THEN 'A'
+                        WHEN 2 THEN 'B'
+                        WHEN 3 THEN 'AB'
+                        WHEN 4 THEN 'O'
+                        ELSE 'X'
+                      END;
+      v_salary := TRUNC(DBMS_RANDOM.VALUE(3000000, 7000000));
+      v_bank_number := v_banks(TRUNC(DBMS_RANDOM.VALUE(1, v_banks.COUNT))) || '-' ||
+                        LPAD(TRUNC(DBMS_RANDOM.VALUE(1000000000000000, 9999999999999999)), 14, '0');
+
+      -- 데이터 삽입
+      INSERT INTO PERSONNEL_INFORMATION (
+         EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO,
+         PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, RELIGION, HEIGHT, WEIGHT,
+         BLOOD_TYPE, SALARY, BANK_NUMBER
+      ) VALUES (
+         TO_CHAR(SYSDATE, 'YYYYDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), v_name, v_position_code,
+         v_dept_code, v_team_code, v_gender, v_social_security, v_password, v_phone,
+         v_extension_call, v_email, v_address, v_religion, v_height, v_weight, v_blood_type,
+         v_salary, v_bank_number
+      );
+   END LOOP;
+
+   -- 나머지 직원들 생성 (포지션 코드 7 이상)
+   FOR i IN 1..v_remaining_employees LOOP
+      v_name := v_surnames(TRUNC(DBMS_RANDOM.VALUE(1, v_surnames.COUNT))) || v_first_names(TRUNC(DBMS_RANDOM.VALUE(1, v_first_names.COUNT)));
+      v_position_code := TRUNC(DBMS_RANDOM.VALUE(7, 11)); -- 7부터 시작
+      v_dept_code := TRUNC(DBMS_RANDOM.VALUE(1, 6));
+      v_team_code := TRUNC(DBMS_RANDOM.VALUE(1, 13));
+      v_gender := CASE WHEN DBMS_RANDOM.VALUE(0, 1) < 0.5 THEN 'M' ELSE 'F' END;
+      v_social_security := TO_CHAR(TRUNC(DBMS_RANDOM.VALUE(1000000000000, 9999999999999)));
+      v_password := DBMS_RANDOM.STRING('X', 8) || DBMS_RANDOM.STRING('A', 2);
+      v_phone := '010' || LPAD(TRUNC(DBMS_RANDOM.VALUE(10000000, 99999999)), 8, '0');
+      v_extension_call := LPAD(TRUNC(DBMS_RANDOM.VALUE(10000000000, 99999999999)), 11, '0');
+      v_email := DBMS_RANDOM.STRING('L', 5) || '@example.com';
+      v_address := '서울특별시 ' || DBMS_RANDOM.STRING('L', 3) || '로 ' || DBMS_RANDOM.STRING('L', 3) || '동';
+      v_religion := CASE TRUNC(DBMS_RANDOM.VALUE(1, 6))
+                      WHEN 1 THEN '불교'
+                      WHEN 2 THEN '천주교'
+                      WHEN 3 THEN '개신교'
+                      WHEN 4 THEN '원주율'
+                      WHEN 5 THEN '유교'
+                      ELSE '무교'
+                    END;
+      v_height := TRUNC(DBMS_RANDOM.VALUE(150, 200));
+      v_weight := TRUNC(DBMS_RANDOM.VALUE(50, 100));
+      v_blood_type := CASE TRUNC(DBMS_RANDOM.VALUE(1, 5))
+                        WHEN 1 THEN 'A'
+                        WHEN 2 THEN 'B'
+                        WHEN 3 THEN 'AB'
+                        WHEN 4 THEN 'O'
+                        ELSE 'X'
+                      END;
+      v_salary := TRUNC(DBMS_RANDOM.VALUE(3000000, 7000000));
+      v_bank_number := v_banks(TRUNC(DBMS_RANDOM.VALUE(1, v_banks.COUNT))) || '-' ||
+                        LPAD(TRUNC(DBMS_RANDOM.VALUE(1000000000000000, 9999999999999999)), 14, '0');
+
+      -- 데이터 삽입
+      INSERT INTO PERSONNEL_INFORMATION (
+         EMP_NO, NAME, POSITION_CODE, DEPT_CODE, TEAM_CODE, GENDER, SOCIAL_SECURITY_NO,
+         PASSWORD, PHONE, EXTENSION_CALL, EMAIL, ADDRESS, RELIGION, HEIGHT, WEIGHT,
+         BLOOD_TYPE, SALARY, BANK_NUMBER
+      ) VALUES (
+         TO_CHAR(SYSDATE, 'YYYYDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), v_name, v_position_code,
+         v_dept_code, v_team_code, v_gender, v_social_security, v_password, v_phone,
+         v_extension_call, v_email, v_address, v_religion, v_height, v_weight, v_blood_type,
+         v_salary, v_bank_number
+      );
+   END LOOP;
+
+   COMMIT;
+END;
+/
+
 COMMIT;
 
+-- 사내 캘린더 더미 데이터
+BEGIN
+    FOR i IN 1..120 LOOP
+        -- 랜덤한 START_DATE를 생성
+        DECLARE
+            v_start_date DATE := TRUNC(SYSDATE + DBMS_RANDOM.VALUE(-300, 220));
+            v_end_date DATE;
+        BEGIN
+            -- END_DATE를 START_DATE 기준으로 -3일에서 +4일 사이로 설정
+            v_end_date := v_start_date + ROUND(DBMS_RANDOM.VALUE(-0, 3));
+
+            -- 데이터 삽입
+            INSERT INTO CALENDAR (
+                CALENDAR_NO, WRITER_NO, TITLE, CONTENT, START_DATE, END_DATE, RANGE
+            ) VALUES (
+                SEQ_CALENDAR_NO.NEXTVAL,
+                2024070099,
+                '회의 일정 ' || TO_CHAR(DBMS_RANDOM.VALUE(1, 1000), 'FM0999'),
+                '이 내용은 사내 회의 일정과 관련된 상세 정보입니다. 회의 일시는 ' ||
+                TO_CHAR(v_start_date, 'YYYY-MM-DD') ||
+                '이며, 세부 사항은 추후 공지됩니다.',
+                TO_CHAR(v_start_date, 'YYYY-MM-DD'),
+                TO_CHAR(v_end_date, 'YYYY-MM-DD'),
+                'company'
+            );
+        END;
+    END LOOP;
+    COMMIT;
+END;
 -------------------------------------------------------------------------------------------------------
 --------------------------------------------------------
 -- 결재 상태 리스트 더미 데이터 (APPR_STAGE_LIST)

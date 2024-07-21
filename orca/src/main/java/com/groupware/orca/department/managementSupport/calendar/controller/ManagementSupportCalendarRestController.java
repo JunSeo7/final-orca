@@ -24,18 +24,14 @@ public class ManagementSupportCalendarRestController {
     @PostMapping("createCalendarCompany")
     public ResponseEntity<Integer> createCalendarCompany(CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
-
         if (userVo == null) {
             // 사용자 정보가 세션에 없을 경우, 인증되지 않은 상태로 응답
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
         int writerNo = userVo.getEmpNo();
         vo.setWriterNo(writerNo);
-
         try {
             int result = service.createCalendarCompany(vo);
-
             if (result > 0) {
                 // 성공적으로 작업이 완료된 경우
                 return ResponseEntity.ok(result);
@@ -72,7 +68,6 @@ public class ManagementSupportCalendarRestController {
     @GetMapping("getCalendarByOne")
     public CalendarVo getCalendarByOne(@RequestParam("calendarNo") int calendarNo) {
         CalendarVo calendarVo = service.getCalendarByOne(calendarNo);
-
         return calendarVo;
     }
 

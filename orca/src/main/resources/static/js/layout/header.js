@@ -12,7 +12,6 @@ function loadPage(page) {
 }
 
 let organizationChart = document.querySelector('.organizationChart');
-console.log(organizationChart);
 organizationChart.addEventListener('click', function(){
   window.location.href = "/orca/organizationChart/showOrganizationChart";
 })
