@@ -1,17 +1,17 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // 결재 양식 목록 가져오기
     $.ajax({
         url: '/orca/template/getlist',
         method: 'GET',
-        success: function(data) {
+        success: function (data) {
             var templateList = $('#template-list');
             templateList.empty();
-            data.forEach(function(template) {
+            data.forEach(function (template) {
                 templateList.append('<div>' + template.title + '</div>');
             });
         },
-        error: function(e) {
-                alert('접근 권한이 없습니다.');
+        error: function (e) {
+            alert('접근 권한이 없습니다.');
         }
     });
 
@@ -19,14 +19,14 @@ $(document).ready(function() {
     $.ajax({
         url: '/orca/apprline/getlist',
         method: 'GET',
-        success: function(data) {
+        success: function (data) {
             var apprlineList = $('#apprline-list');
             apprlineList.empty();
-            data.forEach(function(apprline) {
+            data.forEach(function (apprline) {
                 apprlineList.append('<div>' + apprline.apprLineName + '</div>');
             });
         },
-        error: function(e) {
+        error: function (e) {
             alert('접근 권한이 없습니다.');
         }
     });
@@ -119,7 +119,7 @@ function logout() {
 
 let changePwd = document.querySelector("#change-password")
 changePwd.addEventListener('click', function () {
-    window.location.href = "/orca/user/ShowChangePassword";
+    window.location.href = "/orca/user/showChangePassword";
 })
 
 let organizationChart = document.querySelector('.organizationChart');
@@ -213,19 +213,18 @@ function createCalendarCompany() {
                     startDate: startDate.value,
                     endDate: endDate.value
                 },
-                success: function (response) {
-                    if (response == 1) {
-                        alert("캘린더 작성 성공!");
-                        document.getElementById('title').value = '';
-                        document.getElementById('calendar-content').value = '';
-                        document.getElementById('startDate').value = '';
-                        document.getElementById('endDate').value = '';
-                    } else {
-                        alert("캘린더 작성 실패");
-                    }
+                success: function (xhr, response) {
+                    alert("캘린더 작성 성공!");
+                    document.getElementById('title').value = '';
+                    document.getElementById('calendar-content').value = '';
+                    document.getElementById('startDate').value = '';
+                    document.getElementById('endDate').value = '';
                 },
-                error: function (error) {
-                    alert("캘린더 작성 실패");
+                error: function (xhr, status, error) {
+                    console.log('Status Code:', xhr.status);
+                    console.log('Status Text:', xhr.statusText);
+                    console.log('Error:', error);
+                    alert("캘린더 등록 실패");
                 }
             });
         }

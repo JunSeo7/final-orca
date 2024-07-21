@@ -23,6 +23,28 @@
     </div>
 
     <style>
+        main {
+            margin-top: 60px;
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+            padding-left: 200px;
+            padding-right: 200px;
+            word-break: keep-all;
+        }
+        main.full{
+            margin-left: 20px;
+        }
+
+        .main {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+        }
+
         .write-calendar-company {
             background-color: #fff;
             padding: 20px;

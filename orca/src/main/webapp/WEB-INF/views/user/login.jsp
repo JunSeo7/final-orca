@@ -8,6 +8,17 @@
             <title>ORCA</title>
             <link rel="stylesheet" href="/css/user/login.css">
             <script defer src="/js/user/login.js"></script>
+            <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // 서버에서 전달된 메시지를 가져오기
+                        var message = '<c:out value="${message}"/>';
+
+                        // 메시지가 존재하면 알림 표시
+                        if (message) {
+                            alert(message);
+                        }
+                    });
+                </script>
         </head>
 
         <body>

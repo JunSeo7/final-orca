@@ -1,7 +1,6 @@
 $(document).ready(function () {
     getDepartment();
 
-    // 부서 선택 시 getTeam 호출
     $('#dept').on('change', function () {
         const selectedDeptCode = $(this).val();
         if (selectedDeptCode) {
@@ -9,16 +8,11 @@ $(document).ready(function () {
         }
     });
 
-    // 조직도 제출 폼 이벤트 핸들러
     $('#organizationChart').on('submit', function (event) {
-        console.log("입력됨");
         event.preventDefault();
 
         const deptCode = $('#dept').val();
         const teamCode = $('#team').val();
-
-        console.log(deptCode);
-        console.log(teamCode);
 
         $.ajax({
             url: $(this).attr('action'),
@@ -29,11 +23,13 @@ $(document).ready(function () {
                 teamCode: teamCode
             },
             success: (response) => {
-                console.log(response);
                 updateOrgChart(response);
             },
             error: (xhr, status, error) => {
-                console.log(error);
+                console.log('Status Code:', xhr.status);
+                console.log('Status Text:', xhr.statusText);
+                console.log('Error:', error);
+                console.log('Response Text:', xhr.responseText);
             }
         });
     });
@@ -45,9 +41,7 @@ function getDepartment() {
         url: '/orca/organizationChart/getDepartment',
         dataType: 'json',
         success: function (response) {
-            console.log(response);  // 받아온 데이터를 콘솔에 출력하여 확인
 
-            // 부서 데이터를 추출하여 옵션으로 추가
             const deptSelect = $('#dept');
             response.forEach(dept => {
                 const option = $('<option></option>');
@@ -56,8 +50,11 @@ function getDepartment() {
                 deptSelect.append(option);
             });
         },
-        error: function (error) {
-            console.error('데이터 로드 실패', error);
+        error: function (xhr, status, error) {
+            console.log('Status Code:', xhr.status);
+            console.log('Status Text:', xhr.statusText);
+            console.log('Error:', error);
+            console.log('Response Text:', xhr.responseText);
         }
     });
 }
@@ -71,7 +68,6 @@ function getTeam(deptCode) {
             deptCode: deptCode
         },
         success: function (response) {
-            console.log(response);  // 받아온 데이터를 콘솔에 출력하여 확인
 
             const teamSelect = $('#team');
             teamSelect.empty();
@@ -82,13 +78,22 @@ function getTeam(deptCode) {
                 teamSelect.append(option);
             });
         },
-        error: function (error) {
-            console.error('데이터 로드 실패', error);
+        error: function (xhr, status, error) {
+            console.log('Status Code:', xhr.status);
+            console.log('Status Text:', xhr.statusText);
+            console.log('Error:', error);
+            console.log('Response Text:', xhr.responseText);
         }
     });
 }
 
 function updateOrgChart(data) {
+
+    if (!data || data.length === 0) {
+        alert('해당 부서에 해당하는 사원이 존재하지 않습니다.');
+        return;
+    }
+
     const orgChart = $('#org-chart');
     orgChart.empty();  // 기존의 조직도 내용 제거
 

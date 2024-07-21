@@ -82,9 +82,8 @@
                             <div id="apprline-list"></div>
                         </div>
                         <div class="right">
-                             <h2>사내 캘린더 관리</h2>
-                             <h3>결재 양식 목록</h3>
-                             <h3>기본 결재선 목록</h3>
+                            <h2>사내 캘린더 관리</h2>
+                            <h3>...</h3>
                         </div>
                     </div>
                 </main>
