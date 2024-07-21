@@ -8,7 +8,7 @@ import java.util.List;
 public class ApprovalLineVo {
     // 카테고리 정보
     private int categoryNo;                    // 카테고리 번호
-    private String ㄴcategoryName;               // 카테고리 이름
+    private String categoryName;               // 카테고리 이름
 
     // 템플릿 정보
     private int templateNo;                    // 템플릿 번호

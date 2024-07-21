@@ -183,6 +183,7 @@ public class DocumentController {
     public String getDocumentList(Model model, HttpSession httpSession, Integer status){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
+        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
@@ -228,6 +229,16 @@ public class DocumentController {
         List<DocumentVo> DocumentList = service.searchDocumentList(loginUserNo, searchType, searchText, status);
 
         return DocumentList;
+    }
+
+    // 결재 목록 상태 - 통계
+    @GetMapping("getDocStatusList")
+    @ResponseBody
+    public List<DocStatusVo> getDocStatusList(HttpSession httpSession){
+        int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
+        List<DocStatusVo> DocStatusList = service.getDocStatusList(loginUserNo);
+        System.out.println("DocStatusList = " + DocStatusList);
+        return DocStatusList;
     }
 
     // 결재 상세보기 - 기안자 no 추가 (params)

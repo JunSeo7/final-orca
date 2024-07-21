@@ -20,6 +20,7 @@ public class DocumentVo {
     private int docNo;                 // 문서 번호
     private int writerNo;              // 기안자 번호
     private String writerName;         // 기안자 이름
+    private String profile;            // 기안자 프로필 changeName
     private int deptCode;              // 부서 코드
     private String deptName;           // 부서 이름
     private int positionCode;          // 직위 코드

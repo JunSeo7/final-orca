@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.groupware.orca.user.vo.UserVo" %>
 
 <!DOCTYPE html>
 <html>
@@ -33,6 +34,15 @@
     </div>
 
     <hr>
+        <div id="statisticsContainer" class="hidden">
+            <p> * 최근 한 달 동안 진행된 결재 문서를 보여줍니다.</p>
+            <div class="doc_statistics" id="doc_statistics"></div>
+            <br>
+            <hr>
+        </div>
+
+
+
 
 <c:choose>
      <c:when test="${empty documentList}">
@@ -57,7 +67,15 @@
 
                                 <div class="document_info">
                                 <div class="document_info_inner">
-                                    <img src="/img/header/profile.png" alt="Profile Picture" class="profile-pic-small">
+
+                            <c:choose>
+                                <c:when test="${document.profile != null}">
+                                    <img src="/img/user/${document.profile}" alt="Profile Picture" class="profile-pic-small">
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="/upload/user/profile.png" alt="Profile Picture" class="profile-pic-small">
+                                </c:otherwise>
+                            </c:choose>
 
                                     <div>
                                         <div class="docTitle">${document.title} [${document.docNo}]</div>

@@ -137,6 +137,20 @@ public class DocumentService {
         return documentList;
     }
 
+    public List<DocStatusVo> getDocStatusList(int loginUserNo) {
+        List<DocStatusVo> docStatusList= dao.getDocStatusList(loginUserNo);
+        int sendDocCnt = dao.getSendDocStatusList(loginUserNo);
+
+        // sendDocCnt가 0이 아닌 경우
+        if (sendDocCnt > 0) {
+            DocStatusVo addDocStatus = new DocStatusVo();
+            addDocStatus.setDocCount(sendDocCnt);
+            addDocStatus.setDocStatus("결재");
+            docStatusList.add(addDocStatus);
+        }
+        return docStatusList;
+    }
+
     // 결재 상세보기 - 기안자 no 추가 (params)
     public DocumentVo getDocumentByNo(int docNo, int loginUserNo) {
 
@@ -176,6 +190,5 @@ public class DocumentService {
     public int deleteDocumentByNo(int docNo,  int loginUserNo) {
         return dao.deleteDocumentByNo(docNo, loginUserNo);
     }
-
 
 }

@@ -101,7 +101,7 @@ public interface DocumentMapper {
     @Select("""
             <script>
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
+                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName, PI.IMG_CHANGE_NAME profile,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
             JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
@@ -123,7 +123,7 @@ public interface DocumentMapper {
     // (공람) - 종결된 결재 중 참조인에 해당하는 사람에게 보임
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
-                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
+                   T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName, PI.IMG_CHANGE_NAME profile,
                    PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
             FROM DOCUMENT D
             JOIN DOC_REFERENCE_LIST DRL ON D.DOC_NO = DRL.DOC_NO
@@ -142,7 +142,7 @@ public interface DocumentMapper {
     @Select("""
             SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE
                    , D.STATUS,D.URGENT, T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName
-                   , PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
+                   , PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName, PI.IMG_CHANGE_NAME profile
             FROM DOCUMENT D
             JOIN APPR_LINE A ON D.DOC_NO = A.DOC_NO
             JOIN DOC_STATUS_LIST DSL ON D.STATUS = DSL.DOC_STATUS_NO
@@ -180,7 +180,7 @@ public interface DocumentMapper {
     @Select("""
         <script>
         SELECT D.DOC_NO, D.WRITER_NO, D.STATUS, D.TITLE, D.CONTENT, TO_CHAR(D.ENROLL_DATE, 'YYYY-MM-DD') ENROLL_DATE, TO_CHAR(D.CREDIT_DATE, 'YYYY-MM-DD') CREDIT_DATE, D.STATUS, D.URGENT,
-               T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,
+               T.TITLE AS templateTitle, TC.NAME AS categoryName, DSL.DOC_STATUS_NAME AS statusName,PI.IMG_CHANGE_NAME profile,
                PI.NAME AS writerName, DEPT.PARTNAME AS deptName, P.NAME_OF_POSITION AS positionName
         FROM DOCUMENT D
            JOIN (
@@ -218,6 +218,30 @@ public interface DocumentMapper {
                                         @Param("searchText") String searchText,
                                         @Param("status") Integer status);
 
+    // 결재 목록 상태 - 통계
+    @Select("""
+        SELECT DSL.DOC_STATUS_NAME docStatus, COUNT(D.DOC_NO) AS docCount
+        FROM DOCUMENT D
+        JOIN DOC_STATUS_LIST DSL ON DSL.DOC_STATUS_NO = D.STATUS
+        WHERE D.DEL_YN = 'N'
+        AND D.WRITER_NO = #{loginUserNo}
+        AND D.ENROLL_DATE >= ADD_MONTHS(SYSDATE, -1)
+        GROUP BY DSL.DOC_STATUS_NAME
+        """)
+    List<DocStatusVo> getDocStatusList(int loginUserNo);
+
+    @Select("""
+            SELECT COUNT(D.DOC_NO) AS docCount
+            FROM DOCUMENT D
+            JOIN DOC_STATUS_LIST DSL ON DSL.DOC_STATUS_NO = D.STATUS
+            JOIN APPR_LINE AL ON AL.DOC_NO = D.DOC_NO
+            WHERE D.DEL_YN = 'N'
+            AND AL.APPROVER_NO = #{loginUserNo}
+            AND D.ENROLL_DATE >= ADD_MONTHS(SYSDATE, -1)
+            AND AL.APPROVAL_STAGE != 1
+            """)
+    int getSendDocStatusList(int loginUserNo);
+
     // 상세보기
     // 결재 문서 조회(카테고리, 양식, 기안자관련)
     @Select("""
@@ -238,7 +262,7 @@ public interface DocumentMapper {
     // 결재선 목록 조회
     @Select("""
             SELECT DISTINCT AL.DOC_NO AS approvalDocNo, AL.SEQ, TO_CHAR(AL.APPROVAL_DATE, 'YYYY-MM-DD HH24:MI') AS APPROVAL_DATE
-                  , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName,PI.IMG_CHANGE_NAME profile, DEPT.PARTNAME AS deptName
+                  , AL.APPROVER_CLASSIFICATION_NO, AL."COMMENT", PI.NAME AS approverName, DEPT.PARTNAME AS deptName
                   , P.NAME_OF_POSITION AS positionName, DRL.REFERRER_NO, AL.APPROVAL_STAGE, ASL.APPR_STAGE_NAME AS apprStageName, AL.APPROVER_NO
             FROM APPR_LINE AL
             JOIN PERSONNEL_INFORMATION PI ON AL.APPROVER_NO = PI.EMP_NO
@@ -351,4 +375,7 @@ public interface DocumentMapper {
               )
             """)
     int deleteDocumentByNo(int docNo, int loginUserNo);
+
+
 }
+
