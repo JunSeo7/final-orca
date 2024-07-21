@@ -178,10 +178,10 @@
 
                                 if (response == 1) {
                                     alert("급여 작성 성공하셨습니다.");
-                                    window.location.href = "/orca/salaryList";
+                                    window.location.href = "/orca/accountingDivision/salaryList";
                                 } else {
                                     alert("급여 작성 실패하셨습니다.");
-                                    window.location.href = "/orca/salaryWrite";
+                                    window.location.href = "/orca/accountingDivision/salaryWrite";
                                 }
                             },
                             error: function (xhr, status, error) {

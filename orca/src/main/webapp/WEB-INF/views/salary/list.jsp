@@ -253,7 +253,7 @@
                             str += "<h3>식대 : " + data.meals + "</h3>";
                             str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
                             str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
-                            str += "<a href='http://127.0.0.1:8080/orca/salaryList'>급여 목록으로 돌아가기</a>";
+                            str += "<a href='http://127.0.0.1:8080/orca/accountingDivision/salaryList'>급여 목록으로 돌아가기</a>";
                             str += "<button onclick='edit(" + data.payrollNo + ");'>수정하기</button>";
                             str += "<button onclick='del(" + data.payrollNo + ");'>삭제하기</button>";
                             detailArea.innerHTML = str;
@@ -327,7 +327,7 @@
                                 success: function (data) {
                                     alert("급여 수정 성공하셨습니다.");
                                     $('#editArea').hide();
-                                    window.location.href = "/orca/salaryList";
+                                    window.location.href = "/orca/accountingDivision/salaryList";
 
                                 },
                                 error: function (xhr, status, error) {
@@ -353,7 +353,7 @@
                         },
                         success: function (data) {
                             alert("삭제 성공하셨습니다.");
-                            window.location.href = "/orca/salaryList";
+                            window.location.href = "/orca/accountingDivision/salaryList";
                         },
 
                     });
