@@ -92,7 +92,7 @@ public class WorkInfoRestController {
     }
 
     // 출근 시간 조회
-    @GetMapping("/getStartWorkTime")
+    @GetMapping("getStartWorkTime")
     public ResponseEntity<Map<String, Object>> getStartWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
         int empNo = loginUser.getEmpNo();
@@ -104,7 +104,7 @@ public class WorkInfoRestController {
     }
 
     // 퇴근 시간 조회
-    @GetMapping("/getEndWorkTime")
+    @GetMapping("getEndWorkTime")
     public ResponseEntity<Map<String, Object>> getEndWorkTime(HttpSession httpSession, @RequestParam String workDate) {
         UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
         int empNo = loginUser.getEmpNo();

@@ -1,5 +1,3 @@
-
-
 /* 사이드바 토글 버튼 설정 */
 #toggleSidebar {
   position: fixed;
@@ -16,7 +14,7 @@
 
 /* 어사이드 바 설정 */
 aside {
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   padding: 20px;
   width: 200px;
   position: fixed;
@@ -41,10 +39,6 @@ main {
   transition: margin-left 0.3s ease;
 }
 
-/* 메인 컨텐츠 확장 상태 설정 */
-main.full {
-  margin-left: 20px;
-}
 
 /* 프로필 설정 */
 .profile {
@@ -141,11 +135,26 @@ th {
   background-color: #f4f4f4;
 }
 
+/* 전체 페이지 설정 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 전체 페이지에 스크롤이 생기지 않도록 설정 */
+}
+
+/* 페이지 레이아웃 설정 */
+#content {
+    overflow: auto; /* 내부 콘텐츠의 스크롤만 허용 */
+    height: calc(100% - 60px); /* 상단 헤더 높이를 뺀 나머지 높이 사용 */
+}
+
+/* 캘린더의 스크롤을 없애기 위한 스타일 수정 */
 #calendar {
-    margin-top: 20px;
-    width: calc(100% - 40px); /* 100% 너비에서 20px의 좌우 패딩을 뺀 값 */
-    height: 90vh;
-    overflow: hidden;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
