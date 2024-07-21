@@ -1,10 +1,7 @@
 package com.groupware.orca.salary.controller;
 
 import com.groupware.orca.salary.service.SalaryService;
-import com.groupware.orca.salary.vo.ClientVo;
 import com.groupware.orca.salary.vo.RatesVo;
-import com.groupware.orca.salary.vo.SalaryVo;
-import com.groupware.orca.user.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
