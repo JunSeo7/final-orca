@@ -67,4 +67,5 @@ public class WorkInfoDao {
     public int searchDataCount(String name, String partName, String startDate, String endDate) {
         return mapper.searchDataCount(name, partName, startDate, endDate);
     }
+
 }

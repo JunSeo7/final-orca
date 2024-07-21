@@ -94,12 +94,12 @@
 <body>
     <div class="container">
         <h1>사원 근무 정보</h1>
-        <div>
+        <div class="search-bar">
             <input type="text" id="name" placeholder="이름">
             <input type="text" id="partName" placeholder="부서이름">
             <input type="date" id="startDate">
             <input type="date" id="endDate">
-            <button type="submit">검색</button>
+            <button type="submit" onclick="fetchData(1)">검색</button>
         </div>
         <div id="content">
             <table id="allWorkInfoTable">

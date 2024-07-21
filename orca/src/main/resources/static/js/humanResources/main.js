@@ -154,6 +154,69 @@ employeeRegistration.addEventListener('click', function () {
 });
 
 
+function fetchData(page) {
+    var name = $('#name').val();
+    var partName = $('#partName').val();
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
+    var startNum = (page - 1) * 10 + 1; // 각 페이지당 10개의 레코드
+    var endNum = page * 10;
+
+    $.ajax({
+        url: '/orca/re/work/searchData',
+        method: 'GET',
+        data: {
+            name: name,
+            partName: partName,
+            startDate: startDate,
+            endDate: endDate,
+            startNum: startNum,
+            endNum: endNum
+        },
+        success: function(response) {
+            // 응답 객체 확인
+            console.log(response);
+
+            // 테이블 업데이트
+            var $tbody = $('#allWorkInfoTable tbody');
+            $tbody.empty();
+
+            // 데이터가 배열인지 확인
+            if (Array.isArray(response)) {  // 수정된 부분: response.data가 아닌 response 자체를 검사
+                response.forEach(function(item) {
+                    $tbody.append(
+                        `<tr>
+                            <td>${item.empNo}</td>
+                            <td>${item.workDate}</td>
+                            <td>${item.name}</td>
+                            <td>${item.partName}</td>
+                            <td>${item.nameOfPosition}</td>
+                            <td>${item.startTime}</td>
+                            <td>${item.endTime}</td>
+                            <td>${item.holidayWork}</td>
+                            <td>${item.overtimeWork}</td>
+                        </tr>`
+                    );
+                });
+            } else {
+                console.error('Invalid response data format');
+            }
+
+            // 페이지네이션 업데이트
+            var totalPages = response.totalPages || 0;  // 이 부분은 response에 totalPages 필드가 있다고 가정합니다
+            var $pagination = $('#pagination');
+            $pagination.empty();
+            for (var i = 1; i <= totalPages; i++) {
+                var button = `<button class="pagination-button ${i === page ? 'current-page' : ''}" data-page="${i}" onclick="fetchData(${i})">${i}</button>`;
+                $pagination.append(button);
+            }
+        },
+        error: function(err) {
+            console.error(err);
+        }
+    });
+}
+
 // 화면 불러오기
 const showAllWorkInfo = document.querySelector('.showAllWorkInfo');
 
