@@ -74,16 +74,18 @@ public class UserRestController {
 
     @PostMapping("departmentLogin")
     public ResponseEntity<DepartmentVo> departmentLogin(HttpSession httpSession, DepartmentVo departmentVo) {
+        httpSession.removeAttribute("loginDeptVo");
         UserVo userVo = (UserVo) httpSession.getAttribute("loginUserVo");
         if (userVo == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         departmentVo.setDeptCode(userVo.getDeptCode());
-        DepartmentVo loginDepartVo = service.departmentLogin(departmentVo);
-        if (loginDepartVo == null) {
+        DepartmentVo loginDeptVo = service.departmentLogin(departmentVo);
+        if (loginDeptVo == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(loginDepartVo);
+        httpSession.setAttribute("loginDeptVo", loginDeptVo);
+        return ResponseEntity.ok(loginDeptVo);
     }
 
 }
