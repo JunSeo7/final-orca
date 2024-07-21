@@ -121,16 +121,13 @@ public class PersonnelManagementRestController {
     @GetMapping("getEmployeeDetails")
     public UserVo getEmployeeDetails(@RequestParam("empNo") int empNo) {
         UserVo employeeInfo = service.getEmployeeDetails(empNo);
-        System.out.println(employeeInfo);
         return employeeInfo;
     }
 
     @PostMapping("updateEmployee")
     public int updateEmployee(UserVo employeeVo) throws IOException {
         MultipartFile file = employeeVo.getImage();
-        System.out.println(file);
         if (file != null && !file.isEmpty()) {
-            System.out.println("통과");
             String originFileName = file.getOriginalFilename();
             InputStream is = file.getInputStream();
 
@@ -172,7 +169,6 @@ public class PersonnelManagementRestController {
 
     @GetMapping("searchListEmployeePage")
     public Pagination searchListEmployeePage(SearchVo searchVo) {
-        System.out.println("searchVo = " + searchVo);
         searchVo.setPageSize(10);
         searchVo.setRecordSize(7);
         if (searchVo.getKeyword() != null) {

@@ -24,7 +24,6 @@ $(document).ready(function () {
                         newPassword: newPassword,
                     },
                     success: function (response) {
-                        console.log(response);
                         if (response === 1) {
                             alert("비밀번호 변경 성공!");
                             window.location.href = "/orca/user/login";

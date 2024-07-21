@@ -79,7 +79,6 @@ public class CalendarRestController {
     @PostMapping("editCalendar")
     public int editCalendar(@RequestBody CalendarVo vo, HttpSession httpSession) throws InvalidInputException {
         int writerNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        System.out.println("writerNo : " + writerNo);
         vo.setWriterNo(writerNo);
         int result = service.editCalendar(vo);
         return result;
