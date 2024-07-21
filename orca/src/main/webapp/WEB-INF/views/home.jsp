@@ -37,7 +37,8 @@
                                         <div class="work-status-inner">
                                             <div>
                                                 <p id="date"></p>
-                                                <p>누적근무시간(06.17~06.23) 44h 42m/52h</p>
+                                                <p id="accumulatedWorkTime"></p>
+                                                <p id="actualWorkTime"></p>
                                             </div>
                                             <div id="clock" class="clock"></div>
                                         </div>

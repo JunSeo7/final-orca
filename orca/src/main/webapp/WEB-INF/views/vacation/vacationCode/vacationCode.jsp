@@ -124,7 +124,7 @@
                     <input type="text" id="vacationName" name="vacationName" required>
                 </div>
                 <div style="margin-top: 20px;">
-                    <button type="submit" class="button">등록</button>
+                    <button type="submit" class="button" id="saveButton">등록</button>
                     <button type="button" class="button" id="closeModalBtn">닫기</button>
                 </div>
             </form>
@@ -134,12 +134,12 @@
     <div id="editVacationCodeModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>휴가 코드 수정</h2>
+            <h2>휴가 이름 수정</h2>
             <form id="editVacationCodeForm">
                 <div>
-                    <label for="editVacationCode">휴가 코드:</label>
+                    <label for="editVacationCode" required>휴가 코드:</label>
                     <br />
-                    <input type="text" id="editVacationCode" name="vacationCode">
+                    <input type="text" id="editVacationCode" name="vacationCode" disabled>
                 </div>
                 <div>
                     <label for="editVacationName">휴가 이름:</label>

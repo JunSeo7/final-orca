@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,5 +152,15 @@ public class WorkInfoRestController {
 
         List<WorkInfoVo> workInfoVoList = service.searchData(name, partName, startDate, endDate, startNum, endNum);
         return workInfoVoList;
+    }
+
+    @GetMapping("weekly")
+    public List<WorkInfoVo> getWeeklyWorkRecords(HttpSession httpSession) {
+        UserVo loginUser = (UserVo) httpSession.getAttribute("loginUserVo");
+        int empNo = loginUser.getEmpNo();
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(java.time.DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(java.time.DayOfWeek.SUNDAY);
+        return service.getWorkRecordsBetween(empNo, startOfWeek.atStartOfDay(), endOfWeek.atTime(LocalTime.MAX));
     }
 }
