@@ -81,7 +81,7 @@
                             <li class="nav-item"><a href="#">드라이브</a></li>
                             <li class="nav-item"><a href="#">메일</a></li>
                             <li class="nav-item"><a href="/orca/user/showDepartmentLogin">부서 로그인</a></li>
-                            <li class="nav-item"><a href="/orca/accountingDivision/personList">개인명세서 목록 / 조회</a></li>
+                            <li class="nav-item"><a href="/orca/personList">개인명세서 목록 / 조회</a></li>
                         </ul>
                     </aside>
 
@@ -203,7 +203,7 @@
                             str += "<div class='detail-item'><span>최종급여 :</span><span>" + data.totalSalary + "</span></div>";
                             str += "<div class='detail-item'><span>지급날짜 :</span><span>" + formatDate(data.paymentDate) + "</span></div>";
 
-                            str += "<a href='http://127.0.0.1:8080/orca/accountingDivision/personList'>목록으로 돌아가기</a>";
+                            str += "<a href='http://127.0.0.1:8080/orca/personList'>목록으로 돌아가기</a>";
 
                             detailArea.innerHTML = str;
                         },
