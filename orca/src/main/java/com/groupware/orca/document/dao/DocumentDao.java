@@ -40,7 +40,6 @@ public class DocumentDao {
     public List<ApproverVo> getApproverList(int apprLineNo) {
         List<ApproverVo> approvers = mapper.getApproverList(apprLineNo);
         if(approvers ==null){
-            System.out.println("approverLineVoList= " + approvers);
         } return approvers;
     }
 

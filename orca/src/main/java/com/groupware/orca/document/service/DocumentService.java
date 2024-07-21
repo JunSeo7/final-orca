@@ -83,7 +83,6 @@ public class DocumentService {
             int fileResult = dao.writeDocumentFile(fileList);
             result += fileResult;
         }
-        System.out.println("최종 결과 = " + result);
         return result;
     }
 

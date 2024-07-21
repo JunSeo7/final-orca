@@ -116,7 +116,6 @@ public class DocumentController {
             approverVoList.add(avo);
         }
         vo.setApproverVoList(approverVoList);
-        System.out.println("approverVoList = " + approverVoList);
 
         // 참조자 등록
         List<ReferencerVo> referencerVoList = new ArrayList<>();
@@ -167,7 +166,6 @@ public class DocumentController {
                 PutObjectResult putObjectResult = s3.putObject(bucketName,fileName,file.getInputStream(),metadata);
 
                 URL url = s3.getUrl(bucketName,fileName);
-                System.out.println("url = " + url);
             }
             vo.setFileVoList(fileVoList);
         }
@@ -183,7 +181,6 @@ public class DocumentController {
     public String getDocumentList(Model model, HttpSession httpSession, Integer status){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocumentVo> documentList = service.getDocumentList(loginUserNo, status);
-        System.out.println("documentList = " + documentList);
         model.addAttribute("documentList", documentList);
         return "document/list";
     }
@@ -237,7 +234,6 @@ public class DocumentController {
     public List<DocStatusVo> getDocStatusList(HttpSession httpSession){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         List<DocStatusVo> DocStatusList = service.getDocStatusList(loginUserNo);
-        System.out.println("DocStatusList = " + DocStatusList);
         return DocStatusList;
     }
 
@@ -274,7 +270,6 @@ public class DocumentController {
     public DocumentVo getTemplateData(@RequestParam("docNo") int docNo, HttpSession httpSession) {
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         DocumentVo vo = service.getDocumentByNo(docNo, loginUserNo);
-        System.out.println("vo = " + vo);
         return vo;
     }
 
@@ -288,8 +283,6 @@ public class DocumentController {
             int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
             vo.setWriterNo(loginUserNo);
 
-            System.out.println("vo = " + vo);
-
             int result = service.editDocument(vo);
             return "redirect:/orca/document/list";
         }
@@ -298,7 +291,6 @@ public class DocumentController {
     // 기안서 상태 수정 (임시저장 상태일 경우 - 기안으로 / 기안 - 취소)
     @PostMapping("updateStatus")
     public String updateStatusDocument(DocumentVo vo, HttpSession httpSession){
-        System.out.println("vo = " + vo);
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
         vo.setWriterNo(loginUserNo);
         int result = service.updateStatusDocument(vo);
@@ -309,7 +301,6 @@ public class DocumentController {
     @PostMapping("delete")
     public String deleteDocumentByNo(int docNo, HttpSession httpSession){
         int loginUserNo = ((UserVo) httpSession.getAttribute("loginUserVo")).getEmpNo();
-        System.out.println("docNo = " + docNo);
         int result = service.deleteDocumentByNo(docNo, loginUserNo);
 
         return "redirect:/orca/document/list";
