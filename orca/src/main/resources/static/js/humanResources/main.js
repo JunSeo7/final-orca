@@ -88,7 +88,6 @@ changePwd.addEventListener('click', function () {
 })
 
 let organizationChart = document.querySelector('.organizationChart');
-console.log(organizationChart);
 organizationChart.addEventListener('click', function () {
     window.location.href = "/orca/organizationChart/showOrganizationChart";
 })
@@ -196,7 +195,6 @@ function attachEventListeners(page) {
         },
         success: function (response) {
             Object.assign(pagination, response);
-            console.log(pagination);
             while (totalPage.firstChild) {
                 totalPage.removeChild(totalPage.firstChild);
             }
@@ -529,7 +527,6 @@ function getSelects() {
         url: '/orca/humanResources/getSelects',
         dataType: 'json',
         success: function (response) {
-            console.log(response);  // 받아온 데이터를 콘솔에 출력하여 확인
 
             // 부서 데이터를 추출하여 옵션으로 추가
             const deptSelect = $('#dept');
@@ -588,7 +585,6 @@ function inputEmployeeRegistration() {
     $(document).ready(function () {
         // 폼 제출 시 Ajax로 데이터를 전송한다.
         $('#employee-registration').on('submit', function (event) {
-            console.log("입력됨");
             event.preventDefault();
 
             // FormData 객체 생성
@@ -854,7 +850,6 @@ function deleteEmployee(empNo) {
         },
         dataType: 'json',
         success: function (response) {
-            console.log(response);
             if (response === 1) {
                 alert("사원 삭제 성공!");
                 showEmployeeList();
@@ -882,12 +877,8 @@ function getEmployeeDetails(empNo) {
                 imageUrl = 'profile.png';
             }
             $(document).ready(function () {
-                console.log('data.empNo:', data.empNo); // data.empNo 값을 로그에 출력
-                console.log('data.name:', data.name); // data.name 값을 로그에 출력
                 $('#empNo').text(data.empNo);
                 $('#name').text(data.name);
-                console.log('empNo element content:', $('#empNo').text()); // 설정 후 empNo 요소의 내용을 로그에 출력
-                console.log('name element content:', $('#name').text()); // 설정 후 name 요소의 내용을 로그에 출력
             });
             $('#empNo').text(data.empNo);
             $('#name').text(data.name);
@@ -954,8 +945,6 @@ function getEditSelects(empNo) {
         url: '/orca/humanResources/getSelects',
         dataType: 'json',
         success: function (response) {
-            console.log(response);  // 받아온 데이터를 콘솔에 출력하여 확인
-
             // 부서 데이터를 추출하여 옵션으로 추가
             const deptSelect = $('#deptCode');
             response[0].forEach(dept => {
@@ -1006,8 +995,6 @@ function getEmployeeEditData(empNo) {
             if (data.imgChangeName === null) {
                 imageUrl = 'profile.png';
             }
-
-            console.log(data);
             $('#empNo').text(data.empNo);  // 예시: 사원번호는 span 태그에 텍스트로 설정
             $('#name').val(data.name);  // 이름은 input 태그의 value에 설정
             $('#gender').val(data.gender);  // 성별은 select 태그의 value에 설정
@@ -1056,7 +1043,6 @@ function getEmployeeEditData(empNo) {
 }
 
 function employeeEdit(empNo) {
-    console.log(empNo);
     let formData = new FormData();  // FormData 객체 생성
     let isUpdate = false;
 
@@ -1066,21 +1052,18 @@ function employeeEdit(empNo) {
         if (fieldId === '#bankNumber') {
             const bankName = $('#bankName').val();
             fieldValue = bankName + '-' + fieldValue;
-            console.log(fieldValue);
         }
 
 
         if (String(fieldValue) !== String(updatedFieldValue)) {
             if (fieldValue.trim() === '') {
                 if (updatedFieldValue !== null) {
-                    console.log("is문");
                     isUpdate = true;
                     formData.append(fieldName, fieldValue);
 
                 }
             } else {
                 formData.append(fieldName, fieldValue);
-                console.log("esle문");
                 isUpdate = true;
 
             }
@@ -1107,13 +1090,10 @@ function employeeEdit(empNo) {
 
     // 파일 업로드를 위한 처리
     let fileInput = document.getElementById('image');
-    console.log(fileInput);
     if (fileInput.files.length > 0) {
         formData.append('image', fileInput.files[0]);
         isUpdate = true;
     }
-    console.log(isUpdate);
-    console.log(formData);
     // 변경된 데이터가 있는 경우에만 Ajax를 통해 서버로 전송
     if (isUpdate) {
         formData.append('empNo', empNo);
@@ -1126,7 +1106,6 @@ function employeeEdit(empNo) {
             dataType: 'json',
             success: function (response) {
                 // 성공적으로 업데이트된 경우 처리
-                console.log('데이터 업데이트 성공', response);
                 if (response === 1) {
                     alert("사원 정보 수정 성공!")
                 } else {
@@ -1146,15 +1125,12 @@ function searchListEmployee() {
     $(document).ready(function () {
         // 폼 제출 시 Ajax로 데이터를 전송한다.
         $('#employee-search-form').on('submit', function (event) {
-            console.log("입력됨");
             event.preventDefault();
             // 아래 변수에 담아주는 건 뭐냐?
             // 사용자가 form에 입력한 데이터를 수집하여 이를 Ajax 요청으로 서버에 전송하기 위해 작성되었다.
 
             const keyword = $('#searchInput').val();
             const searchType = $('#searchType').val();
-            console.log(keyword);
-            console.log(searchType);
 
             $.ajax({
                 // 위에 form에서 이미 post로 /messenger/write에 보내주고 있다.
@@ -1182,8 +1158,6 @@ function searchListEmployee() {
 function searchListEmployeePage(page, keyword, searchType) {
     const pagination = {};
     let totalPage = document.querySelector('.totalPage');
-    console.log(keyword);
-    console.log(searchType);
     $.ajax({
         type: 'get',
         url: '/orca/humanResources/searchListEmployeePage',

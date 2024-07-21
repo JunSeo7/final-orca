@@ -38,8 +38,6 @@ public class PersonnelManagementController {
         return "humanResources/personnelManagement/showEmployeeList";
     }
 
-
-
     @GetMapping("showEmployeeDetails")
     public String showEmployeeDetails() {
         return "humanResources/personnelManagement/showEmployeeDetails";

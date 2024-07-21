@@ -10,7 +10,6 @@ $(document).ready(function () {
                 password: password
             },
             success: (response) => {
-                console.log(response);
                 if (response === null) {
                     alert("로그인 실패!");
                 } else {
