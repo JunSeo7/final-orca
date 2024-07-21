@@ -2,6 +2,7 @@ package com.groupware.orca.workInfo.controller;
 
 import com.groupware.orca.common.vo.PageVo;
 import com.groupware.orca.common.vo.Pagination;
+import com.groupware.orca.common.vo.SearchVo;
 import com.groupware.orca.user.vo.UserVo;
 import com.groupware.orca.workInfo.service.WorkInfoService;
 import com.groupware.orca.workInfo.vo.WorkInfoVo;

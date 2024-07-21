@@ -104,4 +104,5 @@ public class WorkInfoService {
     public int searchDataCount(String name, String partName, String startDate, String endDate) {
         return dao.searchDataCount(name, partName, startDate, endDate);
     }
+
 }
