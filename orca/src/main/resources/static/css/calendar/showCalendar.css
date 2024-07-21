@@ -72,6 +72,7 @@ aside {
     overflow-y: auto;
     transition: transform 0.3s ease;
     border-right: 1px solid rgb(212, 212, 212);
+    z-index: 1000;
 }
 
 /* 어사이드 바 숨김 상태 설정 */

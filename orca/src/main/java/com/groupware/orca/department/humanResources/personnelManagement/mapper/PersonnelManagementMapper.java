@@ -26,7 +26,7 @@ public interface PersonnelManagementMapper {
             "<if test='imgOriginName != null'>, IMG_ORIGIN_NAME</if>" +
             "<if test='imgChangeName != null'>, IMG_CHANGE_NAME</if>" +
             ")" +
-            "VALUES (TO_CHAR(SYSDATE, 'YYYYMM') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber}" +
+            "VALUES (TO_CHAR(SYSDATE, 'YYYYDD') || LPAD(SEQ_EMP_NO.NEXTVAL, 4, '0'), #{name} ,#{positionCode}, #{deptCode}, #{teamCode}, #{gender}, #{socialSecurityNo}, #{password}, #{phone}, #{extensionCall}, #{email}, #{address}, #{height}, #{weight}, #{bloodType}, #{religion}, #{salary}, #{bankNumber}" +
             "<if test='imgOriginName != null'>, #{imgOriginName}</if>" +
             "<if test='imgChangeName != null'>, #{imgChangeName}</if>" +
             ")" +
@@ -108,9 +108,9 @@ public interface PersonnelManagementMapper {
             "<if test='vo.bloodType != null'>BLOOD_TYPE = #{vo.bloodType},</if>",
             "<if test='vo.religion != null'>RELIGION = #{vo.religion},</if>",
             "<if test='vo.bankNumber != null'>BANK_NUMBER = #{vo.bankNumber},</if>",
-            "<if test='vo.deptCode != null'>DEPT_CODE = #{vo.deptCode},</if>",
-            "<if test='vo.positionCode != null'>POSITION_CODE = #{vo.positionCode},</if>",
-            "<if test='vo.teamCode != null'>TEAM_CODE = #{vo.teamCode},</if>",
+            "<if test='vo.deptCode != 0'>DEPT_CODE = #{vo.deptCode},</if>",
+            "<if test='vo.positionCode != 0'>POSITION_CODE = #{vo.positionCode},</if>",
+            "<if test='vo.teamCode != 0'>TEAM_CODE = #{vo.teamCode},</if>",
             "<if test='vo.imgOriginName != null'>IMG_ORIGIN_NAME = #{vo.imgOriginName},</if>",
             "<if test='vo.imgChangeName != null'>IMG_CHANGE_NAME = #{vo.imgChangeName},</if>",
             "</set>",

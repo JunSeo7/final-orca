@@ -109,4 +109,10 @@ public class CalendarRestController {
         List<CalendarVo> calendarVoList = service.searchListCalendarData(keyword, startNum, endNum);
         return calendarVoList;
     }
+
+    @GetMapping("getCalendarByOne")
+    public CalendarVo getCalendarByOne(@RequestParam("calendarNo") int calendarNo) {
+        CalendarVo calendarVo = service.getCalendarByOne(calendarNo);
+        return calendarVo;
+    }
 }

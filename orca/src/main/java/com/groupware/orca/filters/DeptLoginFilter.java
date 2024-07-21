@@ -19,7 +19,7 @@ public class DeptLoginFilter extends OncePerRequestFilter {
 
         // 세션에서 로그인 정보 가져오기
         DepartmentVo loginDeptVo = (DepartmentVo) request.getSession().getAttribute("loginDeptVo");
-
+        //getCalendarByOne
         if (loginDeptVo == null) {
             response.sendRedirect(request.getContextPath() + "/orca/user/showDepartmentLogin");
             return;

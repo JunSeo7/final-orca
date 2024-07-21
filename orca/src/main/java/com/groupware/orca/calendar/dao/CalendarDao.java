@@ -37,4 +37,8 @@ public class CalendarDao {
     public int getSearchCalendarCnt(String keyword) {
         return mapper.getSearchCalendarCnt(keyword);
     }
+
+    public CalendarVo getCalendarByOne(int calendarNo) {
+        return mapper.getCalendarByOne(calendarNo);
+    }
 }

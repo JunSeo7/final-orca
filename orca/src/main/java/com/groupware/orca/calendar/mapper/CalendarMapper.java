@@ -102,4 +102,21 @@ public interface CalendarMapper {
             ")\n" +
             "WHERE RNUM BETWEEN #{startNum} AND #{endNum}\n")
     List<CalendarVo> searchListCalendarData(@Param("keyword") String keyword, @Param("startNum") int startNum, @Param("endNum") int endNum);
+
+    @Select("SELECT \n" +
+            "                        C.CALENDAR_NO\n" +
+            "                        , C.TITLE\n" +
+            "                        , C.CONTENT\n" +
+            "                        , TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE\n" +
+            "                        , C.START_DATE\n" +
+            "                        , C.END_DATE\n" +
+            "                        , C.RANGE\n" +
+            "                        , P.NAME AS WRITER\n" +
+            "                        , C.WRITER_NO\n" +
+            "                        , D.PARTNAME\n" +
+            "                    FROM CALENDAR C\n" +
+            "                    JOIN PERSONNEL_INFORMATION P ON C.WRITER_NO = P.EMP_NO\n" +
+            "                    JOIN DEPARTMENT D ON D.DEPT_CODE = P.DEPT_CODE\n" +
+            "                    WHERE CALENDAR_NO = #{calendarNo}")
+    CalendarVo getCalendarByOne(@Param("calendarNo") int calendarNo);
 }
