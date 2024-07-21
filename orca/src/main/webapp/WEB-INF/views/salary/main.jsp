@@ -100,13 +100,61 @@
                             <h1>회계부</h1>
 
                             <!-- 메인페이지 뭐 할지 생각해보기 -->
-
-
-
                         </div>
                     </main>
             </body>
 
             </html>
 
-       
+            <style>
+                /* main 요소 중앙 배치 */
+                main {
+                    display: flex;
+                    justify-content: center;
+                    /* 수평 중앙 정렬 */
+                    align-items: center;
+                    /* 수직 중앙 정렬 */
+                    height: 100vh;
+                    /* 전체 화면 높이 */
+                }
+
+                /* 메인 콘텐츠 박스 스타일 */
+                .main {
+                    width: 80%;
+                    max-width: 800px;
+                    background-color: #ffffff;
+                    /* 흰색 배경 */
+                    padding: 40px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                    /* 가운데 정렬 */
+                    box-sizing: border-box;
+                    margin-bottom: 50%;
+                }
+
+                /* 제목 스타일 */
+                h1 {
+                    font-size: 36px;
+                    color: #333333;
+                    /* 어두운 회색 */
+                    margin: 0;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #87CEEB;
+                    /* 하늘색 밑줄 */
+                }
+
+                /* 기본 a 태그 스타일 */
+                a {
+                    color: #000000;
+                    /* 기본 글자색을 검정색으로 설정 */
+                    text-decoration: none;
+                    /* 밑줄 제거 */
+                }
+
+                /* a 태그에 마우스를 올렸을 때 스타일 */
+                a:hover {
+                    color: #87CEEB;
+                    /* 하늘색으로 변경 */
+                }
+            </style>

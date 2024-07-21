@@ -16,10 +16,10 @@
                 <!-- my css -->
                 <link rel="stylesheet" href="/css/salary/ratesByOne.css">
 
-                 <!-- 공용 css -->
+                <!-- 공용 css -->
                 <link rel="stylesheet" href="/css/layout/aside.css">
                 <script defer src="/js/layout/aside.js"></script>
-                
+
                 <link rel="icon" href="/img/logo.png" type="image/png">
                 <link rel="stylesheet" href="/css/layout/header.css">
                 <script defer src="/js/layout/header.js"></script>
@@ -73,7 +73,7 @@
                             <button onclick="logout()">로그아웃</button>
                         </div>
 
-                        
+
 
 
                         <!-- <div class="profile" onclick="toggleProfile()">
@@ -98,14 +98,16 @@
                     </aside>
                     <main>
                         <div class="main" id="content">
-                            <h1>4대 보험 요율 조회</h1>
+
 
                             <div id="ratesByOne">
+
 
                             </div>
 
                             <div id="editRates">
                                 <form id="editRatesForm">
+                                    <h1>4대 보험 요율 수정</h1>
                                     글 번호: <input type="text" name="ratesNo" id="ratesNo" readonly><br>
                                     국민연금: <input type="text" name="pensionPercentage" id="pensionPercentage"><br>
                                     건강보험: <input type="text" name="healthInsurancePercentage"
@@ -144,6 +146,7 @@
                             let str = "";
 
                             str += "<div>";
+                            str += "<h1 >4대 보험 요율 조회</h1>";
                             str += "<h3>글 번호 : " + data.ratesNo + "</h3>";
                             str += "<h3>기준연도 : " + data.baseYear + "</h3>";
                             str += "<h3>국민연금 : " + data.pensionPercentage + "</h3>";
@@ -175,6 +178,7 @@
 
             <script>
                 function edit(ratesNo) {
+                    $('#h1').hide();
                     $('#ratesByOne').hide();
                     $("#editRates").show();
 
@@ -226,5 +230,120 @@
 
             </script>
 
+            <style>
+                /* 전체 화면 스타일 */
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #ffffff;
+                    /* 배경색은 회색으로 유지 */
+                }
 
-            
+                /* main 요소와 자식 요소들 스타일 */
+                main {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: calc(100vh - 50px);
+                    /* 헤더의 높이를 제외한 전체 화면 높이 */
+                    padding: 20px;
+                    box-sizing: border-box;
+
+                }
+
+                /* 메인 콘텐츠 박스 스타일 */
+                .main {
+                    width: 100%;
+                    max-width: 800px;
+                    background-color: #ffffff;
+                    /* 배경색을 흰색으로 변경 */
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-sizing: border-box;
+                    margin-bottom: 30%;
+                }
+
+                /* 제목 스타일 */
+                h1 {
+                    font-size: 24px;
+                    color: #333333;
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+
+                /* 정보 영역 스타일 */
+                #ratesByOne {
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+
+                /* 수정 폼 영역 스타일 */
+                #editRates {
+                    display: none;
+                }
+
+                /* 폼 그룹 스타일 */
+                .form-group {
+                    margin-bottom: 15px;
+                }
+
+                /* 폼 그룹 내 레이블 스타일 */
+                .form-group label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    color: #555555;
+                }
+
+                /* 입력 필드 스타일 */
+                .form-group input[type="text"] {
+                    width: calc(100% - 22px);
+                    padding: 10px;
+                    border: 1px solid #cccccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    box-sizing: border-box;
+                }
+
+                /* 수정 버튼 및 제출 버튼 스타일 */
+                button,
+                input[type="submit"] {
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
+
+                button:hover,
+                input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+
+                /* 읽기 전용 입력 필드 스타일 */
+                input[readonly] {
+                    background-color: #e9ecef;
+                }
+
+                /* 기본 a 태그 스타일 */
+                a {
+                    color: #000000;
+                    /* 기본 글자색을 검정색으로 설정 */
+                    text-decoration: none;
+                    /* 밑줄 제거 */
+                }
+
+                /* a 태그에 마우스를 올렸을 때 스타일 */
+                a:hover {
+                    color: #87CEEB;
+                    /* 하늘색으로 변경 */
+                }
+            </style>

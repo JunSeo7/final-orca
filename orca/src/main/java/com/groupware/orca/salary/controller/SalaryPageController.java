@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("orca")
+@RequestMapping("orca/accountingDivision")
 public class SalaryPageController {
 
     private final SalaryService service;
