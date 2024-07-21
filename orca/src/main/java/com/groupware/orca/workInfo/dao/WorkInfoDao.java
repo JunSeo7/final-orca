@@ -63,4 +63,8 @@ public class WorkInfoDao {
     public List<WorkInfoVo> getWorkRecordsBetween(int empNo, LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
         return mapper.getWorkRecordsBetween(empNo, startOfWeek, endOfWeek);
     }
+
+    public int searchDataCount(String name, String partName, String startDate, String endDate) {
+        return mapper.searchDataCount(name, partName, startDate, endDate);
+    }
 }

@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사원 근무 정보</title>
     <style>
-        /* Your existing CSS */
         .container {
             width: 80%;
             max-width: 1200px;
@@ -100,7 +99,7 @@
             <input type="text" id="partName" placeholder="부서이름">
             <input type="date" id="startDate">
             <input type="date" id="endDate">
-            <button id="searchButton">검색</button>
+            <button type="submit">검색</button>
         </div>
         <div id="content">
             <table id="allWorkInfoTable">

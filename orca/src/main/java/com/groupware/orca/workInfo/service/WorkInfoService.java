@@ -100,4 +100,8 @@ public class WorkInfoService {
     public List<WorkInfoVo> getWorkRecordsBetween(int empNo, LocalDateTime startOfWeek, LocalDateTime endOfWeek) {
         return dao.getWorkRecordsBetween(empNo, startOfWeek, endOfWeek);
     }
+
+    public int searchDataCount(String name, String partName, String startDate, String endDate) {
+        return dao.searchDataCount(name, partName, startDate, endDate);
+    }
 }
