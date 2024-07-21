@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
+console.log("hi");
+
+     // 현재 URL을 확인하여 조건에 따라 요소 표시
+        const currentUrl = window.location.href;
+        console.log(currentUrl);
+        const statisticsContainer = document.querySelector('#statisticsContainer');
+        if (currentUrl == 'http://127.0.0.1:8080/orca/document/list') {
+            statisticsContainer.classList.remove('hidden');
+            // 페이지 로드 시 AJAX 호출
+            $.ajax({
+                url: '/orca/document/getDocStatusList',
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    displayDocStatus(data);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+        })
+
+}
     // 검색 버튼 클릭 시 searchDocuments 함수를 호출합니다.
     const searchBtn = document.querySelector("#searchButton");
 
@@ -9,6 +31,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // 초기 페이지 로드 시 .document 요소들에 대해 이벤트 리스너 설정
     detailDocument();
 });
+
+function displayDocStatus(data){
+        const container = document.querySelector('#doc_statistics');
+        container.innerHTML = ''; // 기존 내용을 지웁니다.
+
+            data.forEach(function(statusVo) {
+                const element = document.createElement('div');
+                element.className = 'doc_statistics_inner';
+                element.innerHTML = `<h3>${statusVo.docStatus}</h3><p>${statusVo.docCount} 개</p>`;
+                container.appendChild(element);
+            });
+
+}
 
 // 검색 버튼 클릭 시 호출되는 함수
 function searchDocuments() {
