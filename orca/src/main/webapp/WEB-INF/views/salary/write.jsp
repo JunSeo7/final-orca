@@ -258,9 +258,24 @@
                     border-color: #67a8cd;
                     font: bold15px arial, sans-serif;
                     text-shadow: none;
-                     margin: 5%;
-
+                    margin: 5%;
 
 
                 }
+
+                /* 기본 a 태그 스타일 */
+                a {
+                    color: #000000;
+                    /* 기본 글자색을 검정색으로 설정 */
+                    text-decoration: none;
+                    /* 밑줄 제거 */
+                }
+
+                /* a 태그에 마우스를 올렸을 때 스타일 */
+                a:hover {
+                    color: #87CEEB;
+                    /* 하늘색으로 변경 */
+                }
+
+                
             </style>

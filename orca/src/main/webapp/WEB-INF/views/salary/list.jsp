@@ -98,30 +98,32 @@
                     </aside>
                     <main>
                         <div class="main" id="content">
-                            <h1 class="salary-list">급여 목록조회</h1>
 
-                            
+                            <div class="listDiv" id="listDivId">
+                                <h1 class="salary-list">급여 목록조회</h1>
 
-                            <table class="salaryList">
-                                <div id="searchArea">
-                                    <input type="text" id="search" placeholder="검색할 사원 번호 입력">
-                                    <button onclick="search()">검색</button>
-                                </div>
-                                <thead>
-                                    <tr>
-                                        <th>글 번호</th>
-                                        <th>사번</th>
-                                        <th>이름</th>
-                                        <th>최종 급여(원)</th>
-                                        <th>날짜</th>
-                                        <th>상세조회</th>
-                                        <!-- <button onclick="detail();">조회</button> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                <table class="salaryList">
+                                    <div id="searchArea">
+                                        <input type="text" id="search" placeholder="검색할 사원 번호 입력">
+                                        <button onclick="search()">검색</button>
+                                    </div>
+                                    <thead>
+                                        <tr>
+                                            <th>글 번호</th>
+                                            <th>사번</th>
+                                            <th>이름</th>
+                                            <th>최종 급여(원)</th>
+                                            <th>날짜</th>
+                                            <th>상세조회</th>
+                                            <!-- <button onclick="detail();">조회</button> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+
+                            </div>
 
 
                             <div id="detailArea">
@@ -234,7 +236,7 @@
                             const detailArea = document.querySelector("#detailArea");
                             console.log(data);
                             let str = "";
-                            str += "<h1>급여 상세조회</h1>";
+                            str += "<h1>급여 상세 조회</h1>";
                             str += "<h3>번호 : " + data.payrollNo + "</h3>";
                             str += "<h3>사원번호 : " + data.empNo + "</h3>";
                             str += "<h3>이름 : " + data.name + "</h3>";
@@ -359,6 +361,106 @@
 
             </script>
 
-            <style>
 
+
+            <style>
+                .main {
+                    width: 80%;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+
+                .listDiv {
+                    margin-bottom: 20px;
+                    margin-left: 200px;
+                }
+
+                #searchArea {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    margin-left: 100px;
+                }
+
+                #search {
+                    width: 200px;
+                    padding: 5px;
+                }
+
+                .salaryList {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+
+                .salaryList th,
+                .salaryList td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center;
+                }
+
+                #detailArea {
+                    text-align: center;
+                    margin: 20px auto;
+                    width: 50%;
+                }
+
+                #detailArea h1,
+                #detailArea h3 {
+                    margin: 10px 0;
+                }
+
+                #detailArea a,
+                #detailArea button {
+                    display: inline-block;
+                    margin: 10px 5px;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    color: white;
+                    background-color: #84b2e3;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                #detailArea button {
+                    background-color: #dc3545;
+                }
+
+                #editArea {
+                    display: none;
+                    text-align: center;
+                    margin: 20px auto;
+                    width: 50%;
+                }
+
+                #editArea input[type="text"] {
+                    width: 80%;
+                    padding: 5px;
+                    margin: 5px 0;
+                }
+
+                #editArea input[type="submit"] {
+                    margin-top: 10px;
+                    padding: 10px 20px;
+                    background-color: #28a745;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                /* 기본 a 태그 스타일 */
+                a {
+                    color: #000000;
+                    /* 기본 글자색을 검정색으로 설정 */
+                    text-decoration: none;
+                    /* 밑줄 제거 */
+                }
+
+                /* a 태그에 마우스를 올렸을 때 스타일 */
+                a:hover {
+                    color: #87CEEB;
+                    /* 하늘색으로 변경 */
+                }
             </style>

@@ -86,12 +86,9 @@
                     </aside>
 
                     <main class="personSalary">
-
                         <h1 id="salary-list">개인명세서 목록</h1>
 
-                        
-                        <table class="salaryPsersonList">
-
+                        <table class="salaryPersonList">
                             <thead>
                                 <tr>
                                     <th>글 번호</th>
@@ -100,18 +97,16 @@
                                     <th>최종 급여(원)</th>
                                     <th>날짜</th>
                                     <th>상세조회</th>
-                                    <!-- <button onclick="detail();">조회</button> -->
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <!-- 데이터가 여기에 삽입됩니다. -->
                             </tbody>
                         </table>
 
                         <div id="detailArea">
-
+                            <!-- 상세조회 내용이 여기에 삽입됩니다. -->
                         </div>
-
                     </main>
             </body>
 
@@ -129,8 +124,6 @@
                         url: "http://127.0.0.1:8080/orca/salary/person/list",
                         method: "get",
                         success: function (x) {
-
-
                             console.log(x);
                             $('div.editArea').remove();
 
@@ -139,23 +132,29 @@
 
                             const tbody = document.querySelector("tbody");
                             let str = "";
+
+                            // 날짜에서 시간 부분을 제거하는 함수
+                            function formatDate(dateTime) {
+                                // YYYY-MM-DD HH:mm:ss -> YYYY-MM-DD
+                                return dateTime.split(' ')[0];
+                            }
+
                             for (let i = 0; i < voList.length; ++i) {
                                 str += "<tr>";
                                 str += "<td>" + voList[i].payrollNo + "</td>";
                                 str += "<td>" + voList[i].empNo + "</td>";
                                 str += "<td>" + voList[i].name + "</td>";
                                 str += "<td>" + voList[i].totalSalary + "</td>";
-                                str += "<td>" + voList[i].paymentDate + "</td>";
+                                str += "<td>" + formatDate(voList[i].paymentDate) + "</td>"; // 날짜에서 시간 제거
                                 str += "<td><button onclick='detail(" + voList[i].payrollNo + ");'>조회</button></td>";
                                 str += "</tr>";
                             }
 
                             tbody.innerHTML = str;
-
                         },
-
                     });
                 }
+
 
 
             </script>
@@ -169,60 +168,175 @@
 
                     console.log(payrollNo);
 
-                    $('h1.salary-list').remove();
-                    $('table.salaryPsersonList').remove();
-
                     $.ajax({
                         url: "/orca/salary/person/detail",
                         method: "GET",
                         data: {
-
                             payrollNo: payrollNo
-
                         },
                         success: function (data) {
                             const detailArea = document.querySelector("#detailArea");
                             console.log(data);
+
+                            // 날짜에서 시간 부분을 제거하는 함수
+                            function formatDate(dateTime) {
+                                // YYYY-MM-DD HH:mm:ss -> YYYY-MM-DD
+                                return dateTime.split(' ')[0];
+                            }
+
                             let str = "";
                             str += "<h1>급여 상세조회</h1>";
-                            str += "<h3>번호 : " + data.payrollNo + "</h3>";
-                            str += "<h3>사원번호 : " + data.empNo + "</h3>";
-                            str += "<h3>이름 : " + data.name + "</h3>";
-                            str += "<h3>국민연금 : " + data.nationalPension + "</h3>";
-                            str += "<h3>건강보험 : " + data.healthInsurance + "</h3>";
-                            str += "<h3>장기요양보험 : " + data.longCare + "</h3>";
-                            str += "<h3>고용보험 : " + data.employmentInsurance + "</h3>";
-                            str += "<h3>소득세 : " + data.incomeTax + "</h3>";
-                            str += "<h3>지방소득세 : " + data.localIncomeTax + "</h3>";
-                            str += "<h3>직급수당 : " + data.position + "</h3>";
-                            str += "<h3>보너스 : " + data.bonus + "</h3>";
-                            str += "<h3>휴일근무수당 : " + data.holiday + "</h3>";
-                            str += "<h3>연장근로수당 : " + data.overTimeWork + "</h3>";
-                            str += "<h3>식대 : " + data.meals + "</h3>";
-                            str += "<h3>최종급여 : " + data.totalSalary + "</h3>";
-                            str += "<h3>지급날짜 : " + data.paymentDate + "</h3>";
+                            str += "<div class='detail-item'><span>번호 :</span><span>" + data.payrollNo + "</span></div>";
+                            str += "<div class='detail-item'><span>사원번호 :</span><span>" + data.empNo + "</span></div>";
+                            str += "<div class='detail-item'><span>이름 :</span><span>" + data.name + "</span></div>";
+                            str += "<div class='detail-item'><span>국민연금 :</span><span>" + data.nationalPension + "</span></div>";
+                            str += "<div class='detail-item'><span>건강보험 :</span><span>" + data.healthInsurance + "</span></div>";
+                            str += "<div class='detail-item'><span>장기요양보험 :</span><span>" + data.longCare + "</span></div>";
+                            str += "<div class='detail-item'><span>고용보험 :</span><span>" + data.employmentInsurance + "</span></div>";
+                            str += "<div class='detail-item'><span>소득세 :</span><span>" + data.incomeTax + "</span></div>";
+                            str += "<div class='detail-item'><span>지방소득세 :</span><span>" + data.localIncomeTax + "</span></div>";
+                            str += "<div class='detail-item'><span>직급수당 :</span><span>" + data.position + "</span></div>";
+                            str += "<div class='detail-item'><span>보너스 :</span><span>" + data.bonus + "</span></div>";
+                            str += "<div class='detail-item'><span>휴일근무수당 :</span><span>" + data.holiday + "</span></div>";
+                            str += "<div class='detail-item'><span>연장근로수당 :</span><span>" + data.overTimeWork + "</span></div>";
+                            str += "<div class='detail-item'><span>식대 :</span><span>" + data.meals + "</span></div>";
+                            str += "<div class='detail-item'><span>최종급여 :</span><span>" + data.totalSalary + "</span></div>";
+                            str += "<div class='detail-item'><span>지급날짜 :</span><span>" + formatDate(data.paymentDate) + "</span></div>";
 
                             str += "<a href='http://127.0.0.1:8080/orca/personList'>목록으로 돌아가기</a>";
 
                             detailArea.innerHTML = str;
-
-
                         },
-
-
                     });
                 }
 
 
-
             </script>
 
-            
+
 
 
             <style>
+                /* 메인 컨테이너 스타일 */
                 .personSalary {
-                    margin-top: 20%;
-                    margin-left: 45%;
+                    width: 100%;
+                    max-width: 1000px;
+                    /* 너비를 최대 1000px로 설정하여 중앙 정렬 유지 */
+                    margin: 20px auto;
+                    /* 자동 좌우 여백으로 중앙 정렬 */
+                    padding: 20px;
+                    background-color: #ffffff;
+                    /* 배경색을 흰색으로 설정 */
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-sizing: border-box;
+                }
+
+                /* 제목 스타일 */
+                #salary-list {
+                    font-size: 24px;
+                    color: #333333;
+                    margin-bottom: 20px;
+                    text-align: center;
+                    /* 제목 중앙 정렬 */
+                }
+
+                /* 테이블 스타일 */
+                .salaryPersonList {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+
+                .salaryPersonList th,
+                .salaryPersonList td {
+                    padding: 12px;
+                    text-align: center;
+                    border: 1px solid #cccccc;
+                }
+
+                .salaryPersonList th {
+                    background-color: #f1f1f1;
+                }
+
+                .salaryPersonList tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+
+                .salaryPersonList button {
+                    padding: 8px 16px;
+                    background-color: #007bff;
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    font-size: 14px;
+                }
+
+                .salaryPersonList button:hover {
+                    background-color: #0056b3;
+                }
+
+                /* 상세조회 스타일 */
+                #detailArea {
+                    width: 100%;
+                    max-width: 1000px;
+                    /* 너비를 최대 1000px로 설정하여 중앙 정렬 유지 */
+                    margin: 20px auto;
+                    /* 자동 좌우 여백으로 중앙 정렬 */
+                    padding: 20px;
+                    background-color: #ffffff;
+                    /* 배경색을 흰색으로 설정 */
+                    border: 1px solid #cccccc;
+                    /* 테두리 추가 */
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    box-sizing: border-box;
+                }
+
+                /* 상세조회 제목 스타일 */
+                #detailArea h1 {
+                    font-size: 24px;
+                    color: #333333;
+                    margin-bottom: 20px;
+                    text-align: center;
+                    /* 제목 중앙 정렬 */
+                }
+
+                /* 상세조회 항목 스타일 */
+                #detailArea h3 {
+                    font-size: 18px;
+                    color: #555555;
+                    margin: 10px 0;
+                }
+
+                /* 상세조회 항목 내용 스타일 */
+                #detailArea .detail-item {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px;
+                    border-bottom: 1px solid #eeeeee;
+                }
+
+                #detailArea .detail-item:last-child {
+                    border-bottom: none;
+                }
+
+                /* 돌아가기 링크 스타일 */
+                #detailArea a {
+                    display: inline-block;
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: #ffffff;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    transition: background-color 0.3s ease;
+                }
+
+                #detailArea a:hover {
+                    background-color: #0056b3;
                 }
             </style>
