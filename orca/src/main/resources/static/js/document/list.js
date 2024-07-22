@@ -39,7 +39,7 @@ function displayDocStatus(data){
             data.forEach(function(statusVo) {
                 const element = document.createElement('div');
                 element.className = 'doc_statistics_inner';
-                element.innerHTML = `<h3>${statusVo.docStatus}</h3><p>${statusVo.docCount} 개</p>`;
+                element.innerHTML = `<h3>${statusVo.docStatus}</h3><p>${statusVo.docCount} 건</p>`;
                 container.appendChild(element);
             });
 

@@ -136,7 +136,7 @@ header {
 
 /* 어사이드 바 설정 */
 aside {
-    background-color: #f4f4f4;
+    background-color: white;
     padding: 20px;
     width: 200px;
     position: fixed;
