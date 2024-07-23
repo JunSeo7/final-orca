@@ -70,16 +70,9 @@ UI
  # commit Message
 | git status | 의미 |
 | --- | --- |
-| feat | 새로운 기능 추가 |
-| refactor | 기능의 변화가 아닌 코드 리팩터링 ex) 변수 이름 변경 |
-| style | 세미콜론(;) 누락, 코드 변경이 없는 경우 |
-| design | CSS 등 사용자 UI 디자인 변경 |
-| fix | 버그 수정 |
-| chore | 패키지 매니저 수정, 그 외 기타 수정 ex) .gitignore |
-| docs | 문서 수정 |
-| add | 결재 양식 java 코드 추가 |
-| change | 결재 양식 java 코드 수정 |
-| remove | 결재 양식 java 파일/코드 삭제 |
+| ADD | 결재 양식 java 코드 추가 |
+| EDIT | 결재 양식 java 코드 수정 |
+| REMOVE | 결재 양식 java 파일/코드 삭제 |
 
  
 
