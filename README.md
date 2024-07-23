@@ -8,14 +8,14 @@
 
  # 프로젝트 소개 : 그룹웨어 - 오르카
 
-
+![image](https://github.com/user-attachments/assets/e6f5bd7d-bb66-4662-a373-d33266da2e7d)
 
 
 
 
  #  📅 프로젝트 기간
 2024-06-25 ~ 2024-07-22
-![image](https://github.com/user-attachments/assets/e6f5bd7d-bb66-4662-a373-d33266da2e7d)
+
 
 
 
